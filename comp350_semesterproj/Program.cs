@@ -15,18 +15,18 @@ public class Program
         // Creates an instance of the Search class using course_dictionary.txt for spell-checking and mini course database 
         Search search = new Search("course_dictionary.txt");
 
-        Console.WriteLine("Type a course name or course code and press Enter to search for it. \nPress Enter without typing anything to exit.\n ");
+        Console.WriteLine("Type a course name or course code and press Enter to search for it. \nType 'exit' to exit.\n ");
 
         string query = " ";
         List<Course> searchResults;
         int i = 0;
 
-        // This code is for 
-        while (query.Length != 0)
+        // This code is for manually testing the search function and spell-checking 
+        while (query.ToLower() != "exit")
         {
             query = Console.ReadLine();
             Console.WriteLine();
-            if (query.Length == 0)
+            if (query.ToLower() == "exit")
                 break;
             search.searchForQuery(query);
             searchResults = search.lastSearchResults.getCourses();
@@ -50,7 +50,6 @@ public class Program
                 Console.WriteLine("No course was found for the query {0}. \n", query);
             }
         }
-
     }
 
 }
@@ -131,6 +130,23 @@ public class Search
     // The query can be a course name or course code. The results are organized from best match to worst. Courses that don't match at all are not included. 
     public void searchForQuery(string query)
     {
+        if (string.IsNullOrWhiteSpace(query))  // For the user gives a blank query, display all the courses 
+        {
+            lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
+            lastSearchResults.courses.Clear();          // Clear the results from the last search 
+
+            lastSearchResults.correctedQuery = "";
+            lastSearchResults.query = "";
+
+            // Add all of the courses to the search results: 
+            for (int i = 0; i < spelling.getDictionaryFileContents().Count; i++)
+            {
+                lastSearchResults.courses.Add(new Course(i));
+                lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
+            }
+            return;
+        }
+        
         string correctedQuery = "";   // Stores the spell-checked version of the user's query. 
         List<List<int>> matching = new List<List<int>>();    // A list where each index represents a word in the query. For each word, there is a list of ints. These ints are the course IDs of courses containing that word in their name or course code. 
         Dictionary<int, int> bestMatches = new Dictionary<int, int>(); // Maps course IDs to their relevance (how many of the words in the query match words in the course title or course code)

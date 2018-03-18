@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 namespace SpellingCorrector
 {
     /// <summary>
-    /// Conversion from http://norvig.com/spell-correct.html by C.Small
-    /// Modified by Dalton Messmer 
+    /// Conversion from http://norvig.com/spell-correct.html by C.Small. 
+    /// Modified by Dalton Messmer. 
     /// </summary>
     /// 
 
@@ -16,6 +16,7 @@ namespace SpellingCorrector
     {
         private readonly Dictionary<String, List<int>> _dictionary = new Dictionary<String, List<int>>();
         private static readonly Regex _wordRegex = new Regex("[a-z]+", RegexOptions.Compiled);
+        private List<string> fileContentLines; 
 
         public Spelling(string dictionary_filename)
         {
@@ -30,10 +31,10 @@ namespace SpellingCorrector
                 return;
             }
 
-            List<string> wordList = fileContent.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            fileContentLines = fileContent.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             int i = 0;
 
-            foreach (var word in wordList)
+            foreach (var word in fileContentLines)
             {
                 foreach (var word2 in word.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
                 {
@@ -54,6 +55,11 @@ namespace SpellingCorrector
                 }
                 i++;
             }
+        }
+
+        public List<string> getDictionaryFileContents()
+        {
+            return fileContentLines;
         }
 
         public string CorrectSentence(string sentence)
