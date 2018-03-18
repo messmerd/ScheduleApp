@@ -1,0 +1,5 @@
+C:\Users\MessmerDL1\Documents\Visual Studio 2012\Projects\2018\COMP350_PROJECT\comp350_semesterproj\comp350_semesterproj\bin\Debug\comp350_semesterproj.exe
+C:\Users\MessmerDL1\Documents\Visual Studio 2012\Projects\2018\COMP350_PROJECT\comp350_semesterproj\comp350_semesterproj\bin\Debug\comp350_semesterproj.pdb
+C:\Users\MessmerDL1\Documents\Visual Studio 2012\Projects\2018\COMP350_PROJECT\comp350_semesterproj\comp350_semesterproj\obj\Debug\comp350_semesterproj.csprojResolveAssemblyReference.cache
+C:\Users\MessmerDL1\Documents\Visual Studio 2012\Projects\2018\COMP350_PROJECT\comp350_semesterproj\comp350_semesterproj\obj\Debug\comp350_semesterproj.exe
+C:\Users\MessmerDL1\Documents\Visual Studio 2012\Projects\2018\COMP350_PROJECT\comp350_semesterproj\comp350_semesterproj\obj\Debug\comp350_semesterproj.pdb
