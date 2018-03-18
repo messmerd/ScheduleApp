@@ -8,57 +8,100 @@ namespace SpellingCorrector
 {
     /// <summary>
     /// Conversion from http://norvig.com/spell-correct.html by C.Small
+    /// Modified by Dalton Messmer 
     /// </summary>
+    /// 
+
     public class Spelling
     {
-        private Dictionary<String, int> _dictionary = new Dictionary<String, int>();
-        private static Regex _wordRegex = new Regex("([a-{]|[/-:])+", RegexOptions.Compiled);
+        private readonly Dictionary<String, List<int>> _dictionary = new Dictionary<String, List<int>>();
+        private static readonly Regex _wordRegex = new Regex("[a-z]+", RegexOptions.Compiled);
 
-        public Spelling()
+        public Spelling(string dictionary_filename)
         {
-            string fileContent = File.ReadAllText("course_dictionary.txt");  
-            //string fileContent = File.ReadAllText("big.txt");  
+            string fileContent = "";
+            try
+            {
+                fileContent = File.ReadAllText(dictionary_filename);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\n");
+                return;
+            }
+
             List<string> wordList = fileContent.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            int i = 0;
 
             foreach (var word in wordList)
             {
                 foreach (var word2 in word.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     string trimmedWord = word2.Trim().ToLower();
-                    if (_wordRegex.IsMatch(trimmedWord))  // if (true) 
+                    if (_wordRegex.IsMatch(trimmedWord))
                     {
                         if (_dictionary.ContainsKey(trimmedWord))
-                            _dictionary[trimmedWord]++;
+                        {
+                            _dictionary[trimmedWord][0]++;
+                            if (_dictionary[trimmedWord].Last() != i)  // So duplicates are not added 
+                                _dictionary[trimmedWord].Add(i);
+                        }
                         else
                         {
-                            _dictionary.Add(trimmedWord, 1);
-                            //Console.WriteLine("{0}", trimmedWord);
+                            _dictionary.Add(trimmedWord, new List<int> { 1, i });
                         }
                     }
                 }
-            
+                i++;
             }
+        }
+
+        public string CorrectSentence(string sentence)
+        {
+            if (string.IsNullOrEmpty(sentence))
+                return sentence;
+
+            var corrections = new List<string>();
+            foreach (string word in sentence.Split(' '))
+            {
+                corrections.Add(Correct(word));
+            }
+
+            return string.Join(" ", corrections);
         }
 
         public string Correct(string word)
         {
-            word = word.Replace(" ", "{"); //Added by Dalton
+            return CorrectExt(word, true).Key;
+        }
+
+        public KeyValuePair<string, List<int>> CorrectExt(string word, bool useCorrection)
+        {
+            if (word != null)
+                word = word.ToLower();
+
+            KeyValuePair<string, List<int>> wordPair;
+            if (_dictionary.ContainsKey(word))
+            {
+                wordPair = new KeyValuePair<string, List<int>>(word, _dictionary[word]);
+            }
+            else
+            {
+                wordPair = new KeyValuePair<string, List<int>>(word, new List<int>());
+            }
+
+            if (useCorrection == false)
+                return wordPair;
 
             if (string.IsNullOrEmpty(word))
-                return word;
-
-            word = word.ToLower();
+                return wordPair;
 
             // known()
             if (_dictionary.ContainsKey(word))
-            {
-                //Console.WriteLine("Exact match."); 
-                return word.Replace("{", " ");
-
-            }
+                return wordPair;
 
             List<String> list = Edits(word);
-            Dictionary<string, int> candidates = new Dictionary<string, int>();
+            Dictionary<string, List<int>> candidates = new Dictionary<string, List<int>>();
 
             foreach (string wordVariation in list)
             {
@@ -67,8 +110,9 @@ namespace SpellingCorrector
             }
 
             if (candidates.Count > 0)
-                return candidates.OrderByDescending(x => x.Value).First().Key.Replace("{", " ");
-
+            {
+                return candidates.OrderByDescending(x => x.Value[0]).First();
+            }
             // known_edits2()
             foreach (string item in list)
             {
@@ -79,7 +123,7 @@ namespace SpellingCorrector
                 }
             }
 
-            return (candidates.Count > 0) ? candidates.OrderByDescending(x => x.Value).First().Key.Replace("{", " ") : "<Unable to correct>";  // was word.Replace("{", " ") instead of "<Unable to correct>"
+            return (candidates.Count > 0) ? candidates.OrderByDescending(x => x.Value[0]).First() : wordPair;
         }
 
         private List<string> Edits(string word)
@@ -126,11 +170,11 @@ namespace SpellingCorrector
                 string b = splits[i].Item2;
                 if (!string.IsNullOrEmpty(b))
                 {
-                    for (char c = 'a'; c <= '{'; c++)
+                    for (char c = 'a'; c <= 'z'; c++)
                     {
                         replaces.Add(a + c + b.Substring(1));
                     }
-                    for (char c = '/'; c <= ':'; c++)   // Includes all the numbers as well 
+                    for (char c = '0'; c <= '9'; c++)
                     {
                         replaces.Add(a + c + b.Substring(1));
                     }
@@ -142,11 +186,11 @@ namespace SpellingCorrector
             {
                 string a = splits[i].Item1;
                 string b = splits[i].Item2;
-                for (char c = 'a'; c <= '{'; c++)
+                for (char c = 'a'; c <= 'z'; c++)
                 {
                     inserts.Add(a + c + b);
                 }
-                for (char c = '/'; c <= ':'; c++)  // Includes all the numbers as well
+                for (char c = '0'; c <= '9'; c++)
                 {
                     inserts.Add(a + c + b);
                 }
