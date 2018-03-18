@@ -137,7 +137,6 @@ public class Search
         KeyValuePair<string, List<int>> result = new KeyValuePair<string, List<int>>(); // Stores the results from the spellchecker
 
         List<string> querySplit = query.Split().ToList();
-        List<int> temp = new List<int>();
 
         foreach (var word in querySplit)
         {
@@ -153,13 +152,7 @@ public class Search
             if (word != querySplit.Last())
                 correctedQuery += " ";
 
-            temp.Clear();
-            foreach (var item in result.Value)
-            {
-                temp.Add(item);
-            }
-
-            matching.Add(temp);
+            matching.Add(result.Value.GetRange(0, result.Value.Count));
             if (matching.Last().Count != 0)
                 matching.Last().RemoveAt(0);
         }
