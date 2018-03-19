@@ -17,7 +17,7 @@ public class Program
 
         Console.WriteLine("Type a course name or course code and press Enter to search for it. \nType 'exit' to exit.\n ");
 
-        string query = " ";
+        string query = "";
         List<Course> searchResults;
         int i = 0;
 
@@ -39,7 +39,7 @@ public class Program
                 Console.WriteLine("Top 20 search results for {0}, ordered by best match: ", query);
                 foreach (var match in searchResults)
                 {
-                    Console.WriteLine("CourseID = {0}, relevance = {1}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i]);
+                    Console.WriteLine("CourseID = {0}, relevance = {1}, name = {2}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i],search.getDictionaryFileContents()[match.getCourseID()]);
                     if (i == 19) { break; }  // Only show top 20 search results
                     i++;
                 }
@@ -245,6 +245,10 @@ public class Search
         return spelling.Correct(query);
     }
 
+    public List<string> getDictionaryFileContents()
+    {
+        return spelling.getDictionaryFileContents();
+    }
 }
 
 public struct Course
