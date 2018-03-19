@@ -215,12 +215,38 @@ public class Search
 
                 // Note: Courses whose titles or course codes match more words of the corrected query have a higher "relevance" and will appear at the top of search results. 
             }
-            
             j++;
         }
 
-        var bestMatchesList = bestMatches.ToList();
+        List<KeyValuePair<int,int>> bestMatchesList = bestMatches.ToList();
         bestMatchesList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));  // Sorts the courses by relevance. Most relevant first. 
+        
+        // This part orders the results (for each different relevancy value) by department code and course number: 
+        if (bestMatchesList.Count > 1) // Only needs to sort if there is more than one result 
+        {
+            int start = 0;
+            int currentRelevance = bestMatchesList[0].Value;
+            List<KeyValuePair<int, int>> sortedSubset = new List<KeyValuePair<int, int>>();
+            for (int i = 0; i < bestMatchesList.Count; i++)
+            {
+                if (i == bestMatchesList.Count - 1 || bestMatchesList[i + 1].Value != currentRelevance)
+                {
+                    sortedSubset = bestMatchesList.GetRange(start, i - start + 1).OrderBy(a => a.Key).ToList();  // Sort subset by department/course number
+
+                    for (int k = start; k < i + 1; k++) // Copies the sorted subset back into the main list 
+                    {
+                        bestMatchesList[k] = sortedSubset[k - start]; 
+                    }
+
+                    if (i != bestMatchesList.Count - 1)  // If it isn't the last element 
+                    {
+                        currentRelevance = bestMatchesList[i + 1].Value;
+                        start = i + 1;
+                    }
+                }
+
+            }
+        }
 
         // Need function (a factory, maybe) to generate and return a course struct from a course id. 
         // This could be done by a CourseInfo class, which acts as a database. 
