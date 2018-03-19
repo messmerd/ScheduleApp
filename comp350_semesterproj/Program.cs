@@ -164,14 +164,19 @@ public class Search
 
             // For single letter queries, list classes whose first letter in course name/code matches letter? 
 
-            correctedQuery += result.Key;
-            if (word != querySplit.Last())
-                correctedQuery += " ";
+            if (result.Value[0] != 0)  // If the word in the query doesn't match anything in the dictionary and cannot be corrected with the spell-checker, don't add to the corrected query 
+            {
+                correctedQuery += result.Key;
+                if (word != querySplit.Last())
+                    correctedQuery += " ";
+            }
 
             matching.Add(result.Value.GetRange(0, result.Value.Count));
             if (matching.Last().Count != 0)
                 matching.Last().RemoveAt(0);
         }
+
+        correctedQuery = correctedQuery.TrimEnd(' ');  // Removes any extra spaces at the end 
 
         int j = 0; 
         foreach (var match in matching)  // For each word of corrected query 
@@ -190,7 +195,7 @@ public class Search
                     
                     // For the following line, if a course matches the query completely (every word), then that course is given one extra relevancy.
                     // I'm not sure if this will improve search results much. It's an experimental feature. It can be safely commented out to disable it. 
-                    bestMatches[id] += (querySplit.Count != 1 && correctedQuery.Split().All(i => spelling.getDictionaryFileContents()[id].ToLower().Split().Contains(i))) ? 1 : 0;
+                    bestMatches[id] += (querySplit.Count != 1 && correctedQuery.Split().ToList().Count == querySplit.Count && correctedQuery.Split().All(i => spelling.getDictionaryFileContents()[id].ToLower().Split().Contains(i))) ? 1 : 0;
                 }
 
                 // This loop adds extra relevance to results whose department code (part of its course code) matches part of the query 
@@ -203,7 +208,7 @@ public class Search
                     else
                     {
                         //Console.WriteLine("correctedQuery.Split()[j] = ,{0}, word.ToLower() = ,{1}, ", correctedQuery.Split()[j], word.ToLower());
-                        if (correctedQuery.Split()[j] == word.ToLower())    // If a word in the query matches a department code of a course, it counts extra towards the relevance of that course in the search results 
+                        if (j < correctedQuery.Split().ToList().Count && correctedQuery.Split()[j] == word.ToLower())    // If a word in the query matches a department code of a course, it counts extra towards the relevance of that course in the search results 
                             bestMatches[id]++;  // For now, increase the relevance by an extra 1. Remove this line to remove the effect of this whole feature.  
                     }
                 }

@@ -94,6 +94,7 @@ namespace SpellingCorrector
             else
             {
                 wordPair = new KeyValuePair<string, List<int>>(word, new List<int>());
+                wordPair.Value.Add(0);
             }
 
             if (useCorrection == false)
