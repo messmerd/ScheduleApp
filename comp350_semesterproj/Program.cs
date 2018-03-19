@@ -173,21 +173,45 @@ public class Search
                 matching.Last().RemoveAt(0);
         }
 
+        int j = 0; 
         foreach (var match in matching)  // For each word of corrected query 
         {
+            
             foreach (var id in match)    // For each course ID of courses that contain the corrected query word in their title or course code 
             {
                 if (bestMatches.ContainsKey(id))
                 {
                     bestMatches[id]++;  // Increment the number of matching words for the course "id"  
-                    // If it matches the department code rather than just part of the course title, maybe the relevance should be increased an extra amount for better results?   
+                    // If it matches the department code rather than just part of the course title, the relevance will be increased an extra amount for better results (see below)   
                 }
                 else
                 {
                     bestMatches[id] = 1; // This course has one matching word 
+                    
+                    // For the following line, if a course matches the query completely (every word), then that course is given one extra relevancy.
+                    // I'm not sure if this will improve search results much. It's an experimental feature. It can be safely commented out to disable it. 
+                    bestMatches[id] += (querySplit.Count != 1 && correctedQuery.Split().All(i => spelling.getDictionaryFileContents()[id].ToLower().Split().Contains(i))) ? 1 : 0;
                 }
+
+                // This loop adds extra relevance to results whose department code (part of its course code) matches part of the query 
+                // For example, CS courses have higher relevance in search results than the business courses that have "computer" in the name when the user searches for "computer"
+                foreach (string word in spelling.getDictionaryFileContents()[id].Split())
+                {
+
+                    if (Regex.IsMatch(word, @"^\d+$"))  // Breaks once it reaches the course number 
+                        break;
+                    else
+                    {
+                        //Console.WriteLine("correctedQuery.Split()[j] = ,{0}, word.ToLower() = ,{1}, ", correctedQuery.Split()[j], word.ToLower());
+                        if (correctedQuery.Split()[j] == word.ToLower())    // If a word in the query matches a department code of a course, it counts extra towards the relevance of that course in the search results 
+                            bestMatches[id]++;  // For now, increase the relevance by an extra 1. Remove this line to remove the effect of this whole feature.  
+                    }
+                }
+
                 // Note: Courses whose titles or course codes match more words of the corrected query have a higher "relevance" and will appear at the top of search results. 
             }
+            
+            j++;
         }
 
         var bestMatchesList = bestMatches.ToList();
