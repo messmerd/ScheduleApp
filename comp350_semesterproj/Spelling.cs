@@ -39,7 +39,7 @@ namespace SpellingCorrector
                 foreach (var word2 in word.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     string trimmedWord = word2.Trim().ToLower();
-                    if (_wordRegex.IsMatch(trimmedWord))
+                    if (true) // (_wordRegex.IsMatch(trimmedWord))  // Assuming every word in the dictionary file is good data to use 
                     {
                         if (_dictionary.ContainsKey(trimmedWord))
                         {
