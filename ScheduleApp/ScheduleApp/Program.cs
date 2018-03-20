@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CourseClass;
 using SpellingCorrector;
 
 public class Program
@@ -282,30 +283,4 @@ public class Search
     }
 }
 
-public struct Course
-{
-    private int courseID;
-    private string courseName;
-    // Other attributes of the course go here
-
-    public Course(int courseID)  // Constructor
-    {
-        this.courseID = courseID;
-        //  ... (other Class attributes to be set here)
-        this.courseName = "<course name>";  // Temporary, of course
-        // We need to have a Course Database class that contains a function (a factory?) which helps create Course structs from course IDs. 
-
-    }
-
-    public string getCourseName()
-    {
-        return courseName;
-    }
-
-    public int getCourseID()  // Note: courseID is NOT the same as courseCode 
-    {
-        return courseID;
-    }
-
-}
 
