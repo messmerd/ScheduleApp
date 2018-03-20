@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace ScheduleApp
 {
-    public partial class Form1 : Form
+    public partial class masterContainer : Form
     {
-        public Form1()
+        public masterContainer()
         {
             InitializeComponent();
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void advSearchBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
