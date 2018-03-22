@@ -36,7 +36,14 @@ public class Program
                 i = 0;
                 if (search.lastSearchResults.getCorrectedQuery() != query.ToLower())  // If your query had a spelling mistake
                     Console.WriteLine("Did you mean {0}?", search.lastSearchResults.getCorrectedQuery());
-                Console.WriteLine("Top 20 search results for {0}, ordered by best match: ", query);
+                if (searchResults.Count < 20 && searchResults.Count >= 1)
+                {
+                    Console.WriteLine("{0} search result(s) found for {1}, ordered by best match: ", searchResults.Count, query);
+                }
+                else if (searchResults.Count >= 20)
+                {
+                    Console.WriteLine("Top 20 search results for {0}, ordered by best match: ", query);
+                }
                 foreach (var match in searchResults)
                 {
                     Console.WriteLine("CourseID = {0}, relevance = {1}, name = {2}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i],search.getDictionaryFileContents()[match.getCourseID()]);
