@@ -101,6 +101,12 @@ public class Search
     {
         public int rmp; // Rate My Professor rating 
         // Put other advanced options here later 
+        public int courseCode;
+        public string courseDays;
+        public double courseTime;
+        public string courseProfessor;
+        public string courseBuilding;
+        public int courseCredits;
     }
 
     public Search()  // Constructor 
@@ -115,6 +121,11 @@ public class Search
 
         this.options.rmp = 0; // Rate my professor rating
         // Other advanced options will go here 
+        this.options.courseCode = 0;
+        this.options.courseTime = 1.00;
+        this.options.courseProfessor = "Wolfe"; //Temporary Values
+        this.options.courseBuilding = "HAL";
+        this.options.courseCredits = 3;
     }
 
     public Search(string courseDictionary)  // Constructor 
@@ -129,6 +140,11 @@ public class Search
 
         this.options.rmp = 0;  // Rate my professor rating 
         // Other advanced options will go here.
+        this.options.courseCode = 0;
+        this.options.courseTime = 1.00;
+        this.options.courseProfessor = "Wolfe"; //Temporary values
+        this.options.courseBuilding = "HAL";
+        this.options.courseCredits = 3;
     }
 
     // This function creates a list of Courses that match a given query or are close enough to be recognized by the spell-checker. 
