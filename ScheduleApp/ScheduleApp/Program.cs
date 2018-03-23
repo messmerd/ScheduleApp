@@ -5,12 +5,19 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CourseClass;
 using SpellingCorrector;
+using System.Windows.Forms;
 
 public class Program
 {
 
     static void Main(string[] args)
     {
+        
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new ScheduleApp.AppWindow());
+        
+        
         // This code is for testing the course search and spell-checking features 
 
         // Creates an instance of the Search class using course_dictionary.txt for spell-checking and mini course database 
@@ -18,7 +25,7 @@ public class Program
 
         Console.WriteLine("Type a course name or course code and press Enter to search for it. \nType 'exit' to exit.\n ");
 
-        string query = "";
+        string query = "-1";
         List<Course> searchResults;
         int i = 0;
 
@@ -94,6 +101,7 @@ public class Search
     private struct advancedOptions
     {
         public int rmp; // Rate My Professor rating 
+        public string probability; // high, medium, or low
         // Put other advanced options here later 
     }
 
