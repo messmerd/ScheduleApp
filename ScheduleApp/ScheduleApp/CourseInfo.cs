@@ -22,7 +22,7 @@ namespace CourseInfoClass
             Excel.Range xlRange = xlWorksheet.UsedRange;
 
             int rowCount = 762;
-            int colCount = 10;
+            int colCount = 13;
 
             //iterate over the rows and columns and print to the console as it appears in the file
             //excel is not zero based!!
