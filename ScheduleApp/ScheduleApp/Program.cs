@@ -4,13 +4,22 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CourseClass;
+using CourseInfoClass;
 using SpellingCorrector;
+using System.Windows.Forms;
 
 public class Program
 {
 
     static void Main(string[] args)
     {
+        CourseInfo.DB.Create();  // Creates CourseInfo singleton
+
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new ScheduleApp.AppWindow());
+        
+        
         // This code is for testing the course search and spell-checking features 
 
         // Creates an instance of the Search class using course_dictionary.txt for spell-checking and mini course database 
@@ -18,7 +27,7 @@ public class Program
 
         Console.WriteLine("Type a course name or course code and press Enter to search for it. \nType 'exit' to exit.\n ");
 
-        string query = "";
+        string query = "-1";
         List<Course> searchResults;
         int i = 0;
 
@@ -62,38 +71,12 @@ public class Search
     private advancedOptions options;   // For storing advanced search options 
     private Spelling spelling;         // Instance of Spelling object from Spelling.cs 
     private string courseDictionary;   // Stores course dictionary filename for use by spellchecker and course search 
-    public results lastSearchResults;  // Stores the search results after using searchForQuery()
-
-    public struct results
-    {
-        public List<Course> courses;       // Courses ordered from most relevant to least 
-        public string query;               // The query passed to searchForQuery()
-        public string correctedQuery;      // The spell-checked version of query
-        public List<int> courseRelevance;  // Stores the relevance of each course in the results. courseRelevance[i] = relevance of courses[i] 
-
-        // Getters: 
-        public List<Course> getCourses()
-        {
-            return courses;
-        }
-        public string getCorrectedQuery()
-        {
-            return correctedQuery;
-        }
-        public string getQuery()
-        {
-            return query;
-        }
-        public List<int> getCourseRelevance()
-        {
-            return courseRelevance;
-        }
-
-    }
+    public CourseList lastSearchResults;  // Stores the search results after using searchForQuery()
 
     private struct advancedOptions
     {
         public int rmp; // Rate My Professor rating 
+        public string probability; // high, medium, or low
         // Put other advanced options here later 
     }
 
@@ -102,10 +85,7 @@ public class Search
         this.spelling = new Spelling("course_dictionary.txt");
         this.courseDictionary = "course_dictionary.txt";
 
-        this.lastSearchResults.query = "";
-        this.lastSearchResults.correctedQuery = "";
-        this.lastSearchResults.courses = new List<Course>();
-        this.lastSearchResults.courseRelevance = new List<int>();
+        this.lastSearchResults = new CourseList(); 
 
         this.options.rmp = 0; // Rate my professor rating
         // Other advanced options will go here 
@@ -116,10 +96,7 @@ public class Search
         this.spelling = new Spelling(courseDictionary);
         this.courseDictionary = courseDictionary;
 
-        this.lastSearchResults.query = "";
-        this.lastSearchResults.correctedQuery = "";
-        this.lastSearchResults.courses = new List<Course>();
-        this.lastSearchResults.courseRelevance = new List<int>();
+        this.lastSearchResults = new CourseList(); 
 
         this.options.rmp = 0;  // Rate my professor rating 
         // Other advanced options will go here.
@@ -140,7 +117,7 @@ public class Search
             lastSearchResults.query = "";
 
             // Add all of the courses to the search results: 
-            for (int i = 0; i < spelling.getDictionaryFileContents().Count; i++)
+            for (int i = 0; i < CourseInfo.DB.getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
             {
                 lastSearchResults.courses.Add(new Course(i));
                 lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
@@ -284,3 +261,44 @@ public class Search
 }
 
 
+public class CourseList 
+{
+    public List<Course> courses;         // Courses ordered from most relevant to least 
+    public List<Course> courses_ordered; // Courses ordered in a certain way 
+    public string query;                 // The query passed to searchForQuery()
+    public string correctedQuery;        // The spell-checked version of query
+    public List<int> courseRelevance;    // Stores the relevance of each course in the results. courseRelevance[i] = relevance of courses[i] 
+
+    public CourseList()
+    {
+        this.query = "";
+        this.correctedQuery = "";
+        this.courses = new List<Course>();
+        this.courses_ordered = new List<Course>();
+        this.courseRelevance = new List<int>();
+    }
+
+
+    // Getters: 
+    public List<Course> getCourses()
+    {
+        return courses;
+    }
+    public List<Course> getCoursesOrdered()
+    {
+        return courses_ordered;
+    }
+    public string getCorrectedQuery()
+    {
+        return correctedQuery;
+    }
+    public string getQuery()
+    {
+        return query;
+    }
+    public List<int> getCourseRelevance()
+    {
+        return courseRelevance;
+    }
+
+}
