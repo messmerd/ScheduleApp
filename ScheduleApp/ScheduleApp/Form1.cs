@@ -77,7 +77,10 @@ namespace ScheduleApp
             OpenFileDialog jsonImport = new OpenFileDialog();
             jsonImport.Filter = "JSON | *.json";
             jsonImport.Title = "Import a JSON file with a schedule that you or someone else has created";
-            jsonImport.ShowDialog();
+            if(jsonImport.ShowDialog() = DialogResult.OK)
+            {
+
+            }
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
