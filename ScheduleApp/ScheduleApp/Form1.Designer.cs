@@ -32,6 +32,7 @@
             System.Windows.Forms.ToolStripComboBox classicToolStripMenuItem;
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
+            this.filter_UI = new System.Windows.Forms.GroupBox();
             this.searchResult_UI = new System.Windows.Forms.ListView();
             this.creditsCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.courseCodeCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -46,22 +47,15 @@
             this.searchBtn = new System.Windows.Forms.Button();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.scheduleTab = new System.Windows.Forms.TabPage();
-            this.menuBar = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.themesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.mock_credits = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mock_courseCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mock_courseName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -70,17 +64,35 @@
             this.mock_building = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mock_time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mock_day = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button18 = new System.Windows.Forms.Button();
-            this.button19 = new System.Windows.Forms.Button();
-            this.button20 = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.menuBar = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             classicToolStripMenuItem = new System.Windows.Forms.ToolStripComboBox();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             this.scheduleTab.SuspendLayout();
             this.menuBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // classicToolStripMenuItem
+            // 
+            classicToolStripMenuItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            classicToolStripMenuItem.Items.AddRange(new object[] {
+            "Classic",
+            "Dark",
+            "Blue",
+            "Grove City Pride"});
+            classicToolStripMenuItem.Name = "classicToolStripMenuItem";
+            classicToolStripMenuItem.Size = new System.Drawing.Size(152, 23);
             // 
             // menuTabs
             // 
@@ -107,6 +119,16 @@
             this.searchTab.TabIndex = 0;
             this.searchTab.Text = "Search";
             this.searchTab.UseVisualStyleBackColor = true;
+            // 
+            // filter_UI
+            // 
+            this.filter_UI.Location = new System.Drawing.Point(398, 112);
+            this.filter_UI.Name = "filter_UI";
+            this.filter_UI.Size = new System.Drawing.Size(200, 100);
+            this.filter_UI.TabIndex = 6;
+            this.filter_UI.TabStop = false;
+            this.filter_UI.Text = "filter";
+            this.filter_UI.Visible = false;
             // 
             // searchResult_UI
             // 
@@ -217,93 +239,84 @@
             this.scheduleTab.Text = "Schedule";
             this.scheduleTab.UseVisualStyleBackColor = true;
             // 
-            // menuBar
+            // button20
             // 
-            this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuBar.Location = new System.Drawing.Point(0, 0);
-            this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(1008, 24);
-            this.menuBar.TabIndex = 1;
-            this.menuBar.Text = "File";
+            this.button20.BackColor = System.Drawing.Color.Red;
+            this.button20.Location = new System.Drawing.Point(578, 143);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(25, 25);
+            this.button20.TabIndex = 8;
+            this.button20.Text = "X";
+            this.button20.UseVisualStyleBackColor = false;
             // 
-            // fileToolStripMenuItem
+            // button19
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importToolStripMenuItem,
-            this.exportToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.preferencesToolStripMenuItem,
-            this.toolStripMenuItem3,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.button19.BackColor = System.Drawing.Color.Red;
+            this.button19.Location = new System.Drawing.Point(578, 174);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(25, 25);
+            this.button19.TabIndex = 7;
+            this.button19.Text = "X";
+            this.button19.UseVisualStyleBackColor = false;
             // 
-            // importToolStripMenuItem
+            // button18
             // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.importToolStripMenuItem.Text = "Import JSON...";
-            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            this.button18.BackColor = System.Drawing.Color.Red;
+            this.button18.Location = new System.Drawing.Point(578, 205);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(25, 25);
+            this.button18.TabIndex = 6;
+            this.button18.Text = "X";
+            this.button18.UseVisualStyleBackColor = false;
             // 
-            // exportToolStripMenuItem
+            // button5
             // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportToolStripMenuItem.Text = "Export JSON...";
-            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            this.button5.BackColor = System.Drawing.Color.Red;
+            this.button5.Location = new System.Drawing.Point(578, 54);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(25, 25);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "X";
+            this.button5.UseVisualStyleBackColor = false;
             // 
-            // preferencesToolStripMenuItem
+            // button4
             // 
-            this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.themesToolStripMenuItem,
-            this.notifyOnScheduleConflictToolStripMenuItem});
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
+            this.button4.BackColor = System.Drawing.Color.Red;
+            this.button4.Location = new System.Drawing.Point(578, 83);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(25, 25);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "X";
+            this.button4.UseVisualStyleBackColor = false;
             // 
-            // themesToolStripMenuItem
+            // button3
             // 
-            this.themesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            classicToolStripMenuItem});
-            this.themesToolStripMenuItem.Name = "themesToolStripMenuItem";
-            this.themesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.themesToolStripMenuItem.Text = "Themes";
+            this.button3.BackColor = System.Drawing.Color.Red;
+            this.button3.Location = new System.Drawing.Point(578, 112);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(25, 25);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "X";
+            this.button3.UseVisualStyleBackColor = false;
             // 
-            // exitToolStripMenuItem
+            // button2
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.button2.BackColor = System.Drawing.Color.Red;
+            this.button2.Location = new System.Drawing.Point(578, 234);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(25, 25);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "X";
+            this.button2.UseVisualStyleBackColor = false;
             // 
-            // toolStripMenuItem2
+            // button1
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
-            // 
-            // notifyOnScheduleConflictToolStripMenuItem
-            // 
-            this.notifyOnScheduleConflictToolStripMenuItem.Name = "notifyOnScheduleConflictToolStripMenuItem";
-            this.notifyOnScheduleConflictToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.notifyOnScheduleConflictToolStripMenuItem.Text = "Notify on schedule conflict";
-            // 
-            // classicToolStripMenuItem
-            // 
-            classicToolStripMenuItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            classicToolStripMenuItem.Items.AddRange(new object[] {
-            "Classic",
-            "Dark",
-            "Blue",
-            "Grove City Pride"});
-            classicToolStripMenuItem.Name = "classicToolStripMenuItem";
-            classicToolStripMenuItem.Size = new System.Drawing.Size(152, 23);
+            this.button1.Location = new System.Drawing.Point(623, 54);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(63, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "clear";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // listView1
             // 
@@ -322,55 +335,6 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(623, 54);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(63, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "clear";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(578, 234);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(25, 25);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "X";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(578, 112);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(25, 25);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "X";
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.Red;
-            this.button4.Location = new System.Drawing.Point(578, 83);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(25, 25);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "X";
-            this.button4.UseVisualStyleBackColor = false;
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.Red;
-            this.button5.Location = new System.Drawing.Point(578, 54);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(25, 25);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "X";
-            this.button5.UseVisualStyleBackColor = false;
             // 
             // mock_credits
             // 
@@ -405,45 +369,87 @@
             // 
             this.mock_day.Text = "Day";
             // 
-            // button18
+            // menuBar
             // 
-            this.button18.BackColor = System.Drawing.Color.Red;
-            this.button18.Location = new System.Drawing.Point(578, 205);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(25, 25);
-            this.button18.TabIndex = 6;
-            this.button18.Text = "X";
-            this.button18.UseVisualStyleBackColor = false;
+            this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuBar.Location = new System.Drawing.Point(0, 0);
+            this.menuBar.Name = "menuBar";
+            this.menuBar.Size = new System.Drawing.Size(1008, 24);
+            this.menuBar.TabIndex = 1;
+            this.menuBar.Text = "File";
             // 
-            // button19
+            // fileToolStripMenuItem
             // 
-            this.button19.BackColor = System.Drawing.Color.Red;
-            this.button19.Location = new System.Drawing.Point(578, 174);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(25, 25);
-            this.button19.TabIndex = 7;
-            this.button19.Text = "X";
-            this.button19.UseVisualStyleBackColor = false;
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importToolStripMenuItem,
+            this.exportToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.preferencesToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
             // 
-            // button20
+            // importToolStripMenuItem
             // 
-            this.button20.BackColor = System.Drawing.Color.Red;
-            this.button20.Location = new System.Drawing.Point(578, 143);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(25, 25);
-            this.button20.TabIndex = 8;
-            this.button20.Text = "X";
-            this.button20.UseVisualStyleBackColor = false;
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.importToolStripMenuItem.Text = "Import JSON...";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
-            // filter_UI
+            // exportToolStripMenuItem
             // 
-            this.filter_UI.Location = new System.Drawing.Point(398, 112);
-            this.filter_UI.Name = "filter_UI";
-            this.filter_UI.Size = new System.Drawing.Size(200, 100);
-            this.filter_UI.TabIndex = 6;
-            this.filter_UI.TabStop = false;
-            this.filter_UI.Text = "filter";
-            this.filter_UI.Visible = false;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exportToolStripMenuItem.Text = "Export JSON...";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(147, 6);
+            // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.themesToolStripMenuItem,
+            this.notifyOnScheduleConflictToolStripMenuItem});
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
+            // 
+            // themesToolStripMenuItem
+            // 
+            this.themesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            classicToolStripMenuItem});
+            this.themesToolStripMenuItem.Name = "themesToolStripMenuItem";
+            this.themesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.themesToolStripMenuItem.Text = "Themes";
+            // 
+            // notifyOnScheduleConflictToolStripMenuItem
+            // 
+            this.notifyOnScheduleConflictToolStripMenuItem.Name = "notifyOnScheduleConflictToolStripMenuItem";
+            this.notifyOnScheduleConflictToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.notifyOnScheduleConflictToolStripMenuItem.Text = "Notify on schedule conflict";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(147, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
             // 
             // AppWindow
             // 
@@ -461,6 +467,7 @@
             this.scheduleTab.ResumeLayout(false);
             this.menuBar.ResumeLayout(false);
             this.menuBar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -511,8 +518,8 @@
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.GroupBox filter_UI;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
 }
 
