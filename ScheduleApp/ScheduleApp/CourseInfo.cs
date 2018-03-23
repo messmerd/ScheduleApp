@@ -9,12 +9,33 @@ namespace CourseInfoClass
 {
     public class CourseInfo
     {
-        List<Course> database;
+        private static CourseInfo singleton;
 
-        void parseCSV()
+        public static CourseInfo DB
+         {
+            get 
+            {
+                if (singleton == null)
+                {
+                    singleton = new CourseInfo();
+                }
+                return singleton;
+            }
+         }
+
+        private CourseInfo()
+         {
+             database = new List<Course>();
+             //parseCSV();    // This function was causing the program to hang so it is commented out for now
+         }
+
+        public List<Course> database;
+        private int numCourses;
+
+        private void parseCSV()
         {
             //https://coderwall.com/p/app3ya/read-excel-file-in-c
-
+            
             //Create COM Objects. Create a COM object for everything that is referenced
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"sandbox_test.xlsx");
@@ -23,6 +44,7 @@ namespace CourseInfoClass
 
             int rowCount = 762;
             int colCount = 13;
+            numCourses = 0;
 
             //iterate over the rows and columns and print to the console as it appears in the file
             //excel is not zero based!!
@@ -35,7 +57,19 @@ namespace CourseInfoClass
                 }
                 Course nextCourse = new Course(parsedCourse);
                 database.Add(nextCourse);
+                numCourses++;
             }
         }
+
+        public void Create()
+        {
+            // Doesn't have to do anything 
+        }
+
+        public int getNumCourses()
+        {
+            return numCourses; 
+        }
+
     }
 }
