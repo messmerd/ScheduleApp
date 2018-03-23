@@ -13,7 +13,8 @@ public class Program
 
     static void Main(string[] args)
     {
-        
+        CourseInfo.DB.Create();  // Creates CourseInfo singleton
+
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         Application.Run(new ScheduleApp.AppWindow());
@@ -116,7 +117,7 @@ public class Search
             lastSearchResults.query = "";
 
             // Add all of the courses to the search results: 
-            for (int i = 0; i < spelling.getDictionaryFileContents().Count; i++)
+            for (int i = 0; i < CourseInfo.DB.getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
             {
                 lastSearchResults.courses.Add(new Course(i));
                 lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
