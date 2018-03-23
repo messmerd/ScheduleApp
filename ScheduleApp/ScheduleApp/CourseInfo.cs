@@ -30,6 +30,7 @@ namespace CourseInfoClass
          }
 
         public List<Course> database;
+        private int numCourses;
 
         private void parseCSV()
         {
@@ -43,6 +44,7 @@ namespace CourseInfoClass
 
             int rowCount = 762;
             int colCount = 13;
+            numCourses = 0;
 
             //iterate over the rows and columns and print to the console as it appears in the file
             //excel is not zero based!!
@@ -55,6 +57,7 @@ namespace CourseInfoClass
                 }
                 Course nextCourse = new Course(parsedCourse);
                 database.Add(nextCourse);
+                numCourses++;
             }
         }
 
@@ -65,7 +68,7 @@ namespace CourseInfoClass
 
         public int getNumCourses()
         {
-            return 761; 
+            return numCourses; 
         }
 
     }
