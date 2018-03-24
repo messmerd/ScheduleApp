@@ -32,6 +32,8 @@ namespace ScheduleApp
 
             // TODO: Implement advanced search filter here
 
+            searchResult_UI.Items.Clear(); // Remove previous search results 
+
             foreach (var course in searchResults)
             {
                 var courseToAdd = setRow(course);
@@ -59,16 +61,16 @@ namespace ScheduleApp
             string[] row = new string[50]; // row buffer
 
             // These should really be getters
-            row[0] = ""; // Leave this blank due to how ListViewItem() is constructed
-            row[1] = c.credits.ToString(); // placeholder
-            row[2] = c.courseCode;
-            row[3] = c.professor.Item1 + c.professor.Item2;
-            row[4] = c.longName;
-            row[5] = c.time.Item1.ToString() + "-" + c.time.Item2.ToString();
-            row[6] = getDays(c);
-            row[7] = c.enrollment.ToString() + "/" + c.capacity.ToString();
-            row[8] = "4.2"; // placeholder until Sprint 2
-            row[9] = "low"; // placeholder ... 
+            //row[0] = ""; // Leave this blank due to how ListViewItem() is constructed
+            row[0] = c.credits.ToString(); // placeholder
+            row[1] = c.courseCode;
+            row[2] = c.professor.Item1 + " " + c.professor.Item2;
+            row[3] = c.longName;
+            row[4] = c.time.Item1.ToString() + "-" + c.time.Item2.ToString();
+            row[5] = getDays(c);
+            row[6] = c.enrollment.ToString() + "/" + c.capacity.ToString();
+            row[7] = "4.2"; // placeholder until Sprint 2
+            row[8] = "low"; // placeholder ... 
             return row;
         }
         /***************************************************************************************/

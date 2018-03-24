@@ -84,7 +84,7 @@ namespace SearchClass
 
             ///////////// Take query, split into words, and run spell checker on each word   ///////////////
 
-            List<string> querySplit = query.Split().ToList();
+            List<string> querySplit = query.Trim().Split().ToList();
 
             foreach (var word in querySplit)
             {

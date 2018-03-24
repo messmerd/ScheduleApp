@@ -51,7 +51,7 @@ public class Program
                 Console.WriteLine("Top 20 search results for {0}, ordered by best match: ", query);
                 foreach (var match in searchResults)
                 {
-                    Console.WriteLine("CourseID = {0}, relevance = {1}, name = {2}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i],search.lastSearchResults.courses[i].getLongName());  //  search.getDictionaryFileContents()[match.getCourseID()]
+                    Console.WriteLine("ID = {0}, relevance = {1}, name = {2}, StartTime = {3}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i],search.lastSearchResults.getCourses()[i].getLongName(),search.lastSearchResults.getCourses()[i].getTime().Item1);  //  search.getDictionaryFileContents()[match.getCourseID()]
                     if (i == 19) { break; }  // Only show top 20 search results
                     i++;
                 }
