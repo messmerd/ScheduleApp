@@ -79,31 +79,38 @@ namespace CourseClass
             string s1, s2;
             double start, stop;
 
-            s1 = parsedCourse[3].Split(':')[0];
-            s2 = parsedCourse[3].Split(':')[1];
-            if (Int32.TryParse(s1, out j))
-                t1 = j;
-            else
-                t1 = 0;
-            if (Int32.TryParse(s2, out j))
-                t2 = j;
-            else
-                t2 = 0;
-
+            if (parsedCourse[3].Contains(":"))
+            {
+                s1 = parsedCourse[3].Split(':')[0];
+                s2 = parsedCourse[3].Split(':')[1];
+                if (Int32.TryParse(s1, out j))
+                    t1 = j;
+                else
+                    t1 = 0;
+                if (Int32.TryParse(s2, out j))
+                    t2 = j;
+                else
+                    t2 = 0;
+            }
+            else t1 = t2 = 0;
             start = t1 + (double)t2 / 100.0;
 
-            s1 = parsedCourse[4].Split(':')[0];
-            s2 = parsedCourse[4].Split(':')[1];
-            if (Int32.TryParse(s1, out j))
-                t1 = j;
-            else
-                t1 = 0;
-            if (Int32.TryParse(s2, out j))
-                t2 = j;
-            else
-                t2 = 0;
-
+            if (parsedCourse[4].Contains(":"))
+            {
+                s1 = parsedCourse[4].Split(':')[0];
+                s2 = parsedCourse[4].Split(':')[1];
+                if (Int32.TryParse(s1, out j))
+                    t1 = j;
+                else
+                    t1 = 0;
+                if (Int32.TryParse(s2, out j))
+                    t2 = j;
+                else
+                    t2 = 0;
+            }
+            else t1 = t2 = 0;
             stop = t1 + (double)t2 / 100.0;
+
             this.time = Tuple.Create<double, double>(start, stop);
             this.day = new List<bool>
             {

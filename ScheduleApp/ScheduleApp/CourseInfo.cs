@@ -26,7 +26,7 @@ namespace CourseInfoClass
         private CourseInfo()
          {
              database = new List<Course>();
-             //parseCSV();    // This function was causing the program to hang so it is commented out for now
+             parseCSV();    // This function was causing the program to hang so it is commented out for now
          }
 
         public List<Course> database;
@@ -34,11 +34,16 @@ namespace CourseInfoClass
 
         private void parseCSV()
         {
+            string fileName = "course_database.xlsx";
+            System.IO.FileInfo f = new System.IO.FileInfo(fileName);
+            string fullname = f.FullName;
+            //Console.WriteLine("File('{0}') has path '{1}'", fileName, fullname);
+
             //https://coderwall.com/p/app3ya/read-excel-file-in-c
-            
+
             //Create COM Objects. Create a COM object for everything that is referenced
             Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"sandbox_test.xlsx");
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fullname);
             Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Excel.Range xlRange = xlWorksheet.UsedRange;
 
@@ -53,7 +58,9 @@ namespace CourseInfoClass
                 List<string> parsedCourse = new List<string>();
                 for (int j = 1; j <= colCount; j++)
                 {
-                    parsedCourse.Add(xlRange.Cells[i, j].Value2.ToString());   
+                    if (xlRange.Cells[i, j].Value2 != null)
+                        parsedCourse.Add(xlRange.Cells[i, j].Value2.ToString());
+                    else parsedCourse.Add("0");
                 }
                 Course nextCourse = new Course(parsedCourse, numCourses);
                 database.Add(nextCourse);
