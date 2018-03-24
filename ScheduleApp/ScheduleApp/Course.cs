@@ -67,9 +67,9 @@ namespace CourseClass
             credits = 0;
         }
 
-        public Course(List<string> parsedCourse) // Constructor
+        public Course(List<string> parsedCourse, int courseID) // Constructor
         {
-            this.courseID = 0;
+            this.courseID = courseID;
             
             this.professor = Tuple.Create<string, string>(parsedCourse[11], parsedCourse[12]);
 
@@ -77,6 +77,7 @@ namespace CourseClass
             //s.Split(':')[3]
             int j, t1, t2;
             string s1, s2;
+            double start, stop;
 
             s1 = parsedCourse[3].Split(':')[0];
             s2 = parsedCourse[3].Split(':')[1];
@@ -84,13 +85,26 @@ namespace CourseClass
                 t1 = j;
             else
                 t1 = 0;
-
-
-            if (Int32.TryParse(parsedCourse[4], out j))
+            if (Int32.TryParse(s2, out j))
                 t2 = j;
             else
                 t2 = 0;
-            this.time = Tuple.Create<double, double>(t1, t2);
+
+            start = t1 + (double)t2 / 100.0;
+
+            s1 = parsedCourse[4].Split(':')[0];
+            s2 = parsedCourse[4].Split(':')[1];
+            if (Int32.TryParse(s1, out j))
+                t1 = j;
+            else
+                t1 = 0;
+            if (Int32.TryParse(s2, out j))
+                t2 = j;
+            else
+                t2 = 0;
+
+            stop = t1 + (double)t2 / 100.0;
+            this.time = Tuple.Create<double, double>(start, stop);
             this.day = new List<bool>
             {
                 parsedCourse[5].Contains("M"),
@@ -132,6 +146,76 @@ namespace CourseClass
         public int getCourseID()  // Note: courseID is NOT the same as courseCode 
         {
             return courseID;
+        }
+
+        public Build getBuilding()  // Note: courseID is NOT the same as courseCode 
+        {
+            return building;
+        }
+
+        public string getRoom()  // Note: courseID is NOT the same as courseCode 
+        {
+            return room;
+        }
+
+        public string getCourseDept()  // Note: courseID is NOT the same as courseCode 
+        {
+            return courseDept;
+        }
+
+        public string getCourseNum()  // Note: courseID is NOT the same as courseCode 
+        {
+            return courseNum;
+        }
+
+        public string getCourseSect()  // Note: courseID is NOT the same as courseCode 
+        {
+            return courseSect;
+        }
+
+        public string getCourseCode()  // Note: courseID is NOT the same as courseCode 
+        {
+            return courseCode;
+        }
+
+        public string getShortName()  // Note: courseID is NOT the same as courseCode 
+        {
+            return shortName;
+        }
+
+        public string getLongName()  // Note: courseID is NOT the same as courseCode 
+        {
+            return longName;
+        }
+
+        public int getEnrollment()  // Note: courseID is NOT the same as courseCode 
+        {
+            return enrollment;
+        }
+
+        public int getCapacity()  // Note: courseID is NOT the same as courseCode 
+        {
+            return capacity;
+        }
+
+        public List<bool> getDay()  // Note: courseID is NOT the same as courseCode 
+        {
+            return day;
+        }
+
+        public Tuple<double, double> getTime()  // Note: courseID is NOT the same as courseCode 
+        {
+            return time;
+        }
+
+        public Tuple<string, string> getProf()  // Note: courseID is NOT the same as courseCode 
+        {
+            return professor;
+        }
+
+        public int getCredits()  // Note: courseID is NOT the same as courseCode 
+        {
+            return credits;
         }
     };
 }

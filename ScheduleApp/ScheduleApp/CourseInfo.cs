@@ -55,7 +55,7 @@ namespace CourseInfoClass
                 {
                     parsedCourse.Add(xlRange.Cells[i, j].Value2.ToString());   
                 }
-                Course nextCourse = new Course(parsedCourse);
+                Course nextCourse = new Course(parsedCourse, numCourses);
                 database.Add(nextCourse);
                 numCourses++;
             }
