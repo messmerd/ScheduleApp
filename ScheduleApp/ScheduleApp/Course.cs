@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CourseInfoClass;
 
 namespace CourseClass
 {
@@ -36,35 +37,28 @@ namespace CourseClass
 
         public Course(int courseID)  // Constructor
         {
+            CourseInfo DB = CourseInfoClass.CourseInfo.Create();
             this.courseID = courseID;
+            this.professor = DB.getProf(courseID);
 
-            this.professor = Tuple.Create<string, string>(null, null);
+            this.time = DB.getTime(courseID);
+            this.day = DB.getDay(courseID); 
+            
+            this.building = DB.getBuilding(courseID);
+            this.room = DB.getRoom(courseID);
 
-            this.time = Tuple.Create<double, double>(0, 0);
-            this.day = new List<bool>
-            {
-                false,
-                false,
-                false,
-                false,
-                false
-            };
+            this.courseDept = DB.getCourseDept(courseID);
+            this.courseNum = DB.getCourseNum(courseID);
+            this.courseSect = DB.getCourseSect(courseID);
+            this.courseCode = DB.getCourseCode(courseID);
 
-            this.building = Build.NONE;
-            this.room = "0";
+            this.shortName = DB.getShortName(courseID);
+            this.longName = DB.getLongName(courseID);
 
-            courseDept = "";
-            courseNum = "0";
-            courseSect = "A";
-            courseCode = courseDept + " " + courseNum + " " + courseSect;
+            this.enrollment = DB.getEnrollment(courseID);
+            this.capacity = DB.getCapacity(courseID);
 
-            shortName = "";
-            longName = "";
-
-            enrollment = 0;
-            capacity = 0;
-
-            credits = 0;
+            this.credits = DB.getCredits(courseID);
         }
 
         public Course(List<string> parsedCourse, int courseID) // Constructor
@@ -132,8 +126,8 @@ namespace CourseClass
             courseSect = System.Text.RegularExpressions.Regex.Split(parsedCourse[0], @"\s+")[2];
             courseCode = courseDept + " " + courseNum + " " + courseSect;
 
-            shortName = parsedCourse[2];
-            longName = parsedCourse[3];
+            shortName = parsedCourse[1];
+            longName = parsedCourse[2];
 
             if (Int32.TryParse(parsedCourse[8], out j))
                 enrollment = j;

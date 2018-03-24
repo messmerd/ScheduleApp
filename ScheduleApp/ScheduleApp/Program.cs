@@ -14,7 +14,7 @@ public class Program
 
     static void Main(string[] args)
     {
-        CourseInfo.DB.Create();  // Creates CourseInfo singleton
+        CourseInfo database = CourseInfoClass.CourseInfo.Create("course_database.txt");  // Creates CourseInfo singleton
         Search search = SearchClass.Search.Create("course_dictionary.txt");
 
         Application.EnableVisualStyles();
@@ -51,7 +51,7 @@ public class Program
                 Console.WriteLine("Top 20 search results for {0}, ordered by best match: ", query);
                 foreach (var match in searchResults)
                 {
-                    Console.WriteLine("CourseID = {0}, relevance = {1}, name = {2}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i],search.getDictionaryFileContents()[match.getCourseID()]);
+                    Console.WriteLine("CourseID = {0}, relevance = {1}, name = {2}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i],search.lastSearchResults.courses[i].getLongName());  //  search.getDictionaryFileContents()[match.getCourseID()]
                     if (i == 19) { break; }  // Only show top 20 search results
                     i++;
                 }

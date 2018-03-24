@@ -225,7 +225,7 @@ namespace SearchClass
             lastSearchResults.courses.Clear();          // Clear the results from the last search 
 
             // Add all of the courses to the search results: 
-            for (int i = 0; i < CourseInfo.DB.getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
+            for (int i = 0; i < CourseInfo.Create().getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
             {
                 lastSearchResults.courses.Add(new Course(i));
                 lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
