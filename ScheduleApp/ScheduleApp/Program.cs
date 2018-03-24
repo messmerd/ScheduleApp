@@ -113,25 +113,17 @@ public class Search
     {
         if (string.IsNullOrWhiteSpace(query))  // For the user gives a blank query, display all the courses 
         {
-            lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
-            lastSearchResults.courses.Clear();          // Clear the results from the last search 
-
             lastSearchResults.correctedQuery = "";
             lastSearchResults.query = "";
-
-            // Add all of the courses to the search results: 
-            for (int i = 0; i < CourseInfo.DB.getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
-            {
-                lastSearchResults.courses.Add(new Course(i));
-                lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
-            }
-            return;
+            addAllCourses();
         }
         
         string correctedQuery = "";   // Stores the spell-checked version of the user's query. 
         List<List<int>> matching = new List<List<int>>();    // A list where each index represents a word in the query. For each word, there is a list of ints. These ints are the course IDs of courses containing that word in their name or course code. 
         Dictionary<int, int> bestMatches = new Dictionary<int, int>(); // Maps course IDs to their relevance (how many of the words in the query match words in the course title or course code)
         KeyValuePair<string, List<int>> result = new KeyValuePair<string, List<int>>(); // Stores the results from the spellchecker
+
+        ///////////// Take query, split into words, and run spell checker on each word   ///////////////
 
         List<string> querySplit = query.Split().ToList();
 
@@ -147,9 +139,7 @@ public class Search
 
             if (result.Value[0] != 0)  // If the word in the query doesn't match anything in the dictionary and cannot be corrected with the spell-checker, don't add to the corrected query 
             {
-                correctedQuery += result.Key;
-                if (word != querySplit.Last())
-                    correctedQuery += " ";
+                correctedQuery += result.Key + " ";
             }
 
             matching.Add(result.Value.GetRange(0, result.Value.Count));
@@ -158,6 +148,8 @@ public class Search
         }
 
         correctedQuery = correctedQuery.TrimEnd(' ');  // Removes any extra spaces at the end 
+
+        /////////////  Calculate the relevance for each course that matched the query  ///////////////
 
         int j = 0; 
         foreach (var match in matching)  // For each word of corrected query 
@@ -199,6 +191,8 @@ public class Search
             j++;
         }
 
+        /////////////  Sort the search results by relevance   ///////////////
+
         List<KeyValuePair<int,int>> bestMatchesList = bestMatches.ToList();
         bestMatchesList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));  // Sorts the courses by relevance. Most relevant first. 
         
@@ -233,6 +227,8 @@ public class Search
         // This could be done by a CourseInfo class, which acts as a database. 
         // Or maybe it should just be done by a Class constructor that accesses the database class. It is being done this way for now. 
 
+        /////////////  Store search results in lastSearchResults  ///////////////
+
         lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
         lastSearchResults.courses.Clear();          // Clear the results from the last search 
 
@@ -257,9 +253,24 @@ public class Search
         return spelling.Correct(query);
     }
 
+    // Returns the dictionary file contents
     public List<string> getDictionaryFileContents()
     {
         return spelling.getDictionaryFileContents();
+    }
+
+    // Adds all the courses to the search results
+    private void addAllCourses()
+    {
+        lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
+        lastSearchResults.courses.Clear();          // Clear the results from the last search 
+
+        // Add all of the courses to the search results: 
+        for (int i = 0; i < CourseInfo.DB.getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
+        {
+            lastSearchResults.courses.Add(new Course(i));
+            lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
+        }
     }
 }
 
