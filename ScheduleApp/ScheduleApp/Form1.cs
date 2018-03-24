@@ -29,11 +29,14 @@ namespace ScheduleApp
             search.searchForQuery(searchBox.Text);
             List<Course> searchResults = search.lastSearchResults.getCourses();
 
+            // TODO: Implement advanced search filter here
+
             foreach (var course in searchResults)
             {
                 var courseToAdd = setRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
                 searchResult_UI.Items.Add(listViewItem);
+                // TODO: Dynamically create add/remove buttons to candidate schedule structure
             }
         }
 
