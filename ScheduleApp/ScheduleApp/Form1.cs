@@ -29,9 +29,9 @@ namespace ScheduleApp
             search.searchForQuery(searchBox.Text);
             List<Course> searchResults = search.lastSearchResults.getCourses();
 
-            foreach (var returnedCourse in searchResults)
+            foreach (var course in searchResults)
             {
-                var courseToAdd = setRow(returnedCourse);
+                var courseToAdd = setRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
                 searchResult_UI.Items.Add(listViewItem);
             }
@@ -50,19 +50,19 @@ namespace ScheduleApp
             return returnedDays;
         }
 
-        private string[] setRow(Course returnedCourse)
+        private string[] setRow(Course c) // c = the course
         {
             string[] row = new string[50]; // row buffer
 
             // These should really be getters
             row[0] = ""; // Leave this blank due to how ListViewItem() is constructed
-            row[1] = returnedCourse.credits.ToString(); // placeholder
-            row[2] = returnedCourse.courseCode;
-            row[3] = returnedCourse.professor.Item1 + returnedCourse.professor.Item2;
-            row[4] = returnedCourse.longName;
-            row[5] = returnedCourse.time.Item1.ToString() + "-" + returnedCourse.time.Item2.ToString();
-            row[6] = getDays(returnedCourse);
-            row[7] = returnedCourse.enrollment.ToString() + "/" + returnedCourse.capacity.ToString();
+            row[1] = c.credits.ToString(); // placeholder
+            row[2] = c.courseCode;
+            row[3] = c.professor.Item1 + c.professor.Item2;
+            row[4] = c.longName;
+            row[5] = c.time.Item1.ToString() + "-" + c.time.Item2.ToString();
+            row[6] = getDays(c);
+            row[7] = c.enrollment.ToString() + "/" + c.capacity.ToString();
             row[8] = "4.2"; // placeholder until Sprint 2
             row[9] = "low"; // placeholder ... 
             return row;
