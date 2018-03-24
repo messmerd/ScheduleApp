@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CourseClass;
+using SearchClass; 
 using CourseInfoClass;
-using CourseClass; 
 using SpellingCorrector;
 using System.Windows.Forms;
 
