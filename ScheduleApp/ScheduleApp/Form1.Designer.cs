@@ -20,7 +20,7 @@
             base.Dispose(disposing);
         }
 
-        // DONT TOUCH THESE
+        // DONT TOUCH ANYTHING BELOW THIS LINE
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -242,7 +242,7 @@
             // button20
             // 
             this.button20.BackColor = System.Drawing.Color.Red;
-            this.button20.Location = new System.Drawing.Point(578, 143);
+            this.button20.Location = new System.Drawing.Point(592, 142);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(25, 25);
             this.button20.TabIndex = 8;
@@ -252,7 +252,7 @@
             // button19
             // 
             this.button19.BackColor = System.Drawing.Color.Red;
-            this.button19.Location = new System.Drawing.Point(578, 174);
+            this.button19.Location = new System.Drawing.Point(592, 173);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(25, 25);
             this.button19.TabIndex = 7;
@@ -262,7 +262,7 @@
             // button18
             // 
             this.button18.BackColor = System.Drawing.Color.Red;
-            this.button18.Location = new System.Drawing.Point(578, 205);
+            this.button18.Location = new System.Drawing.Point(592, 204);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(25, 25);
             this.button18.TabIndex = 6;
@@ -272,7 +272,7 @@
             // button5
             // 
             this.button5.BackColor = System.Drawing.Color.Red;
-            this.button5.Location = new System.Drawing.Point(578, 54);
+            this.button5.Location = new System.Drawing.Point(592, 53);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(25, 25);
             this.button5.TabIndex = 5;
@@ -282,7 +282,7 @@
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.Red;
-            this.button4.Location = new System.Drawing.Point(578, 83);
+            this.button4.Location = new System.Drawing.Point(592, 82);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(25, 25);
             this.button4.TabIndex = 4;
@@ -292,7 +292,7 @@
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(578, 112);
+            this.button3.Location = new System.Drawing.Point(592, 111);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(25, 25);
             this.button3.TabIndex = 3;
@@ -302,7 +302,7 @@
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(578, 234);
+            this.button2.Location = new System.Drawing.Point(592, 233);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(25, 25);
             this.button2.TabIndex = 2;
@@ -331,7 +331,7 @@
             this.mock_day});
             this.listView1.Location = new System.Drawing.Point(7, 25);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(565, 234);
+            this.listView1.Size = new System.Drawing.Size(580, 234);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;

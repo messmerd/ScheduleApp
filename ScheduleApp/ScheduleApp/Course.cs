@@ -9,6 +9,8 @@ namespace CourseClass
 
     public struct Course
     {
+
+        // TODO: Write Getters for members used in searchBtn event handler
         public Build building;
         public string room;
 
@@ -23,12 +25,12 @@ namespace CourseClass
         public int enrollment;
         public int capacity;
 
-        List<bool> day;
+        public List<bool> day;
         public Tuple<double, double> time;
 
         public Tuple<string, string> professor;
 
-        int credits;
+        public int credits;
 
         private int courseID;
 

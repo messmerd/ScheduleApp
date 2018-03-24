@@ -106,6 +106,9 @@ public class Search
     // It also creates a string containing the spell-checked version of the user's query. 
     // All these search results are placed in the lastSearchResults struct, which can be accessed using the getters. 
     // The query can be a course name or course code. The results are organized from best match to worst. Courses that don't match at all are not included. 
+
+    // TODO: Refactor/split up this method (150 lines currently) before the final submission in May
+    // Split into private methods
     public void searchForQuery(string query)
     {
         if (string.IsNullOrWhiteSpace(query))  // For the user gives a blank query, display all the courses 
