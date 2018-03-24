@@ -12,28 +12,41 @@ namespace SearchClass
 
     public class Search
     {
-        private advancedOptions options;   // For storing advanced search options 
+        
+        private static Search singleton;
+
+        public static Search Create()
+        {
+            if (singleton == null)
+            {
+                singleton = new Search();
+            }
+            return singleton;
+        }      
+
+        public static Search Create(string spelling_db)
+        {
+            if (singleton == null)
+            {
+                singleton = new Search(spelling_db);
+            }
+            return singleton;
+        }        
+             
+        private AdvancedOptions options;   // For storing advanced search options 
         private Spelling spelling;         // Instance of Spelling object from Spelling.cs 
         private string courseDictionary;   // Stores course dictionary filename for use by spellchecker and course search 
         public CourseList lastSearchResults;  // Stores the search results after using searchForQuery()
 
-        private struct advancedOptions
-        {
-            public int rmp; // Rate My Professor rating 
-            public string probability; // high, medium, or low
-            // Put other advanced options here later 
-        }
+        
 
-        public Search()  // Constructor 
+        private Search()  // Constructor 
         {
             this.spelling = new Spelling("course_dictionary.txt");
             this.courseDictionary = "course_dictionary.txt";
 
             this.lastSearchResults = new CourseList();
-
-            this.options.rmp = 0; // Rate my professor rating
-            this.options.probability = "low";
-            // Other advanced options will go here 
+            this.options = new AdvancedOptions();
         }
 
         public Search(string courseDictionary)  // Constructor 
@@ -218,6 +231,14 @@ namespace SearchClass
                 lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
             }
         }
+    }
+
+    public struct AdvancedOptions
+    {
+        public int rmp; // Rate My Professor rating 
+        public string probability; // high, medium, or low
+        // Put other advanced options here later 
+
     }
 
 }

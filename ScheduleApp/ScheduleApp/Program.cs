@@ -15,6 +15,7 @@ public class Program
     static void Main(string[] args)
     {
         CourseInfo.DB.Create();  // Creates CourseInfo singleton
+        Search search = SearchClass.Search.Create("course_dictionary.txt");
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
@@ -24,7 +25,7 @@ public class Program
         // This code is for testing the course search and spell-checking features 
 
         // Creates an instance of the Search class using course_dictionary.txt for spell-checking and mini course database 
-        Search search = new Search("course_dictionary.txt");
+        //Search search = new Search("course_dictionary.txt");
 
         Console.WriteLine("Type a course name or course code and press Enter to search for it. \nType 'exit' to exit.\n ");
 
