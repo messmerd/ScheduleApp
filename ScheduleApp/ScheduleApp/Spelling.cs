@@ -36,7 +36,7 @@ namespace SpellingCorrector
 
             foreach (var word in fileContentLines)
             {
-                foreach (var word2 in word.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var word2 in word.Trim().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     string trimmedWord = word2.Trim().ToLower();
                     if (true) // (_wordRegex.IsMatch(trimmedWord))  // Assuming every word in the dictionary file is good data to use 

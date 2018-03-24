@@ -75,6 +75,7 @@ namespace SearchClass
                 lastSearchResults.correctedQuery = "";
                 lastSearchResults.query = "";
                 addAllCourses();
+                return;
             }
 
             string correctedQuery = "";   // Stores the spell-checked version of the user's query. 
@@ -221,6 +222,7 @@ namespace SearchClass
         // Adds all the courses to the search results
         private void addAllCourses()
         {
+            Console.WriteLine("In addAllCourses(). ");
             lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
             lastSearchResults.courses.Clear();          // Clear the results from the last search 
 
