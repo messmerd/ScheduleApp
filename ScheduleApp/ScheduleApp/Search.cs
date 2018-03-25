@@ -221,7 +221,6 @@ namespace SearchClass
         // Adds all the courses to the search results
         private void addAllCourses()
         {
-            Console.WriteLine("In addAllCourses(). ");
             lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
             lastSearchResults.courses.Clear();          // Clear the results from the last search 
 

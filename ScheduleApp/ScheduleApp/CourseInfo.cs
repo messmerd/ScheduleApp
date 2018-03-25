@@ -106,7 +106,7 @@ namespace CourseInfoClass
                 return;
             }
 
-            numCourses = fileContents.Count - 1;
+            numCourses = fileContents.Count;
             int i = 0;
             foreach (string line in fileContents)  //CourseCode	ShortTitle	LongTitle	BeginTime	EndTime	Meets	Building	Room	Enrollment	Capacity
             {
