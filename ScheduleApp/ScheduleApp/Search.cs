@@ -33,12 +33,10 @@ namespace SearchClass
             return singleton;
         }        
              
-        private AdvancedOptions options;   // For storing advanced search options 
+        public AdvancedOptions options;   // For storing advanced search options 
         private Spelling spelling;         // Instance of Spelling object from Spelling.cs 
         private string courseDictionary;   // Stores course dictionary filename for use by spellchecker and course search 
         public CourseList lastSearchResults;  // Stores the search results after using searchForQuery()
-
-        
 
         private Search()  // Constructor 
         {
@@ -55,10 +53,7 @@ namespace SearchClass
             this.courseDictionary = courseDictionary;
 
             this.lastSearchResults = new CourseList();
-
-            this.options.rmp = 0;  // Rate my professor rating 
-            this.options.probability = "low";
-            // Other advanced options will go here.
+            this.options = new AdvancedOptions();
         }
 
         // This function creates a list of Courses that match a given query or are close enough to be recognized by the spell-checker. 
@@ -75,6 +70,7 @@ namespace SearchClass
                 lastSearchResults.correctedQuery = "";
                 lastSearchResults.query = "";
                 addAllCourses();
+                advancedSearchFilter();
                 return;
             }
 
@@ -205,6 +201,9 @@ namespace SearchClass
 
             lastSearchResults.correctedQuery = correctedQuery; // Setting correctedQuery in the lastSearchResults struct 
             lastSearchResults.query = query;                   // Setting correctedQuery in the lastSearchResults struct 
+
+            advancedSearchFilter();
+
         }
 
         // Corrects a given course name or course code and returns the corrected version. 
@@ -233,13 +232,66 @@ namespace SearchClass
                 lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
             }
         }
+
+        private void advancedSearchFilter()
+        {
+            List<int> removeIndices = new List<int>();
+            if (options.timeStart != -1.0)  // If the user has selected a start time preference 
+            {
+                removeIndices.Clear();
+                // Creates list of indexes in lastSearchResults.getCourses() whose element (a course) doesn't match the start time preference 
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getTime().Item1 < options.timeStart ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.courses.RemoveAt(index);
+                    lastSearchResults.courseRelevance.RemoveAt(index);
+                }
+            }
+
+            if (options.timeEnd != -1.0)    // If the user has selected an end time preference 
+            {
+                removeIndices.Clear();
+                // Creates list of indexes in lastSearchResults.getCourses() whose element (a course) doesn't match the start time preference 
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getTime().Item2 > options.timeEnd ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.courses.RemoveAt(index);
+                    lastSearchResults.courseRelevance.RemoveAt(index);
+                }
+
+            }
+        
+            //  ....
+
+        }
+    
     }
 
-    public struct AdvancedOptions
+    public class AdvancedOptions
     {
-        public int rmp; // Rate My Professor rating 
+        public double rmp;  // Filter by courses with professor with RateMyProfessor rating >= rmp. -1 means the user doesn't have a preference
         public string probability; // high, medium, or low
+
         // Put other advanced options here later 
+
+        public double timeStart;  // Filter by courses that start at or after timeStart. -1 means the user doesn't have a preference 
+        public double timeEnd;    // Filter by courses that end at or before timeEnd. -1 means the user doesn't have a preferenc
+
+        public AdvancedOptions()
+        {
+            rmp = -1.0;  
+            probability = ""; // high, medium, or low
+
+            // Put other advanced options here later 
+
+            timeStart = -1.0; 
+            timeEnd = -1.0; 
+
+        }
 
     }
 

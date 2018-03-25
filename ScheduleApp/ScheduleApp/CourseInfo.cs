@@ -39,7 +39,7 @@ namespace CourseInfoClass
         private CourseInfo()
         {
              database = new List<Course>();
-             parseCSV();    // This function was causing the program to hang so it is commented out for now
+             parseTextFile("course_database.txt");    // This function was causing the program to hang so it is commented out for now
         }
 
         private CourseInfo(string db_filename)
