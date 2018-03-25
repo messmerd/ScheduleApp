@@ -14,8 +14,8 @@ public class Program
 
     static void Main(string[] args)
     {
-        CourseInfo database = CourseInfoClass.CourseInfo.Create("course_database.txt");  // Creates CourseInfo singleton
-        Search search = SearchClass.Search.Create("course_dictionary.txt");
+        CourseInfo database = CourseInfo.Create("course_database.txt");  // Creates CourseInfo singleton
+        Search search = Search.Create("course_dictionary.txt");
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);

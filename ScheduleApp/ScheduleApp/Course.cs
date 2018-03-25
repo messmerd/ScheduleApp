@@ -37,7 +37,7 @@ namespace CourseClass
 
         public Course(int courseID)  // Constructor
         {
-            CourseInfo DB = CourseInfoClass.CourseInfo.Create();
+            CourseInfo DB = CourseInfo.Create();
             this.courseID = courseID;
             this.professor = DB.getProf(courseID);
 

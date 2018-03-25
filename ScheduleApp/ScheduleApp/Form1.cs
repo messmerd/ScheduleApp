@@ -26,7 +26,7 @@ namespace ScheduleApp
         private void searchBtn_Click(object sender, EventArgs e)
         {
 
-            Search search = SearchClass.Search.Create("course_dictionary.txt");
+            Search search = Search.Create("course_dictionary.txt");
             search.searchForQuery(searchBox.Text);
             List<Course> searchResults = search.lastSearchResults.getCourses();
 
