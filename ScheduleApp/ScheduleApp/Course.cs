@@ -149,72 +149,78 @@ namespace CourseClass
             return courseID;
         }
 
-        public Build getBuilding()  // Note: courseID is NOT the same as courseCode 
+        public Build getBuilding()   
         {
             return building;
         }
 
-        public string getRoom()  // Note: courseID is NOT the same as courseCode 
+        public string getRoom()   
         {
             return room;
         }
 
-        public string getCourseDept()  // Note: courseID is NOT the same as courseCode 
+        public string getCourseDept()   
         {
             return courseDept;
         }
 
-        public string getCourseNum()  // Note: courseID is NOT the same as courseCode 
+        public string getCourseNum()   
         {
             return courseNum;
         }
 
-        public string getCourseSect()  // Note: courseID is NOT the same as courseCode 
+        public string getCourseSect()   
         {
             return courseSect;
         }
 
-        public string getCourseCode()  // Note: courseID is NOT the same as courseCode 
+        public string getCourseCode()   
         {
             return courseCode;
         }
 
-        public string getShortName()  // Note: courseID is NOT the same as courseCode 
+        public string getShortName()   
         {
             return shortName;
         }
 
-        public string getLongName()  // Note: courseID is NOT the same as courseCode 
+        public string getLongName()   
         {
             return longName;
         }
 
-        public int getEnrollment()  // Note: courseID is NOT the same as courseCode 
+        public int getEnrollment()   
         {
             return enrollment;
         }
 
-        public int getCapacity()  // Note: courseID is NOT the same as courseCode 
+        public int getCapacity()  
         {
             return capacity;
         }
 
-        public List<bool> getDay()  // Note: courseID is NOT the same as courseCode 
+        public List<bool> getDay()  
         {
             return day;
         }
 
-        public Tuple<double, double> getTime()  // Note: courseID is NOT the same as courseCode 
+        public Tuple<double, double> getTime()   
         {
             return time;
         }
 
-        public Tuple<string, string> getProf()  // Note: courseID is NOT the same as courseCode 
+        public Tuple<string, string> getTimeString()
+        {
+            return null; 
+            // Remember: For adding/removing courses, there may be an associated coourse/lab. Should ask user if they want to add/remove this as well. 
+        }
+
+        public Tuple<string, string> getProf()   
         {
             return professor;
         }
 
-        public int getCredits()  // Note: courseID is NOT the same as courseCode 
+        public int getCredits()   
         {
             return credits;
         }
