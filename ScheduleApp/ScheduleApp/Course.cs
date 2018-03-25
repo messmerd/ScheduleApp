@@ -211,7 +211,13 @@ namespace CourseClass
 
         public Tuple<string, string> getTimeString()
         {
-            return null; 
+            if (time.Item1 == 0) return null;//No time is given
+            int t1 = (int)time.Item1;
+            int t2 = (int)((time.Item1%1)*100.0);
+            int t3 = (int)time.Item2;
+            int t4 = (int)((time.Item2 % 1) * 100.0);
+            
+            return Tuple.Create<string, string>(t1 + ":" + t2, t3 + ":" + t4);
             // Remember: For adding/removing courses, there may be an associated coourse/lab. Should ask user if they want to add/remove this as well. 
         }
 
