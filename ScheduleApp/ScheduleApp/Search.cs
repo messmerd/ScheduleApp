@@ -264,7 +264,23 @@ namespace SearchClass
                 }
 
             }
-        
+
+            if (options.day.Contains(false))    // If the user has selected a day that they don't want included 
+            {
+                removeIndices.Clear();
+                // Remove a course if a day which the potential course meets maps to false for that same day in options.day 
+                // This one's a bit crazy... 
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getDay().Select((elem, ind) => element.getDay()[ind] && !options.day[ind] ? true : false).Where(i => i).ToList().Count != 0 ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.courses.RemoveAt(index);
+                    lastSearchResults.courseRelevance.RemoveAt(index);
+                }
+
+            }
+
             //  ....
 
         }
@@ -279,7 +295,9 @@ namespace SearchClass
         // Put other advanced options here later 
 
         public double timeStart;  // Filter by courses that start at or after timeStart. -1 means the user doesn't have a preference 
-        public double timeEnd;    // Filter by courses that end at or before timeEnd. -1 means the user doesn't have a preferenc
+        public double timeEnd;    // Filter by courses that end at or before timeEnd. -1 means the user doesn't have a preference
+
+        public List<bool> day;    // Filter by courses that don't meet on days you don't want it to meet. If a value is false, it means you don't want a class that meets on that day. All true means user doesn't have a preference 
 
         public AdvancedOptions()
         {
@@ -289,7 +307,9 @@ namespace SearchClass
             // Put other advanced options here later 
 
             timeStart = -1.0; 
-            timeEnd = -1.0; 
+            timeEnd = -1.0;
+
+            day = (new bool[] {true,true,true,true,true}).ToList(); 
 
         }
 

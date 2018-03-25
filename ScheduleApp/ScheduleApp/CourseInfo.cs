@@ -121,6 +121,11 @@ namespace CourseInfoClass
             }
         }
 
+        public Course getCourse(int id)
+        {
+            return database[id]; 
+        }
+
         public int getNumCourses()
         {
             return numCourses; 
