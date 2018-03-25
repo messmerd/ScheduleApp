@@ -217,8 +217,7 @@ namespace CourseClass
             int t3 = (int)time.Item2;
             int t4 = (int)((time.Item2 % 1) * 100.0);
             
-            return Tuple.Create<string, string>(t1 + ":" + t2, t3 + ":" + t4);
-            // Remember: For adding/removing courses, there may be an associated coourse/lab. Should ask user if they want to add/remove this as well. 
+            return Tuple.Create(t1 + ":" + t2, t3 + ":" + t4);
         }
 
         public Tuple<string, string> getProf()   
