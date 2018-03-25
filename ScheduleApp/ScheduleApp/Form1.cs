@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CourseClass;
+using SearchClass; 
 
 namespace ScheduleApp
 {
@@ -18,45 +19,70 @@ namespace ScheduleApp
             InitializeComponent();
         }
 
+
+
+
+        /**********************Create UI Search Results Fns****************************************/
         private void searchBtn_Click(object sender, EventArgs e)
         {
 
-            //Search search = new Search("course_dictionary.txt");
-            //search.searchForQuery(searchBox.Text);
-            //List<Course> searchResults = search.lastSearchResults.getCourses();
+            Search search = Search.Create("course_dictionary.txt");
+            search.searchForQuery(searchBox.Text);
+            List<Course> searchResults = search.lastSearchResults.getCourses();
 
-            /*
-            string[] row = new string[20];
-            foreach (var item in searchResults)
-                row[0] = "3", item.courseCode, "Dr. Foo", longName, time[0].Item1 + "-" + time[0].Item2, "MWF", enrollment.toString() + "/" + capacity.toString(), "low"};
-                row[0] = 
-                row[0]
-                row[0]
-                row[0]
-                row[0]
-                row[0]
-                row[0]
-                row[0]
-                var listViewItem = new ListViewItem(row);
-                searchResult_UI.Items.Add(listViewItem);
-            }
-            */
-            /*
-            string[] row = new string[9];
-            for (var i = 0; i < 9; i++)
+            // TODO: Implement advanced search filter here
+
+            searchResult_UI.Items.Clear(); // Remove previous search results 
+
+            foreach (var course in searchResults)
             {
-                row[i] = i.ToString();
+                var courseToAdd = setRow(course);
+                var listViewItem = new ListViewItem(courseToAdd);
+                searchResult_UI.Items.Add(listViewItem);
+                // TODO: Dynamically create add/remove buttons to candidate schedule structure
             }
-            var listViewItem = new ListViewItem(row);
-            searchResult_UI.Items.Add(listViewItem);
-            */
-
-
-
         }
 
+        private string getDays(Course returnedCourse)
+        {
+            string returnedDays = "";
+            string[] potentialDays = { "M", "T", "W", "R", "F" }; 
+
+            for(int i = 0; i < potentialDays.Length; i++) // since potentialDays.Length == Course.day.Length, and List has no Length member
+            {
+                if (returnedCourse.day[i]) returnedDays += potentialDays[i];
+            }
+
+            return returnedDays;
+        }
+
+        private string[] setRow(Course c) // c = the course
+        {
+            string[] row = new string[50]; // row buffer
+
+            // These should really be getters
+            //row[0] = ""; // Leave this blank due to how ListViewItem() is constructed
+            row[0] = c.credits.ToString(); // placeholder
+            row[1] = c.courseCode;
+            row[2] = c.professor.Item1 + " " + c.professor.Item2;
+            row[3] = c.longName;
+            row[4] = c.time.Item1.ToString() + "-" + c.time.Item2.ToString();
+            row[5] = getDays(c);
+            row[6] = c.enrollment.ToString() + "/" + c.capacity.ToString();
+            row[7] = "4.2"; // placeholder until Sprint 2
+            row[8] = "low"; // placeholder ... 
+            return row;
+        }
+        /***************************************************************************************/
+
+
+
+
+
+        /*************************************adv search****************************************/
         private void advSearchBtn_Click(object sender, EventArgs e)
         {
+
             if (searchResult_UI.Location.Y == 131)
             {
                 searchResult_UI.Location = new Point(99, 218);
@@ -71,13 +97,17 @@ namespace ScheduleApp
             }
 
         }
+        /**************************************************************************************/
 
+
+
+        /**************************************JSON Transfer (Sprint 2)***************************************/
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog jsonImport = new OpenFileDialog();
             jsonImport.Filter = "JSON | *.json";
             jsonImport.Title = "Import a JSON file with a schedule that you or someone else has created";
-            if(jsonImport.ShowDialog() = DialogResult.OK)
+           // if(jsonImport.ShowDialog() = DialogResult.OK)
             {
 
             }
@@ -90,10 +120,16 @@ namespace ScheduleApp
             jsonSave.Title = "Save your schedule as a JSON file";
             jsonSave.ShowDialog();
         }
+        /***************************************************************************************************/
 
+
+
+
+        /***********************************Quit Program****************************************************/
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {   
             Application.Exit();
         }
+        /***************************************************************************************************/
     }
 }
