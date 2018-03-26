@@ -120,7 +120,7 @@ namespace CourseInfoClass
                     parsedCourse.Add("0"); 
                 }
                 database.Add(new Course(parsedCourse, i));
-                prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], -1.0));
+                prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));
                 i++;
             }
         }
@@ -195,7 +195,7 @@ namespace CourseInfoClass
             return database[id].getTime();
         }
 
-        public Tuple<string, string> getProf(int id)  
+        public Professor getProf(int id)  
         {
             return database[id].getProf();
         }
@@ -203,20 +203,6 @@ namespace CourseInfoClass
         public int getCredits(int id)  
         {
             return database[id].getCredits();
-        }
-
-    }
-
-    public struct Professor
-    {
-        string first, last;
-        double rmp; 
-
-        public Professor(string first, string last, double rmp)
-        {
-            this.first = first;
-            this.last = last;
-            this.rmp = rmp;
         }
 
     }

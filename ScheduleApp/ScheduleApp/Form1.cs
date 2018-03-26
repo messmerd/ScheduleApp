@@ -14,6 +14,9 @@ namespace ScheduleApp
 {
     public partial class AppWindow : Form
     {
+
+        public const string emptySearchBarText = "Search by course code or name...";
+
         public AppWindow()
         {
             InitializeComponent();
@@ -22,7 +25,7 @@ namespace ScheduleApp
         /**********************Text Inside Search****************************************/
         private void searchBox_Enter(object sender, EventArgs e)
         {
-            searchBox.Text = "";
+            searchBox.Text = Search.Create().lastSearchResults.getQuery(); 
             searchBox.ForeColor = Color.Black;
         }
 
@@ -30,7 +33,7 @@ namespace ScheduleApp
         {
             if (searchBox.Text == "")
             {
-                searchBox.Text = "Search by course code or name...";
+                searchBox.Text = emptySearchBarText;
                 searchBox.ForeColor = Color.Gray;
             }
         }
@@ -87,7 +90,10 @@ namespace ScheduleApp
         {
 
             Search search = Search.Create("course_dictionary.txt");
-            search.searchForQuery(searchBox.Text);
+            if (searchBox.Text != emptySearchBarText)
+                search.searchForQuery(searchBox.Text);
+            else
+                search.searchForQuery("");
             List<Course> searchResults = search.lastSearchResults.getCourses();
 
             // TODO: Implement advanced search filter here
@@ -122,12 +128,12 @@ namespace ScheduleApp
 
             row[0] = c.getCredits().ToString();
             row[1] = c.getCourseCode();
-            row[2] = c.getProf().Item1 + " " + c.getProf().Item2;
+            row[2] = c.getProf().first + " " + c.getProf().last;
             row[3] = c.getLongName();
-            row[4] = c.getTime().Item1.ToString() + "-" + c.getTime().Item2.ToString();
+            row[4] = c.getTimeString().Item1 + "-" + c.getTimeString().Item2;
             row[5] = getDays(c);
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
-            row[7] = "4.2"; // placeholder until Sprint 2
+            row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
             row[8] = "low"; // placeholder ... 
             return row;
         }

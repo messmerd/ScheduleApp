@@ -32,6 +32,14 @@
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.firstTime_UI = new System.Windows.Forms.NumericUpDown();
+            this.between_label = new System.Windows.Forms.Label();
+            this.F_checkBox = new System.Windows.Forms.CheckBox();
+            this.R_checkBox = new System.Windows.Forms.CheckBox();
+            this.W_checkBox = new System.Windows.Forms.CheckBox();
+            this.T_checkBox = new System.Windows.Forms.CheckBox();
+            this.M_checkBox = new System.Windows.Forms.CheckBox();
+            this.day_label = new System.Windows.Forms.Label();
             this.searchResult_UI = new System.Windows.Forms.ListView();
             this.creditsCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.courseCodeCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -74,20 +82,12 @@
             this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.day_label = new System.Windows.Forms.Label();
-            this.M_checkBox = new System.Windows.Forms.CheckBox();
-            this.T_checkBox = new System.Windows.Forms.CheckBox();
-            this.W_checkBox = new System.Windows.Forms.CheckBox();
-            this.R_checkBox = new System.Windows.Forms.CheckBox();
-            this.F_checkBox = new System.Windows.Forms.CheckBox();
-            this.between_label = new System.Windows.Forms.Label();
-            this.firstTime_UI = new System.Windows.Forms.NumericUpDown();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             this.filter_UI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).BeginInit();
             this.scheduleTab.SuspendLayout();
             this.menuBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).BeginInit();
             this.SuspendLayout();
             // 
             // menuTabs
@@ -110,7 +110,7 @@
             this.searchTab.Controls.Add(this.searchBox);
             this.searchTab.Location = new System.Drawing.Point(4, 31);
             this.searchTab.Name = "searchTab";
-            this.searchTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.searchTab.Padding = new System.Windows.Forms.Padding(3);
             this.searchTab.Size = new System.Drawing.Size(1168, 666);
             this.searchTab.TabIndex = 0;
             this.searchTab.Text = "Search";
@@ -133,6 +133,87 @@
             this.filter_UI.TabStop = false;
             this.filter_UI.Text = "advanced";
             this.filter_UI.Visible = false;
+            // 
+            // firstTime_UI
+            // 
+            this.firstTime_UI.DecimalPlaces = 2;
+            this.firstTime_UI.Location = new System.Drawing.Point(293, 21);
+            this.firstTime_UI.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.firstTime_UI.Name = "firstTime_UI";
+            this.firstTime_UI.Size = new System.Drawing.Size(50, 21);
+            this.firstTime_UI.TabIndex = 8;
+            // 
+            // between_label
+            // 
+            this.between_label.AutoSize = true;
+            this.between_label.Location = new System.Drawing.Point(232, 23);
+            this.between_label.Name = "between_label";
+            this.between_label.Size = new System.Drawing.Size(55, 13);
+            this.between_label.TabIndex = 7;
+            this.between_label.Text = "between";
+            // 
+            // F_checkBox
+            // 
+            this.F_checkBox.AutoSize = true;
+            this.F_checkBox.Location = new System.Drawing.Point(198, 22);
+            this.F_checkBox.Name = "F_checkBox";
+            this.F_checkBox.Size = new System.Drawing.Size(32, 17);
+            this.F_checkBox.TabIndex = 6;
+            this.F_checkBox.Text = "F";
+            this.F_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // R_checkBox
+            // 
+            this.R_checkBox.AutoSize = true;
+            this.R_checkBox.Location = new System.Drawing.Point(163, 22);
+            this.R_checkBox.Name = "R_checkBox";
+            this.R_checkBox.Size = new System.Drawing.Size(34, 17);
+            this.R_checkBox.TabIndex = 5;
+            this.R_checkBox.Text = "R";
+            this.R_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // W_checkBox
+            // 
+            this.W_checkBox.AutoSize = true;
+            this.W_checkBox.Location = new System.Drawing.Point(126, 22);
+            this.W_checkBox.Name = "W_checkBox";
+            this.W_checkBox.Size = new System.Drawing.Size(37, 17);
+            this.W_checkBox.TabIndex = 4;
+            this.W_checkBox.Text = "W";
+            this.W_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // T_checkBox
+            // 
+            this.T_checkBox.AutoSize = true;
+            this.T_checkBox.Location = new System.Drawing.Point(93, 22);
+            this.T_checkBox.Name = "T_checkBox";
+            this.T_checkBox.Size = new System.Drawing.Size(33, 17);
+            this.T_checkBox.TabIndex = 3;
+            this.T_checkBox.Text = "T";
+            this.T_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // M_checkBox
+            // 
+            this.M_checkBox.AutoSize = true;
+            this.M_checkBox.Location = new System.Drawing.Point(59, 21);
+            this.M_checkBox.Name = "M_checkBox";
+            this.M_checkBox.Size = new System.Drawing.Size(35, 17);
+            this.M_checkBox.TabIndex = 2;
+            this.M_checkBox.Text = "M";
+            this.M_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // day_label
+            // 
+            this.day_label.AutoSize = true;
+            this.day_label.Location = new System.Drawing.Point(19, 22);
+            this.day_label.Name = "day_label";
+            this.day_label.Size = new System.Drawing.Size(35, 13);
+            this.day_label.TabIndex = 1;
+            this.day_label.Text = "Day:";
             // 
             // searchResult_UI
             // 
@@ -227,7 +308,7 @@
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(942, 21);
             this.searchBox.TabIndex = 1;
-            this.searchBox.Text = "Search by course code or name\r\n";
+            this.searchBox.Text = "Search by course code or name...";
             this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
             this.searchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             // 
@@ -244,7 +325,7 @@
             this.scheduleTab.Controls.Add(this.listView1);
             this.scheduleTab.Location = new System.Drawing.Point(4, 31);
             this.scheduleTab.Name = "scheduleTab";
-            this.scheduleTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.scheduleTab.Padding = new System.Windows.Forms.Padding(3);
             this.scheduleTab.Size = new System.Drawing.Size(1168, 666);
             this.scheduleTab.TabIndex = 1;
             this.scheduleTab.Text = "Schedule";
@@ -470,87 +551,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // day_label
-            // 
-            this.day_label.AutoSize = true;
-            this.day_label.Location = new System.Drawing.Point(19, 22);
-            this.day_label.Name = "day_label";
-            this.day_label.Size = new System.Drawing.Size(35, 13);
-            this.day_label.TabIndex = 1;
-            this.day_label.Text = "Day:";
-            // 
-            // M_checkBox
-            // 
-            this.M_checkBox.AutoSize = true;
-            this.M_checkBox.Location = new System.Drawing.Point(59, 21);
-            this.M_checkBox.Name = "M_checkBox";
-            this.M_checkBox.Size = new System.Drawing.Size(35, 17);
-            this.M_checkBox.TabIndex = 2;
-            this.M_checkBox.Text = "M";
-            this.M_checkBox.UseVisualStyleBackColor = true;
-            // 
-            // T_checkBox
-            // 
-            this.T_checkBox.AutoSize = true;
-            this.T_checkBox.Location = new System.Drawing.Point(93, 22);
-            this.T_checkBox.Name = "T_checkBox";
-            this.T_checkBox.Size = new System.Drawing.Size(33, 17);
-            this.T_checkBox.TabIndex = 3;
-            this.T_checkBox.Text = "T";
-            this.T_checkBox.UseVisualStyleBackColor = true;
-            // 
-            // W_checkBox
-            // 
-            this.W_checkBox.AutoSize = true;
-            this.W_checkBox.Location = new System.Drawing.Point(126, 22);
-            this.W_checkBox.Name = "W_checkBox";
-            this.W_checkBox.Size = new System.Drawing.Size(37, 17);
-            this.W_checkBox.TabIndex = 4;
-            this.W_checkBox.Text = "W";
-            this.W_checkBox.UseVisualStyleBackColor = true;
-            // 
-            // R_checkBox
-            // 
-            this.R_checkBox.AutoSize = true;
-            this.R_checkBox.Location = new System.Drawing.Point(163, 22);
-            this.R_checkBox.Name = "R_checkBox";
-            this.R_checkBox.Size = new System.Drawing.Size(34, 17);
-            this.R_checkBox.TabIndex = 5;
-            this.R_checkBox.Text = "R";
-            this.R_checkBox.UseVisualStyleBackColor = true;
-            // 
-            // F_checkBox
-            // 
-            this.F_checkBox.AutoSize = true;
-            this.F_checkBox.Location = new System.Drawing.Point(198, 22);
-            this.F_checkBox.Name = "F_checkBox";
-            this.F_checkBox.Size = new System.Drawing.Size(32, 17);
-            this.F_checkBox.TabIndex = 6;
-            this.F_checkBox.Text = "F";
-            this.F_checkBox.UseVisualStyleBackColor = true;
-            // 
-            // between_label
-            // 
-            this.between_label.AutoSize = true;
-            this.between_label.Location = new System.Drawing.Point(232, 23);
-            this.between_label.Name = "between_label";
-            this.between_label.Size = new System.Drawing.Size(55, 13);
-            this.between_label.TabIndex = 7;
-            this.between_label.Text = "between";
-            // 
-            // firstTime_UI
-            // 
-            this.firstTime_UI.DecimalPlaces = 2;
-            this.firstTime_UI.Location = new System.Drawing.Point(293, 21);
-            this.firstTime_UI.Maximum = new decimal(new int[] {
-            12,
-            0,
-            0,
-            0});
-            this.firstTime_UI.Name = "firstTime_UI";
-            this.firstTime_UI.Size = new System.Drawing.Size(50, 21);
-            this.firstTime_UI.TabIndex = 8;
-            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -568,10 +568,10 @@
             this.searchTab.PerformLayout();
             this.filter_UI.ResumeLayout(false);
             this.filter_UI.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).EndInit();
             this.scheduleTab.ResumeLayout(false);
             this.menuBar.ResumeLayout(false);
             this.menuBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

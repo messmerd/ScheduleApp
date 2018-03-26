@@ -29,7 +29,7 @@ namespace CourseClass
         private List<bool> day;
         private Tuple<double, double> time;
 
-        private Tuple<string, string> professor;
+        private Professor professor;
 
         private int credits;
 
@@ -65,7 +65,7 @@ namespace CourseClass
         {
             this.courseID = courseID;
             
-            this.professor = Tuple.Create<string, string>(parsedCourse[11], parsedCourse[12]);
+            this.professor = new Professor(parsedCourse[11], parsedCourse[12]);
 
             //parsedCourse[3], parsedCourse[4]
             //s.Split(':')[3]
@@ -211,16 +211,16 @@ namespace CourseClass
 
         public Tuple<string, string> getTimeString()
         {
-            if (time.Item1 == 0) return null;//No time is given
+            if (time.Item1 == 0) return new Tuple<string,string>("",""); //No time is given
             int t1 = (int)time.Item1;
-            int t2 = (int)((time.Item1%1)*100.0);
+            int t2 = (int)Math.Round((time.Item1 % 1) * 100.0);
             int t3 = (int)time.Item2;
-            int t4 = (int)((time.Item2 % 1) * 100.0);
+            int t4 = (int)Math.Round((time.Item2 % 1) * 100.0);
             
-            return Tuple.Create(t1 + ":" + t2, t3 + ":" + t4);
+            return Tuple.Create(t1.ToString("00") + ":" + t2.ToString("00"), t3.ToString("00") + ":" + t4.ToString("00"));
         }
 
-        public Tuple<string, string> getProf()   
+        public Professor getProf()   
         {
             return professor;
         }
@@ -230,4 +230,19 @@ namespace CourseClass
             return credits;
         }
     };
+
+    public struct Professor
+    {
+        public string first, last;
+        public double rmp;
+
+        public Professor(string first, string last)
+        {
+            this.first = first;
+            this.last = last;
+            this.rmp = 4.2;  // Default value 
+        }
+
+    }
+
 }
