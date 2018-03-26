@@ -235,6 +235,8 @@ namespace SearchClass
         private void advancedSearchFilter()
         {
             List<int> removeIndices = new List<int>();
+
+            // Filter start time 
             if (options.timeStart != -1.0)  // If the user has selected a start time preference 
             {
                 removeIndices.Clear();
@@ -249,6 +251,7 @@ namespace SearchClass
                 }
             }
 
+            // Filter end time
             if (options.timeEnd != -1.0)    // If the user has selected an end time preference 
             {
                 removeIndices.Clear();
@@ -264,6 +267,7 @@ namespace SearchClass
 
             }
 
+            // Filter day of week
             if (options.day.Contains(false))    // If the user has selected a day that they don't want included 
             {
                 removeIndices.Clear();
@@ -279,6 +283,22 @@ namespace SearchClass
                 }
 
             }
+
+            // Filter building 
+            if (options.building != Build.NONE)  // If the building does not equal ANY (NONE)
+            {
+                removeIndices.Clear();
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => (int)element.getBuilding() != (int)options.building ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.courses.RemoveAt(index);
+                    lastSearchResults.courseRelevance.RemoveAt(index);
+                }
+
+            }
+
 
             //  ....
 
@@ -298,6 +318,10 @@ namespace SearchClass
 
         public List<bool> day;    // Filter by courses that don't meet on days you don't want it to meet. If a value is false, it means you don't want a class that meets on that day. All true means user doesn't have a preference 
 
+        //public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, ANY=10 };
+        
+        public CourseClass.Build building;  
+
         public AdvancedOptions()
         {
             rmp = -1.0;  
@@ -307,9 +331,8 @@ namespace SearchClass
 
             timeStart = -1.0; 
             timeEnd = -1.0;
-
-            day = (new bool[] {true,true,true,true,true}).ToList(); 
-
+            day = (new bool[] {true,true,true,true,true}).ToList();
+            building = CourseClass.Build.NONE;  // NONE in CourseClass will mean ANY building here. 
         }
 
     }

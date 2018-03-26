@@ -116,7 +116,7 @@ namespace CourseClass
             };
 
             Build result;//BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, NONE
-            if (Enum.TryParse(parsedCourse[5], out result)) { building = result; }//fix building loc
+            if (Enum.TryParse(parsedCourse[6], out result)) { building = result; }//fix building loc
             else { building = Build.NONE; }
             this.room = parsedCourse[7];
 
