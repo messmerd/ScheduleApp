@@ -128,7 +128,8 @@ namespace ScheduleApp
 
             row[0] = c.getCredits().ToString();
             row[1] = c.getCourseCode();
-            row[2] = c.getProf().first + " " + c.getProf().last;
+            if (c.getProf().first == null || c.getProf().first == "") row[2] = " ";
+            else  row[2] = c.getProf().first[0] + ". " + c.getProf().last;
             row[3] = c.getLongName();
             row[4] = c.getTimeString().Item1 + "-" + c.getTimeString().Item2;
             row[5] = getDays(c);
