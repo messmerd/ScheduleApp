@@ -23,6 +23,7 @@ namespace ScheduleApp
         private void searchBox_Enter(object sender, EventArgs e)
         {
             searchBox.Text = "";
+            searchBox.ForeColor = Color.Black;
         }
 
         private void searchBox_Leave(object sender, EventArgs e)
@@ -139,18 +140,19 @@ namespace ScheduleApp
         /*************************************adv search****************************************/
         private void advSearchBtn_Click(object sender, EventArgs e)
         {
+            int searchResult_shift = 106;
 
-            if (searchResult_UI.Location.Y == 131)
+            if (!filter_UI.Visible)
             {
-                searchResult_UI.Location = new Point(99, 218);
-                searchResult_UI.Height -= 87;
+                searchResult_UI.Location = new Point(searchResult_UI.Location.X, searchResult_UI.Location.Y + searchResult_shift);
+                searchResult_UI.Height -= searchResult_shift;
                 filter_UI.Show();
             }
             else
             {
                 filter_UI.Hide();
-                searchResult_UI.Location = new Point(99, 131);
-                searchResult_UI.Height += 87;
+                searchResult_UI.Location = new Point(searchResult_UI.Location.X, searchResult_UI.Location.Y - searchResult_shift);
+                searchResult_UI.Height += searchResult_shift;
             }
 
         }
@@ -161,6 +163,7 @@ namespace ScheduleApp
         /**************************************JSON Transfer (Sprint 2)***************************************/
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /* 
             OpenFileDialog jsonImport = new OpenFileDialog();
             jsonImport.Filter = "JSON | *.json";
             jsonImport.Title = "Import a JSON file with a schedule that you or someone else has created";
@@ -168,18 +171,18 @@ namespace ScheduleApp
             {
 
             }
+            */
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {   /*
             SaveFileDialog jsonSave = new SaveFileDialog();
             jsonSave.Filter = "JSON | *.json";
             jsonSave.Title = "Save your schedule as a JSON file";
             jsonSave.ShowDialog();
+            */
         }
         /***************************************************************************************************/
-
-
 
 
         /***********************************Quit Program****************************************************/

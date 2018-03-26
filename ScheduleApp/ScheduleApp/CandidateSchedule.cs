@@ -14,7 +14,7 @@ namespace ScheduleApp
 
         CandidateSchedule()
         {
-            
+            // null by default
         }
 
         CandidateSchedule(string filename) // factory constructor using JSON, sprint 2
@@ -26,7 +26,6 @@ namespace ScheduleApp
         public List<int> addCourseByObject(Course c)
         {
             return addCourseByID(c.getCourseID());
-            //schedule.Add(c);
         }
 
 
@@ -59,25 +58,22 @@ namespace ScheduleApp
         }
 
         
-        public void removeCourse(int courseID)
+        public bool removeCourse(int courseID)
         {
             foreach (var course in schedule)
             {
                 if (course.getCourseID() == courseID)
                 {
                     schedule.Remove(course);
-                    return;
+                    return true;
                 }
             }
-
+            return false;
         }
 
         public void removeAllCourses()
         {
-            foreach (var course in schedule)
-            {
-                schedule.Clear();
-            }
+            schedule.Clear();
         }
 
         public bool checkInSchedule(int courseID)
