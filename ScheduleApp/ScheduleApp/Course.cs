@@ -12,7 +12,7 @@ namespace CourseClass
     {
 
         // TODO: Write Getters for members used in searchBtn event handler
-        public Build building;
+        private Build building;
         private string room;
 
         private string courseDept;
@@ -29,7 +29,7 @@ namespace CourseClass
         private List<bool> day;
         private Tuple<double, double> time;
 
-        public Tuple<string, string> professor;
+        private Tuple<string, string> professor;
 
         private int credits;
 
