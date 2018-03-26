@@ -300,6 +300,22 @@ namespace SearchClass
             }
 
 
+            // Filter professor  
+            if (options.professor.Item1 != "" && options.professor.Item2 != "")  // If the user wants to only show courses with a certain professor 
+            {
+                removeIndices.Clear();
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => (element.getProf().first != options.professor.Item1 || element.getProf().last != options.professor.Item2) ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.courses.RemoveAt(index);
+                    lastSearchResults.courseRelevance.RemoveAt(index);
+                }
+
+            }
+
+
             //  ....
 
         }
@@ -320,7 +336,8 @@ namespace SearchClass
 
         //public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, ANY=10 };
         
-        public CourseClass.Build building;  
+        public CourseClass.Build building;
+        public Tuple<string, string> professor;
 
         public AdvancedOptions()
         {
@@ -333,6 +350,7 @@ namespace SearchClass
             timeEnd = -1.0;
             day = (new bool[] {true,true,true,true,true}).ToList();
             building = CourseClass.Build.NONE;  // NONE in CourseClass will mean ANY building here. 
+            professor = new Tuple<string, string>("Myron","Bright");
         }
 
     }
