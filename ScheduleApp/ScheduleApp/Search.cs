@@ -350,7 +350,7 @@ namespace SearchClass
             timeEnd = -1.0;
             day = (new bool[] {true,true,true,true,true}).ToList();
             building = CourseClass.Build.NONE;  // NONE in CourseClass will mean ANY building here. 
-            professor = new Tuple<string, string>("Myron","Bright");
+            professor = new Tuple<string, string>("","");  // First, Last 
         }
 
     }
