@@ -60,15 +60,18 @@ namespace ScheduleApp
         
         public bool removeCourse(int courseID)
         {
-            foreach (var course in schedule)
-            {
-                if (course.getCourseID() == courseID)
-                {
-                    schedule.Remove(course);
-                    return true;
-                }
-            }
-            return false;
+            CourseInfo DB = CourseInfo.Create();
+            return schedule.Remove(DB.getCourse(courseID));
+            //foreach (var course in schedule)
+            //{
+            //    if (course.getCourseID() == courseID)
+            //    {
+            //        schedule.Remove(course);
+            //        return true;
+            //    }
+            //}
+            //return false;
+
         }
 
         public void removeAllCourses()
