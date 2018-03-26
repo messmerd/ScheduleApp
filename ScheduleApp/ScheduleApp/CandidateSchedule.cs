@@ -14,6 +14,7 @@ namespace ScheduleApp
 
         CandidateSchedule()
         {
+            schedule = new List<Course>();
             // null by default
         }
 

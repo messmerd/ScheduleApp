@@ -319,7 +319,46 @@ namespace SearchClass
             //  ....
 
         }
-    
+        
+        public void SortCourses(int sortBy, bool ascending)
+        {
+            // Could use enum to make it obvious what integer to use for sortBy in the caller's code 
+            // Credits, Course code, prof., course name, ...
+
+            if (ascending)
+            {
+                switch (sortBy)
+                {
+                    case 0:  // # of credits
+                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderBy(x => x.getCredits()).ToList();
+                        break;
+                    case 1:  // Course code
+                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderBy(x => x.getCourseCode()).ToList();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (sortBy)
+                {
+                    case 0:  // # of credits
+                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderByDescending(x => x.getCredits()).ToList();
+                        break;
+
+                    case 1:  // Course code
+                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderByDescending(x => x.getCourseCode()).ToList();
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+        }
+
     }
 
     public class AdvancedOptions
