@@ -29,7 +29,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ToolStripComboBox classicToolStripMenuItem;
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
             this.filter_UI = new System.Windows.Forms.GroupBox();
@@ -71,28 +70,17 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeSelector = new System.Windows.Forms.ToolStripComboBox();
             this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            classicToolStripMenuItem = new System.Windows.Forms.ToolStripComboBox();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             this.scheduleTab.SuspendLayout();
             this.menuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // classicToolStripMenuItem
-            // 
-            classicToolStripMenuItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            classicToolStripMenuItem.Items.AddRange(new object[] {
-            "Classic",
-            "Dark",
-            "Blue",
-            "Grove City Pride"});
-            classicToolStripMenuItem.Name = "classicToolStripMenuItem";
-            classicToolStripMenuItem.Size = new System.Drawing.Size(152, 23);
             // 
             // menuTabs
             // 
@@ -213,12 +201,14 @@
             // 
             // searchBox
             // 
+            this.searchBox.ForeColor = System.Drawing.Color.Gray;
             this.searchBox.Location = new System.Drawing.Point(99, 57);
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(808, 20);
             this.searchBox.TabIndex = 1;
-            this.searchBox.Text = "search for courses...";
-            this.searchBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.searchBox.Text = "Search by course code or name\r\n";
+            this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
+            this.searchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             // 
             // scheduleTab
             // 
@@ -423,10 +413,22 @@
             // themesToolStripMenuItem
             // 
             this.themesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            classicToolStripMenuItem});
+            this.themeSelector});
             this.themesToolStripMenuItem.Name = "themesToolStripMenuItem";
             this.themesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.themesToolStripMenuItem.Text = "Themes";
+            // 
+            // themeSelector
+            // 
+            this.themeSelector.Items.AddRange(new object[] {
+            "Classic",
+            "Dark",
+            "Blue",
+            "Grove City Crimson"});
+            this.themeSelector.Name = "themeSelector";
+            this.themeSelector.Size = new System.Drawing.Size(152, 23);
+            this.themeSelector.Text = "Classic";
+            this.themeSelector.SelectedIndexChanged += new System.EventHandler(this.themeSelector_SelectedIndexChanged);
             // 
             // notifyOnScheduleConflictToolStripMenuItem
             // 
@@ -520,6 +522,7 @@
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.GroupBox filter_UI;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.ToolStripComboBox themeSelector;
     }
 }
 

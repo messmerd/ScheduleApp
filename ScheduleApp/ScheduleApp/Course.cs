@@ -13,25 +13,25 @@ namespace CourseClass
 
         // TODO: Write Getters for members used in searchBtn event handler
         public Build building;
-        public string room;
+        private string room;
 
-        public string courseDept;
-        public string courseNum;
-        public string courseSect;
-        public string courseCode;// = courseDept + courseNum.toString();
+        private string courseDept;
+        private string courseNum;
+        private string courseSect;
+        private string courseCode;// = courseDept + courseNum.toString();
 
-        public string shortName;
-        public string longName;
+        private string shortName;
+        private string longName;
 
-        public int enrollment;
-        public int capacity;
+        private int enrollment;
+        private int capacity;
 
-        public List<bool> day;
-        public Tuple<double, double> time;
+        private List<bool> day;
+        private Tuple<double, double> time;
 
         public Tuple<string, string> professor;
 
-        public int credits;
+        private int credits;
 
         private int courseID;
 

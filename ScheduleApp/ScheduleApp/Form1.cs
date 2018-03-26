@@ -19,8 +19,67 @@ namespace ScheduleApp
             InitializeComponent();
         }
 
+        /**********************Text Inside Search****************************************/
+        private void searchBox_Enter(object sender, EventArgs e)
+        {
+            searchBox.Text = "";
+        }
+
+        private void searchBox_Leave(object sender, EventArgs e)
+        {
+            if (searchBox.Text == "")
+            {
+                searchBox.Text = "Search by course code or name...";
+                searchBox.ForeColor = Color.Gray;
+            }
+        }
+        /******************************************************************************************/
+
+        private void themeSelector_SelectedIndexChanged(Object sender, EventArgs e)
+        {
+            int selectedTheme = themeSelector.SelectedIndex;
+            switch (selectedTheme)
+            {
+                case 0:
+                    themeToClassic();
+                    
+                    break;
+                case 1:
+                    themeToNight();
+                    
+                    break;
+                case 2:
+                    themeToBlue();
+                    
+                    break;
+                case 3:
+                    themeToGCC();
+                    
+                    break;
+            }
+        }
+        /***************************************************************************************************/
 
 
+        private void themeToNight()
+        {
+
+        }
+
+        private void themeToBlue()
+        {
+
+        }
+
+        private void themeToGCC()
+        {
+
+        }
+
+        private void themeToClassic()
+        {
+
+        }
 
         /**********************Create UI Search Results Fns****************************************/
         private void searchBtn_Click(object sender, EventArgs e)
@@ -45,30 +104,28 @@ namespace ScheduleApp
 
         private string getDays(Course returnedCourse)
         {
-            string returnedDays = "";
+            string meetingDays = "";
             string[] potentialDays = { "M", "T", "W", "R", "F" }; 
 
             for(int i = 0; i < potentialDays.Length; i++) // since potentialDays.Length == Course.day.Length, and List has no Length member
             {
-                if (returnedCourse.day[i]) returnedDays += potentialDays[i];
+                if (returnedCourse.getDay()[i]) meetingDays += potentialDays[i];
             }
 
-            return returnedDays;
+            return meetingDays;
         }
 
         private string[] setRow(Course c) // c = the course
         {
             string[] row = new string[50]; // row buffer
 
-            // These should really be getters
-            //row[0] = ""; // Leave this blank due to how ListViewItem() is constructed
-            row[0] = c.credits.ToString(); // placeholder
-            row[1] = c.courseCode;
-            row[2] = c.professor.Item1 + " " + c.professor.Item2;
-            row[3] = c.longName;
-            row[4] = c.time.Item1.ToString() + "-" + c.time.Item2.ToString();
+            row[0] = c.getCredits().ToString();
+            row[1] = c.getCourseCode();
+            row[2] = c.getProf().Item1 + " " + c.getProf().Item2;
+            row[3] = c.getLongName();
+            row[4] = c.getTime().Item1.ToString() + "-" + c.getTime().Item2.ToString();
             row[5] = getDays(c);
-            row[6] = c.enrollment.ToString() + "/" + c.capacity.ToString();
+            row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
             row[7] = "4.2"; // placeholder until Sprint 2
             row[8] = "low"; // placeholder ... 
             return row;

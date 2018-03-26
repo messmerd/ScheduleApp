@@ -58,7 +58,7 @@ namespace ScheduleApp
             //Should ask user if they want to add/remove this as well. 
         }
 
-
+        
         public void removeCourse(int courseID)
         {
             foreach (var course in schedule)
@@ -66,15 +66,17 @@ namespace ScheduleApp
                 if (course.getCourseID() == courseID)
                 {
                     schedule.Remove(course);
+                    return;
                 }
             }
+
         }
 
         public void removeAllCourses()
         {
             foreach (var course in schedule)
             {
-                schedule.Remove(course);
+                schedule.Clear();
             }
         }
 
