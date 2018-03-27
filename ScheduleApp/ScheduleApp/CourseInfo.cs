@@ -120,7 +120,8 @@ namespace CourseInfoClass
                     parsedCourse.Add("0"); 
                 }
                 database.Add(new Course(parsedCourse, i));
-                prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));
+                if (!prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));
                 i++;
             }
         }
