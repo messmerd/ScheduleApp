@@ -124,6 +124,7 @@ namespace CourseInfoClass
                     prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));
                 i++;
             }
+            prof_database = prof_database.OrderBy(x => x.last + x.first).ToList(); 
         }
 
         public Course getCourse(int id)
