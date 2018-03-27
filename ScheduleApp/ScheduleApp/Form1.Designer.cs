@@ -32,6 +32,10 @@
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.professor_adv = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.secondTime_UI = new System.Windows.Forms.NumericUpDown();
+            this.building_adv = new System.Windows.Forms.ComboBox();
             this.firstTime_UI = new System.Windows.Forms.NumericUpDown();
             this.between_label = new System.Windows.Forms.Label();
             this.F_checkBox = new System.Windows.Forms.CheckBox();
@@ -54,13 +58,6 @@
             this.searchBtn = new System.Windows.Forms.Button();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.scheduleTab = new System.Windows.Forms.TabPage();
-            this.button20 = new System.Windows.Forms.Button();
-            this.button19 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.mock_credits = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -85,6 +82,7 @@
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             this.filter_UI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.secondTime_UI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).BeginInit();
             this.scheduleTab.SuspendLayout();
             this.menuBar.SuspendLayout();
@@ -95,14 +93,15 @@
             this.menuTabs.Controls.Add(this.searchTab);
             this.menuTabs.Controls.Add(this.scheduleTab);
             this.menuTabs.ItemSize = new System.Drawing.Size(200, 27);
-            this.menuTabs.Location = new System.Drawing.Point(1, 27);
+            this.menuTabs.Location = new System.Drawing.Point(0, 27);
             this.menuTabs.Name = "menuTabs";
             this.menuTabs.SelectedIndex = 0;
-            this.menuTabs.Size = new System.Drawing.Size(1176, 701);
+            this.menuTabs.Size = new System.Drawing.Size(1033, 701);
             this.menuTabs.TabIndex = 0;
             // 
             // searchTab
             // 
+            this.searchTab.BackColor = System.Drawing.SystemColors.Window;
             this.searchTab.Controls.Add(this.filter_UI);
             this.searchTab.Controls.Add(this.searchResult_UI);
             this.searchTab.Controls.Add(this.advSearchBtn);
@@ -111,13 +110,17 @@
             this.searchTab.Location = new System.Drawing.Point(4, 31);
             this.searchTab.Name = "searchTab";
             this.searchTab.Padding = new System.Windows.Forms.Padding(3);
-            this.searchTab.Size = new System.Drawing.Size(1168, 666);
+            this.searchTab.Size = new System.Drawing.Size(1025, 666);
             this.searchTab.TabIndex = 0;
             this.searchTab.Text = "Search";
-            this.searchTab.UseVisualStyleBackColor = true;
             // 
             // filter_UI
             // 
+            this.filter_UI.BackColor = System.Drawing.SystemColors.Window;
+            this.filter_UI.Controls.Add(this.professor_adv);
+            this.filter_UI.Controls.Add(this.label1);
+            this.filter_UI.Controls.Add(this.secondTime_UI);
+            this.filter_UI.Controls.Add(this.building_adv);
             this.filter_UI.Controls.Add(this.firstTime_UI);
             this.filter_UI.Controls.Add(this.between_label);
             this.filter_UI.Controls.Add(this.F_checkBox);
@@ -126,13 +129,54 @@
             this.filter_UI.Controls.Add(this.T_checkBox);
             this.filter_UI.Controls.Add(this.M_checkBox);
             this.filter_UI.Controls.Add(this.day_label);
-            this.filter_UI.Location = new System.Drawing.Point(223, 112);
+            this.filter_UI.Location = new System.Drawing.Point(276, 112);
             this.filter_UI.Name = "filter_UI";
-            this.filter_UI.Size = new System.Drawing.Size(554, 100);
+            this.filter_UI.Size = new System.Drawing.Size(444, 100);
             this.filter_UI.TabIndex = 6;
             this.filter_UI.TabStop = false;
             this.filter_UI.Text = "advanced";
             this.filter_UI.Visible = false;
+            // 
+            // professor_adv
+            // 
+            this.professor_adv.FormattingEnabled = true;
+            this.professor_adv.Location = new System.Drawing.Point(126, 55);
+            this.professor_adv.Name = "professor_adv";
+            this.professor_adv.Size = new System.Drawing.Size(86, 21);
+            this.professor_adv.TabIndex = 12;
+            this.professor_adv.Text = "professor";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(349, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(28, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "and";
+            // 
+            // secondTime_UI
+            // 
+            this.secondTime_UI.DecimalPlaces = 2;
+            this.secondTime_UI.Location = new System.Drawing.Point(384, 21);
+            this.secondTime_UI.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.secondTime_UI.Name = "secondTime_UI";
+            this.secondTime_UI.Size = new System.Drawing.Size(50, 21);
+            this.secondTime_UI.TabIndex = 10;
+            this.secondTime_UI.ValueChanged += new System.EventHandler(this.startEndTimes_valueChanged);
+            // 
+            // building_adv
+            // 
+            this.building_adv.FormattingEnabled = true;
+            this.building_adv.Location = new System.Drawing.Point(22, 55);
+            this.building_adv.Name = "building_adv";
+            this.building_adv.Size = new System.Drawing.Size(86, 21);
+            this.building_adv.TabIndex = 9;
+            this.building_adv.Text = "building";
             // 
             // firstTime_UI
             // 
@@ -146,6 +190,7 @@
             this.firstTime_UI.Name = "firstTime_UI";
             this.firstTime_UI.Size = new System.Drawing.Size(50, 21);
             this.firstTime_UI.TabIndex = 8;
+            this.firstTime_UI.ValueChanged += new System.EventHandler(this.startEndTimes_valueChanged);
             // 
             // between_label
             // 
@@ -165,6 +210,7 @@
             this.F_checkBox.TabIndex = 6;
             this.F_checkBox.Text = "F";
             this.F_checkBox.UseVisualStyleBackColor = true;
+            this.F_checkBox.CheckedChanged += new System.EventHandler(this.daysAttr_checkChanged);
             // 
             // R_checkBox
             // 
@@ -175,6 +221,7 @@
             this.R_checkBox.TabIndex = 5;
             this.R_checkBox.Text = "R";
             this.R_checkBox.UseVisualStyleBackColor = true;
+            this.R_checkBox.CheckedChanged += new System.EventHandler(this.daysAttr_checkChanged);
             // 
             // W_checkBox
             // 
@@ -185,6 +232,7 @@
             this.W_checkBox.TabIndex = 4;
             this.W_checkBox.Text = "W";
             this.W_checkBox.UseVisualStyleBackColor = true;
+            this.W_checkBox.CheckedChanged += new System.EventHandler(this.daysAttr_checkChanged);
             // 
             // T_checkBox
             // 
@@ -195,6 +243,7 @@
             this.T_checkBox.TabIndex = 3;
             this.T_checkBox.Text = "T";
             this.T_checkBox.UseVisualStyleBackColor = true;
+            this.T_checkBox.CheckedChanged += new System.EventHandler(this.daysAttr_checkChanged);
             // 
             // M_checkBox
             // 
@@ -205,6 +254,7 @@
             this.M_checkBox.TabIndex = 2;
             this.M_checkBox.Text = "M";
             this.M_checkBox.UseVisualStyleBackColor = true;
+            this.M_checkBox.CheckedChanged += new System.EventHandler(this.daysAttr_checkChanged);
             // 
             // day_label
             // 
@@ -217,7 +267,7 @@
             // 
             // searchResult_UI
             // 
-            this.searchResult_UI.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.searchResult_UI.BackColor = System.Drawing.Color.White;
             this.searchResult_UI.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.creditsCol,
             this.courseCodeCol,
@@ -228,10 +278,11 @@
             this.capacityCol,
             this.rmpCol,
             this.probCol});
+            this.searchResult_UI.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.searchResult_UI.HoverSelection = true;
-            this.searchResult_UI.Location = new System.Drawing.Point(31, 112);
+            this.searchResult_UI.Location = new System.Drawing.Point(31, 123);
             this.searchResult_UI.Name = "searchResult_UI";
-            this.searchResult_UI.Size = new System.Drawing.Size(942, 537);
+            this.searchResult_UI.Size = new System.Drawing.Size(962, 537);
             this.searchResult_UI.TabIndex = 4;
             this.searchResult_UI.UseCompatibleStateImageBehavior = false;
             this.searchResult_UI.View = System.Windows.Forms.View.Details;
@@ -248,7 +299,7 @@
             // professorCol
             // 
             this.professorCol.Text = "Professor";
-            this.professorCol.Width = 77;
+            this.professorCol.Width = 140;
             // 
             // nameCol
             // 
@@ -281,24 +332,28 @@
             // 
             // advSearchBtn
             // 
+            this.advSearchBtn.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.advSearchBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.advSearchBtn.Location = new System.Drawing.Point(500, 83);
+            this.advSearchBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.advSearchBtn.Location = new System.Drawing.Point(499, 83);
             this.advSearchBtn.Name = "advSearchBtn";
             this.advSearchBtn.Size = new System.Drawing.Size(87, 23);
             this.advSearchBtn.TabIndex = 3;
             this.advSearchBtn.Text = "advanced";
-            this.advSearchBtn.UseVisualStyleBackColor = true;
+            this.advSearchBtn.UseVisualStyleBackColor = false;
             this.advSearchBtn.Click += new System.EventHandler(this.advSearchBtn_Click);
             // 
             // searchBtn
             // 
+            this.searchBtn.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.searchBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.searchBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.searchBtn.Location = new System.Drawing.Point(406, 83);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(87, 23);
             this.searchBtn.TabIndex = 2;
             this.searchBtn.Text = "search";
-            this.searchBtn.UseVisualStyleBackColor = true;
+            this.searchBtn.UseVisualStyleBackColor = false;
             this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
             // searchBox
@@ -306,7 +361,7 @@
             this.searchBox.ForeColor = System.Drawing.Color.Gray;
             this.searchBox.Location = new System.Drawing.Point(31, 57);
             this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(942, 21);
+            this.searchBox.Size = new System.Drawing.Size(962, 21);
             this.searchBox.TabIndex = 1;
             this.searchBox.Text = "Search by course code or name...";
             this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
@@ -314,96 +369,19 @@
             // 
             // scheduleTab
             // 
-            this.scheduleTab.Controls.Add(this.button20);
-            this.scheduleTab.Controls.Add(this.button19);
-            this.scheduleTab.Controls.Add(this.button18);
-            this.scheduleTab.Controls.Add(this.button5);
-            this.scheduleTab.Controls.Add(this.button4);
-            this.scheduleTab.Controls.Add(this.button3);
-            this.scheduleTab.Controls.Add(this.button2);
             this.scheduleTab.Controls.Add(this.button1);
             this.scheduleTab.Controls.Add(this.listView1);
             this.scheduleTab.Location = new System.Drawing.Point(4, 31);
             this.scheduleTab.Name = "scheduleTab";
             this.scheduleTab.Padding = new System.Windows.Forms.Padding(3);
-            this.scheduleTab.Size = new System.Drawing.Size(1168, 666);
+            this.scheduleTab.Size = new System.Drawing.Size(1025, 666);
             this.scheduleTab.TabIndex = 1;
             this.scheduleTab.Text = "Schedule";
             this.scheduleTab.UseVisualStyleBackColor = true;
             // 
-            // button20
-            // 
-            this.button20.BackColor = System.Drawing.Color.Red;
-            this.button20.Location = new System.Drawing.Point(691, 142);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(29, 25);
-            this.button20.TabIndex = 8;
-            this.button20.Text = "X";
-            this.button20.UseVisualStyleBackColor = false;
-            // 
-            // button19
-            // 
-            this.button19.BackColor = System.Drawing.Color.Red;
-            this.button19.Location = new System.Drawing.Point(691, 173);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(29, 25);
-            this.button19.TabIndex = 7;
-            this.button19.Text = "X";
-            this.button19.UseVisualStyleBackColor = false;
-            // 
-            // button18
-            // 
-            this.button18.BackColor = System.Drawing.Color.Red;
-            this.button18.Location = new System.Drawing.Point(691, 204);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(29, 25);
-            this.button18.TabIndex = 6;
-            this.button18.Text = "X";
-            this.button18.UseVisualStyleBackColor = false;
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.Red;
-            this.button5.Location = new System.Drawing.Point(691, 53);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(29, 25);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "X";
-            this.button5.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.Red;
-            this.button4.Location = new System.Drawing.Point(691, 82);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(29, 25);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "X";
-            this.button4.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(691, 111);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(29, 25);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "X";
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(691, 233);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(29, 25);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "X";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(727, 54);
+            this.button1.Location = new System.Drawing.Point(690, 25);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(73, 23);
             this.button1.TabIndex = 1;
@@ -435,6 +413,7 @@
             // mock_courseCode
             // 
             this.mock_courseCode.Text = "Course Code";
+            this.mock_courseCode.Width = 99;
             // 
             // mock_courseName
             // 
@@ -444,6 +423,7 @@
             // mock_prof
             // 
             this.mock_prof.Text = "Professor";
+            this.mock_prof.Width = 81;
             // 
             // mock_room
             // 
@@ -463,12 +443,13 @@
             // 
             // menuBar
             // 
+            this.menuBar.BackColor = System.Drawing.SystemColors.MenuBar;
             this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
             this.menuBar.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuBar.Size = new System.Drawing.Size(1008, 24);
+            this.menuBar.Size = new System.Drawing.Size(1028, 24);
             this.menuBar.TabIndex = 1;
             this.menuBar.Text = "File";
             // 
@@ -555,10 +536,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.ClientSize = new System.Drawing.Size(1028, 725);
             this.Controls.Add(this.menuTabs);
             this.Controls.Add(this.menuBar);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.MainMenuStrip = this.menuBar;
             this.Name = "AppWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -568,6 +550,7 @@
             this.searchTab.PerformLayout();
             this.filter_UI.ResumeLayout(false);
             this.filter_UI.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.secondTime_UI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).EndInit();
             this.scheduleTab.ResumeLayout(false);
             this.menuBar.ResumeLayout(false);
@@ -605,10 +588,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem notifyOnScheduleConflictToolStripMenuItem;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader mock_credits;
@@ -619,9 +598,6 @@
         private System.Windows.Forms.ColumnHeader mock_building;
         private System.Windows.Forms.ColumnHeader mock_time;
         private System.Windows.Forms.ColumnHeader mock_day;
-        private System.Windows.Forms.Button button20;
-        private System.Windows.Forms.Button button19;
-        private System.Windows.Forms.Button button18;
         private System.Windows.Forms.GroupBox filter_UI;
         private System.Windows.Forms.ToolStripComboBox themeSelector;
         private System.Windows.Forms.Label day_label;
@@ -632,6 +608,10 @@
         private System.Windows.Forms.CheckBox T_checkBox;
         private System.Windows.Forms.CheckBox M_checkBox;
         private System.Windows.Forms.NumericUpDown firstTime_UI;
+        private System.Windows.Forms.ComboBox building_adv;
+        private System.Windows.Forms.ComboBox professor_adv;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown secondTime_UI;
     }
 }
 
