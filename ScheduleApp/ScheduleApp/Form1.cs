@@ -14,9 +14,9 @@ namespace ScheduleApp
 {
     public partial class AppWindow : Form
     {
-
+        
         public const string emptySearchBarText = "Search by course code or name...";
-
+        Search search = Search.Create("course_dictionary.txt");
         public AppWindow()
         {
             InitializeComponent();
@@ -38,6 +38,7 @@ namespace ScheduleApp
             }
         }
         /******************************************************************************************/
+
 
         private void themeSelector_SelectedIndexChanged(Object sender, EventArgs e)
         {
@@ -142,7 +143,16 @@ namespace ScheduleApp
         /***************************************************************************************/
 
 
+        /***********************Add to Schedule**************************************************/
 
+/*
+        private void SearchReult_UI_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
+        
+            */
+        /***************************************************************************************/
 
 
         /*************************************adv search****************************************/
@@ -164,6 +174,28 @@ namespace ScheduleApp
             }
 
         }
+
+        private void daysAttr_checkChanged(object sender, EventArgs e)
+        {
+            bool[] checkboxes = { M_checkBox.Checked, T_checkBox.Checked, W_checkBox.Checked, R_checkBox.Checked, F_checkBox.Checked };
+            for(int i = 0; i < checkboxes.Count(); i++)
+            {
+                if (checkboxes[i])
+                {
+                    search.options.day[i] = true;
+                }
+                else
+                {
+                    search.options.day[i] = false;
+                }
+            }
+        }
+        private void startEndTimes_valueChanged(object sender,  EventArgs e)
+        {
+            search.options.timeStart = (double)firstTime_UI.Value;
+            search.options.timeEnd = (double)secondTime_UI.Value;
+        }
+
         /**************************************************************************************/
 
 
