@@ -278,7 +278,7 @@
             this.capacityCol,
             this.rmpCol,
             this.probCol});
-            this.searchResult_UI.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.searchResult_UI.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.searchResult_UI.HoverSelection = true;
             this.searchResult_UI.Location = new System.Drawing.Point(31, 123);
             this.searchResult_UI.Name = "searchResult_UI";
