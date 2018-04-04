@@ -17,7 +17,7 @@ namespace ScheduleApp
     {
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
-        List<Course> schedule = new List<Course>();
+        //List<Course> schedule = new List<Course>();
 
         public AppWindow()
         {
@@ -164,8 +164,6 @@ namespace ScheduleApp
 
                 
                 Course scheduleCourse = new Course(courseID);
-                
-                schedule.Add(scheduleCourse);
 
                 var courseToAdd = setScheduleRow(scheduleCourse);
                 var listViewItem = new ListViewItem(courseToAdd);
@@ -192,58 +190,18 @@ namespace ScheduleApp
 
         private void clearAll_Click(object sender, EventArgs e)
         {
-            schedule.Clear(); // backend schedule
             scheduleView.Items.Clear(); // what the user sees
         }
 
         
-        private void removeBtn_Click(object sender, EventArgs e)
+        private void remove_DoubleClick(object sender, EventArgs e)
         {
-            string btnName = this.Name;
-
-            switch (btnName)
+            if (scheduleView.SelectedItems.Count >= 0)
             {
-                case "_0":
-                    
-                    break;
-                case "_1":
-                    break;
-                case "_2":
-                    break;
-                case "_3":
-                    break;
-                case "_4":
-                    break;
-                case "_5":
-                    break;
-                case "_6":
-                    break;
-                case "_7":
-                    break;
-                case "_8":
-                    break;
-                case "_9":
-                    break;
+                scheduleView.SelectedItems[0].Remove();
             }
         }
-        /*
-        private void removeAtScheduleView(int index)
-        {
-            if (scheduleView.Items[index] != null)
-            {
-                schedule.removeCourse()
-                scheduleView.Items.RemoveAt(index);
-            }
-        }
-
-        private void removeCourse()
-        {
-            for(var course in schedule)
-            {
-                if(course.getCourseID )
-            }
-        }
-        */
+        
 
         /***************************************************************************************/
 
