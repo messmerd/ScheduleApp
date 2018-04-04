@@ -118,6 +118,7 @@ namespace ScheduleApp
                 var listViewItem = new ListViewItem(courseToAdd);
                 searchResult_UI.Items.Add(listViewItem);
             }
+            clickHelp1.Text = "Double click to add a course!";
         }
 
         private string getDays(Course returnedCourse)
