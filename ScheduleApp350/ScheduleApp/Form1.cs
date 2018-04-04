@@ -293,26 +293,52 @@ namespace ScheduleApp
             search.options.timeEnd = (double)secondTime_UI.Value;
         }
 
+        private void building_valueChanged(object sender, EventArgs e)
+        {
+
+            switch (building_adv.Text)
+            {
+                case "HAL":
+                    search.options.building = Build.HAL;
+                    break;
+                case "Hoyt":
+                    search.options.building = Build.HH;
+                    break;
+                case "Other":
+                    search.options.building = Build.OFFCP;
+                    break;
+                case "Pew Fine Arts":
+                    search.options.building = Build.PFAC;
+                    break;
+                case "PLC":
+                    search.options.building = Build.PLC;
+                    break;
+                case "Rockwell":
+                    search.options.building = Build.RH;
+                    break;
+                case "BAO":
+                    search.options.building = Build.BAO;
+                    break;
+            }
+        }
+
         
          private void allNoneCheck_checkChanged(object sender, EventArgs e)
          {
-            
-            if (allNoneCheckBox.Checked)
+            CheckBox[] checkboxes = { M_checkBox, T_checkBox, W_checkBox, R_checkBox, F_checkBox };
+
+            foreach (var checkbox in checkboxes)
             {
-                M_checkBox.Checked = true;
-                T_checkBox.Checked = true;
-                W_checkBox.Checked = true;
-                R_checkBox.Checked = true;
-                F_checkBox.Checked = true;
+                if (allNoneCheckBox.Checked)
+                {
+                    checkbox.Checked = true;
+                }
+                else
+                {
+                    checkbox.Checked = false;
+                }
             }
-            else
-            {
-                M_checkBox.Checked = false;
-                T_checkBox.Checked = false;
-                W_checkBox.Checked = false;
-                R_checkBox.Checked = false;
-                F_checkBox.Checked = false;
-            }
+
          }
        
 

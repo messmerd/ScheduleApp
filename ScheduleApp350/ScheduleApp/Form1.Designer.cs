@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
-            this.clickHelp = new System.Windows.Forms.Label();
+            this.clickHelp1 = new System.Windows.Forms.Label();
             this.userHelpLabel = new System.Windows.Forms.Label();
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
@@ -124,7 +124,7 @@
             // searchTab
             // 
             this.searchTab.BackColor = System.Drawing.Color.White;
-            this.searchTab.Controls.Add(this.clickHelp);
+            this.searchTab.Controls.Add(this.clickHelp1);
             this.searchTab.Controls.Add(this.userHelpLabel);
             this.searchTab.Controls.Add(this.gccLogo);
             this.searchTab.Controls.Add(this.scheduleTitle);
@@ -140,16 +140,16 @@
             this.searchTab.TabIndex = 0;
             this.searchTab.Text = "Search";
             // 
-            // clickHelp
+            // clickHelp1
             // 
-            this.clickHelp.AutoSize = true;
-            this.clickHelp.Font = new System.Drawing.Font("Verdana", 9.25F);
-            this.clickHelp.ForeColor = System.Drawing.Color.Black;
-            this.clickHelp.Location = new System.Drawing.Point(332, 504);
-            this.clickHelp.Name = "clickHelp";
-            this.clickHelp.Size = new System.Drawing.Size(201, 16);
-            this.clickHelp.TabIndex = 10;
-            this.clickHelp.Text = "Double click to add a course!";
+            this.clickHelp1.AutoSize = true;
+            this.clickHelp1.Font = new System.Drawing.Font("Verdana", 9.25F);
+            this.clickHelp1.ForeColor = System.Drawing.Color.Black;
+            this.clickHelp1.Location = new System.Drawing.Point(332, 504);
+            this.clickHelp1.Name = "clickHelp1";
+            this.clickHelp1.Size = new System.Drawing.Size(201, 16);
+            this.clickHelp1.TabIndex = 10;
+            this.clickHelp1.Text = "Double click to add a course!";
             // 
             // userHelpLabel
             // 
@@ -177,7 +177,7 @@
             this.scheduleTitle.AutoSize = true;
             this.scheduleTitle.Font = new System.Drawing.Font("Sitka Text", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scheduleTitle.ForeColor = System.Drawing.Color.Black;
-            this.scheduleTitle.Location = new System.Drawing.Point(102, 3);
+            this.scheduleTitle.Location = new System.Drawing.Point(95, 6);
             this.scheduleTitle.Name = "scheduleTitle";
             this.scheduleTitle.Size = new System.Drawing.Size(341, 39);
             this.scheduleTitle.TabIndex = 7;
@@ -255,11 +255,20 @@
             // building_adv
             // 
             this.building_adv.FormattingEnabled = true;
+            this.building_adv.Items.AddRange(new object[] {
+            "HAL",
+            "Hoyt",
+            "Pew Fine Arts",
+            "PLC",
+            "Rockwell",
+            "BAO",
+            "Other"});
             this.building_adv.Location = new System.Drawing.Point(219, 55);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
             this.building_adv.Text = "building";
+            this.building_adv.SelectedValueChanged += new System.EventHandler(this.building_valueChanged);
             // 
             // firstTime_UI
             // 
@@ -852,7 +861,7 @@
         private System.Windows.Forms.ToolStripMenuItem darkTheme;
         private System.Windows.Forms.ToolStripMenuItem blueTheme;
         private System.Windows.Forms.ToolStripMenuItem gccTheme;
-        private System.Windows.Forms.Label clickHelp;
+        private System.Windows.Forms.Label clickHelp1;
         private System.Windows.Forms.ColumnHeader hiddenIDCol;
         private System.Windows.Forms.ColumnHeader schedule_creditsCol;
         private System.Windows.Forms.ColumnHeader schedule_codeCol;
