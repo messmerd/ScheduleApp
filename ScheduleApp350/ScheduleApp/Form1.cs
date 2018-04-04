@@ -257,6 +257,9 @@ namespace ScheduleApp
 
             switch (building_adv.Text)
             {
+                case "Any":
+                    search.options.building = Build.NONE;
+                    break;
                 case "HAL":
                     search.options.building = Build.HAL;
                     break;
@@ -273,10 +276,13 @@ namespace ScheduleApp
                     search.options.building = Build.PLC;
                     break;
                 case "Rockwell":
-                    search.options.building = Build.RH;
+                    search.options.building = Build.RO;
                     break;
                 case "BAO":
                     search.options.building = Build.BAO;
+                    break;
+                case "STEM":
+                    search.options.building = Build.STEM;
                     break;
             }
         }

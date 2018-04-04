@@ -248,18 +248,20 @@
             // 
             this.building_adv.FormattingEnabled = true;
             this.building_adv.Items.AddRange(new object[] {
+            "Any",
             "HAL",
             "Hoyt",
             "Pew Fine Arts",
             "PLC",
             "Rockwell",
             "BAO",
+            "STEM",
             "Other"});
             this.building_adv.Location = new System.Drawing.Point(219, 55);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
-            this.building_adv.Text = "building";
+            this.building_adv.Text = "Any";
             this.building_adv.SelectedValueChanged += new System.EventHandler(this.building_valueChanged);
             // 
             // firstTime_UI
