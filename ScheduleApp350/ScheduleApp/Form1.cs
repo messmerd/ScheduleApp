@@ -168,7 +168,7 @@ namespace ScheduleApp
                 var courseToAdd = setScheduleRow(scheduleCourse);
                 var listViewItem = new ListViewItem(courseToAdd);
                 scheduleView.Items.Add(listViewItem);
-                clickHelp1.Text = scheduleCourse.getCourseCode().ToString() + " successfully added.";
+                clickHelp1.Text = "\"" + scheduleCourse.getCourseCode().ToString() + "\" successfully added.";
             }
             
         }

@@ -89,9 +89,10 @@
             this.blueTheme = new System.Windows.Forms.ToolStripMenuItem();
             this.gccTheme = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advBuildingLabel = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -178,6 +179,7 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.advBuildingLabel);
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
             this.filter_UI.Controls.Add(this.professor_adv);
             this.filter_UI.Controls.Add(this.label1);
@@ -215,7 +217,7 @@
             // professor_adv
             // 
             this.professor_adv.FormattingEnabled = true;
-            this.professor_adv.Location = new System.Drawing.Point(321, 55);
+            this.professor_adv.Location = new System.Drawing.Point(282, 68);
             this.professor_adv.Name = "professor_adv";
             this.professor_adv.Size = new System.Drawing.Size(86, 21);
             this.professor_adv.TabIndex = 12;
@@ -257,7 +259,7 @@
             "BAO",
             "STEM",
             "Other"});
-            this.building_adv.Location = new System.Drawing.Point(219, 55);
+            this.building_adv.Location = new System.Drawing.Point(111, 68);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
@@ -605,21 +607,21 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.importToolStripMenuItem.Text = "Import JSON...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.exportToolStripMenuItem.Text = "Export JSON...";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(147, 6);
             // 
             // preferencesToolStripMenuItem
             // 
@@ -628,7 +630,7 @@
             this.notifyOnScheduleConflictToolStripMenuItem,
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem});
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
             // themeSelect
@@ -676,23 +678,32 @@
             this.notifyOnScheduleConflictToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
             this.notifyOnScheduleConflictToolStripMenuItem.Text = "Notify on schedule conflict";
             // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
             // notifyOnTooManyOrTooFewCreditsToolStripMenuItem
             // 
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem.Name = "notifyOnTooManyOrTooFewCreditsToolStripMenuItem";
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem.Text = "Notify on too many or too few credits";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(147, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // advBuildingLabel
+            // 
+            this.advBuildingLabel.AutoSize = true;
+            this.advBuildingLabel.Location = new System.Drawing.Point(48, 71);
+            this.advBuildingLabel.Name = "advBuildingLabel";
+            this.advBuildingLabel.Size = new System.Drawing.Size(57, 13);
+            this.advBuildingLabel.TabIndex = 14;
+            this.advBuildingLabel.Text = "Building:";
             // 
             // AppWindow
             // 
@@ -788,6 +799,7 @@
         private System.Windows.Forms.Label removeHelp;
         private System.Windows.Forms.ColumnHeader schedule_hiddenIDCol;
         private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
+        private System.Windows.Forms.Label advBuildingLabel;
     }
 }
 
