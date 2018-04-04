@@ -37,6 +37,7 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
             this.professor_adv = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.secondTime_UI = new System.Windows.Forms.NumericUpDown();
@@ -64,6 +65,17 @@
             this.probCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hiddenIDCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.scheduleTab = new System.Windows.Forms.TabPage();
+            this._9 = new System.Windows.Forms.Button();
+            this._1 = new System.Windows.Forms.Button();
+            this._2 = new System.Windows.Forms.Button();
+            this._3 = new System.Windows.Forms.Button();
+            this._4 = new System.Windows.Forms.Button();
+            this._5 = new System.Windows.Forms.Button();
+            this._6 = new System.Windows.Forms.Button();
+            this._7 = new System.Windows.Forms.Button();
+            this._8 = new System.Windows.Forms.Button();
+            this._0 = new System.Windows.Forms.Button();
+            this.removeLabel = new System.Windows.Forms.Label();
             this.clearAll = new System.Windows.Forms.Button();
             this.scheduleView = new System.Windows.Forms.ListView();
             this.schedule_creditsCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -88,16 +100,6 @@
             this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -184,6 +186,7 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.allNoneCheckBox);
             this.filter_UI.Controls.Add(this.professor_adv);
             this.filter_UI.Controls.Add(this.label1);
             this.filter_UI.Controls.Add(this.secondTime_UI);
@@ -204,10 +207,23 @@
             this.filter_UI.Text = "advanced";
             this.filter_UI.Visible = false;
             // 
+            // allNoneCheckBox
+            // 
+            this.allNoneCheckBox.AutoSize = true;
+            this.allNoneCheckBox.Checked = true;
+            this.allNoneCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.allNoneCheckBox.Location = new System.Drawing.Point(59, 45);
+            this.allNoneCheckBox.Name = "allNoneCheckBox";
+            this.allNoneCheckBox.Size = new System.Drawing.Size(74, 17);
+            this.allNoneCheckBox.TabIndex = 13;
+            this.allNoneCheckBox.Text = "All/None";
+            this.allNoneCheckBox.UseVisualStyleBackColor = true;
+            this.allNoneCheckBox.CheckedChanged += new System.EventHandler(this.allNoneCheck_checkChanged);
+            // 
             // professor_adv
             // 
             this.professor_adv.FormattingEnabled = true;
-            this.professor_adv.Location = new System.Drawing.Point(114, 55);
+            this.professor_adv.Location = new System.Drawing.Point(321, 55);
             this.professor_adv.Name = "professor_adv";
             this.professor_adv.Size = new System.Drawing.Size(86, 21);
             this.professor_adv.TabIndex = 12;
@@ -239,7 +255,7 @@
             // building_adv
             // 
             this.building_adv.FormattingEnabled = true;
-            this.building_adv.Location = new System.Drawing.Point(22, 55);
+            this.building_adv.Location = new System.Drawing.Point(219, 55);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
@@ -271,6 +287,8 @@
             // F_checkBox
             // 
             this.F_checkBox.AutoSize = true;
+            this.F_checkBox.Checked = true;
+            this.F_checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.F_checkBox.Location = new System.Drawing.Point(198, 22);
             this.F_checkBox.Name = "F_checkBox";
             this.F_checkBox.Size = new System.Drawing.Size(32, 17);
@@ -282,6 +300,8 @@
             // R_checkBox
             // 
             this.R_checkBox.AutoSize = true;
+            this.R_checkBox.Checked = true;
+            this.R_checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.R_checkBox.Location = new System.Drawing.Point(163, 22);
             this.R_checkBox.Name = "R_checkBox";
             this.R_checkBox.Size = new System.Drawing.Size(34, 17);
@@ -293,6 +313,8 @@
             // W_checkBox
             // 
             this.W_checkBox.AutoSize = true;
+            this.W_checkBox.Checked = true;
+            this.W_checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.W_checkBox.Location = new System.Drawing.Point(126, 22);
             this.W_checkBox.Name = "W_checkBox";
             this.W_checkBox.Size = new System.Drawing.Size(37, 17);
@@ -304,6 +326,8 @@
             // T_checkBox
             // 
             this.T_checkBox.AutoSize = true;
+            this.T_checkBox.Checked = true;
+            this.T_checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.T_checkBox.Location = new System.Drawing.Point(93, 22);
             this.T_checkBox.Name = "T_checkBox";
             this.T_checkBox.Size = new System.Drawing.Size(33, 17);
@@ -315,6 +339,8 @@
             // M_checkBox
             // 
             this.M_checkBox.AutoSize = true;
+            this.M_checkBox.Checked = true;
+            this.M_checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.M_checkBox.Location = new System.Drawing.Point(59, 21);
             this.M_checkBox.Name = "M_checkBox";
             this.M_checkBox.Size = new System.Drawing.Size(35, 17);
@@ -448,15 +474,16 @@
             // 
             // scheduleTab
             // 
-            this.scheduleTab.Controls.Add(this.button10);
-            this.scheduleTab.Controls.Add(this.button9);
-            this.scheduleTab.Controls.Add(this.button8);
-            this.scheduleTab.Controls.Add(this.button7);
-            this.scheduleTab.Controls.Add(this.button6);
-            this.scheduleTab.Controls.Add(this.button5);
-            this.scheduleTab.Controls.Add(this.button4);
-            this.scheduleTab.Controls.Add(this.button3);
-            this.scheduleTab.Controls.Add(this.button1);
+            this.scheduleTab.Controls.Add(this._9);
+            this.scheduleTab.Controls.Add(this._1);
+            this.scheduleTab.Controls.Add(this._2);
+            this.scheduleTab.Controls.Add(this._3);
+            this.scheduleTab.Controls.Add(this._4);
+            this.scheduleTab.Controls.Add(this._5);
+            this.scheduleTab.Controls.Add(this._6);
+            this.scheduleTab.Controls.Add(this._7);
+            this.scheduleTab.Controls.Add(this._8);
+            this.scheduleTab.Controls.Add(this._0);
             this.scheduleTab.Controls.Add(this.removeLabel);
             this.scheduleTab.Controls.Add(this.clearAll);
             this.scheduleTab.Controls.Add(this.scheduleView);
@@ -467,6 +494,105 @@
             this.scheduleTab.TabIndex = 1;
             this.scheduleTab.Text = "Schedule";
             this.scheduleTab.UseVisualStyleBackColor = true;
+            // 
+            // _9
+            // 
+            this._9.BackColor = System.Drawing.Color.DarkRed;
+            this._9.Location = new System.Drawing.Point(763, 204);
+            this._9.Name = "_9";
+            this._9.Size = new System.Drawing.Size(45, 15);
+            this._9.TabIndex = 13;
+            this._9.UseVisualStyleBackColor = false;
+            // 
+            // _1
+            // 
+            this._1.BackColor = System.Drawing.Color.DarkRed;
+            this._1.Location = new System.Drawing.Point(763, 68);
+            this._1.Name = "_1";
+            this._1.Size = new System.Drawing.Size(45, 15);
+            this._1.TabIndex = 12;
+            this._1.UseVisualStyleBackColor = false;
+            // 
+            // _2
+            // 
+            this._2.BackColor = System.Drawing.Color.DarkRed;
+            this._2.Location = new System.Drawing.Point(763, 85);
+            this._2.Name = "_2";
+            this._2.Size = new System.Drawing.Size(45, 15);
+            this._2.TabIndex = 11;
+            this._2.UseVisualStyleBackColor = false;
+            // 
+            // _3
+            // 
+            this._3.BackColor = System.Drawing.Color.DarkRed;
+            this._3.Location = new System.Drawing.Point(763, 102);
+            this._3.Name = "_3";
+            this._3.Size = new System.Drawing.Size(45, 15);
+            this._3.TabIndex = 10;
+            this._3.UseVisualStyleBackColor = false;
+            // 
+            // _4
+            // 
+            this._4.BackColor = System.Drawing.Color.DarkRed;
+            this._4.Location = new System.Drawing.Point(763, 119);
+            this._4.Name = "_4";
+            this._4.Size = new System.Drawing.Size(45, 15);
+            this._4.TabIndex = 9;
+            this._4.UseVisualStyleBackColor = false;
+            // 
+            // _5
+            // 
+            this._5.BackColor = System.Drawing.Color.DarkRed;
+            this._5.Location = new System.Drawing.Point(763, 136);
+            this._5.Name = "_5";
+            this._5.Size = new System.Drawing.Size(45, 15);
+            this._5.TabIndex = 8;
+            this._5.UseVisualStyleBackColor = false;
+            // 
+            // _6
+            // 
+            this._6.BackColor = System.Drawing.Color.DarkRed;
+            this._6.Location = new System.Drawing.Point(763, 153);
+            this._6.Name = "_6";
+            this._6.Size = new System.Drawing.Size(45, 15);
+            this._6.TabIndex = 7;
+            this._6.UseVisualStyleBackColor = false;
+            // 
+            // _7
+            // 
+            this._7.BackColor = System.Drawing.Color.DarkRed;
+            this._7.Location = new System.Drawing.Point(763, 170);
+            this._7.Name = "_7";
+            this._7.Size = new System.Drawing.Size(45, 15);
+            this._7.TabIndex = 6;
+            this._7.UseVisualStyleBackColor = false;
+            // 
+            // _8
+            // 
+            this._8.BackColor = System.Drawing.Color.DarkRed;
+            this._8.Location = new System.Drawing.Point(763, 187);
+            this._8.Name = "_8";
+            this._8.Size = new System.Drawing.Size(45, 15);
+            this._8.TabIndex = 5;
+            this._8.UseVisualStyleBackColor = false;
+            // 
+            // _0
+            // 
+            this._0.BackColor = System.Drawing.Color.DarkRed;
+            this._0.Location = new System.Drawing.Point(763, 50);
+            this._0.Name = "_0";
+            this._0.Size = new System.Drawing.Size(45, 15);
+            this._0.TabIndex = 3;
+            this._0.UseVisualStyleBackColor = false;
+            // 
+            // removeLabel
+            // 
+            this.removeLabel.AutoSize = true;
+            this.removeLabel.Location = new System.Drawing.Point(759, 32);
+            this.removeLabel.Name = "removeLabel";
+            this.removeLabel.Size = new System.Drawing.Size(54, 13);
+            this.removeLabel.TabIndex = 2;
+            this.removeLabel.Text = "Remove";
             // 
             // clearAll
             // 
@@ -646,96 +772,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // removeLabel
-            // 
-            this.removeLabel.AutoSize = true;
-            this.removeLabel.Location = new System.Drawing.Point(757, 32);
-            this.removeLabel.Name = "removeLabel";
-            this.removeLabel.Size = new System.Drawing.Size(54, 13);
-            this.removeLabel.TabIndex = 2;
-            this.removeLabel.Text = "Remove";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.DarkRed;
-            this.button1.Location = new System.Drawing.Point(763, 49);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(45, 15);
-            this.button1.TabIndex = 3;
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.DarkRed;
-            this.button3.Location = new System.Drawing.Point(763, 191);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(45, 15);
-            this.button3.TabIndex = 5;
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.DarkRed;
-            this.button4.Location = new System.Drawing.Point(763, 173);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(45, 15);
-            this.button4.TabIndex = 6;
-            this.button4.UseVisualStyleBackColor = false;
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.DarkRed;
-            this.button5.Location = new System.Drawing.Point(763, 156);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(45, 15);
-            this.button5.TabIndex = 7;
-            this.button5.UseVisualStyleBackColor = false;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.DarkRed;
-            this.button6.Location = new System.Drawing.Point(763, 139);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(45, 15);
-            this.button6.TabIndex = 8;
-            this.button6.UseVisualStyleBackColor = false;
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.DarkRed;
-            this.button7.Location = new System.Drawing.Point(763, 121);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(45, 15);
-            this.button7.TabIndex = 9;
-            this.button7.UseVisualStyleBackColor = false;
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.DarkRed;
-            this.button8.Location = new System.Drawing.Point(763, 103);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(45, 15);
-            this.button8.TabIndex = 10;
-            this.button8.UseVisualStyleBackColor = false;
-            // 
-            // button9
-            // 
-            this.button9.BackColor = System.Drawing.Color.DarkRed;
-            this.button9.Location = new System.Drawing.Point(763, 85);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(45, 15);
-            this.button9.TabIndex = 11;
-            this.button9.UseVisualStyleBackColor = false;
-            // 
-            // button10
-            // 
-            this.button10.BackColor = System.Drawing.Color.DarkRed;
-            this.button10.Location = new System.Drawing.Point(763, 67);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(45, 15);
-            this.button10.TabIndex = 12;
-            this.button10.UseVisualStyleBackColor = false;
-            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -826,16 +862,18 @@
         private System.Windows.Forms.ColumnHeader schedule_buildingCol;
         private System.Windows.Forms.ColumnHeader schedule_roomCol;
         private System.Windows.Forms.ColumnHeader schedule_daysCol;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button _0;
         private System.Windows.Forms.Label removeLabel;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button _1;
+        private System.Windows.Forms.Button _2;
+        private System.Windows.Forms.Button _3;
+        private System.Windows.Forms.Button _4;
+        private System.Windows.Forms.Button _5;
+        private System.Windows.Forms.Button _6;
+        private System.Windows.Forms.Button _7;
+        private System.Windows.Forms.Button _8;
+        private System.Windows.Forms.Button _9;
+        private System.Windows.Forms.CheckBox allNoneCheckBox;
     }
 }
 

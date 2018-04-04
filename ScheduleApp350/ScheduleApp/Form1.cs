@@ -196,10 +196,52 @@ namespace ScheduleApp
             scheduleView.Items.Clear(); // what the user sees
         }
 
-        /*
+        
         private void removeBtn_Click(object sender, EventArgs e)
         {
+            string btnName = this.Name;
 
+            switch (btnName)
+            {
+                case "_0":
+                    
+                    break;
+                case "_1":
+                    break;
+                case "_2":
+                    break;
+                case "_3":
+                    break;
+                case "_4":
+                    break;
+                case "_5":
+                    break;
+                case "_6":
+                    break;
+                case "_7":
+                    break;
+                case "_8":
+                    break;
+                case "_9":
+                    break;
+            }
+        }
+        /*
+        private void removeAtScheduleView(int index)
+        {
+            if (scheduleView.Items[index] != null)
+            {
+                schedule.removeCourse()
+                scheduleView.Items.RemoveAt(index);
+            }
+        }
+
+        private void removeCourse()
+        {
+            for(var course in schedule)
+            {
+                if(course.getCourseID )
+            }
         }
         */
 
@@ -250,6 +292,29 @@ namespace ScheduleApp
             search.options.timeStart = (double)firstTime_UI.Value;
             search.options.timeEnd = (double)secondTime_UI.Value;
         }
+
+        
+         private void allNoneCheck_checkChanged(object sender, EventArgs e)
+         {
+            
+            if (allNoneCheckBox.Checked)
+            {
+                M_checkBox.Checked = true;
+                T_checkBox.Checked = true;
+                W_checkBox.Checked = true;
+                R_checkBox.Checked = true;
+                F_checkBox.Checked = true;
+            }
+            else
+            {
+                M_checkBox.Checked = false;
+                T_checkBox.Checked = false;
+                W_checkBox.Checked = false;
+                R_checkBox.Checked = false;
+                F_checkBox.Checked = false;
+            }
+         }
+       
 
         /**************************************************************************************/
 
