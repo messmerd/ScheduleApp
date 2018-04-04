@@ -90,6 +90,7 @@
             this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.schedule_hiddenIDCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -189,7 +190,7 @@
             this.filter_UI.Controls.Add(this.T_checkBox);
             this.filter_UI.Controls.Add(this.M_checkBox);
             this.filter_UI.Controls.Add(this.day_label);
-            this.filter_UI.Location = new System.Drawing.Point(210, 111);
+            this.filter_UI.Location = new System.Drawing.Point(203, 108);
             this.filter_UI.Name = "filter_UI";
             this.filter_UI.Size = new System.Drawing.Size(444, 100);
             this.filter_UI.TabIndex = 6;
@@ -471,6 +472,7 @@
             // hiddenIDCol
             // 
             this.hiddenIDCol.Text = "";
+            this.hiddenIDCol.Width = 0;
             // 
             // scheduleTab
             // 
@@ -515,7 +517,8 @@
             this.schedule_timeCol,
             this.schedule_buildingCol,
             this.schedule_roomCol,
-            this.schedule_daysCol});
+            this.schedule_daysCol,
+            this.schedule_hiddenIDCol});
             this.scheduleView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.scheduleView.FullRowSelect = true;
             this.scheduleView.GridLines = true;
@@ -676,6 +679,11 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // schedule_hiddenIDCol
+            // 
+            this.schedule_hiddenIDCol.Text = "DOESNT MATTER";
+            this.schedule_hiddenIDCol.Width = 0;
+            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -768,6 +776,7 @@
         private System.Windows.Forms.ColumnHeader schedule_daysCol;
         private System.Windows.Forms.CheckBox allNoneCheckBox;
         private System.Windows.Forms.Label removeHelp;
+        private System.Windows.Forms.ColumnHeader schedule_hiddenIDCol;
     }
 }
 

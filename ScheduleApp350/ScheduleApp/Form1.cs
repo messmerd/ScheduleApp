@@ -111,7 +111,6 @@ namespace ScheduleApp
             List<Course> searchResults = search.lastSearchResults.getCourses();
 
             searchResult_UI.Items.Clear(); // Remove previous search results
-            searchResult_UI.Columns[9].Width = 0; // hide the ID column, we need this information to add courses later
 
             foreach (var course in searchResults)
             {
@@ -168,8 +167,9 @@ namespace ScheduleApp
                 var courseToAdd = setScheduleRow(scheduleCourse);
                 var listViewItem = new ListViewItem(courseToAdd);
                 scheduleView.Items.Add(listViewItem);
-                
+                clickHelp1.Text = scheduleCourse.getCourseCode().ToString() + " successfully added.";
             }
+            
         }
 
         private string[] setScheduleRow(Course c)
@@ -184,6 +184,7 @@ namespace ScheduleApp
             row[5] = c.getBuilding().ToString();
             row[6] = c.getRoom().ToString();
             row[7] = getDays(c);
+            row[8] = c.getCourseID().ToString();
             return row;
 
         }
