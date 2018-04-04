@@ -8,15 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CourseClass;
-using SearchClass; 
+using SearchClass;
+using CourseInfoClass;
 
 namespace ScheduleApp
 {
     public partial class AppWindow : Form
     {
-        
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
+        List<Course> schedule = new List<Course>();
+
         public AppWindow()
         {
             InitializeComponent();
@@ -40,51 +42,62 @@ namespace ScheduleApp
         /******************************************************************************************/
 
 
-        private void themeSelector_SelectedIndexChanged(Object sender, EventArgs e)
-        {
-            int selectedTheme = themeSelector.SelectedIndex;
-            switch (selectedTheme)
-            {
-                case 0:
-                    themeToClassic();
-                    
-                    break;
-                case 1:
-                    themeToNight();
-                    
-                    break;
-                case 2:
-                    themeToBlue();
-                    
-                    break;
-                case 3:
-                    themeToGCC();
-                    
-                    break;
-            }
-        }
-        /***************************************************************************************************/
 
 
-        private void themeToNight()
+
+        
+        /**************************************** Themes ******************************************/
+
+
+        private void themeToNight(object sender, EventArgs e)
         {
 
         }
 
-        private void themeToBlue()
+        private void themeToBlue(object sender, EventArgs e)
         {
 
         }
 
-        private void themeToGCC()
+        private void themeToGCC(object sender, EventArgs e)
         {
 
         }
 
-        private void themeToClassic()
+        private void themeToClassic(object sender, EventArgs e)
         {
 
+            scheduleTitle.ForeColor = Color.Black;
+
+            
+            menuBar.BackColor = Color.White;
+            searchBox.BackColor = Color.White;
+            searchTab.BackColor = Color.White;
+            searchResult_UI.BackColor = Color.White;
+            searchResult_UI.ForeColor = Color.Black;
+            scheduleView.BackColor = Color.White;
+            scheduleTab.BackColor = Color.White;
+            appMenu.BackColor = Color.White;
+
+            
+            filter_UI.BackColor = Color.White;
+            filter_UI.ForeColor = Color.Black;
+
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+
         }
+        /******************************************************************************************/
+
+
+
+
+
 
         /**********************Create UI Search Results Fns****************************************/
         private void searchBtn_Click(object sender, EventArgs e)
@@ -97,16 +110,14 @@ namespace ScheduleApp
                 search.searchForQuery("");
             List<Course> searchResults = search.lastSearchResults.getCourses();
 
-            // TODO: Implement advanced search filter here
-
-            searchResult_UI.Items.Clear(); // Remove previous search results 
+            searchResult_UI.Items.Clear(); // Remove previous search results
+            searchResult_UI.Columns[9].Width = 0; // hide the ID column, we need this information to add courses later
 
             foreach (var course in searchResults)
             {
-                var courseToAdd = setRow(course);
+                var courseToAdd = setSearchRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
                 searchResult_UI.Items.Add(listViewItem);
-                // TODO: Dynamically create add/remove buttons to candidate schedule structure
             }
         }
 
@@ -123,21 +134,20 @@ namespace ScheduleApp
             return meetingDays;
         }
 
-        private string[] setRow(Course c) // c = the course
+        private string[] setSearchRow(Course c) // c = the course
         {
             string[] row = new string[50]; // row buffer
 
             row[0] = c.getCredits().ToString();
             row[1] = c.getCourseCode();
-            //if (c.getProf().first == null || c.getProf().first == "") row[2] = " ";
-            //else  row[2] = c.getProf().first[0] + ". " + c.getProf().last;
-            row[2] = c.getProf().last + ", " + c.getProf().first; 
+            row[2] = c.getProf().last + ", " + c.getProf().first;
             row[3] = c.getLongName();
             row[4] = c.getTimeString().Item1 + "-" + c.getTimeString().Item2;
             row[5] = getDays(c);
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
             row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
             row[8] = "low"; // placeholder ... 
+            row[9] = c.getCourseID().ToString();
             return row;
         }
         /***************************************************************************************/
@@ -145,14 +155,58 @@ namespace ScheduleApp
 
         /***********************Add to Schedule**************************************************/
 
-/*
-        private void SearchReult_UI_MouseDoubleClick(object sender, MouseEventArgs e)
+
+        private void searchResult_UI_DoubleClick(object sender, MouseEventArgs e)
+        {
+            if(searchResult_UI.SelectedItems.Count >= 0)
+            {
+                int courseID = int.Parse(searchResult_UI.SelectedItems[0].SubItems[9].Text);
+
+                
+                Course scheduleCourse = new Course(courseID);
+                
+                schedule.Add(scheduleCourse);
+
+                var courseToAdd = setScheduleRow(scheduleCourse);
+                var listViewItem = new ListViewItem(courseToAdd);
+                scheduleView.Items.Add(listViewItem);
+                
+            }
+        }
+
+        private string[] setScheduleRow(Course c)
+        {
+            string[] row = new string[50]; // row buffer
+
+            row[0] = c.getCredits().ToString();//
+            row[1] = c.getCourseCode();//
+            row[2] = c.getProf().last + ", " + c.getProf().first;
+            row[3] = c.getLongName();
+            row[4] = c.getTimeString().Item1 + "-" + c.getTimeString().Item2;
+            row[5] = c.getBuilding().ToString();
+            row[6] = c.getRoom().ToString();
+            row[7] = getDays(c);
+            return row;
+
+        }
+
+        private void clearAll_Click(object sender, EventArgs e)
+        {
+            schedule.Clear(); // backend schedule
+            scheduleView.Items.Clear(); // what the user sees
+        }
+
+        /*
+        private void removeBtn_Click(object sender, EventArgs e)
         {
 
         }
-        
-            */
+        */
+
         /***************************************************************************************/
+
+
+
 
 
         /*************************************adv search****************************************/
@@ -190,6 +244,7 @@ namespace ScheduleApp
                 }
             }
         }
+
         private void startEndTimes_valueChanged(object sender,  EventArgs e)
         {
             search.options.timeStart = (double)firstTime_UI.Value;
@@ -230,6 +285,7 @@ namespace ScheduleApp
         {   
             Application.Exit();
         }
+
         /***************************************************************************************************/
     }
 }

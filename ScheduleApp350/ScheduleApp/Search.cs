@@ -375,7 +375,7 @@ namespace SearchClass
 
         //public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, ANY=10 };
         
-        public Build building;
+        public CourseClass.Build building;
         public Tuple<string, string> professor;
 
         public AdvancedOptions()

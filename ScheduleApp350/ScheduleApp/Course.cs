@@ -6,7 +6,9 @@ using CourseInfoClass;
 
 namespace CourseClass
 {
-    public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, NONE };
+    // HAL, HH = HOYT, PFAC = Pew Fine Arts, OFFCP = Study abroad, etc, PLC = Physical Learning cnter, RH = Rockwell, 
+    // TBA = N/A, BAO = ???
+    public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBA, NONE };
 
     public struct Course
     {
