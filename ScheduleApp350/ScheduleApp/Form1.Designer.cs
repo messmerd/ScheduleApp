@@ -37,6 +37,7 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.advBuildingLabel = new System.Windows.Forms.Label();
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
             this.professor_adv = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -92,7 +93,7 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.advBuildingLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -179,6 +180,7 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.label2);
             this.filter_UI.Controls.Add(this.advBuildingLabel);
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
             this.filter_UI.Controls.Add(this.professor_adv);
@@ -201,6 +203,15 @@
             this.filter_UI.Text = "advanced";
             this.filter_UI.Visible = false;
             // 
+            // advBuildingLabel
+            // 
+            this.advBuildingLabel.AutoSize = true;
+            this.advBuildingLabel.Location = new System.Drawing.Point(44, 71);
+            this.advBuildingLabel.Name = "advBuildingLabel";
+            this.advBuildingLabel.Size = new System.Drawing.Size(57, 13);
+            this.advBuildingLabel.TabIndex = 14;
+            this.advBuildingLabel.Text = "Building:";
+            // 
             // allNoneCheckBox
             // 
             this.allNoneCheckBox.AutoSize = true;
@@ -217,11 +228,14 @@
             // professor_adv
             // 
             this.professor_adv.FormattingEnabled = true;
-            this.professor_adv.Location = new System.Drawing.Point(282, 68);
+            this.professor_adv.Items.AddRange(new object[] {
+            "Any"});
+            this.professor_adv.Location = new System.Drawing.Point(263, 68);
             this.professor_adv.Name = "professor_adv";
-            this.professor_adv.Size = new System.Drawing.Size(86, 21);
+            this.professor_adv.Size = new System.Drawing.Size(130, 21);
             this.professor_adv.TabIndex = 12;
-            this.professor_adv.Text = "professor";
+            this.professor_adv.Text = "Any";
+            this.professor_adv.SelectedValueChanged += new System.EventHandler(this.professorValueChanged);
             // 
             // label1
             // 
@@ -259,7 +273,7 @@
             "BAO",
             "STEM",
             "Other"});
-            this.building_adv.Location = new System.Drawing.Point(111, 68);
+            this.building_adv.Location = new System.Drawing.Point(104, 68);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
@@ -696,14 +710,14 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // advBuildingLabel
+            // label2
             // 
-            this.advBuildingLabel.AutoSize = true;
-            this.advBuildingLabel.Location = new System.Drawing.Point(48, 71);
-            this.advBuildingLabel.Name = "advBuildingLabel";
-            this.advBuildingLabel.Size = new System.Drawing.Size(57, 13);
-            this.advBuildingLabel.TabIndex = 14;
-            this.advBuildingLabel.Text = "Building:";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(194, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Professor:";
             // 
             // AppWindow
             // 
@@ -800,6 +814,7 @@
         private System.Windows.Forms.ColumnHeader schedule_hiddenIDCol;
         private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
         private System.Windows.Forms.Label advBuildingLabel;
+        private System.Windows.Forms.Label label2;
     }
 }
 

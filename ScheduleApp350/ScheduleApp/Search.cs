@@ -301,10 +301,10 @@ namespace SearchClass
 
 
             // Filter professor  
-            if (options.professor.Item1 != "" && options.professor.Item2 != "")  // If the user wants to only show courses with a certain professor 
+            if (options.firstNameProfessor != "" && options.lastNameProfessor != "")  // If the user wants to only show courses with a certain professor 
             {
                 removeIndices.Clear();
-                removeIndices = lastSearchResults.getCourses().Select((element, index) => (element.getProf().first != options.professor.Item1 || element.getProf().last != options.professor.Item2) ? index : -1).Where(i => i != -1).ToList();
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => (element.getProf().first != options.firstNameProfessor || element.getProf().last != options.lastNameProfessor) ? index : -1).Where(i => i != -1).ToList();
                 removeIndices.Reverse();
 
                 foreach (int index in removeIndices)
@@ -375,8 +375,9 @@ namespace SearchClass
 
         //public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, ANY=10 };
         
-        public CourseClass.Build building;
-        public Tuple<string, string> professor;
+        public Build building;
+        public string firstNameProfessor;
+        public string lastNameProfessor;
 
         public AdvancedOptions()
         {
@@ -388,8 +389,9 @@ namespace SearchClass
             timeStart = -1.0; 
             timeEnd = -1.0;
             day = (new bool[] {true,true,true,true,true}).ToList();
-            building = CourseClass.Build.NONE;  // NONE in CourseClass will mean ANY building here. 
-            professor = new Tuple<string, string>("","");  // First, Last 
+            building = Build.NONE;  // NONE in CourseClass will mean ANY building here. 
+            firstNameProfessor = "";
+            lastNameProfessor = "";
         }
 
     }

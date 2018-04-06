@@ -17,11 +17,18 @@ namespace ScheduleApp
     {
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
-        //List<Course> schedule = new List<Course>();
+        CourseInfo info = CourseInfo.Create();
 
         public AppWindow()
         {
             InitializeComponent();
+            initializeProfessorComboBox();
+        }
+
+        private void initializeProfessorComboBox()
+        {
+            foreach (var prof in info.prof_database)
+                professor_adv.Items.Add(prof.last + ", " + prof.first);
         }
 
         /**********************Text Inside Search****************************************/
@@ -233,17 +240,11 @@ namespace ScheduleApp
 
         private void daysAttr_checkChanged(object sender, EventArgs e)
         {
-            bool[] checkboxes = { M_checkBox.Checked, T_checkBox.Checked, W_checkBox.Checked, R_checkBox.Checked, F_checkBox.Checked };
+            bool [] checkboxes = { M_checkBox.Checked, T_checkBox.Checked, W_checkBox.Checked, R_checkBox.Checked, F_checkBox.Checked };
+
             for(int i = 0; i < checkboxes.Count(); i++)
             {
-                if (checkboxes[i])
-                {
-                    search.options.day[i] = true;
-                }
-                else
-                {
-                    search.options.day[i] = false;
-                }
+                search.options.day[i] = checkboxes[i] ? true : false;
             }
         }
 
@@ -256,38 +257,29 @@ namespace ScheduleApp
         private void building_valueChanged(object sender, EventArgs e)
         {
 
-            switch (building_adv.Text)
+            Tuple<string, Build>  [] options = {
+                Tuple.Create("Any", Build.NONE),
+                Tuple.Create("HAL", Build.HAL),
+                Tuple.Create("Hoyt", Build.HH),
+                Tuple.Create("Other", Build.OFFCP),
+                Tuple.Create("Pew Fine Arts", Build.PFAC),
+                Tuple.Create("PLC", Build.PLC),
+                Tuple.Create("Rockwell", Build.RH),
+                Tuple.Create("BAO", Build.BAO),
+                Tuple.Create("STEM", Build.STEM)
+            };
+
+            foreach(var option in options)
             {
-                case "Any":
-                    search.options.building = Build.NONE;
-                    break;
-                case "HAL":
-                    search.options.building = Build.HAL;
-                    break;
-                case "Hoyt":
-                    search.options.building = Build.HH;
-                    break;
-                case "Other":
-                    search.options.building = Build.OFFCP;
-                    break;
-                case "Pew Fine Arts":
-                    search.options.building = Build.PFAC;
-                    break;
-                case "PLC":
-                    search.options.building = Build.PLC;
-                    break;
-                case "Rockwell":
-                    search.options.building = Build.RO;
-                    break;
-                case "BAO":
-                    search.options.building = Build.BAO;
-                    break;
-                case "STEM":
-                    search.options.building = Build.STEM;
-                    break;
+                if (building_adv.Text == option.Item1) search.options.building = option.Item2;
             }
         }
-
+        private void professorValueChanged(object sender, EventArgs e)
+        {
+            bool anyProf = professor_adv.Text == "Any";
+            search.options.lastNameProfessor = !anyProf ? professor_adv.Text.Split(',')[0] : "";
+            search.options.firstNameProfessor = !anyProf ? professor_adv.Text.Split(',')[1].Trim() : "";
+        }
         
          private void allNoneCheck_checkChanged(object sender, EventArgs e)
          {
@@ -295,14 +287,7 @@ namespace ScheduleApp
 
             foreach (var checkbox in checkboxes)
             {
-                if (allNoneCheckBox.Checked)
-                {
-                    checkbox.Checked = true;
-                }
-                else
-                {
-                    checkbox.Checked = false;
-                }
+                checkbox.Checked = allNoneCheckBox.Checked ? true : false;
             }
 
          }
