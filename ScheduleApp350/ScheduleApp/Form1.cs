@@ -302,7 +302,7 @@ namespace ScheduleApp
 
 
 
-        /**************************************JSON Transfer (Sprint 2)***************************************/
+        /**************************************JSON Transfer***************************************/
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Stream jsonFileStream = null;

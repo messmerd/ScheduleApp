@@ -15,11 +15,15 @@ namespace ScheduleApp
     {
         public List<Course> schedule;
         public CourseInfo DB;
+        public int creditCount; //current count of credits within user's schedule
+        public int creditSituation; //reports if schedule is less than 12 (-1), 12 to 17 (0), or greater than 17 (1)
 
         CandidateSchedule()
         {
             schedule = new List<Course>();
             DB = CourseInfo.Create();
+            creditCount = 0;
+            creditSituation = -1;
         }
 
         /*
@@ -32,17 +36,23 @@ namespace ScheduleApp
         public void add(Course c)
         {
             schedule.Add(c);
+            creditCount += c.getCredits();
+            checkCreditCount();
         }
 
         public List<int> addCourseByObject(Course c)
         {
+            creditCount += c.getCredits();
+            checkCreditCount();
             return addCourseByID(c.getCourseID());
         }
 
 
-        public List<int> addCourseByID(int id)
+        public List<int> addCourseByID(int id) //implement credit counting
         {
             List<int> additional = new List<int>();
+            creditCount += DB.getCredits(id);
+            checkCreditCount();
             schedule.Add(new Course(id));
             for (int j = 0; j < 2; j++)
             {
@@ -70,11 +80,15 @@ namespace ScheduleApp
         
         public bool removeCourse(int courseID)
         {
+            creditCount -= DB.getCredits(courseID);
+            checkCreditCount();
             return schedule.Remove(DB.getCourse(courseID));
         }
 
         public void removeAllCourses()
         {
+            creditCount = 0;
+            checkCreditCount();
             schedule.Clear();
         }
 
@@ -88,6 +102,22 @@ namespace ScheduleApp
                 }
             }
             return false;
+        }
+
+        public void checkCreditCount()
+        {
+            if (creditCount < 12)
+            {
+                creditSituation = -1;
+            }
+            else if (creditCount > 17)
+            {
+                creditSituation = 1;
+            }
+            else
+            {
+                creditSituation = 0;
+            }
         }
 
         public bool scheduleFromFile(string filename) //creates the schedule from a json file, return true if successful
