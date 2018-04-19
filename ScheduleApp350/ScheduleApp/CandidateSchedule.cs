@@ -7,6 +7,7 @@ using CourseClass;
 using CourseInfoClass;
 using ScheduleApp;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ScheduleApp
 {
@@ -89,14 +90,17 @@ namespace ScheduleApp
             return false;
         }
 
-        public bool scheduleFromFile() //creates the schedule from a json file, return true if successful
+        public bool scheduleFromFile(string filename) //creates the schedule from a json file, return true if successful
         {
+            if(!File.Exists(filename)) return false;
+            string json = System.IO.File.ReadAllText("test.json");
             return false;
         }
 
-        public bool scheduleToFile() //creates a json file from the schedule, return true if successful
+        public bool scheduleToFile(string filename) //creates a json file from the schedule, return true if successful
         {
-
+            //TODO:
+            //convert course to a single string w/ all info, one course per line
             return false;
         }
     }
