@@ -37,6 +37,7 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.advBuildingLabel = new System.Windows.Forms.Label();
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
             this.professor_adv = new System.Windows.Forms.ComboBox();
@@ -93,7 +94,7 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -180,6 +181,7 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.label3);
             this.filter_UI.Controls.Add(this.label2);
             this.filter_UI.Controls.Add(this.advBuildingLabel);
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
@@ -202,6 +204,15 @@
             this.filter_UI.TabStop = false;
             this.filter_UI.Text = "advanced";
             this.filter_UI.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(194, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Professor:";
             // 
             // advBuildingLabel
             // 
@@ -251,13 +262,18 @@
             this.secondTime_UI.DecimalPlaces = 2;
             this.secondTime_UI.Location = new System.Drawing.Point(384, 21);
             this.secondTime_UI.Maximum = new decimal(new int[] {
-            23,
+            24,
             0,
             0,
             0});
             this.secondTime_UI.Name = "secondTime_UI";
             this.secondTime_UI.Size = new System.Drawing.Size(50, 21);
             this.secondTime_UI.TabIndex = 10;
+            this.secondTime_UI.Value = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
             this.secondTime_UI.ValueChanged += new System.EventHandler(this.startEndTimes_valueChanged);
             // 
             // building_adv
@@ -710,14 +726,14 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // label2
+            // label3
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(194, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Professor:";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(140, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "RMP:";
             // 
             // AppWindow
             // 
@@ -815,6 +831,7 @@
         private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
         private System.Windows.Forms.Label advBuildingLabel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

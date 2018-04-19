@@ -120,10 +120,12 @@ namespace CourseInfoClass
                     parsedCourse.Add("0"); 
                 }
                 database.Add(new Course(parsedCourse, i));
-                if (!prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
-                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));
+                // Don't add duplicate professors or empty strings:
+                if (parsedCourse[11] != "" && parsedCourse[12] != "" && !prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));  
                 i++;
             }
+            prof_database = prof_database.OrderBy(x => x.last).ToList();
         }
 
         public Course getCourse(int id)

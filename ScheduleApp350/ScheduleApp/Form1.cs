@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CourseClass;
 using SearchClass;
 using CourseInfoClass;
+using System.IO;
 
 namespace ScheduleApp
 {
@@ -58,7 +59,11 @@ namespace ScheduleApp
 
         private void themeToNight(object sender, EventArgs e)
         {
-
+            // 38 50 56 <- background and surrounding stuff
+            // 0 150 136 <- buttons
+            // 168 183 185 <- text color
+            // 48 64 71 <- search bar
+            // 89 102 107 <- unfocused search bar
         }
 
         private void themeToBlue(object sender, EventArgs e)
@@ -175,7 +180,7 @@ namespace ScheduleApp
                 var courseToAdd = setScheduleRow(scheduleCourse);
                 var listViewItem = new ListViewItem(courseToAdd);
                 scheduleView.Items.Add(listViewItem);
-                clickHelp1.Text = "\"" + scheduleCourse.getCourseCode().ToString() + "\" successfully added.";
+                clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
             }
             
         }
@@ -300,24 +305,54 @@ namespace ScheduleApp
         /**************************************JSON Transfer (Sprint 2)***************************************/
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /* 
-            OpenFileDialog jsonImport = new OpenFileDialog();
-            jsonImport.Filter = "JSON | *.json";
-            jsonImport.Title = "Import a JSON file with a schedule that you or someone else has created";
-           // if(jsonImport.ShowDialog() = DialogResult.OK)
-            {
+            Stream jsonFileStream = null;
+            OpenFileDialog openJsonDialog = new OpenFileDialog();
 
+            openJsonDialog.InitialDirectory = "c:\\";
+            openJsonDialog.Filter = "json files (*.json)";
+            openJsonDialog.FilterIndex = 2;
+            openJsonDialog.RestoreDirectory = true;
+
+            if (openJsonDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if ((jsonFileStream = openJsonDialog.OpenFile()) != null)
+                    {
+                        using (jsonFileStream)
+                        {
+                            // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
+                            // Write an additional function, don't actually write the code here
+                            // You might want to delete the stream from this method and just include it 
+                            // inside the method you're going to write
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
             }
-            */
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
-        {   /*
-            SaveFileDialog jsonSave = new SaveFileDialog();
-            jsonSave.Filter = "JSON | *.json";
-            jsonSave.Title = "Save your schedule as a JSON file";
-            jsonSave.ShowDialog();
-            */
+        {
+            Stream jsonSaveStream = null;
+            SaveFileDialog saveJsonDialog = new SaveFileDialog();
+
+            saveJsonDialog.Filter = "json files (*.json)";
+            saveJsonDialog.FilterIndex = 2;
+            saveJsonDialog.RestoreDirectory = true;
+
+            if (saveJsonDialog.ShowDialog() == DialogResult.OK)
+            {
+                if ((jsonSaveStream = saveJsonDialog.OpenFile()) != null)
+                {
+                    // TODO: Save the Json file to their computer
+                    // You might want to make a multiline string variable to do so.
+                    // Its just a normal string, except using """stuff""" instead of "stuff"
+                }
+            }
         }
         /***************************************************************************************************/
 
