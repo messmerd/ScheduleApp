@@ -94,6 +94,7 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -180,6 +181,7 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.label3);
             this.filter_UI.Controls.Add(this.label2);
             this.filter_UI.Controls.Add(this.advBuildingLabel);
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
@@ -724,6 +726,15 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(140, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "RMP:";
+            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -820,6 +831,7 @@
         private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
         private System.Windows.Forms.Label advBuildingLabel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 
