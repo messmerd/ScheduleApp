@@ -103,9 +103,9 @@ namespace ScheduleApp
             return false;
         }
 
-<<<<<<< HEAD
-        public void checkCreditCount() //for checking the current credit count. makes creditSituation -1 if less than 12 credits,
+        //for checking the current credit count. makes creditSituation -1 if less than 12 credits,
         //0 if 12 to 17 (range with no warning), and 1 if greater than 17 credits.
+        public void checkCreditCount()
         {
             if (creditCount < 12)
             {
@@ -119,7 +119,7 @@ namespace ScheduleApp
             {
                 creditSituation = 0;
             }
-=======
+        }
         public bool scheduleFromFile() //creates the schedule from a json file, return true if successful
         {
             return false;
@@ -129,7 +129,6 @@ namespace ScheduleApp
         {
 
             return false;
->>>>>>> 618dac6cfbe90a530d195df601aa9c66f86da2f0
         }
     }
 }
