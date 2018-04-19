@@ -146,6 +146,11 @@ namespace CourseClass
                 credits = 0;
         }
 
+        public bool isFull() //returns true if the course is full
+        {
+            return capacity-enrollment <= 0;
+        }
+
         public int getCourseID()  // Note: courseID is NOT the same as courseCode 
         {
             return courseID;
