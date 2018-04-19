@@ -39,16 +39,19 @@ namespace CourseInfoClass
         private CourseInfo()
         {
              database = new List<Course>();
+             prof_database = new List<Professor>();
              parseTextFile("course_database.txt");    // This function was causing the program to hang so it is commented out for now
         }
 
         private CourseInfo(string db_filename)
         {
             database = new List<Course>();
+            prof_database = new List<Professor>();
             parseTextFile(db_filename);    // This function was causing the program to hang so it is commented out for now
         }
 
         public List<Course> database;
+        public List<Professor> prof_database;
         private int numCourses;
 
         private void parseCSV()
@@ -117,8 +120,12 @@ namespace CourseInfoClass
                     parsedCourse.Add("0"); 
                 }
                 database.Add(new Course(parsedCourse, i));
+                // Don't add duplicate professors or empty strings:
+                if (parsedCourse[11] != "" && parsedCourse[12] != "" && !prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));  
                 i++;
             }
+            prof_database = prof_database.OrderBy(x => x.last).ToList();
         }
 
         public Course getCourse(int id)
@@ -191,7 +198,7 @@ namespace CourseInfoClass
             return database[id].getTime();
         }
 
-        public Tuple<string, string> getProf(int id)  
+        public Professor getProf(int id)  
         {
             return database[id].getProf();
         }
@@ -202,4 +209,5 @@ namespace CourseInfoClass
         }
 
     }
+
 }

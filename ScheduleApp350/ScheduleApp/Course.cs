@@ -6,32 +6,34 @@ using CourseInfoClass;
 
 namespace CourseClass
 {
-    public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, NONE };
+    // HAL, HH = HOYT, PFAC = Pew Fine Arts, OFFCP = Study abroad, etc, PLC = Physical Learning cnter, RH = Rockwell, 
+    // TBA = N/A, BAO = ???
+    public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBA, NONE };
 
     public struct Course
     {
 
         // TODO: Write Getters for members used in searchBtn event handler
-        public Build building;
-        public string room;
+        private Build building;
+        private string room;
 
-        public string courseDept;
-        public string courseNum;
-        public string courseSect;
-        public string courseCode;// = courseDept + courseNum.toString();
+        private string courseDept;
+        private string courseNum;
+        private string courseSect;
+        private string courseCode;// = courseDept + courseNum.toString();
 
-        public string shortName;
-        public string longName;
+        private string shortName;
+        private string longName;
 
-        public int enrollment;
-        public int capacity;
+        private int enrollment;
+        private int capacity;
 
-        public List<bool> day;
-        public Tuple<double, double> time;
+        private List<bool> day;
+        private Tuple<double, double> time;
 
-        public Tuple<string, string> professor;
+        private Professor professor;
 
-        public int credits;
+        private int credits;
 
         private int courseID;
 
@@ -65,7 +67,7 @@ namespace CourseClass
         {
             this.courseID = courseID;
             
-            this.professor = Tuple.Create<string, string>(parsedCourse[11], parsedCourse[12]);
+            this.professor = new Professor(parsedCourse[11], parsedCourse[12]);
 
             //parsedCourse[3], parsedCourse[4]
             //s.Split(':')[3]
@@ -116,7 +118,7 @@ namespace CourseClass
             };
 
             Build result;//BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, NONE
-            if (Enum.TryParse(parsedCourse[5], out result)) { building = result; }//fix building loc
+            if (Enum.TryParse(parsedCourse[6], out result)) { building = result; }//fix building loc
             else { building = Build.NONE; }
             this.room = parsedCourse[7];
 
@@ -211,16 +213,16 @@ namespace CourseClass
 
         public Tuple<string, string> getTimeString()
         {
-            if (time.Item1 == 0) return null;//No time is given
+            if (time.Item1 == 0) return new Tuple<string,string>("",""); //No time is given
             int t1 = (int)time.Item1;
-            int t2 = (int)((time.Item1%1)*100.0);
+            int t2 = (int)Math.Round((time.Item1 % 1) * 100.0);
             int t3 = (int)time.Item2;
-            int t4 = (int)((time.Item2 % 1) * 100.0);
+            int t4 = (int)Math.Round((time.Item2 % 1) * 100.0);
             
-            return Tuple.Create(t1 + ":" + t2, t3 + ":" + t4);
+            return Tuple.Create(t1.ToString("00") + ":" + t2.ToString("00"), t3.ToString("00") + ":" + t4.ToString("00"));
         }
 
-        public Tuple<string, string> getProf()   
+        public Professor getProf()   
         {
             return professor;
         }
@@ -230,4 +232,19 @@ namespace CourseClass
             return credits;
         }
     };
+
+    public struct Professor
+    {
+        public string first, last;
+        public double rmp;
+
+        public Professor(string first, string last)
+        {
+            this.first = first;
+            this.last = last;
+            this.rmp = 4.2;  // Default value 
+        }
+
+    }
+
 }

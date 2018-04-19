@@ -5,34 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using CourseClass;
 using CourseInfoClass;
+using ScheduleApp;
+using System.Windows.Forms;
 
 namespace ScheduleApp
 {
-    class CandidateSchedule
+    public class CandidateSchedule
     {
-        private List<Course> schedule;
+        public List<Course> schedule;
+        public CourseInfo DB;
 
         CandidateSchedule()
         {
-            
+            schedule = new List<Course>();
+            DB = CourseInfo.Create();
         }
 
+        /*
         CandidateSchedule(string filename) // factory constructor using JSON, sprint 2
         {
 
         }
+        */
 
+        public void add(Course c)
+        {
+            schedule.Add(c);
+        }
 
         public List<int> addCourseByObject(Course c)
         {
             return addCourseByID(c.getCourseID());
-            //schedule.Add(c);
         }
 
 
         public List<int> addCourseByID(int id)
         {
-            CourseInfo DB = CourseInfo.Create();
             List<int> additional = new List<int>();
             schedule.Add(new Course(id));
             for (int j = 0; j < 2; j++)
@@ -58,24 +66,15 @@ namespace ScheduleApp
             //Should ask user if they want to add/remove this as well. 
         }
 
-
-        public void removeCourse(int courseID)
+        
+        public bool removeCourse(int courseID)
         {
-            foreach (var course in schedule)
-            {
-                if (course.getCourseID() == courseID)
-                {
-                    schedule.Remove(course);
-                }
-            }
+            return schedule.Remove(DB.getCourse(courseID));
         }
 
         public void removeAllCourses()
         {
-            foreach (var course in schedule)
-            {
-                schedule.Remove(course);
-            }
+            schedule.Clear();
         }
 
         public bool checkInSchedule(int courseID)
