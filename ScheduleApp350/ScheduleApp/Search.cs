@@ -316,7 +316,19 @@ namespace SearchClass
             }
 
 
-            //  ....
+            // Filter Full Classes
+            if (!options.showFull)
+            {
+                removeIndices.Clear();
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.isFull() ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.courses.RemoveAt(index);
+                    lastSearchResults.courseRelevance.RemoveAt(index);
+                }
+            }
 
         }
         
@@ -379,6 +391,8 @@ namespace SearchClass
         public string firstNameProfessor;
         public string lastNameProfessor;
 
+        public bool showFull;
+
         public AdvancedOptions()
         {
             rmp = -1.0;  
@@ -392,6 +406,7 @@ namespace SearchClass
             building = Build.NONE;  // NONE in CourseClass will mean ANY building here. 
             firstNameProfessor = "";
             lastNameProfessor = "";
+            showFull = true;
         }
 
     }

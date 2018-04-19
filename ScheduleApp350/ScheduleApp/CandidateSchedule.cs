@@ -88,5 +88,16 @@ namespace ScheduleApp
             }
             return false;
         }
+
+        public bool scheduleFromFile() //creates the schedule from a json file, return true if successful
+        {
+            return false;
+        }
+
+        public bool scheduleToFile() //creates a json file from the schedule, return true if successful
+        {
+
+            return false;
+        }
     }
 }
