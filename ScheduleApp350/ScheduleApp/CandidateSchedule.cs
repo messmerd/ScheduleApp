@@ -138,5 +138,28 @@ namespace ScheduleApp
 
             return false;
         }
+
+        public bool checkTimeConflict(Course obj)
+        {
+            foreach (Course index in schedule)
+            {
+                if (index.getCourseID() == obj.getCourseID()) continue;
+                for (int i = 0; i < index.getDay().Count;i++)
+                {
+                    if (!index.getDay()[i] && !obj.getDay()[i]) continue;
+                    if (((index.getTime().Item1 >= obj.getTime().Item1 &&
+                        index.getTime().Item1 <= obj.getTime().Item2) ||
+                        (index.getTime().Item2 >= obj.getTime().Item1 &&
+                        index.getTime().Item2 <= obj.getTime().Item2)) ||
+
+                        ((obj.getTime().Item1 >= index.getTime().Item1 &&
+                        obj.getTime().Item1 <= index.getTime().Item2) ||
+                        (obj.getTime().Item2 >= index.getTime().Item1 &&
+                        obj.getTime().Item2 <= index.getTime().Item2))) return true;
+                }   
+            }
+
+            return false;
+        }
     }
 }
