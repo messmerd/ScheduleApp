@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using CourseClass;
 using CourseInfoClass;
 using SpellingCorrector;
+using SearchResultsClass;
 
 namespace SearchClass
 {
@@ -36,14 +37,14 @@ namespace SearchClass
         public AdvancedOptions options;   // For storing advanced search options 
         private Spelling spelling;         // Instance of Spelling object from Spelling.cs 
         private string courseDictionary;   // Stores course dictionary filename for use by spellchecker and course search 
-        public CourseList lastSearchResults;  // Stores the search results after using searchForQuery()
+        public SearchResults lastSearchResults;  // Stores the search results after using searchForQuery()
 
         private Search()  // Constructor 
         {
             this.spelling = new Spelling("course_dictionary.txt");
             this.courseDictionary = "course_dictionary.txt";
 
-            this.lastSearchResults = new CourseList();
+            this.lastSearchResults = new SearchResults();
             this.options = new AdvancedOptions();
         }
 
@@ -52,7 +53,7 @@ namespace SearchClass
             this.spelling = new Spelling(courseDictionary);
             this.courseDictionary = courseDictionary;
 
-            this.lastSearchResults = new CourseList();
+            this.lastSearchResults = new SearchResults();
             this.options = new AdvancedOptions();
         }
 
@@ -315,7 +316,6 @@ namespace SearchClass
 
             }
 
-
             // Filter Full Classes
             if (!options.showFull)
             {
@@ -332,45 +332,7 @@ namespace SearchClass
 
         }
         
-        public void SortCourses(int sortBy, bool ascending)
-        {
-            // Could use enum to make it obvious what integer to use for sortBy in the caller's code 
-            // Credits, Course code, prof., course name, ...
-
-            if (ascending)
-            {
-                switch (sortBy)
-                {
-                    case 0:  // # of credits
-                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderBy(x => x.getCredits()).ToList();
-                        break;
-                    case 1:  // Course code
-                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderBy(x => x.getCourseCode()).ToList();
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (sortBy)
-                {
-                    case 0:  // # of credits
-                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderByDescending(x => x.getCredits()).ToList();
-                        break;
-
-                    case 1:  // Course code
-                        lastSearchResults.courses_ordered = lastSearchResults.getCoursesOrdered().OrderByDescending(x => x.getCourseCode()).ToList();
-                        break;
-
-                    default:
-                        break;
-                }
-
-            }
-        }
-
+        
     }
 
     public class AdvancedOptions
@@ -396,7 +358,7 @@ namespace SearchClass
         public AdvancedOptions()
         {
             rmp = -1.0;  
-            probability = ""; // high, medium, or low
+            probability = ""; // high, medium, low, or low/none
 
             // Put other advanced options here later 
 

@@ -296,6 +296,16 @@ namespace ScheduleApp
             }
 
          }
+
+         private void rmp_valueChanged(object sender, EventArgs e)
+         {
+            // search.options.rmp = rmpBox.Value;
+         }
+
+         private void probability_valueChanged(object sender, EventArgs e)
+        {
+            //search.options.probability = probBox.Text;
+        }
        
 
         /**************************************************************************************/
