@@ -7,6 +7,7 @@ using CourseClass;
 using CourseInfoClass;
 using ScheduleApp;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ScheduleApp
 {
@@ -103,8 +104,6 @@ namespace ScheduleApp
             return false;
         }
 
-        //for checking the current credit count. makes creditSituation -1 if less than 12 credits,
-        //0 if 12 to 17 (range with no warning), and 1 if greater than 17 credits.
         public void checkCreditCount()
         {
             if (creditCount < 12)
@@ -120,13 +119,22 @@ namespace ScheduleApp
                 creditSituation = 0;
             }
         }
-        public bool scheduleFromFile() //creates the schedule from a json file, return true if successful
+
+        public bool scheduleFromFile(string filename) //creates the schedule from a json file, return true if successful
         {
+            if(!File.Exists(filename)) return false;
+            string json = System.IO.File.ReadAllText(filename);
+
             return false;
         }
 
-        public bool scheduleToFile() //creates a json file from the schedule, return true if successful
+        public bool scheduleToFile(string filename) //creates a json file from the schedule, return true if successful
         {
+            //TODO:
+            //convert course to a single string w/ all info, one course per line
+            
+            //string json = JsonConvert.SerializeObject(objOrArray);
+            //File.WriteAllText(filename, json);
 
             return false;
         }

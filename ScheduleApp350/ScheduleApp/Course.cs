@@ -37,6 +37,8 @@ namespace CourseClass
 
         private int courseID;
 
+        private string allInfo;
+
         public Course(int courseID)  // Constructor
         {
             CourseInfo DB = CourseInfo.Create();
@@ -61,10 +63,20 @@ namespace CourseClass
             this.capacity = DB.getCapacity(courseID);
 
             this.credits = DB.getCredits(courseID);
+
+            this.allInfo = DB.getAllInfo(courseID);
         }
 
         public Course(List<string> parsedCourse, int courseID) // Constructor
         {
+            allInfo = "";
+            foreach (string index in parsedCourse)
+            {
+                allInfo += index + "\t";
+            }
+
+            allInfo += courseID;
+
             this.courseID = courseID;
             
             this.professor = new Professor(parsedCourse[11], parsedCourse[12]);
@@ -273,6 +285,11 @@ namespace CourseClass
         public int getCredits()   
         {
             return credits;
+        }
+
+        public string getAllInfo()
+        {
+            return allInfo;
         }
     };
 
