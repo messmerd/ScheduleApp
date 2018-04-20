@@ -208,6 +208,11 @@ namespace CourseInfoClass
             return database[id].getCredits();
         }
 
+        public string getAllInfo(int id)
+        {
+            return database[id].getAllInfo();
+        }
+
     }
 
 }

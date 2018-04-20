@@ -316,7 +316,6 @@ namespace SearchClass
 
             }
 
-
             // Filter Full Classes
             if (!options.showFull)
             {
@@ -359,7 +358,7 @@ namespace SearchClass
         public AdvancedOptions()
         {
             rmp = -1.0;  
-            probability = ""; // high, medium, or low
+            probability = ""; // high, medium, low, or low/none
 
             // Put other advanced options here later 
 

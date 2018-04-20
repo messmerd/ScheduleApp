@@ -12,8 +12,6 @@ namespace CourseClass
 
     public struct Course
     {
-
-        // TODO: Write Getters for members used in searchBtn event handler
         private Build building;
         private string room;
 
@@ -36,6 +34,8 @@ namespace CourseClass
         private int credits;
 
         private int courseID;
+
+        private string allInfo;
 
         public Course(int courseID)  // Constructor
         {
@@ -61,10 +61,20 @@ namespace CourseClass
             this.capacity = DB.getCapacity(courseID);
 
             this.credits = DB.getCredits(courseID);
+
+            this.allInfo = DB.getAllInfo(courseID);
         }
 
         public Course(List<string> parsedCourse, int courseID) // Constructor
         {
+            allInfo = "";
+            foreach (string index in parsedCourse)
+            {
+                allInfo += index + "\t";
+            }
+
+            allInfo += courseID;
+
             this.courseID = courseID;
             
             this.professor = new Professor(parsedCourse[11], parsedCourse[12]);
@@ -216,6 +226,44 @@ namespace CourseClass
             return time;
         }
 
+        public string getProbability(Course x)
+        {
+            int probScore = 0;
+            string caseRes = "";
+
+            bool[] cases = {
+                (x.getTime().Item1 > 8.00 && x.getTime().Item1 < 11.00),
+                (x.getProf().rmp >= 3.5),
+                (x.capacity - x.enrollment <= 3)
+            };
+
+            foreach(var caseItem in cases)
+            {
+                if (caseItem) probScore++;
+            }
+
+            switch (probScore)
+            {
+                case 0:
+                    caseRes = "high";
+                    break;
+                case 1:
+                    caseRes = "medium";
+                    break;
+                case 2:
+                    caseRes = "low";
+                    break;
+                case 3:
+                    caseRes = "low/none";
+                    break;
+                default:
+                    caseRes = "low/none";
+                    break;
+            }
+
+            return x.capacity - x.enrollment == 0 ? "low/none" : caseRes;
+        }
+
         public Tuple<string, string> getTimeString()
         {
             if (time.Item1 == 0) return new Tuple<string,string>("",""); //No time is given
@@ -236,6 +284,11 @@ namespace CourseClass
         {
             return credits;
         }
+
+        public string getAllInfo()
+        {
+            return allInfo;
+        }
     };
 
     public struct Professor
@@ -249,7 +302,5 @@ namespace CourseClass
             this.last = last;
             this.rmp = 4.2;  // Default value 
         }
-
     }
-
 }
