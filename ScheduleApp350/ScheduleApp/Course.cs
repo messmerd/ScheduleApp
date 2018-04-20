@@ -12,8 +12,6 @@ namespace CourseClass
 
     public struct Course
     {
-
-        // TODO: Write Getters for members used in searchBtn event handler
         private Build building;
         private string room;
 
