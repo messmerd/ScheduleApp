@@ -123,7 +123,8 @@ namespace ScheduleApp
         public bool scheduleFromFile(string filename) //creates the schedule from a json file, return true if successful
         {
             if(!File.Exists(filename)) return false;
-            string json = System.IO.File.ReadAllText("test.json");
+            string json = System.IO.File.ReadAllText(filename);
+
             return false;
         }
 
@@ -131,6 +132,10 @@ namespace ScheduleApp
         {
             //TODO:
             //convert course to a single string w/ all info, one course per line
+            
+            //string json = JsonConvert.SerializeObject(objOrArray);
+            //File.WriteAllText(filename, json);
+
             return false;
         }
     }
