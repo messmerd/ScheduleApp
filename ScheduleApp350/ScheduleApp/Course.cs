@@ -216,6 +216,44 @@ namespace CourseClass
             return time;
         }
 
+        public string getProbability(Course x)
+        {
+            int probScore = 0;
+            string caseRes = "";
+
+            bool[] cases = {
+                (x.getTime().Item1 > 8.00 && x.getTime().Item1 < 11.00),
+                (x.getProf().rmp >= 3.5),
+                (x.capacity - x.enrollment <= 3)
+            };
+
+            foreach(var caseItem in cases)
+            {
+                if (caseItem) probScore++;
+            }
+
+            switch (probScore)
+            {
+                case 0:
+                    caseRes = "high";
+                    break;
+                case 1:
+                    caseRes = "medium";
+                    break;
+                case 2:
+                    caseRes = "low";
+                    break;
+                case 3:
+                    caseRes = "low/none";
+                    break;
+                default:
+                    caseRes = "low/none";
+                    break;
+            }
+
+            return x.capacity - x.enrollment == 0 ? "low/none" : caseRes;
+        }
+
         public Tuple<string, string> getTimeString()
         {
             if (time.Item1 == 0) return new Tuple<string,string>("",""); //No time is given
@@ -249,7 +287,5 @@ namespace CourseClass
             this.last = last;
             this.rmp = 4.2;  // Default value 
         }
-
     }
-
 }
