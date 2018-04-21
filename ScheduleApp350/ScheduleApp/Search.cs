@@ -330,6 +330,20 @@ namespace SearchClass
                 }
             }
 
+            // Filter by RMP score
+            if (options.rmp != -1.0)  // If the user has a preference for the professor's minimum RMP score 
+            {
+                removeIndices.Clear();
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getProf().rmp < options.rmp ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.courses.RemoveAt(index);
+                    lastSearchResults.courseRelevance.RemoveAt(index);
+                }
+            }
+
         }
         
         
