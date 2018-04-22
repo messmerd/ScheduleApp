@@ -56,45 +56,46 @@ namespace ScheduleApp
 
         public List<int> addCourse(Course c)
         {
-            return addCourse(c.getCourseID());
-        }
-
-
-        public List<int> addCourse(int id) //implement credit counting
-        {
             List<int> additional = new List<int>();
-            creditCount += DB.getCredits(id);
+            creditCount += c.getCredits();
             checkCreditCount();
-            schedule.Add(new Course(id));
+            schedule.Add(c);
+            int id = c.getCourseID();
 
             // This loop is untested. I don't think it would work as intended 
             for (int j = 0; j < 2; j++)
             {
                 int i = id;
-                while (i > 0 && i < DB.getNumCourses() && DB.getCourseDept(i) == DB.getCourseDept(id) && DB.getCourseNum(i) == DB.getCourseNum(id))
+                while (i > 0 && i < DB.getNumCourses() && DB.getCourseDept(i) == c.getCourseDept() && DB.getCourseNum(i) == c.getCourseNum())
                 {
-                    if (DB.getCourseSect(i).Contains(DB.getCourseSect(id)) ||
-                        DB.getCourseSect(id).Contains(DB.getCourseSect(i)) ||
-                        DB.getCourseSect(id).Contains("L") ||
-                        DB.getCourseSect(id).Contains("M") ||
-                        DB.getCourseSect(id).Contains("N") ||
-                        DB.getCourseSect(id).Contains("O") ||
-                        DB.getCourseSect(id).Contains("P") ||
-                        DB.getCourseSect(id).Contains("Q"))
+                    if (DB.getCourseSect(i).Contains(c.getCourseSect()) ||
+                        c.getCourseSect().Contains(DB.getCourseSect(i)) ||
+                        c.getCourseSect().Contains("L") ||
+                        c.getCourseSect().Contains("M") ||
+                        c.getCourseSect().Contains("N") ||
+                        c.getCourseSect().Contains("O") ||
+                        c.getCourseSect().Contains("P") ||
+                        c.getCourseSect().Contains("Q"))
                         additional.Add(i);
-                    if (j == 0) 
+                    if (j == 0)
                         i++;
-                    else 
+                    else
                         i--;
                 }
             }
 
-            bool timeConflict = checkTimeConflict(id); 
+            //bool timeConflict = checkTimeConflict(id);
+            bool timeConflict = checkTimeConflict(c).Count > 1;
             addToCalendar(id, timeConflict);
 
             return additional;
             // For adding/removing courses, there may be an associated coourse/lab. 
             //Should ask user if they want to add/remove this as well. 
+        }
+
+        public List<int> addCourse(int id) //implement credit counting
+        {
+            return addCourse(DB.getCourse(id));  
         }
 
         
@@ -163,17 +164,17 @@ namespace ScheduleApp
             return false;
         }
 
-        public bool checkTimeConflict(int id)
+        public bool checkTimeConflict_old(int id)
         {
-            return checkTimeConflict(CourseInfo.Create().getCourse(id));
+            return checkTimeConflict_old(CourseInfo.Create().getCourse(id));
         }
 
-        public bool checkTimeConflict(Course obj)
+        public bool checkTimeConflict_old(Course obj)
         {
             foreach (Course index in schedule)
             {
                 if (index.getCourseID() == obj.getCourseID()) continue;
-                for (int i = 0; i < index.getDay().Count;i++)
+                for (int i = 0; i < index.getDay().Count; i++)
                 {
                     if (!index.getDay()[i] && !obj.getDay()[i]) continue;
                     if (((index.getTime().Item1 >= obj.getTime().Item1 &&
@@ -185,16 +186,38 @@ namespace ScheduleApp
                         obj.getTime().Item1 <= index.getTime().Item2) ||
                         (obj.getTime().Item2 >= index.getTime().Item1 &&
                         obj.getTime().Item2 <= index.getTime().Item2))) return true;
-                }   
+                }
             }
-
             return false;
+        }
+
+
+        public List<Course> checkTimeConflict(int id)
+        {
+            return checkTimeConflict(CourseInfo.Create().getCourse(id)); 
+        }
+
+        public List<Course> checkTimeConflict(Course c)
+        {
+            List<Course> conflicts = new List<Course>();
+            if (c.getTime().Item1 == -1.0)
+                return conflicts;
+            foreach (Course course in schedule)
+            {
+                if (course.getCourseID() == c.getCourseID() || course.getTime().Item1 == -1.0) continue;
+                for (int i = 0; i < 5; i++)
+                {
+                    if (c.getDay()[i] && course.getDay()[i] && c.getTime().Item1 <= course.getTime().Item2 && c.getTime().Item2 >= course.getTime().Item1)
+                        conflicts.Add(course);
+                }
+            }
+            return conflicts;
         }
 
         void addToCalendar(int id, bool conflict)
         {
             // This function adds a course to the Calendar UI 
-
+            
             Tuple<int, int, int, int> course_time = DB.getCourse(id).getTimeHourMinute();
             if (course_time.Item1 == -1 || !DB.getDay(id).Contains(true))  // Course does not have a time or doesn't have a day
                 return; 

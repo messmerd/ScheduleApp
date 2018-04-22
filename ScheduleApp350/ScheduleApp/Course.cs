@@ -97,9 +97,10 @@ namespace CourseClass
                     t2 = j;
                 else
                     t2 = 0;
+                start = t1 + (double)t2 / 100.0;
             }
-            else t1 = t2 = 0;
-            start = t1 + (double)t2 / 100.0;
+            else start = -1.0;
+            
 
             if (parsedCourse[4].Contains(":"))
             {
@@ -113,10 +114,10 @@ namespace CourseClass
                     t2 = j;
                 else
                     t2 = 0;
+                stop = t1 + (double)t2 / 100.0;
             }
-            else t1 = t2 = 0;
-            stop = t1 + (double)t2 / 100.0;
-
+            else stop = -1.0;
+            
             this.time = Tuple.Create<double, double>(start, stop);
             this.day = new List<bool>
             {
@@ -267,13 +268,13 @@ namespace CourseClass
         public Tuple<string, string> getTimeString()
         {
             Tuple<int, int, int, int> temp = getTimeHourMinute();
-            if (temp.Item1 == -1) return new Tuple<string,string>("",""); //No time is given
+            if (temp.Item1 == -1.0) return new Tuple<string,string>("",""); //No time is given
             return Tuple.Create(temp.Item1.ToString("00") + ":" + temp.Item2.ToString("00"), temp.Item3.ToString("00") + ":" + temp.Item4.ToString("00"));
         }
 
         public Tuple<int, int, int, int> getTimeHourMinute()
         {
-            if (time.Item1 == 0) return new Tuple<int,int,int,int>(-1, -1, -1, -1); //No time is given
+            if (time.Item1 == -1.0) return new Tuple<int,int,int,int>(-1, -1, -1, -1); //No time is given
             int t1 = (int)time.Item1;
             int t2 = (int)Math.Round((time.Item1 % 1) * 100.0);
             int t3 = (int)time.Item2;
