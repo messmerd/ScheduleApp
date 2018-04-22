@@ -19,11 +19,72 @@ namespace ScheduleApp
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
         CourseInfo info = CourseInfo.Create();
+        List<Calendar.Appointment> m_Appointments;
+        
 
         public AppWindow()
         {
             InitializeComponent();
             initializeProfessorComboBox();
+
+            m_Appointments = new List<Calendar.Appointment>();
+
+            DateTime m_Date = DateTime.Now;
+
+            m_Date = m_Date.AddHours(10 - m_Date.Hour);
+            m_Date = m_Date.AddMinutes(-m_Date.Minute);
+
+            Calendar.Appointment m_Appointment = new Calendar.Appointment();
+            m_Appointment.StartDate = m_Date;
+            m_Appointment.EndDate = m_Date.AddHours(2.5);
+            m_Appointment.Title = "test1\r\nmultiline";
+
+            m_Appointments.Add(m_Appointment);
+
+            m_Appointment = new Calendar.Appointment();
+            m_Appointment.StartDate = m_Date.AddHours(2);
+            m_Appointment.EndDate = m_Date.AddHours(3);
+            m_Appointment.Title = "test2\r\n locked one";
+            m_Appointment.Color = System.Drawing.Color.LightBlue;
+            m_Appointment.Locked = true;
+
+            m_Appointments.Add(m_Appointment);
+
+            m_Appointment = new Calendar.Appointment();
+            m_Appointment.StartDate = m_Date;
+            m_Appointment.EndDate = m_Date.AddHours(4);
+            m_Appointment.Color = System.Drawing.Color.Yellow;
+            m_Appointment.Title = "test3\r\n some numbers 123456 and unicode chars (turkish) ÐÜÞÝÇÖÇI ";
+
+            m_Appointments.Add(m_Appointment);
+
+            m_Appointment = new Calendar.Appointment();
+            m_Appointment.StartDate = m_Date;
+            m_Appointment.EndDate = m_Date.AddDays(2);
+            m_Appointment.Title = "More than one day";
+            m_Appointment.Color = System.Drawing.Color.Red;
+
+            m_Appointments.Add(m_Appointment);
+
+            m_Appointment = new Calendar.Appointment();
+            m_Appointment.StartDate = m_Date.AddDays(1);
+            m_Appointment.EndDate = m_Date.AddDays(3);
+            m_Appointment.Title = "More than one day (2)";
+            m_Appointment.Color = System.Drawing.Color.Coral;
+
+            m_Appointments.Add(m_Appointment);
+
+            /*
+            dayView1.StartDate = DateTime.Now;
+            dayView1.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
+            dayView1.SelectionChanged += new EventHandler(dayView1_SelectionChanged);
+            dayView1.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
+
+            dayView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
+
+            comboBox1.SelectedIndex = 1;
+            */
+
         }
 
         private void initializeProfessorComboBox()

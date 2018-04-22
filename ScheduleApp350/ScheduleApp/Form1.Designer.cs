@@ -30,6 +30,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
+            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
             this.clickHelp1 = new System.Windows.Forms.Label();
@@ -37,6 +38,7 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.advBuildingLabel = new System.Windows.Forms.Label();
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
@@ -94,7 +96,7 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label3 = new System.Windows.Forms.Label();
+            this.dayView1 = new Calendar.DayView();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -204,6 +206,15 @@
             this.filter_UI.TabStop = false;
             this.filter_UI.Text = "advanced";
             this.filter_UI.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(140, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "RMP:";
             // 
             // label2
             // 
@@ -511,6 +522,7 @@
             // 
             // scheduleTab
             // 
+            this.scheduleTab.Controls.Add(this.dayView1);
             this.scheduleTab.Controls.Add(this.removeHelp);
             this.scheduleTab.Controls.Add(this.clearAll);
             this.scheduleTab.Controls.Add(this.scheduleView);
@@ -726,14 +738,20 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // label3
+            // dayView1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(140, 47);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "RMP:";
+            drawTool1.DayView = this.dayView1;
+            this.dayView1.ActiveTool = drawTool1;
+            this.dayView1.DaysToShow = 5;
+            this.dayView1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.dayView1.Location = new System.Drawing.Point(8, 256);
+            this.dayView1.Name = "dayView1";
+            this.dayView1.SelectionEnd = new System.DateTime(((long)(0)));
+            this.dayView1.SelectionStart = new System.DateTime(((long)(0)));
+            this.dayView1.Size = new System.Drawing.Size(822, 275);
+            this.dayView1.StartDate = new System.DateTime(((long)(0)));
+            this.dayView1.TabIndex = 3;
+            this.dayView1.Text = "dayView1";
             // 
             // AppWindow
             // 
@@ -832,6 +850,7 @@
         private System.Windows.Forms.Label advBuildingLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private Calendar.DayView dayView1;
     }
 }
 
