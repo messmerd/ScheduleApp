@@ -29,7 +29,7 @@ namespace ScheduleApp
 
             m_Appointments = new List<Calendar.Appointment>();
 
-            DateTime m_Date = DateTime.Now;
+            DateTime m_Date = new DateTime(2010, 2, 1); // was DateTime.Now;
 
             m_Date = m_Date.AddHours(10 - m_Date.Hour);
             m_Date = m_Date.AddMinutes(-m_Date.Minute);
@@ -74,16 +74,15 @@ namespace ScheduleApp
 
             m_Appointments.Add(m_Appointment);
 
-            /*
-            dayView1.StartDate = DateTime.Now;
+            dayView1.StartDate = new DateTime(2010,2,1);  // I chose this date so that the calendar starts on Monday the 1st 
             dayView1.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
             dayView1.SelectionChanged += new EventHandler(dayView1_SelectionChanged);
             dayView1.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
 
             dayView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
 
-            comboBox1.SelectedIndex = 1;
-            */
+            //comboBox1.SelectedIndex = 1;
+            
 
         }
 
@@ -110,11 +109,44 @@ namespace ScheduleApp
         }
         /******************************************************************************************/
 
+        /************************Calendar-Related**************************************************/
+
+        private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
+        {
+            List<Calendar.Appointment> m_Apps = new List<Calendar.Appointment>();
+
+            foreach (Calendar.Appointment m_App in m_Appointments)
+                if ((m_App.StartDate >= args.StartDate) &&
+                    (m_App.StartDate <= args.EndDate))
+                    m_Apps.Add(m_App);
+
+            args.Appointments = m_Apps;
+        }
 
 
+        private void dayView1_SelectionChanged(object sender, EventArgs e)
+        {
+            label3.Text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
+        }
 
+        private void dayView1_MouseMove(object sender, MouseEventArgs e)
+        {
+            label2.Text = dayView1.GetTimeAt(e.X, e.Y).ToString();
+        }
 
-        
+        void dayView1_NewAppointment(object sender, Calendar.NewAppointmentEventArgs args)
+        {
+            Calendar.Appointment m_Appointment = new Calendar.Appointment();
+
+            m_Appointment.StartDate = args.StartDate;
+            m_Appointment.EndDate = args.EndDate;
+            m_Appointment.Title = args.Title;
+
+            m_Appointments.Add(m_Appointment);
+        }
+
+        /******************************************************************************************/
+
         /**************************************** Themes ******************************************/
 
 
