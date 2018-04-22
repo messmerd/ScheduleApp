@@ -119,22 +119,45 @@ namespace ScheduleApp
             // 168 183 185 <- text color
             // 48 64 71 <- search bar
             // 89 102 107 <- unfocused search bar
+
+
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.DarkGray;
+            }
+
+            dayView1.Invalidate(); // Updates the Calendar
         }
 
         private void themeToBlue(object sender, EventArgs e)
         {
             dayView1.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.RoyalBlue; 
+            }
 
+            dayView1.Invalidate(); // Updates the Calendar
         }
 
         private void themeToGCC(object sender, EventArgs e)
         {
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.Crimson;
+            }
 
+            dayView1.Invalidate(); // Updates the Calendar
         }
 
         private void themeToClassic(object sender, EventArgs e)
         {
             dayView1.Renderer = new Calendar.Office11Renderer();  // Calendar theme
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.DarkSlateGray;
+            }
+
 
             scheduleTitle.ForeColor = Color.Black;
 
@@ -159,6 +182,8 @@ namespace ScheduleApp
             
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
+
+            dayView1.Invalidate(); // Updates the Calendar
 
         }
         /******************************************************************************************/

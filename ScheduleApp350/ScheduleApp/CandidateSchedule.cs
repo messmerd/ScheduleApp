@@ -67,6 +67,7 @@ namespace ScheduleApp
             checkCreditCount();
             schedule.Add(new Course(id));
 
+            // This loop is untested. I don't think it would work as intended 
             for (int j = 0; j < 2; j++)
             {
                 int i = id;
@@ -208,6 +209,7 @@ namespace ScheduleApp
                     m_course.StartDate = new DateTime(2010, 2, 1 + day, course_time.Item1, course_time.Item2, 0);
                     m_course.EndDate = new DateTime(2010, 2, 1 + day, course_time.Item3, course_time.Item4, 0);
                     m_course.Title = DB.getCourse(id).getCourseCode() + " " + DB.getCourse(id).getLongName();
+                    
                     if (conflict)
                         m_course.Color = System.Drawing.Color.Red;
                     else

@@ -29,8 +29,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
+            this.dayView1 = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
             this.clickHelp1 = new System.Windows.Forms.Label();
@@ -96,7 +97,6 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dayView1 = new Calendar.DayView();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -106,6 +106,24 @@
             this.scheduleTab.SuspendLayout();
             this.menuBar.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // dayView1
+            // 
+            drawTool1.DayView = this.dayView1;
+            this.dayView1.ActiveTool = drawTool1;
+            this.dayView1.DaysToShow = 5;
+            this.dayView1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.dayView1.Location = new System.Drawing.Point(8, 256);
+            this.dayView1.Name = "dayView1";
+            this.dayView1.SelectionEnd = new System.DateTime(((long)(0)));
+            this.dayView1.SelectionStart = new System.DateTime(((long)(0)));
+            this.dayView1.Size = new System.Drawing.Size(822, 275);
+            this.dayView1.StartDate = new System.DateTime(((long)(0)));
+            this.dayView1.TabIndex = 3;
+            this.dayView1.Text = "dayView1";
+            this.dayView1.WorkingHourEnd = 22;
+            this.dayView1.WorkingMinuteEnd = 0;
+            this.dayView1.WorkingMinuteStart = 0;
             // 
             // menuTabs
             // 
@@ -737,21 +755,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // dayView1
-            // 
-            drawTool1.DayView = this.dayView1;
-            this.dayView1.ActiveTool = drawTool1;
-            this.dayView1.DaysToShow = 5;
-            this.dayView1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.dayView1.Location = new System.Drawing.Point(8, 256);
-            this.dayView1.Name = "dayView1";
-            this.dayView1.SelectionEnd = new System.DateTime(((long)(0)));
-            this.dayView1.SelectionStart = new System.DateTime(((long)(0)));
-            this.dayView1.Size = new System.Drawing.Size(822, 275);
-            this.dayView1.StartDate = new System.DateTime(((long)(0)));
-            this.dayView1.TabIndex = 3;
-            this.dayView1.Text = "dayView1";
             // 
             // AppWindow
             // 
