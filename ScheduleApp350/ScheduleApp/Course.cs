@@ -266,13 +266,20 @@ namespace CourseClass
 
         public Tuple<string, string> getTimeString()
         {
-            if (time.Item1 == 0) return new Tuple<string,string>("",""); //No time is given
+            Tuple<int, int, int, int> temp = getTimeHourMinute();
+            if (temp.Item1 == -1) return new Tuple<string,string>("",""); //No time is given
+            return Tuple.Create(temp.Item1.ToString("00") + ":" + temp.Item2.ToString("00"), temp.Item3.ToString("00") + ":" + temp.Item4.ToString("00"));
+        }
+
+        public Tuple<int, int, int, int> getTimeHourMinute()
+        {
+            if (time.Item1 == 0) return new Tuple<int,int,int,int>(-1, -1, -1, -1); //No time is given
             int t1 = (int)time.Item1;
             int t2 = (int)Math.Round((time.Item1 % 1) * 100.0);
             int t3 = (int)time.Item2;
             int t4 = (int)Math.Round((time.Item2 % 1) * 100.0);
-            
-            return Tuple.Create(t1.ToString("00") + ":" + t2.ToString("00"), t3.ToString("00") + ":" + t4.ToString("00"));
+
+            return Tuple.Create(t1, t2, t3, t4);
         }
 
         public Professor getProf()   
