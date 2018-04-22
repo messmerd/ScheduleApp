@@ -210,6 +210,7 @@ namespace ScheduleApp
             {
                 var courseToAdd = setSearchRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
+                listViewItem.Name = course.getCourseID().ToString(); 
                 searchResult_UI.Items.Add(listViewItem);
             }
             clickHelp1.Text = "Double click to add a course!";
@@ -241,7 +242,6 @@ namespace ScheduleApp
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
             row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
             row[8] = "low"; // placeholder ... 
-            row[9] = c.getCourseID().ToString();
             return row;
         }
         /***************************************************************************************/
@@ -254,18 +254,29 @@ namespace ScheduleApp
         {
             if(searchResult_UI.SelectedItems.Count >= 0)
             {
-                int courseID = int.Parse(searchResult_UI.SelectedItems[0].SubItems[9].Text);
+                int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
+                if (!CandidateSchedule.Create().checkInSchedule(courseID))
+                {
+                    Course scheduleCourse = new Course(courseID);
 
-                Course scheduleCourse = new Course(courseID);
+                    var courseToAdd = setScheduleRow(scheduleCourse);
+                    var listViewItem = new ListViewItem(courseToAdd);
+                    listViewItem.Name = courseID.ToString();
+                    scheduleView.Items.Add(listViewItem);
 
-                var courseToAdd = setScheduleRow(scheduleCourse);
-                var listViewItem = new ListViewItem(courseToAdd);
-                scheduleView.Items.Add(listViewItem);
+                    CandidateSchedule.Create().addCourse(scheduleCourse);
+
+                    clickHelp1.ForeColor = Color.Black;
+                    clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
+                    dayView1.Invalidate(); // Updates the Calendar
+                }
+                else
+                {
+                    clickHelp1.ForeColor = Color.Red;
+                    clickHelp1.Text = "\"" + CourseInfo.Create().getCourseCode(courseID) + "\" is already in your schedule.";
+                }
+
                 
-                CandidateSchedule.Create().addCourse(scheduleCourse);
-
-                clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
-                dayView1.Invalidate(); // Updates the Calendar
             }
             
         }
@@ -282,7 +293,6 @@ namespace ScheduleApp
             row[5] = c.getBuilding().ToString();
             row[6] = c.getRoom().ToString();
             row[7] = getDays(c);
-            row[8] = c.getCourseID().ToString();
             return row;
 
         }
@@ -299,18 +309,8 @@ namespace ScheduleApp
         {
             if (scheduleView.SelectedItems.Count >= 0)
             {
-                int courseID = -1;
-                foreach (var course in CourseInfo.Create().database)
-                {
-                    if (course.getCourseCode().Contains(scheduleView.SelectedItems[0].SubItems[1].Text))
-                    {
-                        courseID = course.getCourseID(); 
-                    }
-                }
-
-                if (courseID == -1)
-                    Console.WriteLine("Error. Course not found.");
-
+                int courseID = int.Parse(scheduleView.SelectedItems[0].Name);
+                 
                 scheduleView.SelectedItems[0].Remove();
                 CandidateSchedule.Create().removeCourse(courseID);
                 dayView1.Invalidate(); // Updates the Calendar

@@ -14,9 +14,11 @@ namespace Calendar
             color = Color.White;
             m_BorderColor = Color.Blue;
             m_Title = "New Appointment";
+            m_CourseID = -1;
         }
 
         private DateTime m_StartDate;
+        private int m_CourseID; 
 
         public DateTime StartDate
         {
@@ -31,6 +33,21 @@ namespace Calendar
 
             }
         }
+
+        public int CourseID
+        {
+            get
+            {
+                return m_CourseID;
+            }
+            set
+            {
+                m_CourseID = value;
+                OnStartDateChanged();
+
+            }
+        }
+
         protected virtual void OnStartDateChanged()
         {
         }

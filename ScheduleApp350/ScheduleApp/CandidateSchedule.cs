@@ -85,8 +85,13 @@ namespace ScheduleApp
             }
 
             //bool timeConflict = checkTimeConflict(id);
-            bool timeConflict = checkTimeConflict(c).Count > 1;
-            addToCalendar(id, timeConflict);
+            List<Course> timeConflicts = checkTimeConflict(c);
+            if (timeConflicts.Count > 1)  // There's at least one time conflict 
+            {
+                // Alert the user here, or something 
+            }
+
+            addToCalendar(id);
 
             return additional;
             // For adding/removing courses, there may be an associated coourse/lab. 
@@ -104,9 +109,12 @@ namespace ScheduleApp
             creditCount -= DB.getCredits(courseID);
             checkCreditCount();
 
-            m_Courses.RemoveAll(c => c.Title.Contains(DB.getCourseCode(courseID)));
+            m_Courses.RemoveAll(c => c.CourseID == courseID);
+            
+            bool result = schedule.Remove(DB.getCourse(courseID));
+            updateConflictMarkers();
 
-            return schedule.Remove(DB.getCourse(courseID));
+            return result;
         }
 
         public void removeAllCourses()
@@ -191,7 +199,6 @@ namespace ScheduleApp
             return false;
         }
 
-
         public List<Course> checkTimeConflict(int id)
         {
             return checkTimeConflict(CourseInfo.Create().getCourse(id)); 
@@ -211,10 +218,14 @@ namespace ScheduleApp
                         conflicts.Add(course);
                 }
             }
+
+            if (conflicts.Count != 0)
+                conflicts.Add(c);    // Adds itself to the list of conflicting courses 
+
             return conflicts;
         }
 
-        void addToCalendar(int id, bool conflict)
+        private void addToCalendar(int id)
         {
             // This function adds a course to the Calendar UI 
             
@@ -232,20 +243,45 @@ namespace ScheduleApp
                     m_course.StartDate = new DateTime(2010, 2, 1 + day, course_time.Item1, course_time.Item2, 0);
                     m_course.EndDate = new DateTime(2010, 2, 1 + day, course_time.Item3, course_time.Item4, 0);
                     m_course.Title = DB.getCourse(id).getCourseCode() + " " + DB.getCourse(id).getLongName();
-                    
-                    if (conflict)
-                        m_course.Color = System.Drawing.Color.Red;
-                    else
-                        m_course.Color = System.Drawing.Color.White;
-
+                    m_course.CourseID = id; 
                     m_Courses.Add(m_course);
 
                 }
             }
 
-            
+            updateConflictMarkers();
         }
 
+        private void updateConflictMarkers()
+        {
+            // Looks at all the courses in the schedule and marks conflicting courses red and non-conflicting courses white
+            // This could probably be written more efficiently 
+
+            List<int> conflictIDs = new List<int>(); 
+
+            foreach (var c1 in m_Courses)
+            {
+                c1.Color = System.Drawing.Color.White; 
+                foreach (var conflict in checkTimeConflict(c1.CourseID))
+                {
+                    if (!conflictIDs.Contains(conflict.getCourseID()))
+                        conflictIDs.Add(conflict.getCourseID());
+                }
+            }
+
+            foreach (var c1 in m_Courses)
+            {
+                if (conflictIDs.Contains(c1.CourseID))
+                {
+                    c1.Color = System.Drawing.Color.Red; 
+                }
+                else
+                {
+                    c1.Color = System.Drawing.Color.White; 
+                }
+            }
+                 
+        }
 
     }
 }
