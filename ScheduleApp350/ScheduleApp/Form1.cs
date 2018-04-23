@@ -124,6 +124,34 @@ namespace ScheduleApp
             // 89 102 107 <- unfocused search bar
 
 
+            /*
+            // Base color
+            scheduleTitle.ForeColor = Color.Black;
+
+            menuBar.BackColor = Color.White;
+            searchBox.BackColor = Color.White;
+            searchTab.BackColor = Color.White;
+            searchResult_UI.BackColor = Color.White;
+            searchResult_UI.ForeColor = Color.Black;
+            scheduleView.BackColor = Color.White;
+            scheduleTab.BackColor = Color.White;
+            appMenu.BackColor = Color.White;
+
+            // Adv Filter elements
+            filter_UI.BackColor = Color.White;
+            filter_UI.ForeColor = Color.Black;
+
+            // Button backgrounds
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            // Button fonts
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+            */
+
+
             foreach (var course in CandidateSchedule.Create().m_Courses)
             {
                 course.BorderColor = Color.DarkGray;
@@ -206,19 +234,25 @@ namespace ScheduleApp
             if (searchBox.Text != emptySearchBarText)
                 search.searchForQuery(searchBox.Text);
             else
-                search.searchForQuery("");
-            List<Course> searchResults = search.lastSearchResults.getCourses();
+                search.searchForQuery("\0"); // search for all courses
 
-            searchResult_UI.Items.Clear(); // Remove previous search results
+            populateSearch(search.lastSearchResults.getCourses());
 
+            // Remove previous search results upon performing another search
+            searchResult_UI.Items.Clear(); 
+
+            clickHelp1.Text = "Double click to add a course!";
+        }
+
+        private void populateSearch(List<Course> searchResults)
+        {
             foreach (var course in searchResults)
             {
                 var courseToAdd = setSearchRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
-                listViewItem.Name = course.getCourseID().ToString(); 
+                listViewItem.Name = course.getCourseID().ToString();
                 searchResult_UI.Items.Add(listViewItem);
             }
-            clickHelp1.Text = "Double click to add a course!";
         }
 
         // search by pressing enter, must have the search box focused
