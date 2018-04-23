@@ -37,6 +37,7 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.advBuildingLabel = new System.Windows.Forms.Label();
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
@@ -94,7 +95,6 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label3 = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -204,6 +204,15 @@
             this.filter_UI.TabStop = false;
             this.filter_UI.Text = "advanced";
             this.filter_UI.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(140, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "RMP:";
             // 
             // label2
             // 
@@ -448,7 +457,6 @@
             this.searchResult_UI.Cursor = System.Windows.Forms.Cursors.Hand;
             this.searchResult_UI.FullRowSelect = true;
             this.searchResult_UI.GridLines = true;
-            this.searchResult_UI.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.searchResult_UI.HideSelection = false;
             this.searchResult_UI.LabelWrap = false;
             this.searchResult_UI.Location = new System.Drawing.Point(24, 111);
@@ -725,15 +733,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(140, 47);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "RMP:";
             // 
             // AppWindow
             // 

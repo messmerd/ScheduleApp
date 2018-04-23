@@ -118,6 +118,7 @@ namespace CourseClass
             stop = t1 + (double)t2 / 100.0;
 
             this.time = Tuple.Create<double, double>(start, stop);
+
             this.day = new List<bool>
             {
                 parsedCourse[5].Contains("M"),
