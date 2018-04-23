@@ -40,7 +40,7 @@
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.professor_adv_label = new System.Windows.Forms.Label();
             this.advBuildingLabel = new System.Windows.Forms.Label();
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
             this.professor_adv = new System.Windows.Forms.ComboBox();
@@ -202,7 +202,7 @@
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
             this.filter_UI.Controls.Add(this.label3);
-            this.filter_UI.Controls.Add(this.label2);
+            this.filter_UI.Controls.Add(this.professor_adv_label);
             this.filter_UI.Controls.Add(this.advBuildingLabel);
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
             this.filter_UI.Controls.Add(this.professor_adv);
@@ -222,7 +222,7 @@
             this.filter_UI.Size = new System.Drawing.Size(444, 100);
             this.filter_UI.TabIndex = 6;
             this.filter_UI.TabStop = false;
-            this.filter_UI.Text = "advanced";
+            this.filter_UI.Text = "Advanced";
             this.filter_UI.Visible = false;
             // 
             // label3
@@ -234,14 +234,14 @@
             this.label3.TabIndex = 16;
             this.label3.Text = "RMP:";
             // 
-            // label2
+            // professor_adv_label
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(194, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Professor:";
+            this.professor_adv_label.AutoSize = true;
+            this.professor_adv_label.Location = new System.Drawing.Point(194, 72);
+            this.professor_adv_label.Name = "professor_adv_label";
+            this.professor_adv_label.Size = new System.Drawing.Size(66, 13);
+            this.professor_adv_label.TabIndex = 15;
+            this.professor_adv_label.Text = "Professor:";
             // 
             // advBuildingLabel
             // 
@@ -431,7 +431,7 @@
             this.advSearchBtn.Name = "advSearchBtn";
             this.advSearchBtn.Size = new System.Drawing.Size(87, 23);
             this.advSearchBtn.TabIndex = 3;
-            this.advSearchBtn.Text = "advanced";
+            this.advSearchBtn.Text = "Advanced";
             this.advSearchBtn.UseVisualStyleBackColor = false;
             this.advSearchBtn.Click += new System.EventHandler(this.advSearchBtn_Click);
             // 
@@ -444,7 +444,7 @@
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(87, 23);
             this.searchBtn.TabIndex = 2;
-            this.searchBtn.Text = "search";
+            this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = false;
             this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
@@ -554,10 +554,10 @@
             // removeHelp
             // 
             this.removeHelp.AutoSize = true;
-            this.removeHelp.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removeHelp.Location = new System.Drawing.Point(265, 227);
+            this.removeHelp.Font = new System.Drawing.Font("Verdana", 7.75F, System.Drawing.FontStyle.Italic);
+            this.removeHelp.Location = new System.Drawing.Point(21, 8);
             this.removeHelp.Name = "removeHelp";
-            this.removeHelp.Size = new System.Drawing.Size(225, 16);
+            this.removeHelp.Size = new System.Drawing.Size(196, 13);
             this.removeHelp.TabIndex = 2;
             this.removeHelp.Text = "Double click to remove a course!";
             // 
@@ -567,7 +567,7 @@
             this.clearAll.Name = "clearAll";
             this.clearAll.Size = new System.Drawing.Size(73, 23);
             this.clearAll.TabIndex = 1;
-            this.clearAll.Text = "clear all";
+            this.clearAll.Text = "Clear All";
             this.clearAll.UseVisualStyleBackColor = true;
             this.clearAll.Click += new System.EventHandler(this.clearAll_Click);
             // 
@@ -850,7 +850,7 @@
         private System.Windows.Forms.ColumnHeader schedule_hiddenIDCol;
         private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
         private System.Windows.Forms.Label advBuildingLabel;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label professor_adv_label;
         private System.Windows.Forms.Label label3;
         private Calendar.DayView dayView1;
     }

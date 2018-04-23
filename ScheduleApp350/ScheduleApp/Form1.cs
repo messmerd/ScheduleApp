@@ -84,7 +84,7 @@ namespace ScheduleApp
 
         private void dayView1_MouseMove(object sender, MouseEventArgs e)
         {
-            label2.Text = dayView1.GetTimeAt(e.X, e.Y).ToString();
+            professor_adv_label.Text = dayView1.GetTimeAt(e.X, e.Y).ToString();
             //string text = dayView1.GetTimeAt(e.X, e.Y).ToString();
             //Console.WriteLine(text);
         }
@@ -108,6 +108,9 @@ namespace ScheduleApp
          * /
 
         /******************************************************************************************/
+
+
+
 
         /**************************************** Themes ******************************************/
 
@@ -159,6 +162,7 @@ namespace ScheduleApp
             }
 
 
+            // 
             scheduleTitle.ForeColor = Color.Black;
 
             
@@ -171,15 +175,16 @@ namespace ScheduleApp
             scheduleTab.BackColor = Color.White;
             appMenu.BackColor = Color.White;
 
-            
+            // Adv Filter
             filter_UI.BackColor = Color.White;
             filter_UI.ForeColor = Color.Black;
 
+            // Buttons
             searchBtn.BackColor = Color.Gainsboro;
             advSearchBtn.BackColor = Color.Gainsboro;
             searchBtn.BackColor = Color.Gainsboro;
 
-            
+            // Button font color
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
@@ -241,7 +246,7 @@ namespace ScheduleApp
             row[5] = getDays(c);
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
             row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
-            row[8] = "low"; // placeholder ... 
+            row[8] = c.getProbability(c); // placeholder ... 
             return row;
         }
         /***************************************************************************************/
@@ -417,23 +422,23 @@ namespace ScheduleApp
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Stream jsonFileStream = null;
-            OpenFileDialog openJsonDialog = new OpenFileDialog();
+            OpenFileDialog openJson = new OpenFileDialog();
 
-            openJsonDialog.InitialDirectory = "c:\\";
-            openJsonDialog.Filter = "json files (*.json)";
-            openJsonDialog.FilterIndex = 2;
-            openJsonDialog.RestoreDirectory = true;
+            openJson.InitialDirectory = "c:\\";
+            openJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            openJson.FilterIndex = 2;
+            openJson.RestoreDirectory = true;
 
-            if (openJsonDialog.ShowDialog() == DialogResult.OK)
+            if (openJson.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    if ((jsonFileStream = openJsonDialog.OpenFile()) != null)
+                    if ((jsonFileStream = openJson.OpenFile()) != null)
                     {
                         using (jsonFileStream)
                         {
                             // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
-                            // Write an additional function, don't actually write the code here
+                            // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
                             // You might want to delete the stream from this method and just include it 
                             // inside the method you're going to write
                         }
@@ -444,26 +449,29 @@ namespace ScheduleApp
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
+            jsonFileStream.Close();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Stream jsonSaveStream = null;
-            SaveFileDialog saveJsonDialog = new SaveFileDialog();
+            SaveFileDialog saveJson = new SaveFileDialog();
 
-            saveJsonDialog.Filter = "json files (*.json)";
-            saveJsonDialog.FilterIndex = 2;
-            saveJsonDialog.RestoreDirectory = true;
+            saveJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            saveJson.FilterIndex = 2;
+            saveJson.RestoreDirectory = true;
 
-            if (saveJsonDialog.ShowDialog() == DialogResult.OK)
+            if (saveJson.ShowDialog() == DialogResult.OK)
             {
-                if ((jsonSaveStream = saveJsonDialog.OpenFile()) != null)
+                if ((jsonSaveStream = saveJson.OpenFile()) != null)
                 {
                     // TODO: Save the Json file to their computer
+                    // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
                     // You might want to make a multiline string variable to do so.
                     // Its just a normal string, except using """stuff""" instead of "stuff"
                 }
             }
+            jsonSaveStream.Close();
         }
         /***************************************************************************************************/
 
