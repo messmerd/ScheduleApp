@@ -19,11 +19,22 @@ namespace ScheduleApp
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
         CourseInfo info = CourseInfo.Create();
-
+        
         public AppWindow()
         {
             InitializeComponent();
             initializeProfessorComboBox();
+
+            dayView1.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
+            dayView1.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
+            dayView1.SelectionChanged += new EventHandler(dayView1_SelectionChanged);
+            dayView1.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
+
+            dayView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
+
+            // Use a line like this to change the visual theme of the calendar:
+            dayView1.Renderer = new Calendar.Office12Renderer();    // Can also use Calendar.Office11Renderer
+
         }
 
         private void initializeProfessorComboBox()
@@ -49,11 +60,55 @@ namespace ScheduleApp
         }
         /******************************************************************************************/
 
+        /************************Calendar-Related**************************************************/
+
+        private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
+        {
+            List<Calendar.Appointment> m_Apps = new List<Calendar.Appointment>();
+
+            foreach (Calendar.Appointment m_App in CandidateSchedule.Create().m_Courses)
+                if ((m_App.StartDate >= args.StartDate) &&
+                    (m_App.StartDate <= args.EndDate))
+                    m_Apps.Add(m_App);
+
+            args.Appointments = m_Apps;
+        }
 
 
+        private void dayView1_SelectionChanged(object sender, EventArgs e)
+        {
+            //string text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
+            label3.Text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
+            //Console.WriteLine(text);
+        }
 
+        private void dayView1_MouseMove(object sender, MouseEventArgs e)
+        {
+            label2.Text = dayView1.GetTimeAt(e.X, e.Y).ToString();
+            //string text = dayView1.GetTimeAt(e.X, e.Y).ToString();
+            //Console.WriteLine(text);
+        }
 
-        
+        void dayView1_NewAppointment(object sender, Calendar.NewAppointmentEventArgs args)
+        {
+            Calendar.Appointment m_Appointment = new Calendar.Appointment();
+
+            m_Appointment.StartDate = args.StartDate;
+            m_Appointment.EndDate = args.EndDate;
+            m_Appointment.Title = args.Title;
+
+            CandidateSchedule.Create().m_Courses.Add(m_Appointment);
+        }
+
+        /*
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            dayView1.HalfHourHeight = trackBar1.Value;
+        }
+         * /
+
+        /******************************************************************************************/
+
         /**************************************** Themes ******************************************/
 
 
@@ -64,20 +119,45 @@ namespace ScheduleApp
             // 168 183 185 <- text color
             // 48 64 71 <- search bar
             // 89 102 107 <- unfocused search bar
+
+
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.DarkGray;
+            }
+
+            dayView1.Invalidate(); // Updates the Calendar
         }
 
         private void themeToBlue(object sender, EventArgs e)
         {
+            dayView1.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.RoyalBlue; 
+            }
 
+            dayView1.Invalidate(); // Updates the Calendar
         }
 
         private void themeToGCC(object sender, EventArgs e)
         {
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.Crimson;
+            }
 
+            dayView1.Invalidate(); // Updates the Calendar
         }
 
         private void themeToClassic(object sender, EventArgs e)
         {
+            dayView1.Renderer = new Calendar.Office11Renderer();  // Calendar theme
+            foreach (var course in CandidateSchedule.Create().m_Courses)
+            {
+                course.BorderColor = Color.DarkSlateGray;
+            }
+
 
             scheduleTitle.ForeColor = Color.Black;
 
@@ -102,6 +182,8 @@ namespace ScheduleApp
             
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
+
+            dayView1.Invalidate(); // Updates the Calendar
 
         }
         /******************************************************************************************/
@@ -128,6 +210,7 @@ namespace ScheduleApp
             {
                 var courseToAdd = setSearchRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
+                listViewItem.Name = course.getCourseID().ToString(); 
                 searchResult_UI.Items.Add(listViewItem);
             }
             clickHelp1.Text = "Double click to add a course!";
@@ -159,7 +242,6 @@ namespace ScheduleApp
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
             row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
             row[8] = "low"; // placeholder ... 
-            row[9] = c.getCourseID().ToString();
             return row;
         }
         /***************************************************************************************/
@@ -172,15 +254,29 @@ namespace ScheduleApp
         {
             if(searchResult_UI.SelectedItems.Count >= 0)
             {
-                int courseID = int.Parse(searchResult_UI.SelectedItems[0].SubItems[9].Text);
+                int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
+                if (!CandidateSchedule.Create().checkInSchedule(courseID))
+                {
+                    Course scheduleCourse = new Course(courseID);
+
+                    var courseToAdd = setScheduleRow(scheduleCourse);
+                    var listViewItem = new ListViewItem(courseToAdd);
+                    listViewItem.Name = courseID.ToString();
+                    scheduleView.Items.Add(listViewItem);
+
+                    CandidateSchedule.Create().addCourse(scheduleCourse);
+
+                    clickHelp1.ForeColor = Color.Black;
+                    clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
+                    dayView1.Invalidate(); // Updates the Calendar
+                }
+                else
+                {
+                    clickHelp1.ForeColor = Color.Red;
+                    clickHelp1.Text = "\"" + CourseInfo.Create().getCourseCode(courseID) + "\" is already in your schedule.";
+                }
 
                 
-                Course scheduleCourse = new Course(courseID);
-
-                var courseToAdd = setScheduleRow(scheduleCourse);
-                var listViewItem = new ListViewItem(courseToAdd);
-                scheduleView.Items.Add(listViewItem);
-                clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
             }
             
         }
@@ -197,7 +293,6 @@ namespace ScheduleApp
             row[5] = c.getBuilding().ToString();
             row[6] = c.getRoom().ToString();
             row[7] = getDays(c);
-            row[8] = c.getCourseID().ToString();
             return row;
 
         }
@@ -205,6 +300,8 @@ namespace ScheduleApp
         private void clearAll_Click(object sender, EventArgs e)
         {
             scheduleView.Items.Clear(); // what the user sees
+            CandidateSchedule.Create().removeAllCourses();
+            dayView1.Invalidate(); // Updates the Calendar
         }
 
         
@@ -212,7 +309,11 @@ namespace ScheduleApp
         {
             if (scheduleView.SelectedItems.Count >= 0)
             {
+                int courseID = int.Parse(scheduleView.SelectedItems[0].Name);
+                 
                 scheduleView.SelectedItems[0].Remove();
+                CandidateSchedule.Create().removeCourse(courseID);
+                dayView1.Invalidate(); // Updates the Calendar
             }
         }
         
