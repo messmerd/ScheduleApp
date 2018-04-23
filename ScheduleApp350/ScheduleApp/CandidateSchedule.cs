@@ -98,8 +98,10 @@ namespace ScheduleApp
             //Should ask user if they want to add/remove this as well. 
         }
 
-        public List<int> addCourse(int id) //implement credit counting
+        public List<int> addCourse(int id)
         {
+            creditCount += DB.getCredits(id);
+            checkCreditCount();
             return addCourse(DB.getCourse(id));  
         }
 
