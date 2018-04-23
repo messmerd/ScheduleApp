@@ -221,12 +221,10 @@ namespace ScheduleApp
             clickHelp1.Text = "Double click to add a course!";
         }
 
+        // search by pressing enter, must have the search box focused
         private void input_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Enter)
-            {
-                searchBtn_Click(sender, e);
-            }
+            if (e.KeyData == Keys.Enter) searchBtn_Click(sender, e);
         }
 
         private string getDays(Course returnedCourse)
