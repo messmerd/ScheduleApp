@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.dayView1 = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -41,7 +41,7 @@
             this.filter_UI = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.professor_adv_label = new System.Windows.Forms.Label();
-            this.advBuildingLabel = new System.Windows.Forms.Label();
+            this.adv_building_label = new System.Windows.Forms.Label();
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
             this.professor_adv = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -109,8 +109,8 @@
             // 
             // dayView1
             // 
-            drawTool1.DayView = this.dayView1;
-            this.dayView1.ActiveTool = drawTool1;
+            drawTool2.DayView = this.dayView1;
+            this.dayView1.ActiveTool = drawTool2;
             this.dayView1.DaysToShow = 5;
             this.dayView1.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.dayView1.Location = new System.Drawing.Point(8, 256);
@@ -203,7 +203,7 @@
             this.filter_UI.BackColor = System.Drawing.Color.White;
             this.filter_UI.Controls.Add(this.label3);
             this.filter_UI.Controls.Add(this.professor_adv_label);
-            this.filter_UI.Controls.Add(this.advBuildingLabel);
+            this.filter_UI.Controls.Add(this.adv_building_label);
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
             this.filter_UI.Controls.Add(this.professor_adv);
             this.filter_UI.Controls.Add(this.label1);
@@ -243,14 +243,14 @@
             this.professor_adv_label.TabIndex = 15;
             this.professor_adv_label.Text = "Professor:";
             // 
-            // advBuildingLabel
+            // adv_building_label
             // 
-            this.advBuildingLabel.AutoSize = true;
-            this.advBuildingLabel.Location = new System.Drawing.Point(44, 71);
-            this.advBuildingLabel.Name = "advBuildingLabel";
-            this.advBuildingLabel.Size = new System.Drawing.Size(57, 13);
-            this.advBuildingLabel.TabIndex = 14;
-            this.advBuildingLabel.Text = "Building:";
+            this.adv_building_label.AutoSize = true;
+            this.adv_building_label.Location = new System.Drawing.Point(44, 71);
+            this.adv_building_label.Name = "adv_building_label";
+            this.adv_building_label.Size = new System.Drawing.Size(57, 13);
+            this.adv_building_label.TabIndex = 14;
+            this.adv_building_label.Text = "Building:";
             // 
             // allNoneCheckBox
             // 
@@ -458,6 +458,7 @@
             this.searchBox.TabIndex = 1;
             this.searchBox.Text = "Search by course code or name...";
             this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
+            this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.input_KeyDown);
             this.searchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             // 
             // searchResult_UI
@@ -849,7 +850,7 @@
         private System.Windows.Forms.Label removeHelp;
         private System.Windows.Forms.ColumnHeader schedule_hiddenIDCol;
         private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
-        private System.Windows.Forms.Label advBuildingLabel;
+        private System.Windows.Forms.Label adv_building_label;
         private System.Windows.Forms.Label professor_adv_label;
         private System.Windows.Forms.Label label3;
         private Calendar.DayView dayView1;

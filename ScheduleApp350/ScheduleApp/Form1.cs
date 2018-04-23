@@ -221,6 +221,14 @@ namespace ScheduleApp
             clickHelp1.Text = "Double click to add a course!";
         }
 
+        private void input_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                searchBtn_Click(sender, e);
+            }
+        }
+
         private string getDays(Course returnedCourse)
         {
             string meetingDays = "";
@@ -421,35 +429,17 @@ namespace ScheduleApp
         /**************************************JSON Transfer***************************************/
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Stream jsonFileStream = null;
             OpenFileDialog openJson = new OpenFileDialog();
 
-            openJson.InitialDirectory = "c:\\";
             openJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-            openJson.FilterIndex = 2;
-            openJson.RestoreDirectory = true;
 
             if (openJson.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
-                    if ((jsonFileStream = openJson.OpenFile()) != null)
-                    {
-                        using (jsonFileStream)
-                        {
-                            // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
-                            // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
-                            // You might want to delete the stream from this method and just include it 
-                            // inside the method you're going to write
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-                }
+                // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
+                // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
+                // You might want to delete the stream from this method and just include it 
+                // inside the method you're going to write
             }
-            jsonFileStream.Close();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -458,8 +448,6 @@ namespace ScheduleApp
             SaveFileDialog saveJson = new SaveFileDialog();
 
             saveJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-            saveJson.FilterIndex = 2;
-            saveJson.RestoreDirectory = true;
 
             if (saveJson.ShowDialog() == DialogResult.OK)
             {
