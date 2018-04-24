@@ -12,13 +12,15 @@ namespace Calendar
         DateTime m_SelectionStart;
         bool m_SelectionStarted;
 
+        
         public void Reset()
         {
             m_SelectionStarted = false;
         }
-
+        
         public void MouseMove(MouseEventArgs e)
         {
+            /*
             if (e.Button == MouseButtons.Left)
             {
                 if (m_SelectionStarted)
@@ -42,10 +44,12 @@ namespace Calendar
                     m_DayView.Invalidate();
                 }
             }
+             */ 
         }
 
         public void MouseUp(MouseEventArgs e)
         {
+            /*
             if (e.Button == MouseButtons.Left)
             {
                 m_DayView.Capture = false;
@@ -56,10 +60,12 @@ namespace Calendar
                 if (Complete != null)
                     Complete(this, EventArgs.Empty);
             }
+             */ 
         }
 
         public void MouseDown(MouseEventArgs e)
         {
+            /*
             if (e.Button == MouseButtons.Left)
             {
                 m_SelectionStart = m_DayView.GetTimeAt(e.X, e.Y);
@@ -72,6 +78,7 @@ namespace Calendar
                 m_DayView.Invalidate();
                 m_DayView.Capture = true;
             }
+             */ 
         }
 
         private DayView m_DayView;
