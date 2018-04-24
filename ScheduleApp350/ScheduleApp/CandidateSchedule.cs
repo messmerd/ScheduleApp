@@ -47,20 +47,22 @@ namespace ScheduleApp
         }
         */
 
-        public void add(Course c)
-        {
-            schedule.Add(c);
-            creditCount += c.getCredits();
-            checkCreditCount();
-        }
-
-        public List<int> addCourse(Course c)
+        public List<int> addCourse(Course c, int id_from_listview)
         {
             List<int> additional = new List<int>();
             creditCount += c.getCredits();
             checkCreditCount();
             schedule.Add(c);
             int id = c.getCourseID();
+
+            /************Add to UI*************/
+            Course scheduleCourse = new Course(id_from_listview)
+            var courseToAdd = AppWindow.setScheduleRow(scheduleCourse);
+            var listViewItem = new ListViewItem(courseToAdd);
+            listViewItem.Name = courseID.ToString();
+            AppWindow.scheduleView.Items.Add(listViewItem);
+
+            /**********************************/
 
             // This loop is untested. I don't think it would work as intended 
             for (int j = 0; j < 2; j++)
@@ -127,7 +129,7 @@ namespace ScheduleApp
             m_Courses.Clear(); 
         }
 
-        public bool checkInSchedule(int courseID)
+        public bool containsCourse(int courseID)
         {
             foreach (var course in schedule)
             {
@@ -163,6 +165,7 @@ namespace ScheduleApp
             return false;
         }
 
+        /*
         public bool scheduleToFile(string filename) //creates a json file from the schedule, return true if successful
         {
             //TODO:
@@ -173,6 +176,7 @@ namespace ScheduleApp
 
             return false;
         }
+        */
 
         public bool checkTimeConflict_old(int id)
         {
