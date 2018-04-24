@@ -30,7 +30,6 @@ namespace ScheduleApp
             return singleton;
         }
      
-
         private CandidateSchedule()
         {
             schedule = new List<Course>();
@@ -61,13 +60,14 @@ namespace ScheduleApp
             creditCount += c.getCredits();
             checkCreditCount();
             schedule.Add(c);
+
             int id = c.getCourseID();
             //adds courses with same name recursivly
-            if(DB.getCourseCode(id + 1) == DB.getCourseCode(id))
+            if ( id < DB.getNumCourses() - 1 && DB.getCourseCode(id + 1) == DB.getCourseCode(id))
             {
                 addCourse(DB.getCourse(id + 1));
             }
-            else if (DB.getCourseCode(id - 1) == DB.getCourseCode(id))
+            else if ( id > 0 && DB.getCourseCode(id - 1) == DB.getCourseCode(id))
             {
                 addCourse(DB.getCourse(id - 1));
             }
@@ -112,12 +112,9 @@ namespace ScheduleApp
 
         public void addCourse(int id)
         {
-            creditCount += DB.getCredits(id);
-            checkCreditCount();
             addCourse(DB.getCourse(id)); 
         }
 
-        
         public bool removeCourse(int courseID)
         {
             List<int> toBeRemoved = new List<int>();
