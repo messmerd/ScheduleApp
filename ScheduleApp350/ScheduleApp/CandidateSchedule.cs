@@ -133,19 +133,9 @@ namespace ScheduleApp
         }
 
         public void checkCreditCount()
-        {
-            if (creditCount < 12)
-            {
-                creditSituation = -1;
-            }
-            else if (creditCount > 17)
-            {
-                creditSituation = 1;
-            }
-            else
-            {
-                creditSituation = 0;
-            }
+        {   
+            creditSituation = creditCount < 12 ? -1 : 0;
+            creditSituation = creditCount > 17 ? 1 : 0;
         }
 
         public bool scheduleFromFile(string filename) //creates the schedule from a json file, return true if successful
