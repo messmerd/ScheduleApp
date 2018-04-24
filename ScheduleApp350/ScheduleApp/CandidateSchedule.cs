@@ -46,16 +46,8 @@ namespace ScheduleApp
         }
         */
 
-        public void add(Course c)
-        {
-            schedule.Add(c);
-            creditCount += c.getCredits();
-            checkCreditCount();
-        }
-
         public void addCourse(Course c)
         {
-            /*List<int> additional = new List<int>();*/
             if (schedule.Contains(c)) return;
             creditCount += c.getCredits();
             checkCreditCount();
@@ -72,30 +64,6 @@ namespace ScheduleApp
                 addCourse(DB.getCourse(id - 1));
             }
 
-            // This loop is untested. I don't think it would work as intended 
-            //Commented out unless we want to try and implement it
-            /*
-            for (int j = 0; j < 2; j++)
-            {
-                int i = id;
-                while (i > 0 && i < DB.getNumCourses() && DB.getCourseDept(i) == c.getCourseDept() && DB.getCourseNum(i) == c.getCourseNum())
-                {
-                    if (DB.getCourseSect(i).Contains(c.getCourseSect()) ||
-                        c.getCourseSect().Contains(DB.getCourseSect(i)) ||
-                        c.getCourseSect().Contains("L") ||
-                        c.getCourseSect().Contains("M") ||
-                        c.getCourseSect().Contains("N") ||
-                        c.getCourseSect().Contains("O") ||
-                        c.getCourseSect().Contains("P") ||
-                        c.getCourseSect().Contains("Q"))
-                        additional.Add(i);
-                    if (j == 0)
-                        i++;
-                    else
-                        i--;
-                }
-            }
-            */
             //bool timeConflict = checkTimeConflict(id);
             List<Course> timeConflicts = checkTimeConflict(c);
             if (timeConflicts.Count > 1)  // There's at least one time conflict 
@@ -104,10 +72,6 @@ namespace ScheduleApp
             }
 
             addToCalendar(id);
-
-            /*return additional;*/
-            // For adding/removing courses, there may be an associated coourse/lab. 
-            //Should ask user if they want to add/remove this as well. 
         }
 
         public void addCourse(int id)
