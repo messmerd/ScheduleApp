@@ -54,15 +54,27 @@ namespace ScheduleApp
             checkCreditCount();
         }
 
-        public List<int> addCourse(Course c)
+        public void addCourse(Course c)
         {
-            List<int> additional = new List<int>();
+            /*List<int> additional = new List<int>();*/
+            if (schedule.Contains(c)) return;
             creditCount += c.getCredits();
             checkCreditCount();
             schedule.Add(c);
             int id = c.getCourseID();
+            //adds courses with same name recursivly
+            if(DB.getCourseCode(id + 1) == DB.getCourseCode(id))
+            {
+                addCourse(DB.getCourse(id + 1));
+            }
+            else if (DB.getCourseCode(id - 1) == DB.getCourseCode(id))
+            {
+                addCourse(DB.getCourse(id - 1));
+            }
 
             // This loop is untested. I don't think it would work as intended 
+            //Commented out unless we want to try and implement it
+            /*
             for (int j = 0; j < 2; j++)
             {
                 int i = id;
@@ -83,7 +95,7 @@ namespace ScheduleApp
                         i--;
                 }
             }
-
+            */
             //bool timeConflict = checkTimeConflict(id);
             List<Course> timeConflicts = checkTimeConflict(c);
             if (timeConflicts.Count > 1)  // There's at least one time conflict 
@@ -93,28 +105,41 @@ namespace ScheduleApp
 
             addToCalendar(id);
 
-            return additional;
+            /*return additional;*/
             // For adding/removing courses, there may be an associated coourse/lab. 
             //Should ask user if they want to add/remove this as well. 
         }
 
-        public List<int> addCourse(int id)
+        public void addCourse(int id)
         {
             creditCount += DB.getCredits(id);
             checkCreditCount();
-            return addCourse(DB.getCourse(id));  
+            addCourse(DB.getCourse(id)); 
         }
 
         
         public bool removeCourse(int courseID)
         {
-            creditCount -= DB.getCredits(courseID);
-            checkCreditCount();
+            List<int> toBeRemoved = new List<int>();
+            foreach (var course in schedule)
+            {
+                if (DB.getCourseCode(courseID) == course.getCourseCode())
+                {
+                    toBeRemoved.Add(course.getCourseID());
+                }
+            }
+            bool result = false;
+            foreach (var allIDs in toBeRemoved) 
+            {
+                creditCount -= DB.getCredits(allIDs);
+                checkCreditCount();
 
-            m_Courses.RemoveAll(c => c.CourseID == courseID);
+                m_Courses.RemoveAll(c => c.CourseID == allIDs);
+
+                result = schedule.Remove(DB.getCourse(allIDs));
+                updateConflictMarkers();
+            }
             
-            bool result = schedule.Remove(DB.getCourse(courseID));
-            updateConflictMarkers();
 
             return result;
         }
