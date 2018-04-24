@@ -108,24 +108,27 @@ namespace SearchClass
 
             /////////////  Calculate the relevance for each course that matched the query  ///////////////
 
+            lastSearchResults.courses.Clear();
+            lastSearchResults.relevance.Clear(); 
+
             int j = 0;
             foreach (var match in matching)  // For each word of corrected query 
             {
-
                 foreach (var id in match)    // For each course ID of courses that contain the corrected query word in their title or course code 
                 {
-                    if (bestMatches.ContainsKey(id))
+                    if (lastSearchResults.relevance.ContainsKey(id)) //(bestMatches.ContainsKey(id))
                     {
-                        bestMatches[id]++;  // Increment the number of matching words for the course "id"  
+                        lastSearchResults.relevance[id]++; //bestMatches[id]++;  // Increment the number of matching words for the course "id"  
                         // If it matches the department code rather than just part of the course title, the relevance will be increased an extra amount for better results (see below)   
                     }
                     else
                     {
-                        bestMatches[id] = 1; // This course has one matching word 
+                        lastSearchResults.courses.Add(new Course(id));
+                        lastSearchResults.relevance[id] = 1; //bestMatches[id] = 1; // This course has one matching word 
 
                         // For the following line, if a course matches the query completely (every word), then that course is given one extra relevancy.
                         // I'm not sure if this will improve search results much. It's an experimental feature. It can be safely commented out to disable it. 
-                        bestMatches[id] += (querySplit.Count != 1 && correctedQuery.Split().ToList().Count == querySplit.Count && correctedQuery.Split().All(i => spelling.getDictionaryFileContents()[id].ToLower().Split().Contains(i))) ? 1 : 0;
+                        lastSearchResults.relevance[id] /*bestMatches[id]*/ += (querySplit.Count != 1 && correctedQuery.Split().ToList().Count == querySplit.Count && correctedQuery.Split().All(i => spelling.getDictionaryFileContents()[id].ToLower().Split().Contains(i))) ? 1 : 0;
                     }
 
                     // This loop adds extra relevance to results whose department code (part of its course code) matches part of the query 
@@ -139,7 +142,7 @@ namespace SearchClass
                         {
                             //Console.WriteLine("correctedQuery.Split()[j] = ,{0}, word.ToLower() = ,{1}, ", correctedQuery.Split()[j], word.ToLower());
                             if (j < correctedQuery.Split().ToList().Count && correctedQuery.Split()[j] == word.ToLower())    // If a word in the query matches a department code of a course, it counts extra towards the relevance of that course in the search results 
-                                bestMatches[id]++;  // For now, increase the relevance by an extra 1. Remove this line to remove the effect of this whole feature.  
+                                lastSearchResults.relevance[id]++; //bestMatches[id]++;  // For now, increase the relevance by an extra 1. Remove this line to remove the effect of this whole feature.  
                         }
                     }
 
@@ -148,62 +151,11 @@ namespace SearchClass
                 j++;
             }
 
-            /////////////  Sort the search results by relevance   ///////////////
-
-            List<KeyValuePair<int, int>> bestMatchesList = bestMatches.ToList();
-            bestMatchesList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));  // Sorts the courses by relevance. Most relevant first. 
-
-            // This part orders the results (for each different relevancy value) by department code and course number: 
-            if (bestMatchesList.Count > 1) // Only needs to sort if there is more than one result 
-            {
-                int start = 0;
-                int currentRelevance = bestMatchesList[0].Value;
-                List<KeyValuePair<int, int>> sortedSubset = new List<KeyValuePair<int, int>>();
-                for (int i = 0; i < bestMatchesList.Count; i++)
-                {
-                    if (i == bestMatchesList.Count - 1 || bestMatchesList[i + 1].Value != currentRelevance)
-                    {
-                        sortedSubset = bestMatchesList.GetRange(start, i - start + 1).OrderBy(a => a.Key).ToList();  // Sort subset by department/course number
-
-                        for (int k = start; k < i + 1; k++) // Copies the sorted subset back into the main list 
-                        {
-                            bestMatchesList[k] = sortedSubset[k - start];
-                        }
-
-                        if (i != bestMatchesList.Count - 1)  // If it isn't the last element 
-                        {
-                            currentRelevance = bestMatchesList[i + 1].Value;
-                            start = i + 1;
-                        }
-                    }
-
-                }
-            }
-
-            // Need function (a factory, maybe) to generate and return a course struct from a course id. 
-            // This could be done by a CourseInfo class, which acts as a database. 
-            // Or maybe it should just be done by a Class constructor that accesses the database class. It is being done this way for now. 
-
-            /////////////  Store search results in lastSearchResults  ///////////////
-
-            lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
-            lastSearchResults.courses.Clear();          // Clear the results from the last search 
-
-            foreach (var course in bestMatchesList) // Iterate through the courses in the search results 
-            {
-                if (course.Value != 0)  // This condition is probably not needed. 
-                {
-                    lastSearchResults.courses.Add(new Course(course.Key));  // Add the courses to lastSearchResults struct 
-                    lastSearchResults.courseRelevance.Add(course.Value);    // Add the course relevances to lastSearchResults struct 
-                }
-                else
-                    Console.WriteLine("Error!"); // Shouldn't ever happen. Could remove this later 
-            }
-
             lastSearchResults.correctedQuery = correctedQuery; // Setting correctedQuery in the lastSearchResults struct 
             lastSearchResults.query = query;                   // Setting correctedQuery in the lastSearchResults struct 
 
-            advancedSearchFilter();
+            advancedSearchFilter();                                   // Narrow down the search according to the advanced search options
+            lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, true);  // Order the results by relevancy 
 
         }
 
@@ -222,14 +174,14 @@ namespace SearchClass
         // Adds all the courses to the search results
         private void addAllCourses()
         {
-            lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
+            lastSearchResults.relevance.Clear();  // Clear the results from the last search 
             lastSearchResults.courses.Clear();          // Clear the results from the last search 
 
             // Add all of the courses to the search results: 
             for (int i = 0; i < CourseInfo.Create().getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
             {
                 lastSearchResults.courses.Add(new Course(i));
-                lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
+                lastSearchResults.relevance[i] = 1;      // Should it be 0?  
             }
         }
 
@@ -247,8 +199,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
             }
 
@@ -262,8 +214,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -279,8 +231,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -294,8 +246,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -310,8 +262,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -325,8 +277,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
             }
 
@@ -339,8 +291,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
             }
 

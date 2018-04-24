@@ -51,7 +51,7 @@ public class Program
                 Console.WriteLine("Top 20 search results for {0}, ordered by best match: ", query);
                 foreach (var match in searchResults)
                 {
-                    Console.WriteLine("ID = {0}, relevance = {1}, name = {2}, StartTime = {3}", match.getCourseID(), search.lastSearchResults.getCourseRelevance()[i],search.lastSearchResults.getCourses()[i].getLongName(), search.lastSearchResults.getCourses()[i].getTime().Item1);  //  search.getDictionaryFileContents()[match.getCourseID()]
+                    Console.WriteLine("ID = {0}, relevance = {1}, name = {2}, StartTime = {3}", match.getCourseID(), search.lastSearchResults.getCourseRelevance(match.getCourseID()),search.lastSearchResults.getCourses()[i].getLongName(), search.lastSearchResults.getCourses()[i].getTime().Item1);  //  search.getDictionaryFileContents()[match.getCourseID()]
                     if (i == 19) { break; }  // Only show top 20 search results
                     i++;
                 }
@@ -66,44 +66,3 @@ public class Program
     
 }
 
-public class CourseList 
-{
-    public List<Course> courses;         // Courses ordered from most relevant to least 
-    public List<Course> courses_ordered; // Courses ordered in a certain way 
-    public string query;                 // The query passed to searchForQuery()
-    public string correctedQuery;        // The spell-checked version of query
-    public List<int> courseRelevance;    // Stores the relevance of each course in the results. courseRelevance[i] = relevance of courses[i] 
-
-    public CourseList()
-    {
-        this.query = "";
-        this.correctedQuery = "";
-        this.courses = new List<Course>();
-        this.courses_ordered = new List<Course>();
-        this.courseRelevance = new List<int>();
-    }
-
-
-    // Getters: 
-    public List<Course> getCourses()
-    {
-        return courses;
-    }
-    public List<Course> getCoursesOrdered()
-    {
-        return courses_ordered;
-    }
-    public string getCorrectedQuery()
-    {
-        return correctedQuery;
-    }
-    public string getQuery()
-    {
-        return query;
-    }
-    public List<int> getCourseRelevance()
-    {
-        return courseRelevance;
-    }
-
-}
