@@ -47,22 +47,13 @@ namespace ScheduleApp
         }
         */
 
-        public List<int> addCourse(Course c, int id_from_listview)
+        public List<int> addCourse(Course c)
         {
             List<int> additional = new List<int>();
             creditCount += c.getCredits();
             checkCreditCount();
             schedule.Add(c);
             int id = c.getCourseID();
-
-            /************Add to UI*************/
-            Course scheduleCourse = new Course(id_from_listview)
-            var courseToAdd = AppWindow.setScheduleRow(scheduleCourse);
-            var listViewItem = new ListViewItem(courseToAdd);
-            listViewItem.Name = courseID.ToString();
-            AppWindow.scheduleView.Items.Add(listViewItem);
-
-            /**********************************/
 
             // This loop is untested. I don't think it would work as intended 
             for (int j = 0; j < 2; j++)

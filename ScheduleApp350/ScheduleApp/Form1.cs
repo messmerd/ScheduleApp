@@ -302,8 +302,12 @@ namespace ScheduleApp
                 if (!schedule.containsCourse(courseID))
                 {
                     Course scheduleCourse = new Course(courseID);
-                    
-                    schedule.addCourse(scheduleCourse, courseID);
+
+                    schedule.addCourse(courseID);
+                    var courseToAdd = setScheduleRow(scheduleCourse);
+                    var listViewItem = new ListViewItem(courseToAdd);
+                    listViewItem.Name = courseID.ToString();
+                    scheduleView.Items.Add(listViewItem);
 
                     clickHelp1.ForeColor = Color.Black;
                     clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
