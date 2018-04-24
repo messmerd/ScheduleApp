@@ -228,15 +228,15 @@ namespace CourseClass
             return time;
         }
 
-        public string getProbability(Course x)
+        public string getProbability()
         {
             int probScore = 0;
             string caseRes = "";
 
             bool[] cases = {
-                (x.getTime().Item1 > 8.00 && x.getTime().Item1 < 11.00),
-                (x.getProf().rmp >= 3.5),
-                (x.capacity - x.enrollment <= 3)
+                (this.getTime().Item1 > 8.00 && this.getTime().Item1 < 11.00),
+                (this.getProf().rmp >= 3.5),
+                (this.capacity - this.enrollment <= 3)
             };
 
             foreach(var caseItem in cases)
@@ -263,7 +263,7 @@ namespace CourseClass
                     break;
             }
 
-            return x.capacity - x.enrollment == 0 ? "low/none" : caseRes;
+            return this.capacity - this.enrollment == 0 ? "low/none" : caseRes;
         }
 
         public Tuple<string, string> getTimeString()

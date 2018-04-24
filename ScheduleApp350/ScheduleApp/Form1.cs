@@ -284,7 +284,7 @@ namespace ScheduleApp
             row[5] = getDays(c);
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
             row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
-            row[8] = c.getProbability(c); // placeholder ... 
+            row[8] = c.getProbability();
             return row;
         }
         /***************************************************************************************/
