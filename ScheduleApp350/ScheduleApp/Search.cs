@@ -174,14 +174,14 @@ namespace SearchClass
         // Adds all the courses to the search results
         private void addAllCourses()
         {
-            lastSearchResults.courseRelevance.Clear();  // Clear the results from the last search 
+            lastSearchResults.relevance.Clear();  // Clear the results from the last search 
             lastSearchResults.courses.Clear();          // Clear the results from the last search 
 
             // Add all of the courses to the search results: 
             for (int i = 0; i < CourseInfo.Create().getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
             {
                 lastSearchResults.courses.Add(new Course(i));
-                lastSearchResults.courseRelevance.Add(1);      // Should it be 0?  
+                lastSearchResults.relevance[i] = 1;      // Should it be 0?  
             }
         }
 
@@ -199,8 +199,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
             }
 
@@ -214,8 +214,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -231,8 +231,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -246,8 +246,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -262,8 +262,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
 
             }
@@ -277,8 +277,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
             }
 
@@ -291,8 +291,8 @@ namespace SearchClass
 
                 foreach (int index in removeIndices)
                 {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
                     lastSearchResults.courses.RemoveAt(index);
-                    lastSearchResults.courseRelevance.RemoveAt(index);
                 }
             }
 

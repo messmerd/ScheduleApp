@@ -14,7 +14,6 @@ namespace SearchResultsClass
         public List<Course> courses;         // Courses ordered from most relevant to least by default.  
         public string query;                 // The query passed to searchForQuery()
         public string correctedQuery;        // The spell-checked version of query
-        public List<int> courseRelevance;    // Stores the relevance of each course in the results. courseRelevance[i] = relevance of courses[i] 
         public Dictionary<int, int> relevance; 
 
         public SearchResults()
@@ -22,7 +21,6 @@ namespace SearchResultsClass
             this.query = "";
             this.correctedQuery = "";
             this.courses = new List<Course>();
-            this.courseRelevance = new List<int>();
             this.relevance = new Dictionary<int, int>();
         }
 
@@ -39,9 +37,12 @@ namespace SearchResultsClass
         {
             return query;
         }
-        public List<int> getCourseRelevance()
+        public int getCourseRelevance(int id)
         {
-            return courseRelevance;
+            if (relevance.ContainsKey(id))
+                return relevance[id];
+            else
+                return -1; // Course is not in the search results
         }
 
         public void SortCourses(SORTTYPE sortBy, bool ascending)
