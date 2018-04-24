@@ -231,7 +231,8 @@ namespace ScheduleApp
                     m_course.StartDate = new DateTime(2010, 2, 1 + day, course_time.Item1, course_time.Item2, 0);
                     m_course.EndDate = new DateTime(2010, 2, 1 + day, course_time.Item3, course_time.Item4, 0);
                     m_course.Title = DB.getCourse(id).getCourseCode() + " " + DB.getCourse(id).getLongName();
-                    m_course.CourseID = id; 
+                    m_course.CourseID = id;
+                    m_course.Locked = true; 
                     m_Courses.Add(m_course);
 
                 }
