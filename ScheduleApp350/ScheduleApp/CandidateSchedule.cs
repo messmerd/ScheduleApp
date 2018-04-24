@@ -13,6 +13,8 @@ namespace ScheduleApp
 {
     public class CandidateSchedule
     {
+        public const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF\n";
+
         public List<Course> schedule;
         public List<Calendar.Appointment> m_Courses;
         public CourseInfo DB;
@@ -84,10 +86,11 @@ namespace ScheduleApp
             List<int> toBeRemoved = new List<int>();
             foreach (var course in schedule)
             {
-                if (DB.getCourseCode(courseID) == course.getCourseCode())
-                {
+                //deals with items that have an ID greater than the max for the database
+                if (courseID < DB.getNumCourses() && DB.getCourseCode(courseID) == course.getCourseCode())
                     toBeRemoved.Add(course.getCourseID());
-                }
+                else if (courseID == course.getCourseID())
+                    toBeRemoved.Add(course.getCourseID());
             }
             bool result = false;
             foreach (var allIDs in toBeRemoved) 
@@ -141,23 +144,47 @@ namespace ScheduleApp
             }
         }
 
-        public bool scheduleFromFile(string filename) //creates the schedule from a json file, return true if successful
+        public bool scheduleFromFile(string filepath) //creates the schedule from a json file, return true if successful
         {
-            if(!File.Exists(filename)) return false;
-            string json = System.IO.File.ReadAllText(filename);
+            if(!File.Exists(filepath)) return false;
+            string allCourses = System.IO.File.ReadAllText(filepath);
 
-            return false;
+            if (!allCourses.StartsWith(KEY_STRING)) return false; //secondary check that file is correct type
+            else allCourses.Replace(KEY_STRING, null);
+
+            List<string> listOfCourses = new List<string>(allCourses.Split('\n'));
+            removeAllCourses(); //replaces current candidate schedule
+
+            int i = 0;
+            foreach (var course in listOfCourses)
+            {
+                List<string> importedCourse = new List<string>(course.Split('\t'));
+
+                int id;
+                if (Int32.TryParse(importedCourse[importedCourse.Count - 1], out id) &&
+                    DB.getCourseCode(id) == System.Text.RegularExpressions.Regex.Replace(importedCourse[0], @"\s+", " ")) ;
+                else id = DB.getNumCourses() + i++;
+
+                importedCourse.RemoveAt(importedCourse.Count - 1);
+                if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
+                else addCourse(new Course(importedCourse, id));
+            }
+            return true;
         }
 
-        public bool scheduleToFile(string filename) //creates a json file from the schedule, return true if successful
+        public bool scheduleToFile(string filepath) //creates a json file from the schedule, return true if successful
         {
-            //TODO:
-            //convert course to a single string w/ all info, one course per line
-            
-            //string json = JsonConvert.SerializeObject(objOrArray);
-            //File.WriteAllText(filename, json);
-
-            return false;
+            if (File.Exists(filepath)) return false;
+            using (StreamWriter sw = File.CreateText(filepath))
+            {
+                sw.Write(KEY_STRING);//marks first line for verifying file
+                // Create a file to write to.
+                foreach (var course in schedule)
+                {
+                    sw.WriteLine(course.getAllInfo());
+                }
+            }
+            return true;
         }
 
         public bool checkTimeConflict_old(int id)
@@ -231,8 +258,7 @@ namespace ScheduleApp
                     m_course.StartDate = new DateTime(2010, 2, 1 + day, course_time.Item1, course_time.Item2, 0);
                     m_course.EndDate = new DateTime(2010, 2, 1 + day, course_time.Item3, course_time.Item4, 0);
                     m_course.Title = DB.getCourse(id).getCourseCode() + " " + DB.getCourse(id).getLongName();
-                    m_course.CourseID = id;
-                    m_course.Locked = true; 
+                    m_course.CourseID = id; 
                     m_Courses.Add(m_course);
 
                 }
