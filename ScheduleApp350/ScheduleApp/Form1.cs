@@ -19,7 +19,7 @@ namespace ScheduleApp
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
         CourseInfo info = CourseInfo.Create();
-        
+
         public AppWindow()
         {
             InitializeComponent();
@@ -35,6 +35,7 @@ namespace ScheduleApp
             // Use a line like this to change the visual theme of the calendar:
             dayView1.Renderer = new Calendar.Office12Renderer();    // Can also use Calendar.Office11Renderer
 
+            clickHelp1.Text = "Double click to add a course!";
         }
 
         private void initializeProfessorComboBox()
@@ -230,23 +231,20 @@ namespace ScheduleApp
         private void searchBtn_Click(object sender, EventArgs e)
         {
 
-            Search search = Search.Create("course_dictionary.txt");
+            // Remove previous search results upon performing another search
+            searchResult_UI.Items.Clear();
+
             if (searchBox.Text != emptySearchBarText)
                 search.searchForQuery(searchBox.Text);
             else
-                search.searchForQuery("\0"); // search for all courses
+                search.searchForQuery(""); // search for all courses
 
             populateSearch(search.lastSearchResults.getCourses());
-
-            // Remove previous search results upon performing another search
-            searchResult_UI.Items.Clear(); 
-
-            clickHelp1.Text = "Double click to add a course!";
         }
 
-        private void populateSearch(List<Course> searchResults)
+        private void populateSearch(List<Course> results)
         {
-            foreach (var course in searchResults)
+            foreach (var course in results)
             {
                 var courseToAdd = setSearchRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
