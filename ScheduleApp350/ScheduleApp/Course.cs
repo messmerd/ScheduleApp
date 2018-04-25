@@ -8,7 +8,7 @@ namespace CourseClass
 {
     // HAL, HH = HOYT, PFAC = Pew Fine Arts, OFFCP = Study abroad, etc, PLC = Physical Learning cnter, RH = Rockwell, 
     // TBA = N/A, BAO = ???
-    public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBA, NONE };
+    public enum Build { NONE, BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBA };
 
     public struct Course
     {
@@ -230,8 +230,24 @@ namespace CourseClass
 
         public string getProbability()
         {
+            switch (getProbabilityInt())
+            {
+                case 0:
+                    return "high";
+                case 1:
+                    return "medium";
+                case 2:
+                    return "low";
+                case 3:
+                    return "low/none";
+                default:
+                    return "low/none";
+            }
+        }
+
+        public int getProbabilityInt()
+        {
             int probScore = 0;
-            string caseRes = "";
 
             bool[] cases = {
                 (this.getTime().Item1 > 8.00 && this.getTime().Item1 < 11.00),
@@ -239,31 +255,12 @@ namespace CourseClass
                 (this.capacity - this.enrollment <= 3)
             };
 
-            foreach(var caseItem in cases)
+            foreach (var caseItem in cases)
             {
                 if (caseItem) probScore++;
             }
 
-            switch (probScore)
-            {
-                case 0:
-                    caseRes = "high";
-                    break;
-                case 1:
-                    caseRes = "medium";
-                    break;
-                case 2:
-                    caseRes = "low";
-                    break;
-                case 3:
-                    caseRes = "low/none";
-                    break;
-                default:
-                    caseRes = "low/none";
-                    break;
-            }
-
-            return this.capacity - this.enrollment == 0 ? "low/none" : caseRes;
+            return this.capacity - this.enrollment == 0 ? 3 : probScore;
         }
 
         public Tuple<string, string> getTimeString()
