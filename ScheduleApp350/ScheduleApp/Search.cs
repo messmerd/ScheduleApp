@@ -73,7 +73,6 @@ namespace SearchClass
 
             string correctedQuery = "";   // Stores the spell-checked version of the user's query. 
             List<List<int>> matching = new List<List<int>>();    // A list where each index represents a word in the query. For each word, there is a list of ints. These ints are the course IDs of courses containing that word in their name or course code. 
-            Dictionary<int, int> bestMatches = new Dictionary<int, int>(); // Maps course IDs to their relevance (how many of the words in the query match words in the course title or course code)
             KeyValuePair<string, List<int>> result = new KeyValuePair<string, List<int>>(); // Stores the results from the spellchecker
 
             ///////////// Take query, split into words, and run spell checker on each word   ///////////////
@@ -101,18 +100,17 @@ namespace SearchClass
             }
 
             correctedQuery = correctedQuery.TrimEnd(' ');  // Removes any extra spaces at the end 
-
-            lastSearchResults.courses.Clear();
-
-            setSearchResultRelevancy(matching, querySplit, correctedQuery);  // Calculate the relevance for each course that matched the query
-            
             lastSearchResults.correctedQuery = correctedQuery; // Setting correctedQuery in the lastSearchResults struct 
-            lastSearchResults.query = query;                   // Setting correctedQuery in the lastSearchResults struct 
+            lastSearchResults.query = query;                   // Setting query in the lastSearchResults struct 
+
+            storeSearchResults(matching, querySplit, correctedQuery);  // Calculate the relevance for each course that matched the query, and store that along with all the courses in results 
+
         }
 
-        // Calculates the relevancy of each item in the search results using a heuristic, then stores these results. 
-        private void setSearchResultRelevancy(List<List<int>> matching, List<string> querySplit, string correctedQuery)
+        // Calculates the relevancy of each item in the search results using a heuristic, then stores these values along with all the courses in the results. 
+        private void storeSearchResults(List<List<int>> matching, List<string> querySplit, string correctedQuery)
         {
+            lastSearchResults.courses.Clear();
             lastSearchResults.relevance.Clear(); 
             int j = 0;
             foreach (var match in matching)  // For each word of corrected query 
