@@ -6,9 +6,8 @@ using CourseClass;
 
 namespace SearchResultsClass
 {
-
-    public enum SORTTYPE {COURSECODE, DAY, PROF, CREDITS, STARTTIME, ENDTIME, RELEVANCY};
-
+    public enum SORTTYPE { BUILDING, CAPACITY, COURSECODE, COURSENAME, CREDITS, DAY, ENDTIME, ENROLLMENT, PROBABILITY, PROFESSOR, RMP, RELEVANCY, STARTTIME };
+ 
     public class SearchResults
     {
         public List<Course> courses;         // Courses ordered from most relevant to least by default.  
@@ -47,24 +46,47 @@ namespace SearchResultsClass
 
         public void SortCourses(SORTTYPE sortBy, bool ascending)
         {
-            // Could use enum to make it obvious what integer to use for sortBy in the caller's code 
-            // Credits, Course code, prof., course name, ...
-
+            // RMP, name, capacity, probability
             switch (sortBy)
             {
-                case SORTTYPE.CREDITS:  // # of credits
-                    courses = courses.OrderBy(x => x.getCredits()).ToList();
+                case SORTTYPE.BUILDING:  // Not implemented yet 
                     break;
-                case SORTTYPE.COURSECODE:  // Course code
+                case SORTTYPE.CAPACITY:
+                    courses = courses.OrderBy(x => x.getCapacity()).ToList();
+                    break;
+                case SORTTYPE.COURSECODE: 
                     courses = courses.OrderBy(x => x.getCourseCode()).ToList();
                     break;
-                case SORTTYPE.DAY:
-                    courses = courses.OrderBy(x => Int32.MaxValue - boolArrayToInt(x.getDay().ToArray())).ToList();
-                    break; 
-                case SORTTYPE.RELEVANCY:
-                    courses.Sort((c1, c2) => relevance[c2.getCourseID()].CompareTo(relevance[c1.getCourseID()])); // Sort by relevancy
+                case SORTTYPE.COURSENAME:
+                    courses = courses.OrderBy(x => x.getLongName()).ToList();
                     break;
-
+                case SORTTYPE.CREDITS: 
+                    courses = courses.OrderBy(x => x.getCredits()).ToList();
+                    break;
+                case SORTTYPE.DAY:
+                    courses = courses.OrderBy(x => getSortableValueForDay(x.getDay())).ToList();
+                    break;
+                case SORTTYPE.ENDTIME:
+                    courses = courses.OrderBy(x => x.getTime().Item2).ToList();
+                    break;
+                case SORTTYPE.ENROLLMENT:
+                    courses = courses.OrderBy(x => x.getEnrollment()).ToList();
+                    break;
+                case SORTTYPE.PROBABILITY:        // Doesn't work yet. 
+                    courses = courses.OrderBy(x => x.getProbability()).ToList();
+                    break;
+                case SORTTYPE.PROFESSOR:
+                    courses = courses.OrderBy(x => x.getProf().last + x.getProf().first).ToList();
+                    break;
+                case SORTTYPE.RMP:
+                    courses = courses.OrderBy(x => x.getProf().rmp).ToList();
+                    break;
+                case SORTTYPE.RELEVANCY:
+                    courses = courses.OrderBy(x => relevance[x.getCourseID()]).ToList();
+                    break;
+                case SORTTYPE.STARTTIME:  
+                    courses = courses.OrderBy(x => x.getTime().Item1).ToList();
+                    break;
                 default:
                     break;
             }
@@ -75,65 +97,47 @@ namespace SearchResultsClass
             alphabetize(sortBy);
         }
 
-        private void sortByRelevance()
+        private double getSortableValueForDay(List<bool> input)
         {
-            // This function sorts courses by relevancy. Courses with the same relevancy are sorted by course code. 
-            courses.Sort((c1, c2) => relevance[c2.getCourseID()].CompareTo(relevance[c1.getCourseID()])); // Sort by relevancy first
-
-            // This part orders the results (for each different relevancy value) by department code and course number: 
-            if (courses.Count > 1) // Only needs to sort if there is more than one result 
+            int sum = 0;
+            for (int i = 0; i < 5; i++)
             {
-                int start = 0;
-                int currentRelevance = relevance[courses[0].getCourseID()];
-                List<Course> sortedSubset = new List<Course>();
-
-                for (int i = 0; i < courses.Count; i++)
-                {
-                    if (i == courses.Count - 1 || relevance[courses[i + 1].getCourseID()] != currentRelevance)
-                    {
-                        sortedSubset = courses.GetRange(start, i - start + 1).OrderBy(a => a.getCourseID()).ToList();  // Sort subset by department/course number
-
-                        for (int k = start; k < i + 1; k++) // Copies the sorted subset back into the main list 
-                        {
-                            courses[k] = sortedSubset[k - start];
-                        }
-
-                        if (i != courses.Count - 1)  // If it isn't the last element 
-                        {
-                            currentRelevance = relevance[courses[i + 1].getCourseID()];  
-                            start = i + 1;
-                        }
-                    }
-
-                }
+                sum += (input[i] ? 1 : 0) * (1 << (4 - i));
             }
-        }
-
-        private Int32 boolArrayToInt(bool[] input)
-        {
-            System.Collections.BitArray arr = new System.Collections.BitArray(input);
-            byte[] data = new byte[4];
-            arr.CopyTo(data, 0);
-            return BitConverter.ToInt32(data, 0);
+            return Int32.MaxValue - (sum + input.Count(x => !x) * 32);
         }
 
         private double getSortableValue(SORTTYPE type, int index)
         {
             switch (type)
             {
+                case SORTTYPE.BUILDING:      // Still needs to be done 
+                    return -1.0;
+                case SORTTYPE.CAPACITY:
+                    return courses[index].getCapacity();
+                case SORTTYPE.COURSECODE:
+                    return courses[index].getCourseID(); 
+                case SORTTYPE.COURSENAME:
+                    return -1.0;             // Still needs to be done
                 case SORTTYPE.CREDITS:
-                    return (double)courses[index].getCredits();
+                    return courses[index].getCredits();
                 case SORTTYPE.DAY:
-                    return (double)(Int32.MaxValue - boolArrayToInt(courses[index].getDay().ToArray()));
-                case SORTTYPE.PROF:
-                    return (double)CourseInfoClass.CourseInfo.Create().prof_database.FindIndex(x => x.Equals(courses[index].getProf()));
-                case SORTTYPE.STARTTIME:
-                    return courses[index].getTime().Item1;
+                    return getSortableValueForDay(courses[index].getDay());
                 case SORTTYPE.ENDTIME:
                     return courses[index].getTime().Item2;
+                case SORTTYPE.ENROLLMENT:
+                    return courses[index].getEnrollment(); 
+                case SORTTYPE.PROBABILITY:   // Still needs to be done  
+                    return -1.0; 
+                case SORTTYPE.PROFESSOR:     // This relies on the fact that the professor database is sorted alphabetically 
+                    return CourseInfoClass.CourseInfo.Create().prof_database.FindIndex(x => x.Equals(courses[index].getProf()));
                 case SORTTYPE.RELEVANCY:
-                    return (double)relevance[courses[index].getCourseID()]; 
-
+                    return relevance[courses[index].getCourseID()]; 
+                case SORTTYPE.RMP:
+                    return courses[index].getProf().rmp;
+                case SORTTYPE.STARTTIME:
+                    return courses[index].getTime().Item1;
+                
                 default:
                     return -1.0;
             }
@@ -142,14 +146,11 @@ namespace SearchResultsClass
 
         private void alphabetize(SORTTYPE groupBy)
         {
-            // This part orders the results (for each different relevancy value) by department code and course number: 
+            // This part orders the results (for each different groupBy value) by department code and course number: 
             if (courses.Count > 1) // Only needs to sort if there is more than one result 
             {
                 int start = 0;
-                int currentRelevance = relevance[courses[0].getCourseID()];
-
                 double currentValue = getSortableValue(groupBy, 0);
-
                 List<Course> sortedSubset = new List<Course>();
 
                 for (int i = 0; i < courses.Count; i++)

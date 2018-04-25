@@ -60,10 +60,7 @@ namespace SearchClass
         // This function creates a list of Courses that match a given query or are close enough to be recognized by the spell-checker. 
         // It also creates a string containing the spell-checked version of the user's query. 
         // All these search results are placed in the lastSearchResults struct, which can be accessed using the getters. 
-        // The query can be a course name or course code. The results are organized from best match to worst. Courses that don't match at all are not included. 
-
-        // TODO: Refactor/split up this method (150 lines currently) before the final submission in May
-        // Split into private methods
+        // The query can be a course name or course code. Courses that don't match the query at all are not included in the results. 
         public void searchForQuery(string query)
         {
             if (string.IsNullOrWhiteSpace(query))  // For the user gives a blank query, display all the courses 
@@ -71,7 +68,6 @@ namespace SearchClass
                 lastSearchResults.correctedQuery = "";
                 lastSearchResults.query = "";
                 addAllCourses();
-                advancedSearchFilter();
                 return;
             }
 
@@ -106,11 +102,18 @@ namespace SearchClass
 
             correctedQuery = correctedQuery.TrimEnd(' ');  // Removes any extra spaces at the end 
 
-            /////////////  Calculate the relevance for each course that matched the query  ///////////////
-
             lastSearchResults.courses.Clear();
-            lastSearchResults.relevance.Clear(); 
 
+            setSearchResultRelevancy(matching, querySplit, correctedQuery);  // Calculate the relevance for each course that matched the query
+            
+            lastSearchResults.correctedQuery = correctedQuery; // Setting correctedQuery in the lastSearchResults struct 
+            lastSearchResults.query = query;                   // Setting correctedQuery in the lastSearchResults struct 
+        }
+
+        // Calculates the relevancy of each item in the search results using a heuristic, then stores these results. 
+        private void setSearchResultRelevancy(List<List<int>> matching, List<string> querySplit, string correctedQuery)
+        {
+            lastSearchResults.relevance.Clear(); 
             int j = 0;
             foreach (var match in matching)  // For each word of corrected query 
             {
@@ -151,11 +154,6 @@ namespace SearchClass
                 j++;
             }
 
-            lastSearchResults.correctedQuery = correctedQuery; // Setting correctedQuery in the lastSearchResults struct 
-            lastSearchResults.query = query;                   // Setting correctedQuery in the lastSearchResults struct 
-
-            advancedSearchFilter();                                   // Narrow down the search according to the advanced search options
-            lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, true);  // Order the results by relevancy 
 
         }
 
@@ -166,7 +164,7 @@ namespace SearchClass
         }
 
         // Returns the dictionary file contents
-        public List<string> getDictionaryFileContents()
+        private List<string> getDictionaryFileContents()
         {
             return spelling.getDictionaryFileContents();
         }
@@ -185,7 +183,7 @@ namespace SearchClass
             }
         }
 
-        private void advancedSearchFilter()
+        public void advancedSearchFilter()
         {
             List<int> removeIndices = new List<int>();
 

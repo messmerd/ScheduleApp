@@ -34,7 +34,7 @@ namespace ScheduleApp
             calendar_UI.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
 
             // Use a line like this to change the visual theme of the calendar:
-            calendar_UI.Renderer = new Calendar.Office12Renderer();    // Can also use Calendar.Office11Renderer
+            calendar_UI.Renderer = new Calendar.Office11Renderer();    // Can also use Calendar.Office12Renderer
 
             clickHelp1.Text = "Double click to add a course!";
         }
@@ -240,6 +240,9 @@ namespace ScheduleApp
             else
                 search.searchForQuery(""); // search for all courses
 
+            search.advancedSearchFilter(); 
+            search.lastSearchResults.SortCourses(SearchResultsClass.SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
+
             populateSearch(search.lastSearchResults.getCourses());
         }
 
@@ -299,7 +302,7 @@ namespace ScheduleApp
             if(searchResult_UI.SelectedItems.Count >= 0)
             {
                 int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
-                if (!schedule.containsCourse(courseID))
+                if (!schedule.checkInSchedule(courseID)) 
                 {
                     Course scheduleCourse = new Course(courseID);
 
@@ -430,23 +433,22 @@ namespace ScheduleApp
             search.options.firstNameProfessor = !anyProf ? professor_adv.Text.Split(',')[1].Trim() : "";
         }
         
-         private void allNoneCheck_checkChanged(object sender, EventArgs e)
-         {
+        private void allNoneCheck_checkChanged(object sender, EventArgs e)
+        {
             CheckBox[] checkboxes = { M_checkBox, T_checkBox, W_checkBox, R_checkBox, F_checkBox };
 
             foreach (var checkbox in checkboxes)
             {
                 checkbox.Checked = allNoneCheckBox.Checked ? true : false;
             }
+        }
 
-         }
-
-         private void rmp_valueChanged(object sender, EventArgs e)
-         {
+        private void rmp_valueChanged(object sender, EventArgs e)
+        {
             // search.options.rmp = rmpBox.Value;
-         }
-
-         private void probability_valueChanged(object sender, EventArgs e)
+        }
+        
+        private void probability_valueChanged(object sender, EventArgs e)
         {
             //search.options.probability = probBox.Text;
         }
