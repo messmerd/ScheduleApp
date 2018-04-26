@@ -19,22 +19,24 @@ namespace ScheduleApp
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
         CourseInfo info = CourseInfo.Create();
-        
+        CandidateSchedule schedule = CandidateSchedule.Create();
+
         public AppWindow()
         {
             InitializeComponent();
             initializeProfessorComboBox();
 
-            dayView1.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
-            dayView1.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
-            dayView1.SelectionChanged += new EventHandler(dayView1_SelectionChanged);
-            dayView1.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
+            calendar_UI.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
+            calendar_UI.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
+            calendar_UI.SelectionChanged += new EventHandler(dayView1_SelectionChanged);
+            calendar_UI.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
 
-            dayView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
+            calendar_UI.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
 
             // Use a line like this to change the visual theme of the calendar:
-            dayView1.Renderer = new Calendar.Office12Renderer();    // Can also use Calendar.Office11Renderer
+            calendar_UI.Renderer = new Calendar.Office11Renderer();    // Can also use Calendar.Office12Renderer
 
+            clickHelp1.Text = "Double click to add a course!";
         }
 
         private void initializeProfessorComboBox()
@@ -78,13 +80,13 @@ namespace ScheduleApp
         private void dayView1_SelectionChanged(object sender, EventArgs e)
         {
             //string text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
-            label3.Text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
+            label3.Text = calendar_UI.SelectionStart.ToString() + ":" + calendar_UI.SelectionEnd.ToString();
             //Console.WriteLine(text);
         }
 
         private void dayView1_MouseMove(object sender, MouseEventArgs e)
         {
-            professor_adv_label.Text = dayView1.GetTimeAt(e.X, e.Y).ToString();
+            professor_adv_label.Text = calendar_UI.GetTimeAt(e.X, e.Y).ToString();
             //string text = dayView1.GetTimeAt(e.X, e.Y).ToString();
             //Console.WriteLine(text);
         }
@@ -124,23 +126,51 @@ namespace ScheduleApp
             // 89 102 107 <- unfocused search bar
 
 
+            /*
+            // Base color
+            scheduleTitle.ForeColor = Color.Black;
+
+            menuBar.BackColor = Color.White;
+            searchBox.BackColor = Color.White;
+            searchTab.BackColor = Color.White;
+            searchResult_UI.BackColor = Color.White;
+            searchResult_UI.ForeColor = Color.Black;
+            scheduleView.BackColor = Color.White;
+            scheduleTab.BackColor = Color.White;
+            appMenu.BackColor = Color.White;
+
+            // Adv Filter elements
+            filter_UI.BackColor = Color.White;
+            filter_UI.ForeColor = Color.Black;
+
+            // Button backgrounds
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            // Button fonts
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+            */
+
+
             foreach (var course in CandidateSchedule.Create().m_Courses)
             {
                 course.BorderColor = Color.DarkGray;
             }
 
-            dayView1.Invalidate(); // Updates the Calendar
+            calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToBlue(object sender, EventArgs e)
         {
-            dayView1.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
+            calendar_UI.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
             foreach (var course in CandidateSchedule.Create().m_Courses)
             {
                 course.BorderColor = Color.RoyalBlue; 
             }
 
-            dayView1.Invalidate(); // Updates the Calendar
+            calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToGCC(object sender, EventArgs e)
@@ -150,12 +180,12 @@ namespace ScheduleApp
                 course.BorderColor = Color.Crimson;
             }
 
-            dayView1.Invalidate(); // Updates the Calendar
+            calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToClassic(object sender, EventArgs e)
         {
-            dayView1.Renderer = new Calendar.Office11Renderer();  // Calendar theme
+            calendar_UI.Renderer = new Calendar.Office11Renderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().m_Courses)
             {
                 course.BorderColor = Color.DarkSlateGray;
@@ -188,7 +218,7 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
-            dayView1.Invalidate(); // Updates the Calendar
+            calendar_UI.Invalidate(); // Updates the Calendar
 
         }
         /******************************************************************************************/
@@ -202,23 +232,35 @@ namespace ScheduleApp
         private void searchBtn_Click(object sender, EventArgs e)
         {
 
-            Search search = Search.Create("course_dictionary.txt");
+            // Remove previous search results upon performing another search
+            searchResult_UI.Items.Clear();
+
             if (searchBox.Text != emptySearchBarText)
                 search.searchForQuery(searchBox.Text);
             else
-                search.searchForQuery("");
-            List<Course> searchResults = search.lastSearchResults.getCourses();
+                search.searchForQuery(""); // search for all courses
 
-            searchResult_UI.Items.Clear(); // Remove previous search results
+            search.advancedSearchFilter(); 
+            search.lastSearchResults.SortCourses(SearchResultsClass.SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
 
-            foreach (var course in searchResults)
+            populateSearch(search.lastSearchResults.getCourses());
+        }
+
+        private void populateSearch(List<Course> results)
+        {
+            foreach (var course in results)
             {
                 var courseToAdd = setSearchRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
-                listViewItem.Name = course.getCourseID().ToString(); 
+                listViewItem.Name = course.getCourseID().ToString();
                 searchResult_UI.Items.Add(listViewItem);
             }
-            clickHelp1.Text = "Double click to add a course!";
+        }
+
+        // search by pressing enter, must have the search box focused
+        private void input_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter) searchBtn_Click(sender, e);
         }
 
         private string getDays(Course returnedCourse)
@@ -246,7 +288,7 @@ namespace ScheduleApp
             row[5] = getDays(c);
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
             row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
-            row[8] = c.getProbability(c); // placeholder ... 
+            row[8] = c.getProbability();
             return row;
         }
         /***************************************************************************************/
@@ -260,25 +302,24 @@ namespace ScheduleApp
             if(searchResult_UI.SelectedItems.Count >= 0)
             {
                 int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
-                if (!CandidateSchedule.Create().checkInSchedule(courseID))
+                if (!schedule.checkInSchedule(courseID)) 
                 {
                     Course scheduleCourse = new Course(courseID);
 
+                    schedule.addCourse(courseID);
                     var courseToAdd = setScheduleRow(scheduleCourse);
                     var listViewItem = new ListViewItem(courseToAdd);
                     listViewItem.Name = courseID.ToString();
                     scheduleView.Items.Add(listViewItem);
 
-                    CandidateSchedule.Create().addCourse(scheduleCourse);
-
                     clickHelp1.ForeColor = Color.Black;
                     clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
-                    dayView1.Invalidate(); // Updates the Calendar
+                    calendar_UI.Invalidate(); // Updates the Calendar
                 }
                 else
                 {
                     clickHelp1.ForeColor = Color.Red;
-                    clickHelp1.Text = "\"" + CourseInfo.Create().getCourseCode(courseID) + "\" is already in your schedule.";
+                    clickHelp1.Text = "\"" + info.getCourseCode(courseID) + "\" is already in your schedule.";
                 }
 
                 
@@ -286,7 +327,7 @@ namespace ScheduleApp
             
         }
 
-        private string[] setScheduleRow(Course c)
+        public string[] setScheduleRow(Course c)
         {
             string[] row = new string[50]; // row buffer
 
@@ -306,7 +347,7 @@ namespace ScheduleApp
         {
             scheduleView.Items.Clear(); // what the user sees
             CandidateSchedule.Create().removeAllCourses();
-            dayView1.Invalidate(); // Updates the Calendar
+            calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         
@@ -318,7 +359,7 @@ namespace ScheduleApp
                  
                 scheduleView.SelectedItems[0].Remove();
                 CandidateSchedule.Create().removeCourse(courseID);
-                dayView1.Invalidate(); // Updates the Calendar
+                calendar_UI.Invalidate(); // Updates the Calendar
             }
         }
         
@@ -392,23 +433,22 @@ namespace ScheduleApp
             search.options.firstNameProfessor = !anyProf ? professor_adv.Text.Split(',')[1].Trim() : "";
         }
         
-         private void allNoneCheck_checkChanged(object sender, EventArgs e)
-         {
+        private void allNoneCheck_checkChanged(object sender, EventArgs e)
+        {
             CheckBox[] checkboxes = { M_checkBox, T_checkBox, W_checkBox, R_checkBox, F_checkBox };
 
             foreach (var checkbox in checkboxes)
             {
                 checkbox.Checked = allNoneCheckBox.Checked ? true : false;
             }
+        }
 
-         }
-
-         private void rmp_valueChanged(object sender, EventArgs e)
-         {
+        private void rmp_valueChanged(object sender, EventArgs e)
+        {
             // search.options.rmp = rmpBox.Value;
-         }
-
-         private void probability_valueChanged(object sender, EventArgs e)
+        }
+        
+        private void probability_valueChanged(object sender, EventArgs e)
         {
             //search.options.probability = probBox.Text;
         }
@@ -421,35 +461,17 @@ namespace ScheduleApp
         /**************************************JSON Transfer***************************************/
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Stream jsonFileStream = null;
             OpenFileDialog openJson = new OpenFileDialog();
 
-            openJson.InitialDirectory = "c:\\";
             openJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-            openJson.FilterIndex = 2;
-            openJson.RestoreDirectory = true;
 
             if (openJson.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
-                    if ((jsonFileStream = openJson.OpenFile()) != null)
-                    {
-                        using (jsonFileStream)
-                        {
-                            // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
-                            // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
-                            // You might want to delete the stream from this method and just include it 
-                            // inside the method you're going to write
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-                }
+                // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
+                // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
+                // You might want to delete the stream from this method and just include it 
+                // inside the method you're going to write
             }
-            jsonFileStream.Close();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -458,8 +480,6 @@ namespace ScheduleApp
             SaveFileDialog saveJson = new SaveFileDialog();
 
             saveJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-            saveJson.FilterIndex = 2;
-            saveJson.RestoreDirectory = true;
 
             if (saveJson.ShowDialog() == DialogResult.OK)
             {

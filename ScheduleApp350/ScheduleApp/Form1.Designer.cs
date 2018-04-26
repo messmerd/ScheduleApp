@@ -29,9 +29,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
-            this.dayView1 = new Calendar.DayView();
+            this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
             this.clickHelp1 = new System.Windows.Forms.Label();
@@ -41,7 +41,7 @@
             this.filter_UI = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.professor_adv_label = new System.Windows.Forms.Label();
-            this.advBuildingLabel = new System.Windows.Forms.Label();
+            this.adv_building_label = new System.Windows.Forms.Label();
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
             this.professor_adv = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -81,7 +81,6 @@
             this.schedule_buildingCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.schedule_roomCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.schedule_daysCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.schedule_hiddenIDCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuBar = new System.Windows.Forms.MenuStrip();
             this.appMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,23 +106,24 @@
             this.menuBar.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dayView1
+            // calendar_UI
             // 
-            drawTool1.DayView = this.dayView1;
-            this.dayView1.ActiveTool = drawTool1;
-            this.dayView1.DaysToShow = 5;
-            this.dayView1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.dayView1.Location = new System.Drawing.Point(8, 256);
-            this.dayView1.Name = "dayView1";
-            this.dayView1.SelectionEnd = new System.DateTime(((long)(0)));
-            this.dayView1.SelectionStart = new System.DateTime(((long)(0)));
-            this.dayView1.Size = new System.Drawing.Size(822, 275);
-            this.dayView1.StartDate = new System.DateTime(((long)(0)));
-            this.dayView1.TabIndex = 3;
-            this.dayView1.Text = "dayView1";
-            this.dayView1.WorkingHourEnd = 22;
-            this.dayView1.WorkingMinuteEnd = 0;
-            this.dayView1.WorkingMinuteStart = 0;
+            drawTool2.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool2;
+            this.calendar_UI.AllowInplaceEditing = false;
+            this.calendar_UI.DaysToShow = 5;
+            this.calendar_UI.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.calendar_UI.Location = new System.Drawing.Point(8, 256);
+            this.calendar_UI.Name = "calendar_UI";
+            this.calendar_UI.SelectionEnd = new System.DateTime(((long)(0)));
+            this.calendar_UI.SelectionStart = new System.DateTime(((long)(0)));
+            this.calendar_UI.Size = new System.Drawing.Size(822, 275);
+            this.calendar_UI.StartDate = new System.DateTime(((long)(0)));
+            this.calendar_UI.TabIndex = 3;
+            this.calendar_UI.Text = "dayView1";
+            this.calendar_UI.WorkingHourEnd = 22;
+            this.calendar_UI.WorkingMinuteEnd = 0;
+            this.calendar_UI.WorkingMinuteStart = 0;
             // 
             // menuTabs
             // 
@@ -203,7 +203,7 @@
             this.filter_UI.BackColor = System.Drawing.Color.White;
             this.filter_UI.Controls.Add(this.label3);
             this.filter_UI.Controls.Add(this.professor_adv_label);
-            this.filter_UI.Controls.Add(this.advBuildingLabel);
+            this.filter_UI.Controls.Add(this.adv_building_label);
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
             this.filter_UI.Controls.Add(this.professor_adv);
             this.filter_UI.Controls.Add(this.label1);
@@ -243,14 +243,14 @@
             this.professor_adv_label.TabIndex = 15;
             this.professor_adv_label.Text = "Professor:";
             // 
-            // advBuildingLabel
+            // adv_building_label
             // 
-            this.advBuildingLabel.AutoSize = true;
-            this.advBuildingLabel.Location = new System.Drawing.Point(44, 71);
-            this.advBuildingLabel.Name = "advBuildingLabel";
-            this.advBuildingLabel.Size = new System.Drawing.Size(57, 13);
-            this.advBuildingLabel.TabIndex = 14;
-            this.advBuildingLabel.Text = "Building:";
+            this.adv_building_label.AutoSize = true;
+            this.adv_building_label.Location = new System.Drawing.Point(44, 71);
+            this.adv_building_label.Name = "adv_building_label";
+            this.adv_building_label.Size = new System.Drawing.Size(57, 13);
+            this.adv_building_label.TabIndex = 14;
+            this.adv_building_label.Text = "Building:";
             // 
             // allNoneCheckBox
             // 
@@ -458,6 +458,7 @@
             this.searchBox.TabIndex = 1;
             this.searchBox.Text = "Search by course code or name...";
             this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
+            this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.input_KeyDown);
             this.searchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             // 
             // searchResult_UI
@@ -539,7 +540,7 @@
             // 
             // scheduleTab
             // 
-            this.scheduleTab.Controls.Add(this.dayView1);
+            this.scheduleTab.Controls.Add(this.calendar_UI);
             this.scheduleTab.Controls.Add(this.removeHelp);
             this.scheduleTab.Controls.Add(this.clearAll);
             this.scheduleTab.Controls.Add(this.scheduleView);
@@ -563,7 +564,7 @@
             // 
             // clearAll
             // 
-            this.clearAll.Location = new System.Drawing.Point(682, 227);
+            this.clearAll.Location = new System.Drawing.Point(758, 227);
             this.clearAll.Name = "clearAll";
             this.clearAll.Size = new System.Drawing.Size(73, 23);
             this.clearAll.TabIndex = 1;
@@ -581,16 +582,13 @@
             this.schedule_timeCol,
             this.schedule_buildingCol,
             this.schedule_roomCol,
-            this.schedule_daysCol,
-            this.schedule_hiddenIDCol});
+            this.schedule_daysCol});
             this.scheduleView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.scheduleView.FullRowSelect = true;
             this.scheduleView.GridLines = true;
-            this.scheduleView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.scheduleView.Location = new System.Drawing.Point(8, 25);
             this.scheduleView.Name = "scheduleView";
-            this.scheduleView.Scrollable = false;
-            this.scheduleView.Size = new System.Drawing.Size(747, 199);
+            this.scheduleView.Size = new System.Drawing.Size(822, 199);
             this.scheduleView.TabIndex = 0;
             this.scheduleView.UseCompatibleStateImageBehavior = false;
             this.scheduleView.View = System.Windows.Forms.View.Details;
@@ -604,17 +602,17 @@
             // schedule_codeCol
             // 
             this.schedule_codeCol.Text = "Course Code";
-            this.schedule_codeCol.Width = 98;
+            this.schedule_codeCol.Width = 112;
             // 
             // schedule_profCol
             // 
             this.schedule_profCol.Text = "Professor";
-            this.schedule_profCol.Width = 120;
+            this.schedule_profCol.Width = 131;
             // 
             // schedule_nameCol
             // 
             this.schedule_nameCol.Text = "Course Name";
-            this.schedule_nameCol.Width = 181;
+            this.schedule_nameCol.Width = 217;
             // 
             // schedule_timeCol
             // 
@@ -624,6 +622,7 @@
             // schedule_buildingCol
             // 
             this.schedule_buildingCol.Text = "Building";
+            this.schedule_buildingCol.Width = 67;
             // 
             // schedule_roomCol
             // 
@@ -632,11 +631,7 @@
             // schedule_daysCol
             // 
             this.schedule_daysCol.Text = "Days";
-            // 
-            // schedule_hiddenIDCol
-            // 
-            this.schedule_hiddenIDCol.Text = "DOESNT MATTER";
-            this.schedule_hiddenIDCol.Width = 0;
+            this.schedule_daysCol.Width = 71;
             // 
             // menuBar
             // 
@@ -706,29 +701,29 @@
             // classicTheme
             // 
             this.classicTheme.Name = "classicTheme";
-            this.classicTheme.Size = new System.Drawing.Size(121, 22);
+            this.classicTheme.Size = new System.Drawing.Size(146, 22);
             this.classicTheme.Text = "Classic";
             this.classicTheme.Click += new System.EventHandler(this.themeToClassic);
             // 
             // darkTheme
             // 
             this.darkTheme.Name = "darkTheme";
-            this.darkTheme.Size = new System.Drawing.Size(121, 22);
+            this.darkTheme.Size = new System.Drawing.Size(146, 22);
             this.darkTheme.Text = "Dark";
             this.darkTheme.Click += new System.EventHandler(this.themeToNight);
             // 
             // blueTheme
             // 
             this.blueTheme.Name = "blueTheme";
-            this.blueTheme.Size = new System.Drawing.Size(121, 22);
+            this.blueTheme.Size = new System.Drawing.Size(146, 22);
             this.blueTheme.Text = "Blue";
             this.blueTheme.Click += new System.EventHandler(this.themeToBlue);
             // 
             // gccTheme
             // 
             this.gccTheme.Name = "gccTheme";
-            this.gccTheme.Size = new System.Drawing.Size(121, 22);
-            this.gccTheme.Text = "GCC Red";
+            this.gccTheme.Size = new System.Drawing.Size(146, 22);
+            this.gccTheme.Text = "GCC Crimson";
             this.gccTheme.Click += new System.EventHandler(this.themeToGCC);
             // 
             // notifyOnScheduleConflictToolStripMenuItem
@@ -847,12 +842,11 @@
         private System.Windows.Forms.ColumnHeader schedule_daysCol;
         private System.Windows.Forms.CheckBox allNoneCheckBox;
         private System.Windows.Forms.Label removeHelp;
-        private System.Windows.Forms.ColumnHeader schedule_hiddenIDCol;
         private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
-        private System.Windows.Forms.Label advBuildingLabel;
+        private System.Windows.Forms.Label adv_building_label;
         private System.Windows.Forms.Label professor_adv_label;
         private System.Windows.Forms.Label label3;
-        private Calendar.DayView dayView1;
+        private Calendar.DayView calendar_UI;
     }
 }
 
