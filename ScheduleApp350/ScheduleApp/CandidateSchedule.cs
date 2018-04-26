@@ -32,6 +32,7 @@ namespace ScheduleApp
             return singleton;
         }
      
+        //builds an empty candidate schedule
         private CandidateSchedule()
         {
             schedule = new List<Course>();
@@ -41,13 +42,8 @@ namespace ScheduleApp
             m_Courses = new List<Calendar.Appointment>();
         }
 
-        /*
-        CandidateSchedule(string filename) // factory constructor using JSON, sprint 2
-        {
-
-        }
-        */
-
+        //adds a course to the candidate schedule based on course object,
+        //along with any courses with the same course code
         public void addCourse(Course c)
         {
             if (schedule.Contains(c)) return;
@@ -76,11 +72,14 @@ namespace ScheduleApp
             addToCalendar(id);
         }
 
+        //adds a course to the candidate schedule based on course id
         public void addCourse(int id)
         {
             addCourse(DB.getCourse(id)); 
         }
 
+        //removes the course with the given id along with all courses with the same course code
+        //returns true if successful
         public bool removeCourse(int courseID)
         {
             List<int> toBeRemoved = new List<int>();
@@ -108,6 +107,7 @@ namespace ScheduleApp
             return result;
         }
 
+        //removes all courses from the candidate schedule
         public void removeAllCourses()
         {
             creditCount = 0;
@@ -116,6 +116,7 @@ namespace ScheduleApp
             m_Courses.Clear(); 
         }
 
+        //returns true if the any course in the current candidate schedule has the given id
         public bool checkInSchedule(int courseID)
         {
             foreach (var course in schedule)
@@ -128,6 +129,7 @@ namespace ScheduleApp
             return false;
         }
 
+        //changes the variable creditSituation based on the total number of credits in the schedule
         public void checkCreditCount()
         {
             if (creditCount < 12)
@@ -144,7 +146,8 @@ namespace ScheduleApp
             }
         }
 
-        public bool scheduleFromFile(string filepath) //creates the schedule from a json file, return true if successful
+        //creates the schedule from a json file, return true if successful
+        public bool scheduleFromFile(string filepath) 
         {
             if(!File.Exists(filepath)) return false;
             string allCourses = System.IO.File.ReadAllText(filepath);
@@ -172,7 +175,8 @@ namespace ScheduleApp
             return true;
         }
 
-        public bool scheduleToFile(string filepath) //creates a json file from the schedule, return true if successful
+        //creates a json file from the schedule, return true if successful
+        public bool scheduleToFile(string filepath) 
         {
             if (File.Exists(filepath)) return false;
             using (StreamWriter sw = File.CreateText(filepath))
@@ -187,38 +191,13 @@ namespace ScheduleApp
             return true;
         }
 
-        public bool checkTimeConflict_old(int id)
-        {
-            return checkTimeConflict_old(CourseInfo.Create().getCourse(id));
-        }
-
-        public bool checkTimeConflict_old(Course obj)
-        {
-            foreach (Course index in schedule)
-            {
-                if (index.getCourseID() == obj.getCourseID()) continue;
-                for (int i = 0; i < index.getDay().Count; i++)
-                {
-                    if (!index.getDay()[i] && !obj.getDay()[i]) continue;
-                    if (((index.getTime().Item1 >= obj.getTime().Item1 &&
-                        index.getTime().Item1 <= obj.getTime().Item2) ||
-                        (index.getTime().Item2 >= obj.getTime().Item1 &&
-                        index.getTime().Item2 <= obj.getTime().Item2)) ||
-
-                        ((obj.getTime().Item1 >= index.getTime().Item1 &&
-                        obj.getTime().Item1 <= index.getTime().Item2) ||
-                        (obj.getTime().Item2 >= index.getTime().Item1 &&
-                        obj.getTime().Item2 <= index.getTime().Item2))) return true;
-                }
-            }
-            return false;
-        }
-
+        //returns a list of courses that conflict with the course with the given id, including itself
         public List<Course> checkTimeConflict(int id)
         {
             return checkTimeConflict(CourseInfo.Create().getCourse(id)); 
         }
 
+        //returns a list of courses that conflict with the given course, including itself
         public List<Course> checkTimeConflict(Course c)
         {
             List<Course> conflicts = new List<Course>();
@@ -240,10 +219,9 @@ namespace ScheduleApp
             return conflicts;
         }
 
+        // This function adds a course to the Calendar UI
         private void addToCalendar(int id)
         {
-            // This function adds a course to the Calendar UI 
-            
             Tuple<int, int, int, int> course_time = DB.getCourse(id).getTimeHourMinute();
             if (course_time.Item1 == -1 || !DB.getDay(id).Contains(true))  // Course does not have a time or doesn't have a day
                 return; 
@@ -267,11 +245,10 @@ namespace ScheduleApp
             updateConflictMarkers();
         }
 
+        // Looks at all the courses in the schedule and marks conflicting courses red and non-conflicting courses white
+        // This could probably be written more efficiently 
         private void updateConflictMarkers()
         {
-            // Looks at all the courses in the schedule and marks conflicting courses red and non-conflicting courses white
-            // This could probably be written more efficiently 
-
             List<int> conflictIDs = new List<int>(); 
 
             foreach (var c1 in m_Courses)
