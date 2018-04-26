@@ -67,14 +67,8 @@ namespace CourseClass
 
         public Course(List<string> parsedCourse, int courseID) // Constructor
         {
-            allInfo = "";
-            foreach (string index in parsedCourse)
-            {
-                allInfo += index + "\t";
-            }
-
-            allInfo += courseID;
-
+            this.allInfo = string.Join("\t", parsedCourse.ToArray()) + "\t" + courseID.ToString(); 
+ 
             this.courseID = courseID;
             
             this.professor = new Professor(parsedCourse[11], parsedCourse[12]);
