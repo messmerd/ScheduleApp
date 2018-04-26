@@ -15,11 +15,11 @@ namespace ScheduleApp
     {
         public const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF\n";
 
-        public List<Course> schedule;
-        public List<Calendar.Appointment> m_Courses;
+        public List<Course> schedule { get; set; }
+        public List<Calendar.Appointment> m_Courses { get; set; }
         public CourseInfo DB;
-        public int creditCount; //current count of credits within user's schedule
-        public int creditSituation; //reports if schedule is less than 12 (-1), 12 to 17 (0), or greater than 17 (1)
+        public int creditCount { get; set; } //current count of credits within user's schedule
+        public int creditSituation { get; set; } //reports if schedule is less than 12 (-1), 12 to 17 (0), or greater than 17 (1)
 
         private static CandidateSchedule singleton;
 
