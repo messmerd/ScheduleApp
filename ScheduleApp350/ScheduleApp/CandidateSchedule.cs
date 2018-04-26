@@ -168,6 +168,9 @@ namespace ScheduleApp
                 importedCourse.RemoveAt(importedCourse.Count - 1);
                 if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
                 else addCourse(new Course(importedCourse, id));
+
+                creditCount += DB.getCredits(id);
+                checkCreditCount();
             }
             return true;
         }
