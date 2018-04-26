@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using CourseClass;
-using CourseInfoClass;
 using SpellingCorrector;
-using SearchResultsClass;
 
-namespace SearchClass
+namespace ScheduleApp
 {
 
     public class Search

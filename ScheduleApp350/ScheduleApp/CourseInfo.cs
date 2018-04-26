@@ -4,10 +4,9 @@ using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Text;
-using CourseClass;
 using Excel = Microsoft.Office.Interop.Excel;       //Microsoft Excel 14 object in references-> COM tab
 
-namespace CourseInfoClass
+namespace ScheduleApp
 {
     public class CourseInfo
     {

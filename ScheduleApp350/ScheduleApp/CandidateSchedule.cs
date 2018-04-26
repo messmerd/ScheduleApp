@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CourseClass;
-using CourseInfoClass;
-using ScheduleApp;
 using System.Windows.Forms;
 using System.IO;
 
@@ -64,13 +61,6 @@ namespace ScheduleApp
             else if ( id > 0 && DB.getCourseCode(id - 1) == DB.getCourseCode(id))
             {
                 addCourse(DB.getCourse(id - 1));
-            }
-
-            //bool timeConflict = checkTimeConflict(id);
-            List<Course> timeConflicts = checkTimeConflict(c);
-            if (timeConflicts.Count > 1)  // There's at least one time conflict 
-            {
-                // Alert the user here, or something 
             }
 
             addToCalendar(id);
@@ -287,6 +277,7 @@ namespace ScheduleApp
 
             foreach (var c1 in m_Courses)
             {
+
                 if (conflictIDs.Contains(c1.CourseID))
                 {
                     c1.Color = System.Drawing.Color.Red; 

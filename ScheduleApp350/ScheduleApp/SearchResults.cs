@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CourseClass;
 
-namespace SearchResultsClass
+namespace ScheduleApp
 {
     public enum SORTTYPE { BUILDING, CAPACITY, COURSECODE, COURSENAME, CREDITS, DAY, ENDTIME, ENROLLMENT, PROBABILITY, PROFESSOR, RMP, RELEVANCY, STARTTIME };
  
-    public class SearchResults
+    public class SearchResults 
     {
         public List<Course> courses;         // Courses ordered from most relevant to least by default.  
         public string query;                 // The query passed to searchForQuery()
         public string correctedQuery;        // The spell-checked version of query
-        public Dictionary<int, int> relevance; 
+        public Dictionary<int, int> relevance;
+        public List<bool> conflicting_courses; 
 
         public SearchResults()
         {
@@ -21,6 +21,11 @@ namespace SearchResultsClass
             this.correctedQuery = "";
             this.courses = new List<Course>();
             this.relevance = new Dictionary<int, int>();
+            this.conflicting_courses = new List<bool>();
+            for (int i = 0; i < CourseInfo.Create().getNumCourses(); i++)
+            {
+                this.conflicting_courses.Add(false);
+            }
         }
 
         // Getters: 
@@ -171,6 +176,20 @@ namespace SearchResultsClass
             }
 
 
+        }
+
+        public void updateConflictingCourses()
+        {
+            /*
+            foreach (Course c in courses)
+            {
+                if (CandidateSchedule.Create().checkTimeConflict(c).Count > 1)
+                {
+                    conflicting_courses[c1.CourseID] = true;  // Mark courses in the search results that would conflict with the schedule 
+                }
+
+            }
+             */ 
         }
 
     }

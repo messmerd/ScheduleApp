@@ -7,9 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CourseClass;
-using SearchClass;
-using CourseInfoClass;
 using System.IO;
 
 namespace ScheduleApp
@@ -241,7 +238,7 @@ namespace ScheduleApp
                 search.searchForQuery(""); // search for all courses
 
             search.advancedSearchFilter(); 
-            search.lastSearchResults.SortCourses(SearchResultsClass.SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
+            search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
 
             populateSearch(search.lastSearchResults.getCourses());
         }

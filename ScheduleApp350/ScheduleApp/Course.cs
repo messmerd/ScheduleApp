@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CourseInfoClass;
 
-namespace CourseClass
+namespace ScheduleApp
 {
     // HAL, HH = HOYT, PFAC = Pew Fine Arts, OFFCP = Study abroad, etc, PLC = Physical Learning cnter, RH = Rockwell, 
     // TBA = N/A, BAO = ???
