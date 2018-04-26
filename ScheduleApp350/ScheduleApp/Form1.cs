@@ -24,7 +24,7 @@ namespace ScheduleApp
             initializeProfessorComboBox();
 
             calendar_UI.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
-            calendar_UI.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
+            //calendar_UI.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
             calendar_UI.SelectionChanged += new EventHandler(dayView1_SelectionChanged);
             calendar_UI.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
 
@@ -64,26 +64,27 @@ namespace ScheduleApp
 
         /************************Calendar-Related**************************************************/
 
+        
         private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
         {
             List<Calendar.Appointment> m_Apps = new List<Calendar.Appointment>();
 
-            foreach (Calendar.Appointment m_App in CandidateSchedule.Create().m_Courses)
+            foreach (Calendar.Appointment m_App in CandidateSchedule.Create().getCalendarItems())
                 if ((m_App.StartDate >= args.StartDate) &&
                     (m_App.StartDate <= args.EndDate))
                     m_Apps.Add(m_App);
 
             args.Appointments = m_Apps;
         }
-
-
+        
+        
         private void dayView1_SelectionChanged(object sender, EventArgs e)
         {
             //string text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
             label3.Text = calendar_UI.SelectionStart.ToString() + ":" + calendar_UI.SelectionEnd.ToString();
             //Console.WriteLine(text);
         }
-
+        
         private void dayView1_MouseMove(object sender, MouseEventArgs e)
         {
             professor_adv_label.Text = calendar_UI.GetTimeAt(e.X, e.Y).ToString();
@@ -91,6 +92,7 @@ namespace ScheduleApp
             //Console.WriteLine(text);
         }
 
+        /*
         void dayView1_NewAppointment(object sender, Calendar.NewAppointmentEventArgs args)
         {
             Calendar.Appointment m_Appointment = new Calendar.Appointment();
@@ -100,7 +102,7 @@ namespace ScheduleApp
             m_Appointment.Title = args.Title;
 
             CandidateSchedule.Create().m_Courses.Add(m_Appointment);
-        }
+        }*/
 
         /*
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -154,7 +156,7 @@ namespace ScheduleApp
             */
 
 
-            foreach (var course in CandidateSchedule.Create().m_Courses)
+            foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
                 course.BorderColor = Color.DarkGray;
             }
@@ -165,7 +167,7 @@ namespace ScheduleApp
         private void themeToBlue(object sender, EventArgs e)
         {
             calendar_UI.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
-            foreach (var course in CandidateSchedule.Create().m_Courses)
+            foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
                 course.BorderColor = Color.RoyalBlue; 
             }
@@ -175,7 +177,7 @@ namespace ScheduleApp
 
         private void themeToGCC(object sender, EventArgs e)
         {
-            foreach (var course in CandidateSchedule.Create().m_Courses)
+            foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
                 course.BorderColor = Color.Crimson;
             }
@@ -186,7 +188,7 @@ namespace ScheduleApp
         private void themeToClassic(object sender, EventArgs e)
         {
             calendar_UI.Renderer = new Calendar.Office11Renderer();  // Calendar theme
-            foreach (var course in CandidateSchedule.Create().m_Courses)
+            foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
                 course.BorderColor = Color.DarkSlateGray;
             }

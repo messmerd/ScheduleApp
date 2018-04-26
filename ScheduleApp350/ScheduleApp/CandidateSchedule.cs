@@ -12,14 +12,11 @@ namespace ScheduleApp
     {
         public const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF\n";
 
-        public int cred_total; //current count of credits within user's schedule
-        public int cred_statis; //reports if schedule is less than 12 (-1), 12 to 17 (0), or greater than 17 (1)
-        public List<Course> schedule;
-        public List<Calendar.Appointment> m_Courses;
-        public CourseInfo DB;
-        public int creditCount { get; set; } //current count of credits within user's schedule
-        public int creditSituation { get; set; } //reports if schedule is less than 12 (-1), 12 to 17 (0), or greater than 17 (1)
-
+        public List<Course> schedule;                  // Stores all the courses in the user's schedule
+        private List<Calendar.Appointment> m_Courses;  // Stores the calendar items 
+        private CourseInfo DB;
+        private int creditCount; //Current count of credits within user's schedule
+        
         private static CandidateSchedule singleton;
 
         public static CandidateSchedule Create()
@@ -36,8 +33,7 @@ namespace ScheduleApp
         {
             schedule = new List<Course>();
             DB = CourseInfo.Create();
-            cred_total = 0;
-            cred_statis = -1;
+            creditCount = 0;
             m_Courses = new List<Calendar.Appointment>();
         }
         /*
@@ -52,8 +48,7 @@ namespace ScheduleApp
         //along with any courses with the same course code
         {
             if (schedule.Contains(c)) return;
-            cred_total += c.getCredits();
-            checkCreditCount();
+            creditCount += c.getCredits();
             schedule.Add(c);
             
             int id = c.getCourseID();
@@ -92,8 +87,7 @@ namespace ScheduleApp
             bool result = false;
             foreach (var allIDs in toBeRemoved) 
             {
-                cred_total -= DB.getCredits(allIDs);
-                checkCreditCount();
+                creditCount -= DB.getCredits(allIDs);
 
                 m_Courses.RemoveAll(c => c.CourseID == allIDs);
 
@@ -108,8 +102,7 @@ namespace ScheduleApp
         //removes all courses from the candidate schedule
         public void removeAllCourses()
         {
-            cred_total = 0;
-            checkCreditCount();
+            creditCount = 0;
             schedule.Clear();
             m_Courses.Clear(); 
         }
@@ -124,11 +117,12 @@ namespace ScheduleApp
             return false;
         }
 
-        //changes the variable creditSituation based on the total number of credits in the schedule
-        public void checkCreditCount()
+        //Checks the total number of credits in the schedule. Returns -1 if there are too few credits, 0 if there are enough, and 1 if there are too many
+        public int checkCreditCount()
         {
-            cred_statis = cred_total < 12 ? -1 : 0;
-            cred_statis = cred_total > 17 ? 1 : 0;
+            int cred_status = creditCount < 12 ? -1 : 0;
+            cred_status = creditCount > 17 ? 1 : cred_status;
+            return cred_status; 
         }
 
         //creates the schedule from a json file, return true if successful
@@ -266,6 +260,16 @@ namespace ScheduleApp
                 }
             }
                  
+        }
+
+        public int getCreditCount()
+        {
+            return creditCount; 
+        }
+
+        public List<Calendar.Appointment> getCalendarItems()
+        {
+            return m_Courses; 
         }
 
     }
