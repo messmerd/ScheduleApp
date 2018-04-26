@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -108,19 +108,19 @@
             // 
             // calendar_UI
             // 
-            drawTool2.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool2;
+            drawTool1.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool1;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.DaysToShow = 5;
             this.calendar_UI.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.calendar_UI.Location = new System.Drawing.Point(8, 256);
+            this.calendar_UI.Location = new System.Drawing.Point(15, 256);
             this.calendar_UI.Name = "calendar_UI";
             this.calendar_UI.SelectionEnd = new System.DateTime(((long)(0)));
             this.calendar_UI.SelectionStart = new System.DateTime(((long)(0)));
             this.calendar_UI.Size = new System.Drawing.Size(822, 275);
             this.calendar_UI.StartDate = new System.DateTime(((long)(0)));
             this.calendar_UI.TabIndex = 3;
-            this.calendar_UI.Text = "dayView1";
+            this.calendar_UI.Text = "Schedule";
             this.calendar_UI.WorkingHourEnd = 22;
             this.calendar_UI.WorkingMinuteEnd = 0;
             this.calendar_UI.WorkingMinuteStart = 0;
@@ -556,7 +556,7 @@
             // 
             this.removeHelp.AutoSize = true;
             this.removeHelp.Font = new System.Drawing.Font("Verdana", 7.75F, System.Drawing.FontStyle.Italic);
-            this.removeHelp.Location = new System.Drawing.Point(21, 8);
+            this.removeHelp.Location = new System.Drawing.Point(23, 8);
             this.removeHelp.Name = "removeHelp";
             this.removeHelp.Size = new System.Drawing.Size(196, 13);
             this.removeHelp.TabIndex = 2;
@@ -564,7 +564,7 @@
             // 
             // clearAll
             // 
-            this.clearAll.Location = new System.Drawing.Point(758, 227);
+            this.clearAll.Location = new System.Drawing.Point(760, 227);
             this.clearAll.Name = "clearAll";
             this.clearAll.Size = new System.Drawing.Size(73, 23);
             this.clearAll.TabIndex = 1;
@@ -586,7 +586,7 @@
             this.scheduleView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.scheduleView.FullRowSelect = true;
             this.scheduleView.GridLines = true;
-            this.scheduleView.Location = new System.Drawing.Point(8, 25);
+            this.scheduleView.Location = new System.Drawing.Point(15, 25);
             this.scheduleView.Name = "scheduleView";
             this.scheduleView.Size = new System.Drawing.Size(822, 199);
             this.scheduleView.TabIndex = 0;

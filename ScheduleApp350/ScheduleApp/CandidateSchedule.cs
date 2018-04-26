@@ -15,11 +15,11 @@ namespace ScheduleApp
     {
         public const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF\n";
 
-        public List<Course> schedule;
+        private List<Course> schedule;
         public List<Calendar.Appointment> m_Courses;
         public CourseInfo DB;
-        public int creditCount; //current count of credits within user's schedule
-        public int creditSituation; //reports if schedule is less than 12 (-1), 12 to 17 (0), or greater than 17 (1)
+        public int cred_total; //current count of credits within user's schedule
+        public int cred_statis; //reports if schedule is less than 12 (-1), 12 to 17 (0), or greater than 17 (1)
 
         private static CandidateSchedule singleton;
 
@@ -36,8 +36,8 @@ namespace ScheduleApp
         {
             schedule = new List<Course>();
             DB = CourseInfo.Create();
-            creditCount = 0;
-            creditSituation = -1;
+            cred_total = 0;
+            cred_statis = -1;
             m_Courses = new List<Calendar.Appointment>();
         }
 
@@ -48,10 +48,10 @@ namespace ScheduleApp
         }
         */
 
-        public void addCourse(Course c)
+        public void add_ob(Course c)
         {
             if (schedule.Contains(c)) return;
-            creditCount += c.getCredits();
+            cred_total += c.getCredits();
             checkCreditCount();
             schedule.Add(c);
 
@@ -59,11 +59,11 @@ namespace ScheduleApp
             //adds courses with same name recursivly
             if ( id < DB.getNumCourses() - 1 && DB.getCourseCode(id + 1) == DB.getCourseCode(id))
             {
-                addCourse(DB.getCourse(id + 1));
+                add_ob(DB.getCourse(id + 1));
             }
             else if ( id > 0 && DB.getCourseCode(id - 1) == DB.getCourseCode(id))
             {
-                addCourse(DB.getCourse(id - 1));
+                add_ob(DB.getCourse(id - 1));
             }
 
             //bool timeConflict = checkTimeConflict(id);
@@ -76,9 +76,9 @@ namespace ScheduleApp
             addToCalendar(id);
         }
 
-        public void addCourse(int id)
+        public void add_id(int id)
         {
-            addCourse(DB.getCourse(id)); 
+            add_ob(DB.getCourse(id)); 
         }
 
         public bool removeCourse(int courseID)
@@ -95,7 +95,7 @@ namespace ScheduleApp
             bool result = false;
             foreach (var allIDs in toBeRemoved) 
             {
-                creditCount -= DB.getCredits(allIDs);
+                cred_total -= DB.getCredits(allIDs);
                 checkCreditCount();
 
                 m_Courses.RemoveAll(c => c.CourseID == allIDs);
@@ -110,28 +110,24 @@ namespace ScheduleApp
 
         public void removeAllCourses()
         {
-            creditCount = 0;
+            cred_total = 0;
             checkCreditCount();
             schedule.Clear();
             m_Courses.Clear(); 
         }
 
-        public bool checkInSchedule(int courseID)
-        {
+        public bool exists(int courseID) {
             foreach (var course in schedule)
             {
-                if (course.getCourseID() == courseID)
-                {
-                    return true;
-                }
+                if(course.getCourseID() == courseID) return true;
             }
             return false;
         }
 
         public void checkCreditCount()
         {
-            creditSituation = creditCount < 12 ? -1 : 0;
-            creditSituation = creditCount > 17 ? 1 : 0;
+            cred_statis = cred_total < 12 ? -1 : 0;
+            cred_statis = cred_total > 17 ? 1 : 0;
         }
 
         public bool scheduleFromFile(string filepath) //creates the schedule from a json file, return true if successful
@@ -156,8 +152,8 @@ namespace ScheduleApp
                 else id = DB.getNumCourses() + i++;
 
                 importedCourse.RemoveAt(importedCourse.Count - 1);
-                if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
-                else addCourse(new Course(importedCourse, id));
+                if (id < DB.getNumCourses()) add_ob(DB.getCourse(id));
+                else add_ob(new Course(importedCourse, id));
             }
             return true;
         }
