@@ -309,8 +309,6 @@ namespace SearchClass
 
         public List<bool> day;    // Filter by courses that don't meet on days you don't want it to meet. If a value is false, it means you don't want a class that meets on that day. All true means user doesn't have a preference 
 
-        //public enum Build { BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBD, ANY=10 };
-        
         public Build building;
         public string firstNameProfessor;
         public string lastNameProfessor;
