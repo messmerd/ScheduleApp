@@ -59,6 +59,9 @@ namespace ScheduleApp
         }
         /******************************************************************************************/
 
+
+
+
         /************************Calendar-Related**************************************************/
 
         private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
@@ -260,17 +263,17 @@ namespace ScheduleApp
             if (e.KeyData == Keys.Enter) searchBtn_Click(sender, e);
         }
 
-        private string getDays(Course returnedCourse)
+        private string getDays(Course c)
         {
-            string meetingDays = "";
-            string[] potentialDays = { "M", "T", "W", "R", "F" }; 
+            string res = "";
+            string[] all_days = { "M", "T", "W", "R", "F" }; 
 
-            for(int i = 0; i < potentialDays.Length; i++) // since potentialDays.Length == Course.day.Length, and List has no Length member
+            for(int i = 0; i < all_days.Length; i++) // since potentialDays.Length == Course.day.Length, and List has no Length member
             {
-                if (returnedCourse.getDay()[i]) meetingDays += potentialDays[i];
+                if (c.getDay()[i]) res += all_days[i];
             }
 
-            return meetingDays;
+            return res;
         }
 
         private string[] setSearchRow(Course c) // c = the course
@@ -299,11 +302,11 @@ namespace ScheduleApp
             if(searchResult_UI.SelectedItems.Count >= 0)
             {
                 int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
-                if (!schedule.checkInSchedule(courseID)) 
+                if (!schedule.exists(courseID)) 
                 {
                     Course scheduleCourse = new Course(courseID);
 
-                    schedule.addCourse(courseID);
+                    schedule.add_id(courseID);
                     var courseToAdd = setScheduleRow(scheduleCourse);
                     var listViewItem = new ListViewItem(courseToAdd);
                     listViewItem.Name = courseID.ToString();
@@ -318,7 +321,6 @@ namespace ScheduleApp
                     clickHelp1.ForeColor = Color.Red;
                     clickHelp1.Text = "\"" + info.getCourseCode(courseID) + "\" is already in your schedule.";
                 }
-
                 
             }
             
@@ -343,7 +345,7 @@ namespace ScheduleApp
         private void clearAll_Click(object sender, EventArgs e)
         {
             scheduleView.Items.Clear(); // what the user sees
-            CandidateSchedule.Create().removeAllCourses();
+            schedule.removeAllCourses();
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
@@ -352,10 +354,9 @@ namespace ScheduleApp
         {
             if (scheduleView.SelectedItems.Count >= 0)
             {
-                int courseID = int.Parse(scheduleView.SelectedItems[0].Name);
-                 
+                int courseID = int.Parse(scheduleView.SelectedItems[0].Name);   
                 scheduleView.SelectedItems[0].Remove();
-                CandidateSchedule.Create().removeCourse(courseID);
+                schedule.removeCourse(courseID);
                 calendar_UI.Invalidate(); // Updates the Calendar
             }
         }
@@ -370,19 +371,21 @@ namespace ScheduleApp
         /*************************************adv search****************************************/
         private void advSearchBtn_Click(object sender, EventArgs e)
         {
-            int searchResult_shift = 106;
+            int shift = 106;
+            int x = searchResult_UI.Location.X;
+            int y = searchResult_UI.Location.Y;
 
             if (!filter_UI.Visible)
             {
-                searchResult_UI.Location = new Point(searchResult_UI.Location.X, searchResult_UI.Location.Y + searchResult_shift);
-                searchResult_UI.Height -= searchResult_shift;
+                searchResult_UI.Location = new Point(x, y + shift);
+                searchResult_UI.Height -= shift;
                 filter_UI.Show();
             }
             else
             {
                 filter_UI.Hide();
-                searchResult_UI.Location = new Point(searchResult_UI.Location.X, searchResult_UI.Location.Y - searchResult_shift);
-                searchResult_UI.Height += searchResult_shift;
+                searchResult_UI.Location = new Point(x, y - shift);
+                searchResult_UI.Height += shift;
             }
 
         }
@@ -405,22 +408,15 @@ namespace ScheduleApp
 
         private void building_valueChanged(object sender, EventArgs e)
         {
+        
+            string [] str = { "Any", "HAL", "Hoyt", "Other", "Pew Fine Arts", "PLC", "Rockwell", "BAO", "STEM" };
 
-            Tuple<string, Build>  [] options = {
-                Tuple.Create("Any", Build.NONE),
-                Tuple.Create("HAL", Build.HAL),
-                Tuple.Create("Hoyt", Build.HH),
-                Tuple.Create("Other", Build.OFFCP),
-                Tuple.Create("Pew Fine Arts", Build.PFAC),
-                Tuple.Create("PLC", Build.PLC),
-                Tuple.Create("Rockwell", Build.RH),
-                Tuple.Create("BAO", Build.BAO),
-                Tuple.Create("STEM", Build.STEM)
-            };
+            Build[] enums = { Build.NONE, Build.HAL, Build.HH, Build.OFFCP, Build.PFAC, Build.PLC, Build.RH, Build.BAO, Build.STEM };
 
-            foreach(var option in options)
+                           // same size for both
+            for(var i = 0; i < str.Length; i++)
             {
-                if (building_adv.Text == option.Item1) search.options.building = option.Item2;
+                if (building_adv.Text == str[i]) search.options.building = enums[i];
             }
         }
         private void professorValueChanged(object sender, EventArgs e)

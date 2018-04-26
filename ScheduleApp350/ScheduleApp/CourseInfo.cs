@@ -121,7 +121,7 @@ namespace ScheduleApp
                 database.Add(new Course(parsedCourse, i));
                 // Don't add duplicate professors or empty strings:
                 if (parsedCourse[11] != "" && parsedCourse[12] != "" && !prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
-                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12]));  
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], 0.0));  
                 i++;
             }
             prof_database = prof_database.OrderBy(x => x.last).ToList();

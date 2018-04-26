@@ -70,7 +70,7 @@ namespace ScheduleApp
  
             this.courseID = courseID;
             
-            this.professor = new Professor(parsedCourse[11], parsedCourse[12]);
+            this.professor = new Professor(parsedCourse[11], parsedCourse[12], 0.0);
 
             //parsedCourse[3], parsedCourse[4]
             //s.Split(':')[3]
@@ -233,11 +233,12 @@ namespace ScheduleApp
                     return "low";
                 case 3:
                     return "low/none";
-                default:
+                default: // It should never activate this case, but we put it in to account for corner cases
                     return "low/none";
             }
         }
 
+        // 0, 1, 2, or 3
         public int getProbabilityInt()
         {
             int probScore = 0;
@@ -253,6 +254,7 @@ namespace ScheduleApp
                 if (caseItem) probScore++;
             }
 
+            // If the class is full, it has a default probability of low/none, otherwise we return our calculated score
             return this.capacity - this.enrollment == 0 ? 3 : probScore;
         }
 
@@ -288,6 +290,10 @@ namespace ScheduleApp
         {
             return allInfo;
         }
+        public double getRMPScore()
+        {
+            return 0.0;
+        }
     };
 
     public struct Professor
@@ -295,11 +301,11 @@ namespace ScheduleApp
         public string first, last;
         public double rmp;
 
-        public Professor(string first, string last)
+        public Professor(string first, string last, double rmp)
         {
             this.first = first;
             this.last = last;
-            this.rmp = 4.2;  // Default value 
+            this.rmp = rmp;
         }
     }
 }
