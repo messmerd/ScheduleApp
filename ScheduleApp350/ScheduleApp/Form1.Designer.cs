@@ -135,6 +135,7 @@
             this.menuTabs.SelectedIndex = 0;
             this.menuTabs.Size = new System.Drawing.Size(862, 575);
             this.menuTabs.TabIndex = 0;
+            this.menuTabs.Click += new System.EventHandler(this.menuTabs_Click);
             // 
             // searchTab
             // 

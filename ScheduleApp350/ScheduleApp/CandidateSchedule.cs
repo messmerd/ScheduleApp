@@ -272,5 +272,10 @@ namespace ScheduleApp
             return m_Courses; 
         }
 
+        public List<Course> getCourses()
+        {
+            return schedule; 
+        }
+
     }
 }

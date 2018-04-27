@@ -15,13 +15,16 @@ namespace ScheduleApp
     {
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
-        CourseInfo info = CourseInfo.Create();
+        CourseInfo DB = CourseInfo.Create();
         CandidateSchedule schedule = CandidateSchedule.Create();
 
         public AppWindow()
         {
             InitializeComponent();
             initializeProfessorComboBox();
+            searchResult_UI.ShowItemToolTips = true;
+            //searchResult_UI.HideSelection = true;
+            
 
             calendar_UI.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
             //calendar_UI.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
@@ -38,7 +41,7 @@ namespace ScheduleApp
 
         private void initializeProfessorComboBox()
         {
-            foreach (var prof in info.prof_database)
+            foreach (var prof in DB.prof_database)
                 professor_adv.Items.Add(prof.last + ", " + prof.first);
         }
 
@@ -67,6 +70,7 @@ namespace ScheduleApp
         
         private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
         {
+            
             List<Calendar.Appointment> m_Apps = new List<Calendar.Appointment>();
 
             foreach (Calendar.Appointment m_App in CandidateSchedule.Create().getCalendarItems())
@@ -75,19 +79,20 @@ namespace ScheduleApp
                     m_Apps.Add(m_App);
 
             args.Appointments = m_Apps;
+             
         }
         
         
         private void dayView1_SelectionChanged(object sender, EventArgs e)
         {
             //string text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
-            label3.Text = calendar_UI.SelectionStart.ToString() + ":" + calendar_UI.SelectionEnd.ToString();
+            //label3.Text = calendar_UI.SelectionStart.ToString() + ":" + calendar_UI.SelectionEnd.ToString();
             //Console.WriteLine(text);
         }
         
         private void dayView1_MouseMove(object sender, MouseEventArgs e)
         {
-            professor_adv_label.Text = calendar_UI.GetTimeAt(e.X, e.Y).ToString();
+            //professor_adv_label.Text = calendar_UI.GetTimeAt(e.X, e.Y).ToString();
             //string text = dayView1.GetTimeAt(e.X, e.Y).ToString();
             //Console.WriteLine(text);
         }
@@ -255,7 +260,41 @@ namespace ScheduleApp
                 var courseToAdd = setSearchRow(course);
                 var listViewItem = new ListViewItem(courseToAdd);
                 listViewItem.Name = course.getCourseID().ToString();
+                listViewItem.UseItemStyleForSubItems = false;
+
+                for (int j = 0; j < listViewItem.SubItems.Count; j++)
+                {
+                    listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : Color.White;
+                }
+
+                if (schedule.checkTimeConflict(course).Count > 1)
+                {
+                    listViewItem.SubItems[4].BackColor = Color.Red;
+                    listViewItem.ToolTipText = "This course conflicts with your schedule";
+                }
                 searchResult_UI.Items.Add(listViewItem);
+            }
+        }
+
+        private void refreshSearchItemColors(List<Course> results)
+        {
+            int i = 0;
+            foreach (ListViewItem item in searchResult_UI.Items)
+            {
+                item.UseItemStyleForSubItems = false;
+
+                for (int j = 0; j < item.SubItems.Count; j++)
+                {
+                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : Color.White;
+                }
+
+                if (schedule.checkTimeConflict(results[i]).Count > 1)
+                {
+                    item.SubItems[4].BackColor = Color.Red;
+                    item.ToolTipText = "This course conflicts with your schedule";
+                }
+                i++;
+                
             }
         }
 
@@ -306,22 +345,25 @@ namespace ScheduleApp
                 int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
                 if (!schedule.exists(courseID)) 
                 {
-                    Course scheduleCourse = new Course(courseID);
-
                     schedule.add_id(courseID);
-                    var courseToAdd = setScheduleRow(scheduleCourse);
-                    var listViewItem = new ListViewItem(courseToAdd);
-                    listViewItem.Name = courseID.ToString();
-                    scheduleView.Items.Add(listViewItem);
 
-                    clickHelp1.ForeColor = Color.Black;
-                    clickHelp1.Text = "\"" + scheduleCourse.getCourseCode() + "\" successfully added.";
+                    updateScheduleUI(); 
+
+                    clickHelp1.ForeColor = Color.Green;
+                    clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" successfully added.";
                     calendar_UI.Invalidate(); // Updates the Calendar
+                    refreshSearchItemColors(search.lastSearchResults.getCourses());
+                    searchResult_UI.SelectedItems[0].Selected = false; 
                 }
                 else
                 {
+                    schedule.removeCourse(courseID);
+                    updateScheduleUI(); 
                     clickHelp1.ForeColor = Color.Red;
-                    clickHelp1.Text = "\"" + info.getCourseCode(courseID) + "\" is already in your schedule.";
+                    clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" was removed from your schedule.";
+                    refreshSearchItemColors(search.lastSearchResults.getCourses());
+                    searchResult_UI.SelectedItems[0].Selected = false; 
+                    
                 }
                 
             }
@@ -349,6 +391,7 @@ namespace ScheduleApp
             scheduleView.Items.Clear(); // what the user sees
             schedule.removeAllCourses();
             calendar_UI.Invalidate(); // Updates the Calendar
+            refreshSearchItemColors(search.lastSearchResults.getCourses());
         }
 
         
@@ -357,12 +400,25 @@ namespace ScheduleApp
             if (scheduleView.SelectedItems.Count >= 0)
             {
                 int courseID = int.Parse(scheduleView.SelectedItems[0].Name);   
-                scheduleView.SelectedItems[0].Remove();
                 schedule.removeCourse(courseID);
+                updateScheduleUI(); 
                 calendar_UI.Invalidate(); // Updates the Calendar
+                refreshSearchItemColors(search.lastSearchResults.getCourses());
             }
         }
-        
+
+        private void updateScheduleUI()
+        {
+            scheduleView.Items.Clear();
+            foreach (Course c in schedule.getCourses())
+            {
+                var courseToAdd = setScheduleRow(c);
+                var listViewItem = new ListViewItem(courseToAdd);
+                listViewItem.Name = c.getCourseID().ToString();
+                scheduleView.Items.Add(listViewItem);
+            }
+        }
+
 
         /***************************************************************************************/
 
@@ -495,6 +551,18 @@ namespace ScheduleApp
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {   
             Application.Exit();
+        }
+
+        /***************************************************************************************************/
+
+        /***********************************Click on tab****************************************************/
+        private void menuTabs_Click(object sender, EventArgs e)
+        {
+            if (menuTabs.SelectedIndex == 1) // If the Schedule tab was clicked
+            {
+                clickHelp1.ForeColor = Color.Black;
+                clickHelp1.Text = "Double click to add a course!";
+            }
         }
 
         /***************************************************************************************************/

@@ -13,7 +13,6 @@ namespace ScheduleApp
         public string query;                 // The query passed to searchForQuery()
         public string correctedQuery;        // The spell-checked version of query
         public Dictionary<int, int> relevance;
-        public List<bool> conflicting_courses; 
 
         public SearchResults()
         {
@@ -21,17 +20,16 @@ namespace ScheduleApp
             this.correctedQuery = "";
             this.courses = new List<Course>();
             this.relevance = new Dictionary<int, int>();
-            this.conflicting_courses = new List<bool>();
-            for (int i = 0; i < CourseInfo.Create().getNumCourses(); i++)
-            {
-                this.conflicting_courses.Add(false);
-            }
         }
 
         // Getters: 
         public List<Course> getCourses()
         {
             return courses;
+        }
+        public Course getCourse(int id)
+        {
+            return courses.ElementAt(id); 
         }
         public string getCorrectedQuery()
         {
@@ -178,19 +176,6 @@ namespace ScheduleApp
 
         }
 
-        public void updateConflictingCourses()
-        {
-            /*
-            foreach (Course c in courses)
-            {
-                if (CandidateSchedule.Create().checkTimeConflict(c).Count > 1)
-                {
-                    conflicting_courses[c1.CourseID] = true;  // Mark courses in the search results that would conflict with the schedule 
-                }
-
-            }
-             */ 
-        }
 
     }
 
