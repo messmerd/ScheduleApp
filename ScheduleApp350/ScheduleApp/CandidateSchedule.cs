@@ -43,9 +43,9 @@ namespace ScheduleApp
         }
         */
 
-        public void add_ob(Course c)
         //adds a course to the candidate schedule based on course object,
         //along with any courses with the same course code
+        public void addCourse(Course c)
         {
             if (schedule.Contains(c)) return;
             creditCount += c.getCredits();
@@ -55,20 +55,21 @@ namespace ScheduleApp
             //adds courses with same name recursivly
             if ( id < DB.getNumCourses() - 1 && DB.getCourseCode(id + 1) == DB.getCourseCode(id))
             {
-                add_ob(DB.getCourse(id + 1));
+                addCourse(DB.getCourse(id + 1));
             }
             else if ( id > 0 && DB.getCourseCode(id - 1) == DB.getCourseCode(id))
             {
-                add_ob(DB.getCourse(id - 1));
+                addCourse(DB.getCourse(id - 1));
             }
 
             addToCalendar(id);
         }
 
-        public void add_id(int id)
         //adds a course to the candidate schedule based on course id
+        public void addCourse(int id)
+        
         {
-            add_ob(DB.getCourse(id)); 
+            addCourse(DB.getCourse(id)); 
         }
 
         //removes the course with the given id along with all courses with the same course code
@@ -107,8 +108,8 @@ namespace ScheduleApp
             m_Courses.Clear(); 
         }
 
-        public bool exists(int courseID)
         //returns true if the any course in the current candidate schedule has the given id
+        public bool exists(int courseID)
         {
             foreach (var course in schedule)
             {
@@ -148,11 +149,11 @@ namespace ScheduleApp
                 else id = DB.getNumCourses() + i++;
 
                 importedCourse.RemoveAt(importedCourse.Count - 1);
-                if (id < DB.getNumCourses()) add_ob(DB.getCourse(id));
-                else add_ob(new Course(importedCourse, id));
+                if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
+                else addCourse(new Course(importedCourse, id));
 
-                if (id < DB.getNumCourses()) add_ob(DB.getCourse(id));
-                else add_ob(new Course(importedCourse, id));
+                if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
+                else addCourse(new Course(importedCourse, id));
 
                 creditCount += DB.getCredits(id);
                 checkCreditCount();
@@ -231,35 +232,20 @@ namespace ScheduleApp
             updateConflictMarkers();
         }
 
-        // Looks at all the courses in the schedule and marks conflicting courses red and non-conflicting courses white
-        // This could probably be written more efficiently 
+        // Looks at all the courses in the schedule and marks conflicting courses in the calendar red and non-conflicting courses white
         private void updateConflictMarkers()
         {
-            List<int> conflictIDs = new List<int>(); 
-
             foreach (var c1 in m_Courses)
             {
-                c1.Color = System.Drawing.Color.White; 
-                foreach (var conflict in checkTimeConflict(c1.CourseID))
+                if (checkTimeConflict(c1.CourseID).Count > 1)
                 {
-                    if (!conflictIDs.Contains(conflict.getCourseID()))
-                        conflictIDs.Add(conflict.getCourseID());
-                }
-            }
-
-            foreach (var c1 in m_Courses)
-            {
-
-                if (conflictIDs.Contains(c1.CourseID))
-                {
-                    c1.Color = System.Drawing.Color.Red; 
+                    c1.Color = System.Drawing.Color.Red;
                 }
                 else
                 {
                     c1.Color = System.Drawing.Color.White; 
                 }
-            }
-                 
+            }         
         }
 
         public int getCreditCount()

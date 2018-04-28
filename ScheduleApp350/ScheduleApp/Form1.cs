@@ -345,7 +345,7 @@ namespace ScheduleApp
                 int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
                 if (!schedule.exists(courseID)) 
                 {
-                    schedule.add_id(courseID);
+                    schedule.addCourse(courseID);
 
                     updateScheduleUI(); 
 
@@ -415,6 +415,14 @@ namespace ScheduleApp
                 var courseToAdd = setScheduleRow(c);
                 var listViewItem = new ListViewItem(courseToAdd);
                 listViewItem.Name = c.getCourseID().ToString();
+                if (schedule.checkTimeConflict(c).Count > 1)
+                {
+                    listViewItem.BackColor = Color.Red;
+                }
+                else
+                {
+                    listViewItem.BackColor = Color.White; 
+                }
                 scheduleView.Items.Add(listViewItem);
             }
         }
