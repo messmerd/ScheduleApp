@@ -10,7 +10,7 @@ namespace ScheduleApp
 {
     public class CandidateSchedule
     {
-        public const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF\n";
+        public const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF";
 
         public List<Course> schedule;                  // Stores all the courses in the user's schedule
         private List<Calendar.Appointment> m_Courses;  // Stores the calendar items 
@@ -129,11 +129,13 @@ namespace ScheduleApp
         //creates the schedule from a json file, return true if successful
         public bool scheduleFromFile(string filepath) 
         {
+            Console.WriteLine(!File.Exists(filepath));
             if(!File.Exists(filepath)) return false;
             string allCourses = System.IO.File.ReadAllText(filepath);
-
+            Console.WriteLine(KEY_STRING);
+            Console.WriteLine(allCourses);
             if (!allCourses.StartsWith(KEY_STRING)) return false; //secondary check that file is correct type
-            else allCourses.Replace(KEY_STRING, null);
+            else allCourses.Replace(KEY_STRING, null).Trim();
 
             List<string> listOfCourses = new List<string>(allCourses.Split('\n'));
             removeAllCourses(); //replaces current candidate schedule
