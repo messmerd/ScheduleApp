@@ -36,12 +36,6 @@ namespace ScheduleApp
             creditCount = 0;
             m_Courses = new List<Calendar.Appointment>();
         }
-        /*
-        CandidateSchedule(string filename) // factory constructor using JSON, sprint 2
-        {
-
-        }
-        */
 
         //adds a course to the candidate schedule based on course object,
         //along with any courses with the same course code

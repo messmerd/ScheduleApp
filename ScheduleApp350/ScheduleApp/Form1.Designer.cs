@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool3 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool4 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -95,7 +95,6 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.test = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -108,8 +107,8 @@
             // 
             // calendar_UI
             // 
-            drawTool3.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool3;
+            drawTool4.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool4;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.DaysToShow = 5;
             this.calendar_UI.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -140,7 +139,6 @@
             // searchTab
             // 
             this.searchTab.BackColor = System.Drawing.Color.White;
-            this.searchTab.Controls.Add(this.test);
             this.searchTab.Controls.Add(this.clickHelp1);
             this.searchTab.Controls.Add(this.userHelpLabel);
             this.searchTab.Controls.Add(this.gccLogo);
@@ -747,15 +745,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // test
-            // 
-            this.test.AutoSize = true;
-            this.test.Location = new System.Drawing.Point(134, 88);
-            this.test.Name = "test";
-            this.test.Size = new System.Drawing.Size(41, 13);
-            this.test.TabIndex = 11;
-            this.test.Text = "label2";
-            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -852,7 +841,6 @@
         private System.Windows.Forms.Label professor_adv_label;
         private System.Windows.Forms.Label label3;
         private Calendar.DayView calendar_UI;
-        private System.Windows.Forms.Label test;
     }
 }
 

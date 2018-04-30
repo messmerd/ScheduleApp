@@ -199,11 +199,9 @@ namespace ScheduleApp
                 course.BorderColor = Color.DarkSlateGray;
             }
 
-
             // 
             scheduleTitle.ForeColor = Color.Black;
 
-            
             menuBar.BackColor = Color.White;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = Color.White;
@@ -236,15 +234,9 @@ namespace ScheduleApp
         /*************************Sort Search Result Column****************************************/
         private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
         {
-
-
             int i = get_clicked_header(); // index of column header clicked
             set_sort_type(i); // sets whether it should be by relevancy, asc, or desc order
             sort_col(i); // performs the ordering, and sets the new search results
-
-            test.Text = i.ToString();
-
-
         }
 
         private int get_clicked_header()
@@ -274,8 +266,8 @@ namespace ScheduleApp
                     search.lastSearchResults.SortCourses((SORTTYPE)i, false);
                     break;
             }
-            searchResult_UI.Items.Clear();
-            populateSearch(search.lastSearchResults.getCourses()); // refresh
+
+            refresh_search_results(search.lastSearchResults.getCourses());
         }
 
         /******************************************************************************************/
@@ -302,8 +294,7 @@ namespace ScheduleApp
         {
             foreach (var course in results)
             {
-                var courseToAdd = setSearchRow(course);
-                var listViewItem = new ListViewItem(courseToAdd);
+                var listViewItem = new ListViewItem(setSearchRow(course));
                 listViewItem.Name = course.getCourseID().ToString();
                 listViewItem.UseItemStyleForSubItems = false;
 
@@ -318,6 +309,18 @@ namespace ScheduleApp
                     listViewItem.ToolTipText = "This course conflicts with your schedule";
                 }
                 searchResult_UI.Items.Add(listViewItem);
+            }
+        }
+
+
+        // more efficiently display the sort
+        private void refresh_search_results(List<Course> results)
+        {
+            int j = 0;
+            for(int i = 0; i < searchResult_UI.Items.Count; i++)
+            {
+                searchResult_UI.Items[i] = new ListViewItem(setSearchRow(results[i]));
+                j++;
             }
         }
 
@@ -354,7 +357,7 @@ namespace ScheduleApp
             string res = "";
             string[] all_days = { "M", "T", "W", "R", "F" }; 
 
-            for(int i = 0; i < all_days.Length; i++) // since potentialDays.Length == Course.day.Length, and List has no Length member
+            for(int i = 0; i < all_days.Length; i++) 
             {
                 if (c.getDay()[i]) res += all_days[i];
             }
@@ -410,24 +413,22 @@ namespace ScheduleApp
                     searchResult_UI.SelectedItems[0].Selected = false; 
                     
                 }
-                
             }
-            
         }
 
         public string[] setScheduleRow(Course c)
         {
-            string[] row = new string[50]; // row buffer
+            string[] buf = new string[50]; // buf buffer
 
-            row[0] = c.getCredits().ToString();//
-            row[1] = c.getCourseCode();//
-            row[2] = c.getProf().last + ", " + c.getProf().first;
-            row[3] = c.getLongName();
-            row[4] = c.getTimeString().Item1 + "-" + c.getTimeString().Item2;
-            row[5] = c.getBuilding().ToString();
-            row[6] = c.getRoom().ToString();
-            row[7] = getDays(c);
-            return row;
+            buf[0] = c.getCredits().ToString();
+            buf[1] = c.getCourseCode();
+            buf[2] = c.getProf().last + ", " + c.getProf().first;
+            buf[3] = c.getLongName();
+            buf[4] = c.getTimeString().Item1 + "-" + c.getTimeString().Item2;
+            buf[5] = c.getBuilding().ToString();
+            buf[6] = c.getRoom().ToString();
+            buf[7] = getDays(c);
+            return buf;
 
         }
 
