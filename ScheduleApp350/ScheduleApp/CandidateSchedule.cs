@@ -244,17 +244,17 @@ namespace ScheduleApp
                 }
             }         
         }
-
+        // getter for creditCount
         public int getCreditCount()
         {
             return creditCount; 
         }
-
+        //getter for m_Courses
         public List<Calendar.Appointment> getCalendarItems()
         {
             return m_Courses; 
         }
-
+        //getter for schedule
         public List<Course> getCourses()
         {
             return schedule; 

@@ -156,72 +156,72 @@ namespace ScheduleApp
             return capacity-enrollment <= 0;
         }
 
-        public int getCourseID()  // Note: courseID is NOT the same as courseCode 
+        public int getCourseID()  // Getter for courseID, Note: courseID is NOT the same as courseCode 
         {
             return courseID;
         }
 
-        public Build getBuilding()   
+        public Build getBuilding()   //Getter for building
         {
             return building;
         }
 
-        public string getRoom()   
+        public string getRoom()   //Getter for room
         {
             return room;
         }
 
-        public string getCourseDept()   
+        public string getCourseDept()   //getter for courseDept
         {
             return courseDept;
         }
 
-        public string getCourseNum()   
+        public string getCourseNum()   //getter for courseNum
         {
             return courseNum;
         }
 
-        public string getCourseSect()   
+        public string getCourseSect()   //getter for courseSect
         {
             return courseSect;
         }
 
-        public string getCourseCode()   
+        public string getCourseCode()   //getter for courseCode
         {
             return courseCode;
         }
 
-        public string getShortName()   
+        public string getShortName()   //getter for shortName
         {
             return shortName;
         }
 
-        public string getLongName()   
+        public string getLongName()   //getter for longNamef
         {
             return longName;
         }
 
-        public int getEnrollment()   
+        public int getEnrollment()   //getter for enrollment
         {
             return enrollment;
         }
 
-        public int getCapacity()  
+        public int getCapacity()  //getter for capacity
         {
             return capacity;
         }
 
-        public List<bool> getDay()  
+        public List<bool> getDay()  //getter for day
         {
             return day;
         }
 
-        public Tuple<double, double> getTime()   
+        public Tuple<double, double> getTime()   //getter for time
         {
             return time;
         }
 
-        public string getProbability()
+        public string getProbability()  //returns the string equivelent of getProbabilityInt
         {
             switch (getProbabilityInt())
             {
@@ -239,7 +239,7 @@ namespace ScheduleApp
         }
 
         // 0, 1, 2, or 3
-        public int getProbabilityInt()
+        public int getProbabilityInt()  //calculates and returns the probability of a student recieving a course (int)
         {
             int probScore = 0;
 
@@ -258,14 +258,14 @@ namespace ScheduleApp
             return this.capacity - this.enrollment == 0 ? 3 : probScore;
         }
 
-        public Tuple<string, string> getTimeString()
+        public Tuple<string, string> getTimeString()    //returns time as a tuple of strings
         {
             Tuple<int, int, int, int> temp = getTimeHourMinute();
             if (temp.Item1 == -1.0) return new Tuple<string,string>("",""); //No time is given
             return Tuple.Create(temp.Item1.ToString("00") + ":" + temp.Item2.ToString("00"), temp.Item3.ToString("00") + ":" + temp.Item4.ToString("00"));
         }
 
-        public Tuple<int, int, int, int> getTimeHourMinute()
+        public Tuple<int, int, int, int> getTimeHourMinute() //returns time as a tuple of ints
         {
             if (time.Item1 == -1.0) return new Tuple<int,int,int,int>(-1, -1, -1, -1); //No time is given
             int t1 = (int)time.Item1;
@@ -276,27 +276,27 @@ namespace ScheduleApp
             return Tuple.Create(t1, t2, t3, t4);
         }
 
-        public Professor getProf()   
+        public Professor getProf()   //getter for professor
         {
             return professor;
         }
 
-        public int getCredits()   
+        public int getCredits()   //getter for credits
         {
             return credits;
         }
 
-        public string getAllInfo()
+        public string getAllInfo()  //getter for allInfo
         {
             return allInfo;
         }
-        public double getRMPScore()
+        public double getRMPScore() //getter for RMPScore
         {
             return 0.0;
         }
     };
 
-    public struct Professor
+    public struct Professor //struct for the professor object
     {
         public string first, last;
         public double rmp;
