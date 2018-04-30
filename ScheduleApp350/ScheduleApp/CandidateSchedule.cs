@@ -46,6 +46,7 @@ namespace ScheduleApp
             schedule.Add(c);
             
             int id = c.getCourseID();
+
             //adds courses with same name recursivly
             if ( id < DB.getNumCourses() - 1 && DB.getCourseCode(id + 1) == DB.getCourseCode(id))
             {
@@ -140,14 +141,11 @@ namespace ScheduleApp
                 int id;
                 if (Int32.TryParse(importedCourse[importedCourse.Count - 1], out id) &&
                     DB.getCourseCode(id) == System.Text.RegularExpressions.Regex.Replace(importedCourse[0], @"\s+", " ")) ;
-                else id = DB.getNumCourses() + i++;
+                else continue;
 
                 importedCourse.RemoveAt(importedCourse.Count - 1);
-                if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
-                else addCourse(new Course(importedCourse, id));
-
-                if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
-                else addCourse(new Course(importedCourse, id));
+                addCourse(DB.getCourse(id));
+                
 
                 creditCount += DB.getCredits(id);
                 checkCreditCount();
@@ -199,21 +197,27 @@ namespace ScheduleApp
         // This function adds a course to the Calendar UI
         private void addToCalendar(int id)
         {
-            Tuple<int, int, int, int> course_time = DB.getCourse(id).getTimeHourMinute();
-            if (course_time.Item1 == -1 || !DB.getDay(id).Contains(true))  // Course does not have a time or doesn't have a day
+            addToCalendar(DB.getCourse(id));
+        }
+
+        // This function adds a course to the Calendar UI
+        private void addToCalendar(Course course)
+        {
+            Tuple<int, int, int, int> course_time = course.getTimeHourMinute();
+            if (course_time.Item1 == -1 || !course.getDay().Contains(true))  // Course does not have a time or doesn't have a day
                 return; 
 
             Calendar.Appointment m_course;
 
             for (int day = 0; day < 5; day++)
             {
-                if (DB.getDay(id)[day])
+                if (course.getDay()[day])
                 {
                     m_course = new Calendar.Appointment();
                     m_course.StartDate = new DateTime(2010, 2, 1 + day, course_time.Item1, course_time.Item2, 0);
                     m_course.EndDate = new DateTime(2010, 2, 1 + day, course_time.Item3, course_time.Item4, 0);
-                    m_course.Title = DB.getCourse(id).getCourseCode() + " " + DB.getCourse(id).getLongName();
-                    m_course.CourseID = id;
+                    m_course.Title = course.getCourseCode() + " " + course.getLongName();
+                    m_course.CourseID = course.getCourseID();
                     m_course.Locked = true; 
                     m_Courses.Add(m_course);
 
@@ -238,17 +242,17 @@ namespace ScheduleApp
                 }
             }         
         }
-
+        // getter for creditCount
         public int getCreditCount()
         {
             return creditCount; 
         }
-
+        //getter for m_Courses
         public List<Calendar.Appointment> getCalendarItems()
         {
             return m_Courses; 
         }
-
+        //getter for schedule
         public List<Course> getCourses()
         {
             return schedule; 
