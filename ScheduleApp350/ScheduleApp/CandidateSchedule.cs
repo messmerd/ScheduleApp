@@ -129,14 +129,12 @@ namespace ScheduleApp
         //creates the schedule from a json file, return true if successful
         public bool scheduleFromFile(string filepath) 
         {
-            Console.WriteLine(!File.Exists(filepath));
             if(!File.Exists(filepath)) return false;
             string allCourses = System.IO.File.ReadAllText(filepath);
-            Console.WriteLine(KEY_STRING);
-            Console.WriteLine(allCourses);
-            if (!allCourses.StartsWith(KEY_STRING)) return false; //secondary check that file is correct type
-            else allCourses.Replace(KEY_STRING, null).Trim();
 
+            if (!allCourses.StartsWith(KEY_STRING)) return false; //secondary check that file is correct type
+            else allCourses = allCourses.Replace(KEY_STRING, null).Trim();
+            
             List<string> listOfCourses = new List<string>(allCourses.Split('\n'));
             removeAllCourses(); //replaces current candidate schedule
 

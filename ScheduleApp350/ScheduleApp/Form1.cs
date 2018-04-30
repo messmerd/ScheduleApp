@@ -533,17 +533,18 @@ namespace ScheduleApp
             openJson.ReadOnlyChecked = true;
             openJson.ShowReadOnly = true;
 
-            bool success = false;
             if (openJson.ShowDialog() == DialogResult.OK)
             {
                 // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
                 // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
                 // You might want to delete the stream from this method and just include it 
                 // inside the method you're going to write
-                success = schedule.scheduleFromFile(openJson.FileName);
-            }
-            if (!success) MessageBox.Show("The file either failed to open or \nhad an incorrect format.", "File Error", 
+                if (!schedule.scheduleFromFile(openJson.FileName)) MessageBox.Show("The file either failed to open or \nhad an incorrect format.", "File Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            updateScheduleUI();
+            calendar_UI.Invalidate(); // Updates the Calendar
+            refreshSearchItemColors(search.lastSearchResults.getCourses());
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
