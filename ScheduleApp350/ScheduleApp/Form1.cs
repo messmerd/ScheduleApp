@@ -17,6 +17,7 @@ namespace ScheduleApp
         Search search = Search.Create("course_dictionary.txt");
         CourseInfo DB = CourseInfo.Create();
         CandidateSchedule schedule = CandidateSchedule.Create();
+        int[] sort_status = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         public AppWindow()
         {
@@ -230,10 +231,54 @@ namespace ScheduleApp
         }
         /******************************************************************************************/
 
+        
+
+        /*************************Sort Search Result Column****************************************/
+        private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
+        {
 
 
+            int i = get_clicked_header(); // index of column header clicked
+            set_sort_type(i); // sets whether it should be by relevancy, asc, or desc order
+            sort_col(i); // performs the ordering, and sets the new search results
+
+            test.Text = i.ToString();
 
 
+        }
+
+        private int get_clicked_header()
+        {
+            Point mousePosition = searchResult_UI.PointToClient(Control.MousePosition);
+            ListViewHitTestInfo hit = searchResult_UI.HitTest(mousePosition);
+            return hit.Item.SubItems.IndexOf(hit.SubItem);
+        }
+
+        private void set_sort_type(int index)
+        {
+            // 0 is relevancy, 1 is asc, 2 is desc
+            sort_status[index] = (sort_status[index] + 1) % 3;
+        }
+
+        private void sort_col(int i)
+        {
+            switch (sort_status[i])
+            { 
+                case 0:
+                    search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, true);
+                    break;
+                case 1:
+                    search.lastSearchResults.SortCourses((SORTTYPE)i, true);
+                    break;
+                case 2:
+                    search.lastSearchResults.SortCourses((SORTTYPE)i, false);
+                    break;
+            }
+            searchResult_UI.Items.Clear();
+            populateSearch(search.lastSearchResults.getCourses()); // refresh
+        }
+
+        /******************************************************************************************/
 
         /**********************Create UI Search Results Fns****************************************/
         private void searchBtn_Click(object sender, EventArgs e)
@@ -535,10 +580,6 @@ namespace ScheduleApp
 
             if (openJson.ShowDialog() == DialogResult.OK)
             {
-                // TODO: Code to stream and save to the user's candidate schedule in here (Michael)
-                // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
-                // You might want to delete the stream from this method and just include it 
-                // inside the method you're going to write
                 if (!schedule.scheduleFromFile(openJson.FileName)) MessageBox.Show("The file either failed to open or \nhad an incorrect format.", "File Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -566,10 +607,6 @@ namespace ScheduleApp
             {
                 if ((jsonSaveStream = File.CreateText(saveJson.FileName)) != null)
                 {
-                    // TODO: Save the Json file to their computer
-                    // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
-                    // You might want to make a multiline string variable to do so.
-                    // Its just a normal string, except using """stuff""" instead of "stuff"
                     jsonSaveStream.Write(schedule.scheduleToFile());
                     jsonSaveStream.Close();
                 }
@@ -586,6 +623,8 @@ namespace ScheduleApp
         }
 
         /***************************************************************************************************/
+
+
 
         /***********************************Click on tab****************************************************/
         private void menuTabs_Click(object sender, EventArgs e)

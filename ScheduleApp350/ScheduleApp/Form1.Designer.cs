@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool3 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -68,7 +68,6 @@
             this.capacityCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rmpCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.probCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.hiddenIDCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.scheduleTab = new System.Windows.Forms.TabPage();
             this.removeHelp = new System.Windows.Forms.Label();
             this.clearAll = new System.Windows.Forms.Button();
@@ -96,6 +95,7 @@
             this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.test = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -108,8 +108,8 @@
             // 
             // calendar_UI
             // 
-            drawTool1.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool1;
+            drawTool3.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool3;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.DaysToShow = 5;
             this.calendar_UI.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -140,6 +140,7 @@
             // searchTab
             // 
             this.searchTab.BackColor = System.Drawing.Color.White;
+            this.searchTab.Controls.Add(this.test);
             this.searchTab.Controls.Add(this.clickHelp1);
             this.searchTab.Controls.Add(this.userHelpLabel);
             this.searchTab.Controls.Add(this.gccLogo);
@@ -474,8 +475,7 @@
             this.daysCol,
             this.capacityCol,
             this.rmpCol,
-            this.probCol,
-            this.hiddenIDCol});
+            this.probCol});
             this.searchResult_UI.Cursor = System.Windows.Forms.Cursors.Hand;
             this.searchResult_UI.FullRowSelect = true;
             this.searchResult_UI.GridLines = true;
@@ -487,6 +487,7 @@
             this.searchResult_UI.TabIndex = 4;
             this.searchResult_UI.UseCompatibleStateImageBehavior = false;
             this.searchResult_UI.View = System.Windows.Forms.View.Details;
+            this.searchResult_UI.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.sortResults_columnClick);
             this.searchResult_UI.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.searchResult_UI_DoubleClick);
             // 
             // creditsCol
@@ -527,17 +528,12 @@
             // rmpCol
             // 
             this.rmpCol.Text = "RMP";
-            this.rmpCol.Width = 49;
+            this.rmpCol.Width = 61;
             // 
             // probCol
             // 
             this.probCol.Text = "Prob.";
-            this.probCol.Width = 51;
-            // 
-            // hiddenIDCol
-            // 
-            this.hiddenIDCol.Text = "";
-            this.hiddenIDCol.Width = 0;
+            this.probCol.Width = 61;
             // 
             // scheduleTab
             // 
@@ -751,6 +747,15 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // test
+            // 
+            this.test.AutoSize = true;
+            this.test.Location = new System.Drawing.Point(134, 88);
+            this.test.Name = "test";
+            this.test.Size = new System.Drawing.Size(41, 13);
+            this.test.TabIndex = 11;
+            this.test.Text = "label2";
+            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -832,7 +837,6 @@
         private System.Windows.Forms.ToolStripMenuItem blueTheme;
         private System.Windows.Forms.ToolStripMenuItem gccTheme;
         private System.Windows.Forms.Label clickHelp1;
-        private System.Windows.Forms.ColumnHeader hiddenIDCol;
         private System.Windows.Forms.ColumnHeader schedule_creditsCol;
         private System.Windows.Forms.ColumnHeader schedule_codeCol;
         private System.Windows.Forms.ColumnHeader schedule_profCol;
@@ -848,6 +852,7 @@
         private System.Windows.Forms.Label professor_adv_label;
         private System.Windows.Forms.Label label3;
         private Calendar.DayView calendar_UI;
+        private System.Windows.Forms.Label test;
     }
 }
 
