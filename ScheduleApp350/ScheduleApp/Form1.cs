@@ -235,15 +235,26 @@ namespace ScheduleApp
         private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
         {
             int i = get_clicked_header(); // index of column header clicked
-            set_sort_type(i); // sets whether it should be by relevancy, asc, or desc order
-            sort_col(i); // performs the ordering, and sets the new search results
+
+            if(i != -1)
+            {
+                set_sort_type(i); // sets whether it should be by relevancy, asc, or desc order
+                sort_col(i); // performs the ordering, and sets the new search results
+            }
         }
 
         private int get_clicked_header()
         {
-            Point mousePosition = searchResult_UI.PointToClient(Control.MousePosition);
-            ListViewHitTestInfo hit = searchResult_UI.HitTest(mousePosition);
-            return hit.Item.SubItems.IndexOf(hit.SubItem);
+            if (searchResult_UI.Items.Count > 0)
+            {
+                Point mousePosition = searchResult_UI.PointToClient(Control.MousePosition);
+                ListViewHitTestInfo hit = searchResult_UI.HitTest(mousePosition);
+                return hit.Item.SubItems.IndexOf(hit.SubItem);
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         private void set_sort_type(int index)
@@ -267,7 +278,8 @@ namespace ScheduleApp
                     break;
             }
 
-            refresh_search_results(search.lastSearchResults.getCourses());
+            searchResult_UI.Items.Clear();
+            populateSearch(search.lastSearchResults.getCourses());
         }
 
         /******************************************************************************************/
@@ -314,6 +326,7 @@ namespace ScheduleApp
 
 
         // more efficiently display the sort
+        /*
         private void refresh_search_results(List<Course> results)
         {
             int j = 0;
@@ -323,7 +336,7 @@ namespace ScheduleApp
                 j++;
             }
         }
-
+        */
         private void refreshSearchItemColors(List<Course> results)
         {
             int i = 0;
