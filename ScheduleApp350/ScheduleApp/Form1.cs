@@ -521,8 +521,17 @@ namespace ScheduleApp
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openJson = new OpenFileDialog();
-
             openJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            openJson.FilterIndex = 1;  // Json by default 
+            //openJson.InitialDirectory = @"C:\";
+            openJson.Title = "Browse Schedule Files";
+            openJson.CheckFileExists = true;
+            openJson.CheckPathExists = true;
+            openJson.DefaultExt = "json";
+            openJson.RestoreDirectory = true;
+
+            openJson.ReadOnlyChecked = true;
+            openJson.ShowReadOnly = true;
 
             if (openJson.ShowDialog() == DialogResult.OK)
             {
@@ -539,6 +548,14 @@ namespace ScheduleApp
             SaveFileDialog saveJson = new SaveFileDialog();
 
             saveJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+
+            saveJson.FilterIndex = 1;  // Json by default 
+            //openJson.InitialDirectory = @"C:\";
+            saveJson.Title = "Browse Schedule Files";
+            saveJson.CheckFileExists = true;
+            saveJson.CheckPathExists = true;
+            saveJson.DefaultExt = "json";
+            saveJson.RestoreDirectory = true;
 
             if (saveJson.ShowDialog() == DialogResult.OK)
             {
