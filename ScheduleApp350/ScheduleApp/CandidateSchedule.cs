@@ -161,20 +161,17 @@ namespace ScheduleApp
             return true;
         }
 
-        //creates a json file from the schedule, return true if successful
-        public bool scheduleToFile(string filepath) 
+        //creates a json file from the schedule, returns the string to write
+        public string scheduleToFile() 
         {
-            if (File.Exists(filepath)) return false;
-            using (StreamWriter sw = File.CreateText(filepath))
+            string file = KEY_STRING + "\n"; //marks first line for verifying file
+            // Create a file to write to.
+            foreach (var course in schedule)
             {
-                sw.Write(KEY_STRING);//marks first line for verifying file
-                // Create a file to write to.
-                foreach (var course in schedule)
-                {
-                    sw.WriteLine(course.getAllInfo());
-                }
+                file = file + course.getAllInfo() + "\n";
             }
-            return true;
+            
+            return file;
         }
 
         //returns a list of courses that conflict with the course with the given id, including itself

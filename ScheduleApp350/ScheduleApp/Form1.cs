@@ -549,7 +549,7 @@ namespace ScheduleApp
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Stream jsonSaveStream = null;
+            StreamWriter jsonSaveStream = null;
             SaveFileDialog saveJson = new SaveFileDialog();
 
             saveJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
@@ -564,15 +564,17 @@ namespace ScheduleApp
 
             if (saveJson.ShowDialog() == DialogResult.OK)
             {
-                if ((jsonSaveStream = saveJson.OpenFile()) != null)
+                if ((jsonSaveStream = File.CreateText(saveJson.FileName)) != null)
                 {
                     // TODO: Save the Json file to their computer
                     // Write a separate function, additionally may not want to use a file stream (I just assumed you do)
                     // You might want to make a multiline string variable to do so.
                     // Its just a normal string, except using """stuff""" instead of "stuff"
+                    jsonSaveStream.Write(schedule.scheduleToFile());
+                    jsonSaveStream.Close();
                 }
             }
-            jsonSaveStream.Close();
+            
         }
         /***************************************************************************************************/
 
