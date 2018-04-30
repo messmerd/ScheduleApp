@@ -52,6 +52,13 @@ namespace ScheduleApp
             schedule.Add(c);
             
             int id = c.getCourseID();
+
+            if (id >= DB.getNumCourses())
+            {
+                //addToCalendar(id);
+                return;
+            }
+
             //adds courses with same name recursivly
             if ( id < DB.getNumCourses() - 1 && DB.getCourseCode(id + 1) == DB.getCourseCode(id))
             {
@@ -152,10 +159,10 @@ namespace ScheduleApp
                 if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
                 else addCourse(new Course(importedCourse, id));
 
-                if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
-                else addCourse(new Course(importedCourse, id));
+                //if (id < DB.getNumCourses()) addCourse(DB.getCourse(id));
+                //else addCourse(new Course(importedCourse, id));
 
-                creditCount += DB.getCredits(id);
+                if (id < DB.getNumCourses()) creditCount += DB.getCredits(id);
                 checkCreditCount();
             }
             return true;

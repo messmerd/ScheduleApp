@@ -66,7 +66,7 @@ namespace ScheduleApp
 
         public Course(List<string> parsedCourse, int courseID) // Constructor
         {
-            this.allInfo = string.Join("\t", parsedCourse.ToArray()) + "\t" + courseID.ToString(); 
+            this.allInfo = System.Text.RegularExpressions.Regex.Replace(string.Join("\t", parsedCourse.ToArray()) + "\t" + courseID.ToString(), @"\s+", " "); 
  
             this.courseID = courseID;
             
@@ -128,9 +128,10 @@ namespace ScheduleApp
             this.room = parsedCourse[7];
 
             // parsedCourse[0]
-            courseDept = System.Text.RegularExpressions.Regex.Split(parsedCourse[0], @"\s+")[0];
-            courseNum = System.Text.RegularExpressions.Regex.Split(parsedCourse[0], @"\s+")[1];
-            courseSect = System.Text.RegularExpressions.Regex.Split(parsedCourse[0], @"\s+")[2];
+            parsedCourse[0] = System.Text.RegularExpressions.Regex.Replace(parsedCourse[0], @"\s+", " ");
+            courseDept = parsedCourse[0].Split(null, 3)[0];
+            courseNum = parsedCourse[0].Split(null, 3)[1];
+            courseSect = parsedCourse[0].Split(null, 3)[2];
             courseCode = courseDept + " " + courseNum + " " + courseSect;
 
             shortName = parsedCourse[1];
