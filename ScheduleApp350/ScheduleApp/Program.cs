@@ -10,7 +10,7 @@ namespace ScheduleApp
 {
     public class Program
     {
-
+        [STAThreadAttribute]
         static void Main(string[] args)
         {
             CourseInfo database = CourseInfo.Create("course_database.txt");  // Creates CourseInfo singleton
