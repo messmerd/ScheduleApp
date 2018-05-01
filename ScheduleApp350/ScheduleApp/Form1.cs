@@ -11,6 +11,9 @@ using System.IO;
 
 namespace ScheduleApp
 {
+    public enum THEME { CLASSIC, NIGHT, BLUE, GCC };
+    
+
     public partial class AppWindow : Form
     {
         public const string emptySearchBarText = "Search by course code or name...";
@@ -19,6 +22,7 @@ namespace ScheduleApp
         CandidateSchedule schedule = CandidateSchedule.Create();
         int[] sort_status = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         int cur_attr = 0;
+        public static THEME currentTheme;
 
         public AppWindow()
         {
@@ -26,7 +30,8 @@ namespace ScheduleApp
             initializeProfessorComboBox();
             searchResult_UI.ShowItemToolTips = true;
             //searchResult_UI.HideSelection = true;
-            
+
+            currentTheme = THEME.CLASSIC; 
 
             calendar_UI.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
             //calendar_UI.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
@@ -128,6 +133,7 @@ namespace ScheduleApp
 
         private void themeToNight(object sender, EventArgs e)
         {
+            currentTheme = THEME.NIGHT; 
             // 38 50 56 <- background and surrounding stuff
             // 0 150 136 <- buttons
             // 168 183 185 <- text color
@@ -160,6 +166,9 @@ namespace ScheduleApp
             // Button fonts
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
+              
+            // More need to be added  
+            
             */
 
 
@@ -168,11 +177,20 @@ namespace ScheduleApp
                 course.BorderColor = Color.DarkGray;
             }
 
+            if (clickHelp1.ForeColor == Color.Yellow)
+                clickHelp1.ForeColor = Color.Green;
+            if (clickHelp1.ForeColor == Color.LightSalmon)
+                clickHelp1.ForeColor = Color.Red;
+            if (clickHelp1.ForeColor == Color.White)
+                clickHelp1.ForeColor = Color.Black;
+
+
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToBlue(object sender, EventArgs e)
         {
+            currentTheme = THEME.BLUE; 
             calendar_UI.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -205,11 +223,21 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
+            if (clickHelp1.ForeColor == Color.Green)
+                clickHelp1.ForeColor = Color.Yellow;
+            if (clickHelp1.ForeColor == Color.Red)
+                clickHelp1.ForeColor = Color.LightSalmon;
+            if (clickHelp1.ForeColor == Color.Black)
+                clickHelp1.ForeColor = Color.White;
+
+            removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
+
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToGCC(object sender, EventArgs e)
         {
+            currentTheme = THEME.GCC; 
             calendar_UI.Renderer = new Calendar.GCCCrimsonRenderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -245,12 +273,21 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
+            if (clickHelp1.ForeColor == Color.Yellow)
+                clickHelp1.ForeColor = Color.Green;
+            if (clickHelp1.ForeColor == Color.LightSalmon)
+                clickHelp1.ForeColor = Color.Red;
+            if (clickHelp1.ForeColor == Color.White)
+                clickHelp1.ForeColor = Color.Black;
+
+            removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToClassic(object sender, EventArgs e)
         {
+            currentTheme = THEME.CLASSIC;
             calendar_UI.Renderer = new Calendar.Office11Renderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -282,6 +319,15 @@ namespace ScheduleApp
             // Button font color
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
+
+            if (clickHelp1.ForeColor == Color.Yellow)
+                clickHelp1.ForeColor = Color.Green;
+            if (clickHelp1.ForeColor == Color.LightSalmon)
+                clickHelp1.ForeColor = Color.Red;
+            if (clickHelp1.ForeColor == Color.White)
+                clickHelp1.ForeColor = Color.Black;
+
+            removeHelp.ForeColor = Color.Black;  // This is the "Double click to remove courses" text
 
             calendar_UI.Invalidate(); // Updates the Calendar
 
@@ -501,9 +547,18 @@ namespace ScheduleApp
                 {
                     schedule.addCourse(courseID);
 
-                    updateScheduleUI(); 
+                    updateScheduleUI();
+                    switch (currentTheme)
+                    {
+                        case THEME.BLUE:
+                            clickHelp1.ForeColor = Color.Yellow;
+                            break;
 
-                    clickHelp1.ForeColor = Color.Green;
+                        default:
+                            clickHelp1.ForeColor = Color.Green;
+                            break;
+                    }
+
                     clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" successfully added.";
                     calendar_UI.Invalidate(); // Updates the Calendar
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
@@ -512,8 +567,19 @@ namespace ScheduleApp
                 else
                 {
                     schedule.removeCourse(courseID);
-                    updateScheduleUI(); 
-                    clickHelp1.ForeColor = Color.Red;
+                    updateScheduleUI();
+
+                    switch (currentTheme)
+                    {
+                        case THEME.BLUE:
+                            clickHelp1.ForeColor = Color.LightSalmon;
+                            break;
+
+                        default:
+                            clickHelp1.ForeColor = Color.Red;
+                            break;
+                    }
+
                     clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" was removed from your schedule.";
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
                     searchResult_UI.SelectedItems[0].Selected = false; 
@@ -738,7 +804,17 @@ namespace ScheduleApp
         {
             if (menuTabs.SelectedIndex == 1) // If the Schedule tab was clicked
             {
-                clickHelp1.ForeColor = Color.Black;
+                switch (currentTheme)
+                {
+                    case THEME.BLUE:
+                        clickHelp1.ForeColor = Color.White;
+                        break;
+
+                    default:
+                        clickHelp1.ForeColor = Color.Black;
+                        break;
+                }
+                
                 clickHelp1.Text = "Double click to add a course!";
             }
         }
