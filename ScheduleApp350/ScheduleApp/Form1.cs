@@ -356,7 +356,7 @@ namespace ScheduleApp
 
                 for (int j = 0; j < listViewItem.SubItems.Count; j++)
                 {
-                    listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : Color.FromArgb(0, 0xFF, 0xFF, 0xFF);
+                    listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
                 }
 
                 if (schedule.checkTimeConflict(course).Count > 1)
@@ -390,7 +390,7 @@ namespace ScheduleApp
                   
                 for (int j = 0; j < item.SubItems.Count; j++)
                 {
-                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : Color.FromArgb(0, 0xFF, 0xFF, 0xFF);
+                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
                 }
 
                 if (schedule.checkTimeConflict(results[i]).Count > 1)
@@ -413,7 +413,7 @@ namespace ScheduleApp
 
                 for (int j = 0; j < item.SubItems.Count; j++)
                 {
-                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : Color.FromArgb(0,0xFF,0xFF,0xFF);
+                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
                 }
 
                 if (schedule.checkTimeConflict(results[i]).Count > 1)
