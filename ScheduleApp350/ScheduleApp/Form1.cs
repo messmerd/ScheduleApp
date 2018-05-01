@@ -179,6 +179,32 @@ namespace ScheduleApp
                 course.BorderColor = Color.RoyalBlue; 
             }
 
+            scheduleTitle.ForeColor = Color.White;
+            //Color.CornflowerBlue;
+            //Color.DarkBlue
+            menuBar.BackColor = Color.White;
+            searchBox.BackColor = Color.White;
+            searchTab.BackColor = Color.MidnightBlue;
+            searchResult_UI.BackColor = Color.White;
+            searchResult_UI.ForeColor = Color.Black;
+            scheduleView.BackColor = Color.White;
+            scheduleView.ForeColor = Color.Black;
+            scheduleTab.BackColor = Color.MidnightBlue;
+            appMenu.BackColor = Color.White;
+
+            // Adv Filter
+            filter_UI.BackColor = Color.DarkBlue;
+            filter_UI.ForeColor = Color.White;
+
+            // Buttons
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            // Button font color
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
