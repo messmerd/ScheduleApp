@@ -184,10 +184,41 @@ namespace ScheduleApp
 
         private void themeToGCC(object sender, EventArgs e)
         {
+            calendar_UI.Renderer = new Calendar.GCCCrimsonRenderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
                 course.BorderColor = Color.Crimson;
             }
+
+
+            scheduleTitle.ForeColor = Color.Black;
+            
+            menuBar.BackColor = Color.White;
+            searchBox.BackColor = Color.White;
+            
+            searchTab.BackColor = Calendar.GCCCrimsonRenderer.TrueCrimsonLight;
+            scheduleTab.BackColor = Calendar.GCCCrimsonRenderer.TrueCrimsonLight;
+
+            searchResult_UI.BackColor = Color.White;
+            scheduleView.BackColor = Color.White;
+            
+            searchResult_UI.ForeColor = Color.Black;
+            
+            appMenu.BackColor = Color.White;
+
+            // Adv Filter
+            filter_UI.BackColor = Color.White;
+            filter_UI.ForeColor = Color.Black;
+
+            // Buttons
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            // Button font color
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
@@ -211,6 +242,7 @@ namespace ScheduleApp
             scheduleView.BackColor = Color.White;
             scheduleTab.BackColor = Color.White;
             appMenu.BackColor = Color.White;
+
 
             // Adv Filter
             filter_UI.BackColor = Color.White;
@@ -279,7 +311,7 @@ namespace ScheduleApp
             switch (sort_status[i])
             { 
                 case 0:
-                    search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, true);
+                    search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);
                     break;
                 case 1:
                     search.lastSearchResults.SortCourses((SORTTYPE)i, true);
@@ -291,6 +323,7 @@ namespace ScheduleApp
 
             searchResult_UI.Items.Clear();
             populateSearch(search.lastSearchResults.getCourses());
+            //refresh_search_results(search.lastSearchResults.getCourses());
         }
 
         /******************************************************************************************/
@@ -323,7 +356,7 @@ namespace ScheduleApp
 
                 for (int j = 0; j < listViewItem.SubItems.Count; j++)
                 {
-                    listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : Color.White;
+                    listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : Color.FromArgb(0, 0xFF, 0xFF, 0xFF);
                 }
 
                 if (schedule.checkTimeConflict(course).Count > 1)
@@ -336,18 +369,40 @@ namespace ScheduleApp
         }
 
 
-        /*
+        
         private void refresh_search_results(List<Course> results)
         {
-            int j = 0;
-            for (int i = 0; i < searchResult_UI.Items.Count; i++)
+            int i = 0;
+            foreach (ListViewItem item in searchResult_UI.Items)
             {
-                for(int k = 0; k < 9 ; k++)
-                    searchResult_UI.Items[i].SubItems[k].Text = setSearchRow(results[i])[k];
-                j++;
+                item.UseItemStyleForSubItems = false;
+                //item.SubItems[0].Text = results[i].getCredits().ToString();
+                //item.SubItems[1].Text = results[i].getCourseCode();
+                //item.SubItems[2].Text = results[i].getProf().last + ", " + results[i].getProf().first;
+                //item.SubItems[3].Text = results[i].getLongName();
+                //item.SubItems[4].Text = results[i].getTimeString().Item1 + "-" + results[i].getTimeString().Item2;
+                //item.SubItems[5].Text = getDays(results[i]);
+                //item.SubItems[6].Text = results[i].getEnrollment().ToString() + "/" + results[i].getCapacity().ToString();
+                //item.SubItems[7].Text = results[i].getProf().rmp.ToString(); // placeholder until Sprint 2
+                //item.SubItems[8].Text = results[i].getProbability();
+                int k = 0;
+                setSearchRow(results[i]).ToList().ForEach(x => item.SubItems[k++].Text = x); 
+                  
+                for (int j = 0; j < item.SubItems.Count; j++)
+                {
+                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : Color.FromArgb(0, 0xFF, 0xFF, 0xFF);
+                }
+
+                if (schedule.checkTimeConflict(results[i]).Count > 1)
+                {
+                    item.SubItems[4].BackColor = Color.Red;
+                    item.ToolTipText = "This course conflicts with your schedule";
+                }
+                i++;
+
             }
         }
-        */
+        
 
         private void refreshSearchItemColors(List<Course> results)
         {
@@ -358,7 +413,7 @@ namespace ScheduleApp
 
                 for (int j = 0; j < item.SubItems.Count; j++)
                 {
-                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : Color.White;
+                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : Color.FromArgb(0,0xFF,0xFF,0xFF);
                 }
 
                 if (schedule.checkTimeConflict(results[i]).Count > 1)

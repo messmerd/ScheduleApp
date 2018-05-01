@@ -8,6 +8,9 @@ namespace Calendar
 {
     public abstract class AbstractRenderer
     {
+        public static Color TrueCrimsonLight = Color.FromArgb(152,1,46);
+        public static Color TrueCrimson = Color.FromArgb(112,1,34);
+
         public virtual Color AllDayEventsBackColor
         {
             get
@@ -118,7 +121,7 @@ namespace Calendar
             if (drawBorder)
                 g.DrawRectangle(SystemPens.WindowFrame, rect);
         }
-
+        
         public virtual void DrawDayGripper(Graphics g, Rectangle rect, int gripWidth)
         {
             using (Brush m_Brush = new SolidBrush(Color.White))
