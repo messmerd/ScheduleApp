@@ -18,6 +18,7 @@ namespace ScheduleApp
         CourseInfo DB = CourseInfo.Create();
         CandidateSchedule schedule = CandidateSchedule.Create();
         int[] sort_status = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        int cur_attr = 0;
 
         public AppWindow()
         {
@@ -260,6 +261,16 @@ namespace ScheduleApp
         private void set_sort_type(int index)
         {
             // 0 is relevancy, 1 is asc, 2 is desc
+            if(cur_attr == index)
+            {
+                for(int i = 0; i < sort_status.Length; i++)
+                {
+                    sort_status[i] = 0;
+                }
+            }
+
+            cur_attr = index;
+
             sort_status[index] = (sort_status[index] + 1) % 3;
         }
 
@@ -325,18 +336,19 @@ namespace ScheduleApp
         }
 
 
-        // more efficiently display the sort
         /*
         private void refresh_search_results(List<Course> results)
         {
             int j = 0;
-            for(int i = 0; i < searchResult_UI.Items.Count; i++)
+            for (int i = 0; i < searchResult_UI.Items.Count; i++)
             {
-                searchResult_UI.Items[i] = new ListViewItem(setSearchRow(results[i]));
+                for(int k = 0; k < 9 ; k++)
+                    searchResult_UI.Items[i].SubItems[k].Text = setSearchRow(results[i])[k];
                 j++;
             }
         }
         */
+
         private void refreshSearchItemColors(List<Course> results)
         {
             int i = 0;
