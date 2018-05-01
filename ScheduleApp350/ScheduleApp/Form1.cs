@@ -261,7 +261,7 @@ namespace ScheduleApp
         private void set_sort_type(int index)
         {
             // 0 is relevancy, 1 is asc, 2 is desc
-            if(cur_attr == index)
+            if(cur_attr != index)
             {
                 for(int i = 0; i < sort_status.Length; i++)
                 {
