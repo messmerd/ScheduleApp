@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
+
 
 namespace ScheduleApp
 {
@@ -19,7 +21,7 @@ namespace ScheduleApp
         Search search = Search.Create("course_dictionary.txt");
         CourseInfo DB = CourseInfo.Create();
         CandidateSchedule schedule = CandidateSchedule.Create();
-        int[] sort_status = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        SortOrder[] sort_status = { SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None };
         int cur_attr = 0;
         public static THEME currentTheme;
 
@@ -340,6 +342,7 @@ namespace ScheduleApp
         {
             set_sort_type(e.Column); // sets whether it should be by relevancy, asc, or desc order
             sort_col(e.Column); // performs the ordering, and sets the new search results
+            searchResult_UI.SetSortIcon(e.Column, sort_status[e.Column]);  // Sets the arrow icon 
         }
 
         private void set_sort_type(int index)
@@ -349,26 +352,39 @@ namespace ScheduleApp
             {
                 for(int i = 0; i < sort_status.Length; i++)
                 {
-                    sort_status[i] = 0;
+                    sort_status[i] = SortOrder.None; 
                 }
             }
 
             cur_attr = index;
 
-            sort_status[index] = (sort_status[index] + 1) % 3;
+            if (sort_status[index] == SortOrder.None)
+            {
+                sort_status[index] = SortOrder.Ascending;
+            }
+            else if (sort_status[index] == SortOrder.Ascending)
+            {
+                sort_status[index] = SortOrder.Descending;
+            }
+            else
+            {
+                sort_status[index] = SortOrder.None;
+            }
+
+            //sort_status[index] = (sort_status[index] + 1) % 3;
         }
 
         private void sort_col(int i)
         {
             switch (sort_status[i])
-            { 
-                case 0:
+            {
+                case SortOrder.None:
                     search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);
                     break;
-                case 1:
+                case SortOrder.Ascending:
                     search.lastSearchResults.SortCourses((SORTTYPE)i, true);
                     break;
-                case 2:
+                case SortOrder.Descending:
                     search.lastSearchResults.SortCourses((SORTTYPE)i, false);
                     break;
             }
@@ -378,6 +394,7 @@ namespace ScheduleApp
             //refresh_search_results(search.lastSearchResults.getCourses());
         }
 
+        
         /******************************************************************************************/
 
         /**********************Create UI Search Results Fns****************************************/
@@ -801,4 +818,99 @@ namespace ScheduleApp
 
         /***************************************************************************************************/
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static class ListViewExtensions
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        public struct HDITEM
+        {
+            public Mask mask;
+            public int cxy;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string pszText;
+            public IntPtr hbm;
+            public int cchTextMax;
+            public Format fmt;
+            public IntPtr lParam;
+            // _WIN32_IE >= 0x0300 
+            public int iImage;
+            public int iOrder;
+            // _WIN32_IE >= 0x0500
+            public uint type;
+            public IntPtr pvFilter;
+            // _WIN32_WINNT >= 0x0600
+            public uint state;
+
+            [Flags]
+            public enum Mask
+            {
+                Format = 0x4,       // HDI_FORMAT
+            };
+
+            [Flags]
+            public enum Format
+            {
+                SortDown = 0x200,   // HDF_SORTDOWN
+                SortUp = 0x400,     // HDF_SORTUP
+            };
+        };
+
+        public const int LVM_FIRST = 0x1000;
+        public const int LVM_GETHEADER = LVM_FIRST + 31;
+
+        public const int HDM_FIRST = 0x1200;
+        public const int HDM_GETITEM = HDM_FIRST + 11;
+        public const int HDM_SETITEM = HDM_FIRST + 12;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, ref HDITEM lParam);
+
+        public static void SetSortIcon(this ListView listViewControl, int columnIndex, SortOrder order)
+        {
+            IntPtr columnHeader = SendMessage(listViewControl.Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
+            for (int columnNumber = 0; columnNumber <= listViewControl.Columns.Count - 1; columnNumber++)
+            {
+                var columnPtr = new IntPtr(columnNumber);
+                var item = new HDITEM
+                {
+                    mask = HDITEM.Mask.Format
+                };
+
+                if (SendMessage(columnHeader, HDM_GETITEM, columnPtr, ref item) == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (order != SortOrder.None && columnNumber == columnIndex)
+                {
+                    switch (order)
+                    {
+                        case SortOrder.Ascending:
+                            item.fmt &= ~HDITEM.Format.SortDown;
+                            item.fmt |= HDITEM.Format.SortUp;
+                            break;
+                        case SortOrder.Descending:
+                            item.fmt &= ~HDITEM.Format.SortUp;
+                            item.fmt |= HDITEM.Format.SortDown;
+                            break;
+                    }
+                }
+                else
+                {
+                    item.fmt &= ~HDITEM.Format.SortDown & ~HDITEM.Format.SortUp;
+                }
+
+                if (SendMessage(columnHeader, HDM_SETITEM, columnPtr, ref item) == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+            }
+        }
+    }
+
+
 }
