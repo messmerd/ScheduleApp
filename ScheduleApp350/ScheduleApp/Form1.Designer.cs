@@ -85,16 +85,13 @@
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.themeSelect = new System.Windows.Forms.ToolStripMenuItem();
-            this.classicTheme = new System.Windows.Forms.ToolStripMenuItem();
-            this.darkTheme = new System.Windows.Forms.ToolStripMenuItem();
-            this.blueTheme = new System.Windows.Forms.ToolStripMenuItem();
-            this.gccTheme = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyOnScheduleConflictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themes_menu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nightTheme = new System.Windows.Forms.ToolStripMenuItem();
+            this.blueTheme = new System.Windows.Forms.ToolStripMenuItem();
+            this.crimsonTheme = new System.Windows.Forms.ToolStripMenuItem();
+            this.classicTheme = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -162,7 +159,7 @@
             this.clickHelp1.AutoSize = true;
             this.clickHelp1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clickHelp1.ForeColor = System.Drawing.Color.Black;
-            this.clickHelp1.Location = new System.Drawing.Point(332, 504);
+            this.clickHelp1.Location = new System.Drawing.Point(329, 504);
             this.clickHelp1.Name = "clickHelp1";
             this.clickHelp1.Size = new System.Drawing.Size(201, 16);
             this.clickHelp1.TabIndex = 10;
@@ -219,7 +216,7 @@
             this.filter_UI.Controls.Add(this.T_checkBox);
             this.filter_UI.Controls.Add(this.M_checkBox);
             this.filter_UI.Controls.Add(this.day_label);
-            this.filter_UI.Location = new System.Drawing.Point(203, 108);
+            this.filter_UI.Location = new System.Drawing.Point(197, 108);
             this.filter_UI.Name = "filter_UI";
             this.filter_UI.Size = new System.Drawing.Size(444, 100);
             this.filter_UI.TabIndex = 6;
@@ -508,7 +505,7 @@
             // nameCol
             // 
             this.nameCol.Text = "Course Name";
-            this.nameCol.Width = 222;
+            this.nameCol.Width = 219;
             // 
             // timeCol
             // 
@@ -528,12 +525,12 @@
             // rmpCol
             // 
             this.rmpCol.Text = "RMP";
-            this.rmpCol.Width = 61;
+            this.rmpCol.Width = 49;
             // 
             // probCol
             // 
             this.probCol.Text = "Prob.";
-            this.probCol.Width = 61;
+            this.probCol.Width = 74;
             // 
             // scheduleTab
             // 
@@ -648,7 +645,7 @@
             this.importToolStripMenuItem,
             this.exportToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.preferencesToolStripMenuItem,
+            this.themes_menu,
             this.toolStripMenuItem3,
             this.exitToolStripMenuItem});
             this.appMenu.Name = "appMenu";
@@ -658,94 +655,77 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.importToolStripMenuItem.Text = "Import JSON...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exportToolStripMenuItem.Text = "Export JSON...";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(147, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
             // 
-            // preferencesToolStripMenuItem
+            // themes_menu
             // 
-            this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.themeSelect,
-            this.notifyOnScheduleConflictToolStripMenuItem,
-            this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem});
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
-            // 
-            // themeSelect
-            // 
-            this.themeSelect.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.classicTheme,
-            this.darkTheme,
+            this.themes_menu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nightTheme,
             this.blueTheme,
-            this.gccTheme});
-            this.themeSelect.Name = "themeSelect";
-            this.themeSelect.Size = new System.Drawing.Size(273, 22);
-            this.themeSelect.Text = "Themes";
-            // 
-            // classicTheme
-            // 
-            this.classicTheme.Name = "classicTheme";
-            this.classicTheme.Size = new System.Drawing.Size(146, 22);
-            this.classicTheme.Text = "Classic";
-            this.classicTheme.Click += new System.EventHandler(this.themeToClassic);
-            // 
-            // darkTheme
-            // 
-            this.darkTheme.Name = "darkTheme";
-            this.darkTheme.Size = new System.Drawing.Size(146, 22);
-            this.darkTheme.Text = "Dark";
-            this.darkTheme.Click += new System.EventHandler(this.themeToNight);
-            // 
-            // blueTheme
-            // 
-            this.blueTheme.Name = "blueTheme";
-            this.blueTheme.Size = new System.Drawing.Size(146, 22);
-            this.blueTheme.Text = "Blue";
-            this.blueTheme.Click += new System.EventHandler(this.themeToBlue);
-            // 
-            // gccTheme
-            // 
-            this.gccTheme.Name = "gccTheme";
-            this.gccTheme.Size = new System.Drawing.Size(146, 22);
-            this.gccTheme.Text = "GCC Crimson";
-            this.gccTheme.Click += new System.EventHandler(this.themeToGCC);
-            // 
-            // notifyOnScheduleConflictToolStripMenuItem
-            // 
-            this.notifyOnScheduleConflictToolStripMenuItem.Name = "notifyOnScheduleConflictToolStripMenuItem";
-            this.notifyOnScheduleConflictToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
-            this.notifyOnScheduleConflictToolStripMenuItem.Text = "Notify on schedule conflict";
-            // 
-            // notifyOnTooManyOrTooFewCreditsToolStripMenuItem
-            // 
-            this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem.Name = "notifyOnTooManyOrTooFewCreditsToolStripMenuItem";
-            this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
-            this.notifyOnTooManyOrTooFewCreditsToolStripMenuItem.Text = "Notify on too many or too few credits";
+            this.crimsonTheme,
+            this.classicTheme});
+            this.themes_menu.Name = "themes_menu";
+            this.themes_menu.Size = new System.Drawing.Size(152, 22);
+            this.themes_menu.Text = "Theme";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(147, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // nightTheme
+            // 
+            this.nightTheme.CheckOnClick = true;
+            this.nightTheme.Name = "nightTheme";
+            this.nightTheme.Size = new System.Drawing.Size(152, 22);
+            this.nightTheme.Text = "Night";
+            this.nightTheme.Click += new System.EventHandler(this.themeToNight);
+            // 
+            // blueTheme
+            // 
+            this.blueTheme.CheckOnClick = true;
+            this.blueTheme.Name = "blueTheme";
+            this.blueTheme.Size = new System.Drawing.Size(152, 22);
+            this.blueTheme.Text = "Blue";
+            this.blueTheme.Click += new System.EventHandler(this.themeToBlue);
+            // 
+            // crimsonTheme
+            // 
+            this.crimsonTheme.CheckOnClick = true;
+            this.crimsonTheme.Name = "crimsonTheme";
+            this.crimsonTheme.Size = new System.Drawing.Size(152, 22);
+            this.crimsonTheme.Text = "GCC Crimson";
+            this.crimsonTheme.Click += new System.EventHandler(this.themeToGCC);
+            // 
+            // classicTheme
+            // 
+            this.classicTheme.Checked = true;
+            this.classicTheme.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.classicTheme.Name = "classicTheme";
+            this.classicTheme.Size = new System.Drawing.Size(152, 22);
+            this.classicTheme.Text = "Classic";
+            this.classicTheme.Click += new System.EventHandler(this.themeToClassic);
             // 
             // AppWindow
             // 
@@ -799,12 +779,10 @@
         private System.Windows.Forms.ToolStripMenuItem appMenu;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem themeSelect;
+        private System.Windows.Forms.ToolStripMenuItem themes_menu;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem notifyOnScheduleConflictToolStripMenuItem;
         private System.Windows.Forms.Button clearAll;
         private System.Windows.Forms.ListView scheduleView;
         private System.Windows.Forms.GroupBox filter_UI;
@@ -823,10 +801,6 @@
         private System.Windows.Forms.Label scheduleTitle;
         private System.Windows.Forms.Label userHelpLabel;
         private System.Windows.Forms.PictureBox gccLogo;
-        private System.Windows.Forms.ToolStripMenuItem classicTheme;
-        private System.Windows.Forms.ToolStripMenuItem darkTheme;
-        private System.Windows.Forms.ToolStripMenuItem blueTheme;
-        private System.Windows.Forms.ToolStripMenuItem gccTheme;
         private System.Windows.Forms.Label clickHelp1;
         private System.Windows.Forms.ColumnHeader schedule_creditsCol;
         private System.Windows.Forms.ColumnHeader schedule_codeCol;
@@ -838,11 +812,14 @@
         private System.Windows.Forms.ColumnHeader schedule_daysCol;
         private System.Windows.Forms.CheckBox allNoneCheckBox;
         private System.Windows.Forms.Label removeHelp;
-        private System.Windows.Forms.ToolStripMenuItem notifyOnTooManyOrTooFewCreditsToolStripMenuItem;
         private System.Windows.Forms.Label adv_building_label;
         private System.Windows.Forms.Label professor_adv_label;
         private System.Windows.Forms.Label label3;
         private Calendar.DayView calendar_UI;
+        private System.Windows.Forms.ToolStripMenuItem nightTheme;
+        private System.Windows.Forms.ToolStripMenuItem blueTheme;
+        private System.Windows.Forms.ToolStripMenuItem crimsonTheme;
+        private System.Windows.Forms.ToolStripMenuItem classicTheme;
     }
 }
 

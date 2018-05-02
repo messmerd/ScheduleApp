@@ -134,10 +134,43 @@ namespace ScheduleApp
 
         /**************************************** Themes ******************************************/
 
+        private void adjustCheckstates()
+        {
+            if(currentTheme == THEME.NIGHT)
+            {
+                classicTheme.CheckState = CheckState.Unchecked;
+                nightTheme.CheckState = CheckState.Checked;
+                crimsonTheme.CheckState = CheckState.Unchecked;
+                blueTheme.CheckState = CheckState.Unchecked;
+            }
+            if (currentTheme == THEME.BLUE)
+            {
+                classicTheme.CheckState = CheckState.Unchecked;
+                nightTheme.CheckState = CheckState.Unchecked;
+                crimsonTheme.CheckState = CheckState.Unchecked;
+                blueTheme.CheckState = CheckState.Checked;
+            }
+            if (currentTheme == THEME.GCC)
+            {
+                classicTheme.CheckState = CheckState.Unchecked;
+                nightTheme.CheckState = CheckState.Unchecked;
+                crimsonTheme.CheckState = CheckState.Checked;
+                blueTheme.CheckState = CheckState.Unchecked;
+            }
+            if (currentTheme == THEME.CLASSIC)
+            {
+                classicTheme.CheckState = CheckState.Checked;
+                nightTheme.CheckState = CheckState.Unchecked;
+                crimsonTheme.CheckState = CheckState.Unchecked;
+                blueTheme.CheckState = CheckState.Unchecked;
+            }
+        }
 
         private void themeToNight(object sender, EventArgs e)
         {
-            currentTheme = THEME.NIGHT; 
+            currentTheme = THEME.NIGHT;
+            adjustCheckstates();
+
             // 38 50 56 <- background and surrounding stuff
             // 0 150 136 <- buttons
             // 168 183 185 <- text color
@@ -194,7 +227,8 @@ namespace ScheduleApp
 
         private void themeToBlue(object sender, EventArgs e)
         {
-            currentTheme = THEME.BLUE; 
+            currentTheme = THEME.BLUE;
+            adjustCheckstates();
             calendar_UI.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -241,7 +275,10 @@ namespace ScheduleApp
 
         private void themeToGCC(object sender, EventArgs e)
         {
-            currentTheme = THEME.GCC; 
+            currentTheme = THEME.GCC;
+
+            adjustCheckstates();
+
             calendar_UI.Renderer = new Calendar.GCCCrimsonRenderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -291,7 +328,10 @@ namespace ScheduleApp
 
         private void themeToClassic(object sender, EventArgs e)
         {
+
             currentTheme = THEME.CLASSIC;
+            adjustCheckstates();
+
             calendar_UI.Renderer = new Calendar.Office11Renderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
