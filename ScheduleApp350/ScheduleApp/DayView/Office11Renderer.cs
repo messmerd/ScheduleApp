@@ -9,6 +9,7 @@ namespace Calendar
     public class Office11Renderer : AbstractRenderer
     {
         private Font minuteFont;
+        private Font baseFont;
 
         public Office11Renderer(DayView parent)
         {
@@ -28,6 +29,19 @@ namespace Calendar
                     minuteFont = new Font(BaseFont, FontStyle.Italic);
 
                 return minuteFont;
+            }
+        }
+
+        public override Font BaseFont
+        {
+            get
+            {
+                if (baseFont == null)
+                {
+                    baseFont = new Font("Segoe UI", 8, FontStyle.Regular);
+                }
+
+                return baseFont;
             }
         }
 

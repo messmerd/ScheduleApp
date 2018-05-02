@@ -330,7 +330,7 @@ namespace Calendar
             }
         }
 
-        private bool allowScroll = true;
+        private bool allowScroll = true; 
 
         [System.ComponentModel.DefaultValue(true)]
         public bool AllowScroll
@@ -342,6 +342,8 @@ namespace Calendar
             set
             {
                 allowScroll = value;
+                scrollbar.Visible = value; 
+                Invalidate();
             }
         }
 
