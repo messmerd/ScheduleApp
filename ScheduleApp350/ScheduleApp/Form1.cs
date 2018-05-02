@@ -13,7 +13,6 @@ namespace ScheduleApp
 {
     public enum THEME { CLASSIC, NIGHT, BLUE, GCC };
     
-
     public partial class AppWindow : Form
     {
         public const string emptySearchBarText = "Search by course code or name...";
@@ -339,27 +338,8 @@ namespace ScheduleApp
         /*************************Sort Search Result Column****************************************/
         private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
         {
-            int i = get_clicked_header(); // index of column header clicked
-
-            if(i != -1)
-            {
-                set_sort_type(i); // sets whether it should be by relevancy, asc, or desc order
-                sort_col(i); // performs the ordering, and sets the new search results
-            }
-        }
-
-        private int get_clicked_header()
-        {
-            if (searchResult_UI.Items.Count > 0)
-            {
-                Point mousePosition = searchResult_UI.PointToClient(Control.MousePosition);
-                ListViewHitTestInfo hit = searchResult_UI.HitTest(mousePosition);
-                return hit.Item.SubItems.IndexOf(hit.SubItem);
-            }
-            else
-            {
-                return -1;
-            }
+            set_sort_type(e.Column); // sets whether it should be by relevancy, asc, or desc order
+            sort_col(e.Column); // performs the ordering, and sets the new search results
         }
 
         private void set_sort_type(int index)

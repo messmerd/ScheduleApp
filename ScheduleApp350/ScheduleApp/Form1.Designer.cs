@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool4 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -107,16 +107,16 @@
             // 
             // calendar_UI
             // 
-            drawTool4.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool4;
+            drawTool1.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool1;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.DaysToShow = 5;
             this.calendar_UI.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.calendar_UI.Location = new System.Drawing.Point(15, 256);
+            this.calendar_UI.Location = new System.Drawing.Point(15, 210);
             this.calendar_UI.Name = "calendar_UI";
             this.calendar_UI.SelectionEnd = new System.DateTime(((long)(0)));
             this.calendar_UI.SelectionStart = new System.DateTime(((long)(0)));
-            this.calendar_UI.Size = new System.Drawing.Size(822, 275);
+            this.calendar_UI.Size = new System.Drawing.Size(822, 321);
             this.calendar_UI.StartDate = new System.DateTime(((long)(0)));
             this.calendar_UI.TabIndex = 3;
             this.calendar_UI.Text = "Schedule";
@@ -559,7 +559,7 @@
             // 
             // clearAll
             // 
-            this.clearAll.Location = new System.Drawing.Point(760, 227);
+            this.clearAll.Location = new System.Drawing.Point(764, 181);
             this.clearAll.Name = "clearAll";
             this.clearAll.Size = new System.Drawing.Size(73, 23);
             this.clearAll.TabIndex = 1;
@@ -583,7 +583,7 @@
             this.scheduleView.GridLines = true;
             this.scheduleView.Location = new System.Drawing.Point(15, 25);
             this.scheduleView.Name = "scheduleView";
-            this.scheduleView.Size = new System.Drawing.Size(822, 199);
+            this.scheduleView.Size = new System.Drawing.Size(822, 150);
             this.scheduleView.TabIndex = 0;
             this.scheduleView.UseCompatibleStateImageBehavior = false;
             this.scheduleView.View = System.Windows.Forms.View.Details;
