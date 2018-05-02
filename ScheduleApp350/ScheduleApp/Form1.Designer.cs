@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool4 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -107,8 +107,8 @@
             // 
             // calendar_UI
             // 
-            drawTool4.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool4;
+            drawTool1.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool1;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.DaysToShow = 5;
             this.calendar_UI.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -160,7 +160,7 @@
             this.clickHelp1.AutoSize = true;
             this.clickHelp1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clickHelp1.ForeColor = System.Drawing.Color.Black;
-            this.clickHelp1.Location = new System.Drawing.Point(332, 504);
+            this.clickHelp1.Location = new System.Drawing.Point(329, 504);
             this.clickHelp1.Name = "clickHelp1";
             this.clickHelp1.Size = new System.Drawing.Size(201, 16);
             this.clickHelp1.TabIndex = 10;
@@ -217,7 +217,7 @@
             this.filter_UI.Controls.Add(this.T_checkBox);
             this.filter_UI.Controls.Add(this.M_checkBox);
             this.filter_UI.Controls.Add(this.day_label);
-            this.filter_UI.Location = new System.Drawing.Point(203, 108);
+            this.filter_UI.Location = new System.Drawing.Point(197, 108);
             this.filter_UI.Name = "filter_UI";
             this.filter_UI.Size = new System.Drawing.Size(444, 100);
             this.filter_UI.TabIndex = 6;
@@ -506,7 +506,7 @@
             // nameCol
             // 
             this.nameCol.Text = "Course Name";
-            this.nameCol.Width = 222;
+            this.nameCol.Width = 219;
             // 
             // timeCol
             // 
@@ -526,12 +526,12 @@
             // rmpCol
             // 
             this.rmpCol.Text = "RMP";
-            this.rmpCol.Width = 61;
+            this.rmpCol.Width = 49;
             // 
             // probCol
             // 
             this.probCol.Text = "Prob.";
-            this.probCol.Width = 61;
+            this.probCol.Width = 74;
             // 
             // scheduleTab
             // 

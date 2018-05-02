@@ -133,7 +133,6 @@ namespace ScheduleApp
             List<string> listOfCourses = new List<string>(allCourses.Split('\n'));
             removeAllCourses(); //replaces current candidate schedule
 
-            int i = 0;
             foreach (var course in listOfCourses)
             {
                 List<string> importedCourse = new List<string>(course.Split('\t'));
