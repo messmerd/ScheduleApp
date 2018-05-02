@@ -10,6 +10,16 @@ namespace Calendar
     {
         private Font minuteFont;
 
+        public Office11Renderer(DayView parent)
+        {
+            this.parent = parent;
+        }
+
+        public Office11Renderer()
+        {
+            this.parent = null;
+        }
+
         public override Font MinuteFont
         {
             get
@@ -28,12 +38,14 @@ namespace Calendar
 
             using (Pen m_Pen = new Pen(m_Color))
                 g.DrawLine(m_Pen, rect.Left, rect.Y, rect.Width, rect.Y);
+            if (hour < 21)  // Hours after 20 are not shown (makes it look better in our app)
+            {
+                g.DrawString(hour.ToString("##00"), HourFont, SystemBrushes.ControlText, rect);
 
-            g.DrawString(hour.ToString("##00"), HourFont, SystemBrushes.ControlText, rect);
+                rect.X += 27;
 
-            rect.X += 27;
-
-            g.DrawString("00", MinuteFont, SystemBrushes.ControlText, rect);
+                g.DrawString("00", MinuteFont, SystemBrushes.ControlText, rect);
+            }
         }
 
         public override void DrawDayHeader(Graphics g, Rectangle rect, DateTime date)

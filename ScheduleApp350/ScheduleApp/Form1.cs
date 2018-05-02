@@ -42,7 +42,10 @@ namespace ScheduleApp
             calendar_UI.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
 
             // Use a line like this to change the visual theme of the calendar:
-            calendar_UI.Renderer = new Calendar.Office11Renderer();    // Can also use Calendar.Office12Renderer
+            calendar_UI.Renderer = new Calendar.Office11Renderer(calendar_UI);    // Can also use Calendar.Office12Renderer
+            calendar_UI.HalfHourHeight = 11;  // was 18
+            calendar_UI.StartHour = 8;
+            calendar_UI.WorkingHourStart = 8;
 
             clickHelp1.Text = "Double click to add a course!";
         }
@@ -347,7 +350,6 @@ namespace ScheduleApp
 
         private void set_sort_type(int index)
         {
-            // 0 is relevancy, 1 is asc, 2 is desc
             if(cur_attr != index)
             {
                 for(int i = 0; i < sort_status.Length; i++)
@@ -370,8 +372,6 @@ namespace ScheduleApp
             {
                 sort_status[index] = SortOrder.None;
             }
-
-            //sort_status[index] = (sort_status[index] + 1) % 3;
         }
 
         private void sort_col(int i)
