@@ -193,21 +193,21 @@ namespace ScheduleApp
             calendar_UI.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
-                course.BorderColor = Color.RoyalBlue; 
+                course.BorderColor = Color.MidnightBlue; 
             }
 
             scheduleTitle.ForeColor = Color.White;
             //Color.CornflowerBlue;
             //Color.DarkBlue
-            menuBar.BackColor = Color.White;
+            menuBar.BackColor = Color.CornflowerBlue;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = Color.MidnightBlue;
-            searchResult_UI.BackColor = Color.White;
+            searchResult_UI.BackColor = Color.CornflowerBlue;
             searchResult_UI.ForeColor = Color.Black;
-            scheduleView.BackColor = Color.White;
+            scheduleView.BackColor = Color.CornflowerBlue;
             scheduleView.ForeColor = Color.Black;
             scheduleTab.BackColor = Color.MidnightBlue;
-            appMenu.BackColor = Color.White;
+            appMenu.BackColor = Color.CornflowerBlue;
 
             // Adv Filter
             filter_UI.BackColor = Color.DarkBlue;
@@ -619,7 +619,7 @@ namespace ScheduleApp
                 }
                 else
                 {
-                    listViewItem.BackColor = Color.White; 
+                    listViewItem.BackColor = scheduleView.BackColor; 
                 }
                 scheduleView.Items.Add(listViewItem);
             }
