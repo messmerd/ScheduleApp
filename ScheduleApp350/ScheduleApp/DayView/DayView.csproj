@@ -45,6 +45,7 @@
     <Compile Include="AbstractRenderer.cs" />
     <Compile Include="Appointment.cs" />
     <Compile Include="AppointmentEventArgs.cs" />
+    <Compile Include="GCCCrimsonRenderer.cs" />
     <Compile Include="DayView.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -8,17 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
+
 
 namespace ScheduleApp
 {
+    public enum THEME { CLASSIC, NIGHT, BLUE, GCC };
+    
     public partial class AppWindow : Form
     {
         public const string emptySearchBarText = "Search by course code or name...";
         Search search = Search.Create("course_dictionary.txt");
         CourseInfo DB = CourseInfo.Create();
         CandidateSchedule schedule = CandidateSchedule.Create();
-        int[] sort_status = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        SortOrder[] sort_status = { SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None };
         int cur_attr = 0;
+        public static THEME currentTheme;
 
         public AppWindow()
         {
@@ -26,7 +31,8 @@ namespace ScheduleApp
             initializeProfessorComboBox();
             searchResult_UI.ShowItemToolTips = true;
             //searchResult_UI.HideSelection = true;
-            
+
+            currentTheme = THEME.CLASSIC; 
 
             calendar_UI.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
             //calendar_UI.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
@@ -128,6 +134,7 @@ namespace ScheduleApp
 
         private void themeToNight(object sender, EventArgs e)
         {
+            currentTheme = THEME.NIGHT; 
             // 38 50 56 <- background and surrounding stuff
             // 0 150 136 <- buttons
             // 168 183 185 <- text color
@@ -160,6 +167,9 @@ namespace ScheduleApp
             // Button fonts
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
+              
+            // More need to be added  
+            
             */
 
 
@@ -168,32 +178,117 @@ namespace ScheduleApp
                 course.BorderColor = Color.DarkGray;
             }
 
+            if (clickHelp1.ForeColor == Color.Yellow)
+                clickHelp1.ForeColor = Color.Green;
+            if (clickHelp1.ForeColor == Color.LightSalmon)
+                clickHelp1.ForeColor = Color.Red;
+            if (clickHelp1.ForeColor == Color.White)
+                clickHelp1.ForeColor = Color.Black;
+
+
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToBlue(object sender, EventArgs e)
         {
+            currentTheme = THEME.BLUE; 
             calendar_UI.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
-                course.BorderColor = Color.RoyalBlue; 
+                course.BorderColor = Color.MidnightBlue; 
             }
+
+            scheduleTitle.ForeColor = Color.White;
+            //Color.CornflowerBlue;
+            //Color.DarkBlue
+            menuBar.BackColor = Color.CornflowerBlue;
+            searchBox.BackColor = Color.White;
+            searchTab.BackColor = Color.MidnightBlue;
+            searchResult_UI.BackColor = Color.CornflowerBlue;
+            searchResult_UI.ForeColor = Color.Black;
+            scheduleView.BackColor = Color.CornflowerBlue;
+            scheduleView.ForeColor = Color.Black;
+            scheduleTab.BackColor = Color.MidnightBlue;
+            appMenu.BackColor = Color.CornflowerBlue;
+
+            // Adv Filter
+            filter_UI.BackColor = Color.DarkBlue;
+            filter_UI.ForeColor = Color.White;
+
+            // Buttons
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            // Button font color
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+
+            if (clickHelp1.ForeColor == Color.Green)
+                clickHelp1.ForeColor = Color.Yellow;
+            if (clickHelp1.ForeColor == Color.Red)
+                clickHelp1.ForeColor = Color.LightSalmon;
+            if (clickHelp1.ForeColor == Color.Black)
+                clickHelp1.ForeColor = Color.White;
+
+            removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToGCC(object sender, EventArgs e)
         {
+            currentTheme = THEME.GCC; 
+            calendar_UI.Renderer = new Calendar.GCCCrimsonRenderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
                 course.BorderColor = Color.Crimson;
             }
+
+
+            scheduleTitle.ForeColor = Color.Black;
+            
+            menuBar.BackColor = Color.White;
+            searchBox.BackColor = Color.White;
+            
+            searchTab.BackColor = Calendar.GCCCrimsonRenderer.TrueCrimsonLight;
+            scheduleTab.BackColor = Calendar.GCCCrimsonRenderer.TrueCrimsonLight;
+
+            searchResult_UI.BackColor = Color.White;
+            scheduleView.BackColor = Color.White;
+            
+            searchResult_UI.ForeColor = Color.Black;
+            
+            appMenu.BackColor = Color.White;
+
+            // Adv Filter
+            filter_UI.BackColor = Color.White;
+            filter_UI.ForeColor = Color.Black;
+
+            // Buttons
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            // Button font color
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+
+            if (clickHelp1.ForeColor == Color.Yellow)
+                clickHelp1.ForeColor = Color.Green;
+            if (clickHelp1.ForeColor == Color.LightSalmon)
+                clickHelp1.ForeColor = Color.Red;
+            if (clickHelp1.ForeColor == Color.White)
+                clickHelp1.ForeColor = Color.Black;
+
+            removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
         private void themeToClassic(object sender, EventArgs e)
         {
+            currentTheme = THEME.CLASSIC;
             calendar_UI.Renderer = new Calendar.Office11Renderer();  // Calendar theme
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -212,6 +307,7 @@ namespace ScheduleApp
             scheduleTab.BackColor = Color.White;
             appMenu.BackColor = Color.White;
 
+
             // Adv Filter
             filter_UI.BackColor = Color.White;
             filter_UI.ForeColor = Color.Black;
@@ -225,6 +321,15 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
+            if (clickHelp1.ForeColor == Color.Yellow)
+                clickHelp1.ForeColor = Color.Green;
+            if (clickHelp1.ForeColor == Color.LightSalmon)
+                clickHelp1.ForeColor = Color.Red;
+            if (clickHelp1.ForeColor == Color.White)
+                clickHelp1.ForeColor = Color.Black;
+
+            removeHelp.ForeColor = Color.Black;  // This is the "Double click to remove courses" text
+
             calendar_UI.Invalidate(); // Updates the Calendar
 
         }
@@ -235,27 +340,9 @@ namespace ScheduleApp
         /*************************Sort Search Result Column****************************************/
         private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
         {
-            int i = get_clicked_header(); // index of column header clicked
-
-            if(i != -1)
-            {
-                set_sort_type(i); // sets whether it should be by relevancy, asc, or desc order
-                sort_col(i); // performs the ordering, and sets the new search results
-            }
-        }
-
-        private int get_clicked_header()
-        {
-            if (searchResult_UI.Items.Count > 0)
-            {
-                Point mousePosition = searchResult_UI.PointToClient(Control.MousePosition);
-                ListViewHitTestInfo hit = searchResult_UI.HitTest(mousePosition);
-                return hit.Item.SubItems.IndexOf(hit.SubItem);
-            }
-            else
-            {
-                return -1;
-            }
+            set_sort_type(e.Column); // sets whether it should be by relevancy, asc, or desc order
+            sort_col(e.Column); // performs the ordering, and sets the new search results
+            searchResult_UI.SetSortIcon(e.Column, sort_status[e.Column]);  // Sets the arrow icon 
         }
 
         private void set_sort_type(int index)
@@ -265,34 +352,49 @@ namespace ScheduleApp
             {
                 for(int i = 0; i < sort_status.Length; i++)
                 {
-                    sort_status[i] = 0;
+                    sort_status[i] = SortOrder.None; 
                 }
             }
 
             cur_attr = index;
 
-            sort_status[index] = (sort_status[index] + 1) % 3;
+            if (sort_status[index] == SortOrder.None)
+            {
+                sort_status[index] = SortOrder.Ascending;
+            }
+            else if (sort_status[index] == SortOrder.Ascending)
+            {
+                sort_status[index] = SortOrder.Descending;
+            }
+            else
+            {
+                sort_status[index] = SortOrder.None;
+            }
+
+            //sort_status[index] = (sort_status[index] + 1) % 3;
         }
 
         private void sort_col(int i)
         {
             switch (sort_status[i])
-            { 
-                case 0:
-                    search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, true);
+            {
+                case SortOrder.None:
+                    search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);
                     break;
-                case 1:
+                case SortOrder.Ascending:
                     search.lastSearchResults.SortCourses((SORTTYPE)i, true);
                     break;
-                case 2:
+                case SortOrder.Descending:
                     search.lastSearchResults.SortCourses((SORTTYPE)i, false);
                     break;
             }
 
             searchResult_UI.Items.Clear();
             populateSearch(search.lastSearchResults.getCourses());
+            //refresh_search_results(search.lastSearchResults.getCourses());
         }
 
+        
         /******************************************************************************************/
 
         /**********************Create UI Search Results Fns****************************************/
@@ -323,7 +425,7 @@ namespace ScheduleApp
 
                 for (int j = 0; j < listViewItem.SubItems.Count; j++)
                 {
-                    listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : Color.White;
+                    listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
                 }
 
                 if (schedule.checkTimeConflict(course).Count > 1)
@@ -336,18 +438,40 @@ namespace ScheduleApp
         }
 
 
-        /*
+        
         private void refresh_search_results(List<Course> results)
         {
-            int j = 0;
-            for (int i = 0; i < searchResult_UI.Items.Count; i++)
+            int i = 0;
+            foreach (ListViewItem item in searchResult_UI.Items)
             {
-                for(int k = 0; k < 9 ; k++)
-                    searchResult_UI.Items[i].SubItems[k].Text = setSearchRow(results[i])[k];
-                j++;
+                item.UseItemStyleForSubItems = false;
+                //item.SubItems[0].Text = results[i].getCredits().ToString();
+                //item.SubItems[1].Text = results[i].getCourseCode();
+                //item.SubItems[2].Text = results[i].getProf().last + ", " + results[i].getProf().first;
+                //item.SubItems[3].Text = results[i].getLongName();
+                //item.SubItems[4].Text = results[i].getTimeString().Item1 + "-" + results[i].getTimeString().Item2;
+                //item.SubItems[5].Text = getDays(results[i]);
+                //item.SubItems[6].Text = results[i].getEnrollment().ToString() + "/" + results[i].getCapacity().ToString();
+                //item.SubItems[7].Text = results[i].getProf().rmp.ToString(); // placeholder until Sprint 2
+                //item.SubItems[8].Text = results[i].getProbability();
+                int k = 0;
+                setSearchRow(results[i]).ToList().ForEach(x => item.SubItems[k++].Text = x); 
+                  
+                for (int j = 0; j < item.SubItems.Count; j++)
+                {
+                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
+                }
+
+                if (schedule.checkTimeConflict(results[i]).Count > 1)
+                {
+                    item.SubItems[4].BackColor = Color.Red;
+                    item.ToolTipText = "This course conflicts with your schedule";
+                }
+                i++;
+
             }
         }
-        */
+        
 
         private void refreshSearchItemColors(List<Course> results)
         {
@@ -358,7 +482,7 @@ namespace ScheduleApp
 
                 for (int j = 0; j < item.SubItems.Count; j++)
                 {
-                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : Color.White;
+                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
                 }
 
                 if (schedule.checkTimeConflict(results[i]).Count > 1)
@@ -420,9 +544,18 @@ namespace ScheduleApp
                 {
                     schedule.addCourse(courseID);
 
-                    updateScheduleUI(); 
+                    updateScheduleUI();
+                    switch (currentTheme)
+                    {
+                        case THEME.BLUE:
+                            clickHelp1.ForeColor = Color.Yellow;
+                            break;
 
-                    clickHelp1.ForeColor = Color.Green;
+                        default:
+                            clickHelp1.ForeColor = Color.Green;
+                            break;
+                    }
+
                     clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" successfully added.";
                     calendar_UI.Invalidate(); // Updates the Calendar
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
@@ -431,8 +564,19 @@ namespace ScheduleApp
                 else
                 {
                     schedule.removeCourse(courseID);
-                    updateScheduleUI(); 
-                    clickHelp1.ForeColor = Color.Red;
+                    updateScheduleUI();
+
+                    switch (currentTheme)
+                    {
+                        case THEME.BLUE:
+                            clickHelp1.ForeColor = Color.LightSalmon;
+                            break;
+
+                        default:
+                            clickHelp1.ForeColor = Color.Red;
+                            break;
+                    }
+
                     clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" was removed from your schedule.";
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
                     searchResult_UI.SelectedItems[0].Selected = false; 
@@ -492,7 +636,7 @@ namespace ScheduleApp
                 }
                 else
                 {
-                    listViewItem.BackColor = Color.White; 
+                    listViewItem.BackColor = scheduleView.BackColor; 
                 }
                 scheduleView.Items.Add(listViewItem);
             }
@@ -657,11 +801,116 @@ namespace ScheduleApp
         {
             if (menuTabs.SelectedIndex == 1) // If the Schedule tab was clicked
             {
-                clickHelp1.ForeColor = Color.Black;
+                switch (currentTheme)
+                {
+                    case THEME.BLUE:
+                        clickHelp1.ForeColor = Color.White;
+                        break;
+
+                    default:
+                        clickHelp1.ForeColor = Color.Black;
+                        break;
+                }
+                
                 clickHelp1.Text = "Double click to add a course!";
             }
         }
 
         /***************************************************************************************************/
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static class ListViewExtensions
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        public struct HDITEM
+        {
+            public Mask mask;
+            public int cxy;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string pszText;
+            public IntPtr hbm;
+            public int cchTextMax;
+            public Format fmt;
+            public IntPtr lParam;
+            // _WIN32_IE >= 0x0300 
+            public int iImage;
+            public int iOrder;
+            // _WIN32_IE >= 0x0500
+            public uint type;
+            public IntPtr pvFilter;
+            // _WIN32_WINNT >= 0x0600
+            public uint state;
+
+            [Flags]
+            public enum Mask
+            {
+                Format = 0x4,       // HDI_FORMAT
+            };
+
+            [Flags]
+            public enum Format
+            {
+                SortDown = 0x200,   // HDF_SORTDOWN
+                SortUp = 0x400,     // HDF_SORTUP
+            };
+        };
+
+        public const int LVM_FIRST = 0x1000;
+        public const int LVM_GETHEADER = LVM_FIRST + 31;
+
+        public const int HDM_FIRST = 0x1200;
+        public const int HDM_GETITEM = HDM_FIRST + 11;
+        public const int HDM_SETITEM = HDM_FIRST + 12;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, ref HDITEM lParam);
+
+        public static void SetSortIcon(this ListView listViewControl, int columnIndex, SortOrder order)
+        {
+            IntPtr columnHeader = SendMessage(listViewControl.Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
+            for (int columnNumber = 0; columnNumber <= listViewControl.Columns.Count - 1; columnNumber++)
+            {
+                var columnPtr = new IntPtr(columnNumber);
+                var item = new HDITEM
+                {
+                    mask = HDITEM.Mask.Format
+                };
+
+                if (SendMessage(columnHeader, HDM_GETITEM, columnPtr, ref item) == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (order != SortOrder.None && columnNumber == columnIndex)
+                {
+                    switch (order)
+                    {
+                        case SortOrder.Ascending:
+                            item.fmt &= ~HDITEM.Format.SortDown;
+                            item.fmt |= HDITEM.Format.SortUp;
+                            break;
+                        case SortOrder.Descending:
+                            item.fmt &= ~HDITEM.Format.SortUp;
+                            item.fmt |= HDITEM.Format.SortDown;
+                            break;
+                    }
+                }
+                else
+                {
+                    item.fmt &= ~HDITEM.Format.SortDown & ~HDITEM.Format.SortUp;
+                }
+
+                if (SendMessage(columnHeader, HDM_SETITEM, columnPtr, ref item) == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+            }
+        }
+    }
+
+
 }

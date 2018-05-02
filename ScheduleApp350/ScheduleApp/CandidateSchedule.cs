@@ -231,6 +231,7 @@ namespace ScheduleApp
         {
             foreach (var c1 in m_Courses)
             {
+                
                 if (checkTimeConflict(c1.CourseID).Count > 1)
                 {
                     c1.Color = System.Drawing.Color.Red;
