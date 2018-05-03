@@ -56,7 +56,8 @@ namespace SpellingCorrector
                 i++;
             }
         }
-
+        
+        //getter
         public List<string> getDictionaryFileContents()
         {
             return fileContentLines;

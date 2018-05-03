@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace ScheduleApp
 {
+    //Class that physically runs the program
     public class Program
     {
         [STAThreadAttribute]
