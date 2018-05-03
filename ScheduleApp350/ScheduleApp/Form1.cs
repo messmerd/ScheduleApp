@@ -49,8 +49,12 @@ namespace ScheduleApp
 
         private void initializeProfessorComboBox()
         {
-            foreach (var prof in DB.prof_database)
-                professor_adv.Items.Add(prof.last + ", " + prof.first);
+            foreach (var prof in DB.prof_database) {
+                if ((prof.last + ", " + prof.first).Trim() != ",")
+                {
+                    professor_adv.Items.Add(prof.last + ", " + prof.first);
+                }
+            }
         }
 
         /**********************Text Inside Search****************************************/
@@ -447,6 +451,7 @@ namespace ScheduleApp
             else
                 search.searchForQuery(""); // search for all courses
 
+            display_corrected_query();
             search.advancedSearchFilter(); 
             search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
 
@@ -725,6 +730,29 @@ namespace ScheduleApp
             search.options.timeEnd = (double)secondTime_UI.Value;
         }
 
+        private void display_corrected_query()
+        {
+            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower() /*||
+               search.lastSearchResults.getCorrectedQuery().Split().Length > 1*/)
+            {
+                searchBox.Text = search.lastSearchResults.getCorrectedQuery();
+                autocorrect_label.Text = search.lastSearchResults.getCorrectedQuery();
+                MessageBox.Show(search.lastSearchResults.getCorrectedQuery());
+                display_query_labels(true);
+            }
+            else
+            {
+                display_query_labels(false);
+            }
+        }
+
+        private void display_query_labels(bool p)
+        {
+            dym_label.Visible = p;
+            qm_label.Visible = p;
+            autocorrect_label.Visible = p;
+        }
+
         private void building_valueChanged(object sender, EventArgs e)
         {
         
@@ -732,7 +760,6 @@ namespace ScheduleApp
 
             Build[] enums = { Build.NONE, Build.HAL, Build.HH, Build.OFFCP, Build.PFAC, Build.PLC, Build.RH, Build.BAO, Build.STEM };
 
-                           // same size for both
             for(var i = 0; i < str.Length; i++)
             {
                 if (building_adv.Text == str[i]) search.options.building = enums[i];
@@ -744,6 +771,8 @@ namespace ScheduleApp
             search.options.lastNameProfessor = !anyProf ? professor_adv.Text.Split(',')[0] : "";
             search.options.firstNameProfessor = !anyProf ? professor_adv.Text.Split(',')[1].Trim() : "";
         }
+
+
         
         private void allNoneCheck_checkChanged(object sender, EventArgs e)
         {
@@ -757,12 +786,12 @@ namespace ScheduleApp
 
         private void rmp_valueChanged(object sender, EventArgs e)
         {
-            // search.options.rmp = rmpBox.Value;
+            search.options.rmp = (double)rmp_numericUpDown.Value;
         }
         
         private void probability_valueChanged(object sender, EventArgs e)
         {
-            //search.options.probability = probBox.Text;
+            search.options.probability = probability_combobox.Text;
         }
        
 
