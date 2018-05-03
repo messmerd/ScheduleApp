@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -40,6 +40,7 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.clear_adv = new System.Windows.Forms.Button();
             this.probability_combobox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.rmp_numericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -113,8 +114,8 @@
             // 
             // calendar_UI
             // 
-            drawTool2.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool2;
+            drawTool1.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool1;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
@@ -222,6 +223,7 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.clear_adv);
             this.filter_UI.Controls.Add(this.probability_combobox);
             this.filter_UI.Controls.Add(this.label2);
             this.filter_UI.Controls.Add(this.rmp_numericUpDown);
@@ -248,6 +250,16 @@
             this.filter_UI.TabStop = false;
             this.filter_UI.Text = "Advanced";
             this.filter_UI.Visible = false;
+            // 
+            // clear_adv
+            // 
+            this.clear_adv.Location = new System.Drawing.Point(415, 71);
+            this.clear_adv.Name = "clear_adv";
+            this.clear_adv.Size = new System.Drawing.Size(24, 24);
+            this.clear_adv.TabIndex = 20;
+            this.clear_adv.Text = "X";
+            this.clear_adv.UseVisualStyleBackColor = true;
+            this.clear_adv.Click += new System.EventHandler(this.clearAdvBtn_Click);
             // 
             // probability_combobox
             // 
@@ -302,7 +314,7 @@
             // professor_adv_label
             // 
             this.professor_adv_label.AutoSize = true;
-            this.professor_adv_label.Location = new System.Drawing.Point(194, 73);
+            this.professor_adv_label.Location = new System.Drawing.Point(169, 72);
             this.professor_adv_label.Name = "professor_adv_label";
             this.professor_adv_label.Size = new System.Drawing.Size(66, 13);
             this.professor_adv_label.TabIndex = 15;
@@ -311,7 +323,7 @@
             // adv_building_label
             // 
             this.adv_building_label.AutoSize = true;
-            this.adv_building_label.Location = new System.Drawing.Point(44, 72);
+            this.adv_building_label.Location = new System.Drawing.Point(19, 72);
             this.adv_building_label.Name = "adv_building_label";
             this.adv_building_label.Size = new System.Drawing.Size(57, 13);
             this.adv_building_label.TabIndex = 14;
@@ -336,7 +348,7 @@
             this.professor_adv.FormattingEnabled = true;
             this.professor_adv.Items.AddRange(new object[] {
             "Any"});
-            this.professor_adv.Location = new System.Drawing.Point(263, 69);
+            this.professor_adv.Location = new System.Drawing.Point(241, 69);
             this.professor_adv.Name = "professor_adv";
             this.professor_adv.Size = new System.Drawing.Size(130, 21);
             this.professor_adv.TabIndex = 12;
@@ -384,7 +396,7 @@
             "BAO",
             "STEM",
             "Other"});
-            this.building_adv.Location = new System.Drawing.Point(104, 69);
+            this.building_adv.Location = new System.Drawing.Point(77, 69);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
@@ -925,6 +937,7 @@
         private System.Windows.Forms.ComboBox probability_combobox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label credits_notify_label;
+        private System.Windows.Forms.Button clear_adv;
     }
 }
 

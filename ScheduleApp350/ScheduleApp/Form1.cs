@@ -64,6 +64,7 @@ namespace ScheduleApp
         }
 
         /**********************Text Inside Search****************************************/
+        #region 
         private void searchBox_Enter(object sender, EventArgs e)
         {
             searchBox.Text = Search.Create().lastSearchResults.getQuery(); 
@@ -78,14 +79,15 @@ namespace ScheduleApp
                 searchBox.ForeColor = Color.Gray;
             }
         }
+        #endregion 
         /******************************************************************************************/
 
 
 
 
         /************************Calendar-Related**************************************************/
+        #region
 
-        
         private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
         {
             
@@ -133,14 +135,16 @@ namespace ScheduleApp
         {
             dayView1.HalfHourHeight = trackBar1.Value;
         }
-         * /
+         */
 
+         #endregion 
         /******************************************************************************************/
 
 
 
 
         /**************************************** Themes ******************************************/
+        #region
         //sets themes
         private void adjustCheckstates()
         {
@@ -215,10 +219,13 @@ namespace ScheduleApp
             advSearchBtn.ForeColor = Color.Black;
               
             // More need to be added  
+<<<<<<< HEAD
             
             
 
 
+=======
+>>>>>>> 853194de1bff6f938b4177bfeb0bf48c8b2f35fc
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -390,11 +397,13 @@ namespace ScheduleApp
             calendar_UI.Invalidate(); // Updates the Calendar
 
         }
+        #endregion
         /******************************************************************************************/
 
         
 
         /*************************Sort Search Result Column****************************************/
+        #region 
         //initial function for sorting
         private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
         {
@@ -451,14 +460,14 @@ namespace ScheduleApp
             //refresh_search_results(search.lastSearchResults.getCourses());
         }
 
-        
+        #endregion
         /******************************************************************************************/
 
         /**********************Create UI Search Results Fns****************************************/
+        #region 
         //event listener for button clicks
         private void searchBtn_Click(object sender, EventArgs e)
         {
-
             // Remove previous search results upon performing another search
             searchResult_UI.Items.Clear();
 
@@ -469,6 +478,13 @@ namespace ScheduleApp
 
             search.advancedSearchFilter(); 
             search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
+
+            int column = sort_status.ToList().FindIndex(x => x != SortOrder.None);
+            if (column != -1)
+            {
+                searchResult_UI.SetSortIcon(column, SortOrder.None);  // Sets the arrow icon 
+                sort_status[column] = SortOrder.None; 
+            }
 
             populateSearch(search.lastSearchResults.getCourses());
             //display_corrected_query();
@@ -590,6 +606,7 @@ namespace ScheduleApp
             row[8] = c.getProbability();
             return row;
         }
+        #endregion 
         /***************************************************************************************/
 
 
@@ -852,7 +869,34 @@ namespace ScheduleApp
                     break;
             }
         }
-       
+        private void clearAdvBtn_Click(object sender, EventArgs e)
+        {
+            search.options.rmp = -1;
+            rmp_numericUpDown.Value = (decimal)0.0;
+
+            search.options.probabilityScore = -1;
+            probability_combobox.ResetText();
+
+            search.options.timeStart = 0.0;
+            search.options.timeEnd = 24.0;
+
+            firstTime_UI.Value = 0;
+            secondTime_UI.Value = 24;
+
+            search.options.building = Build.NONE;
+            building_adv.Text = "Any";
+
+            search.options.day = (new bool[] { true, true, true, true, true }).ToList();
+            allNoneCheckBox.Checked = true;
+            allNoneCheck_checkChanged(sender, e);
+
+            professor_adv.Text = "Any";
+            search.options.firstNameProfessor = "";
+            search.options.lastNameProfessor = "";
+
+            probability_combobox.Text = "Any";
+            search.options.probabilityScore = 3;
+        }
 
         /**************************************************************************************/
 
