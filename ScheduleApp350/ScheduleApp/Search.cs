@@ -312,13 +312,9 @@ namespace ScheduleApp
     public class AdvancedOptions
     {
         public double rmp;  // Filter by courses with professor with RateMyProfessor rating >= rmp. -1 means the user doesn't have a preference
-<<<<<<< HEAD
         public int probabilityScore; // high, medium, or low
 
         // Put other advanced options here later 
-=======
-        public string probability; // high, medium, or low 
->>>>>>> 939970d75673769432100c66f28dd01353662c18
 
         public double timeStart;  // Filter by courses that start at or after timeStart. -1 means the user doesn't have a preference 
         public double timeEnd;    // Filter by courses that end at or before timeEnd. -1 means the user doesn't have a preference

@@ -187,9 +187,6 @@ namespace ScheduleApp
             // 89 102 107 <- unfocused search bar
 
             var veryDarkGray = Color.FromArgb(51, 51, 51);
-
-<<<<<<< HEAD
-=======
             // Base color
             scheduleTitle.ForeColor = Color.White;
 
@@ -219,8 +216,6 @@ namespace ScheduleApp
             // More need to be added  
             
             
-
->>>>>>> 939970d75673769432100c66f28dd01353662c18
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -854,7 +849,34 @@ namespace ScheduleApp
                     break;
             }
         }
-       
+        private void clearAdvBtn_Click(object sender, EventArgs e)
+        {
+            search.options.rmp = -1;
+            rmp_numericUpDown.Value = (decimal)0.0;
+
+            search.options.probabilityScore = -1;
+            probability_combobox.ResetText();
+
+            search.options.timeStart = 0.0;
+            search.options.timeEnd = 24.0;
+
+            firstTime_UI.Value = 0;
+            secondTime_UI.Value = 24;
+
+            search.options.building = Build.NONE;
+            building_adv.Text = "Any";
+
+            search.options.day = (new bool[] { true, true, true, true, true }).ToList();
+            allNoneCheckBox.Checked = true;
+            allNoneCheck_checkChanged(sender, e);
+
+            professor_adv.Text = "Any";
+            search.options.firstNameProfessor = "";
+            search.options.lastNameProfessor = "";
+
+            probability_combobox.Text = "Any";
+            search.options.probabilityScore = 3;
+        }
 
         /**************************************************************************************/
 
