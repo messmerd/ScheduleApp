@@ -10,6 +10,17 @@ namespace Calendar
     {
         public static Color TrueCrimsonLight = Color.FromArgb(152,1,46);
         public static Color TrueCrimson = Color.FromArgb(112,1,34);
+        protected Calendar.DayView parent { get; set; }
+
+        public AbstractRenderer()
+        {
+            this.parent = null;
+        }
+
+        public AbstractRenderer(Calendar.DayView parent)
+        {
+            this.parent = parent; 
+        }
 
         public virtual Color AllDayEventsBackColor
         {

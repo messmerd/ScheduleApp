@@ -115,8 +115,10 @@
             drawTool1.DayView = this.calendar_UI;
             this.calendar_UI.ActiveTool = drawTool1;
             this.calendar_UI.AllowInplaceEditing = false;
+            this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
             this.calendar_UI.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.calendar_UI.HalfHourHeight = 11;
             this.calendar_UI.Location = new System.Drawing.Point(15, 210);
             this.calendar_UI.Name = "calendar_UI";
             this.calendar_UI.SelectionEnd = new System.DateTime(((long)(0)));

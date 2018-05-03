@@ -11,6 +11,16 @@ namespace Calendar
     {
         Font baseFont;
 
+        public GCCCrimsonRenderer(DayView parent)
+        {
+            this.parent = parent;
+        }
+
+        public GCCCrimsonRenderer()
+        {
+            this.parent = null;
+        }
+
         public override Font BaseFont
         {
             get
@@ -82,11 +92,14 @@ namespace Calendar
 
             using (SolidBrush brush = new SolidBrush(color))
             {
-                g.DrawString(hour.ToString("##00"), HourFont, brush, rect);
+                if (hour < 21)  // Hours after 20 are not shown (makes it look better in our app)
+                {
+                    g.DrawString(hour.ToString("##00"), HourFont, brush, rect);
 
-                rect.X += 27;
+                    rect.X += 27;
 
-                g.DrawString("00", MinuteFont, brush, rect);
+                    g.DrawString("00", MinuteFont, brush, rect);
+                }
             }
         }
 
