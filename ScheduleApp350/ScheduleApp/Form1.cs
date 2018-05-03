@@ -177,23 +177,24 @@ namespace ScheduleApp
             // 48 64 71 <- search bar
             // 89 102 107 <- unfocused search bar
 
+            var veryDarkGray = Color.FromArgb(51, 51, 51);
 
-            /*
             // Base color
-            scheduleTitle.ForeColor = Color.Black;
+            scheduleTitle.ForeColor = Color.White;
 
             menuBar.BackColor = Color.White;
+            //menuBar.ForeColor = Color.White;
             searchBox.BackColor = Color.White;
-            searchTab.BackColor = Color.White;
+            searchTab.BackColor = veryDarkGray;
             searchResult_UI.BackColor = Color.White;
             searchResult_UI.ForeColor = Color.Black;
             scheduleView.BackColor = Color.White;
-            scheduleTab.BackColor = Color.White;
+            scheduleTab.BackColor = veryDarkGray;
             appMenu.BackColor = Color.White;
 
             // Adv Filter elements
-            filter_UI.BackColor = Color.White;
-            filter_UI.ForeColor = Color.Black;
+            filter_UI.BackColor = veryDarkGray;
+            filter_UI.ForeColor = Color.White;
 
             // Button backgrounds
             searchBtn.BackColor = Color.Gainsboro;
@@ -206,7 +207,7 @@ namespace ScheduleApp
               
             // More need to be added  
             
-            */
+            
 
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
@@ -241,9 +242,9 @@ namespace ScheduleApp
             menuBar.BackColor = Color.CornflowerBlue;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = Color.MidnightBlue;
-            searchResult_UI.BackColor = Color.CornflowerBlue;
+            //searchResult_UI.BackColor = Color.CornflowerBlue;
             searchResult_UI.ForeColor = Color.Black;
-            scheduleView.BackColor = Color.CornflowerBlue;
+            //scheduleView.BackColor = Color.CornflowerBlue;
             scheduleView.ForeColor = Color.Black;
             scheduleTab.BackColor = Color.MidnightBlue;
             appMenu.BackColor = Color.CornflowerBlue;
