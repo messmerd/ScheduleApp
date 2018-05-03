@@ -9,6 +9,7 @@ namespace ScheduleApp
     // TBA = N/A, BAO = ???
     public enum Build { NONE, BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBA };
 
+    //contains all variables to be designated to a specific course after it is parsed from courseinfo
     public struct Course
     {
         private Build building;
@@ -302,6 +303,7 @@ namespace ScheduleApp
         public string first, last;
         public double rmp;
 
+        //constructor for professor
         public Professor(string first, string last, double rmp)
         {
             this.first = first;

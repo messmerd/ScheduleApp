@@ -8,6 +8,7 @@ using Excel = Microsoft.Office.Interop.Excel;       //Microsoft Excel 14 object 
 
 namespace ScheduleApp
 {
+    //Used to designate all data assigned to a specific course; utilizes a singleton method
     public class CourseInfo
     {
         private static CourseInfo singleton;
@@ -34,7 +35,7 @@ namespace ScheduleApp
 
         }
 
-
+        //constructor
         private CourseInfo()
         {
              database = new List<Course>();
@@ -42,6 +43,7 @@ namespace ScheduleApp
              parseTextFile("course_database.txt");    // This function was causing the program to hang so it is commented out for now
         }
 
+        //construtor based on a given database filename
         private CourseInfo(string db_filename)
         {
             database = new List<Course>();
@@ -52,7 +54,8 @@ namespace ScheduleApp
         public List<Course> database;
         public List<Professor> prof_database;
         private int numCourses;
-
+        
+        //function that parses the database file (if it is CSV)
         private void parseCSV()
         {
             string fileName = "course_database.xlsx";
@@ -94,6 +97,7 @@ namespace ScheduleApp
         
         }
 
+        //function that parses the database file (if it is .txt)
         private void parseTextFile(string filename)
         {
             List<string> fileContents = new List<string>();
@@ -127,6 +131,7 @@ namespace ScheduleApp
             prof_database = prof_database.OrderBy(x => x.last).ToList();
         }
 
+        //getters
         public Course getCourse(int id)
         {
             return database[id]; 

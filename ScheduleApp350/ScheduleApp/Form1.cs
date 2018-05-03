@@ -15,6 +15,7 @@ namespace ScheduleApp
 {
     public enum THEME { CLASSIC, NIGHT, BLUE, GCC };
     
+    //class for the program window itself
     public partial class AppWindow : Form
     {
         public const string emptySearchBarText = "Search by course code or name...";
@@ -25,6 +26,7 @@ namespace ScheduleApp
         int cur_attr = 0;
         public static THEME currentTheme;
 
+        //constructor
         public AppWindow()
         {
             InitializeComponent();
@@ -50,6 +52,7 @@ namespace ScheduleApp
             clickHelp1.Text = "Double click to add a course!";
         }
 
+        //orders professor first and last name in dropdown
         private void initializeProfessorComboBox()
         {
             foreach (var prof in DB.prof_database) {
@@ -97,7 +100,7 @@ namespace ScheduleApp
              
         }
         
-        
+        //function for a change of selction of options
         private void dayView1_SelectionChanged(object sender, EventArgs e)
         {
             //string text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
@@ -105,6 +108,7 @@ namespace ScheduleApp
             //Console.WriteLine(text);
         }
         
+        //function for mouse movement
         private void dayView1_MouseMove(object sender, MouseEventArgs e)
         {
             //professor_adv_label.Text = calendar_UI.GetTimeAt(e.X, e.Y).ToString();
@@ -137,7 +141,7 @@ namespace ScheduleApp
 
 
         /**************************************** Themes ******************************************/
-
+        //sets themes
         private void adjustCheckstates()
         {
             if(currentTheme == THEME.NIGHT)
@@ -170,6 +174,7 @@ namespace ScheduleApp
             }
         }
 
+        //sets theme to night
         private void themeToNight(object sender, EventArgs e)
         {
             currentTheme = THEME.NIGHT;
@@ -181,7 +186,41 @@ namespace ScheduleApp
             // 48 64 71 <- search bar
             // 89 102 107 <- unfocused search bar
 
+            var veryDarkGray = Color.FromArgb(51, 51, 51);
 
+<<<<<<< HEAD
+=======
+            // Base color
+            scheduleTitle.ForeColor = Color.White;
+
+            menuBar.BackColor = Color.White;
+            //menuBar.ForeColor = Color.White;
+            searchBox.BackColor = Color.White;
+            searchTab.BackColor = veryDarkGray;
+            searchResult_UI.BackColor = Color.White;
+            searchResult_UI.ForeColor = Color.Black;
+            scheduleView.BackColor = Color.White;
+            scheduleTab.BackColor = veryDarkGray;
+            appMenu.BackColor = Color.White;
+
+            // Adv Filter elements
+            filter_UI.BackColor = veryDarkGray;
+            filter_UI.ForeColor = Color.White;
+
+            // Button backgrounds
+            searchBtn.BackColor = Color.Gainsboro;
+            advSearchBtn.BackColor = Color.Gainsboro;
+            searchBtn.BackColor = Color.Gainsboro;
+
+            // Button fonts
+            searchBtn.ForeColor = Color.Black;
+            advSearchBtn.ForeColor = Color.Black;
+              
+            // More need to be added  
+            
+            
+
+>>>>>>> 939970d75673769432100c66f28dd01353662c18
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -199,6 +238,7 @@ namespace ScheduleApp
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
+        //sets theme to blue
         private void themeToBlue(object sender, EventArgs e)
         {
             currentTheme = THEME.BLUE;
@@ -212,15 +252,15 @@ namespace ScheduleApp
             scheduleTitle.ForeColor = Color.White;
             //Color.CornflowerBlue;
             //Color.DarkBlue
-            menuBar.BackColor = Color.CornflowerBlue;
+            menuBar.BackColor = Color.White;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = Color.MidnightBlue;
-            searchResult_UI.BackColor = Color.CornflowerBlue;
+            //searchResult_UI.BackColor = Color.CornflowerBlue;
             searchResult_UI.ForeColor = Color.Black;
-            scheduleView.BackColor = Color.CornflowerBlue;
+            //scheduleView.BackColor = Color.CornflowerBlue;
             scheduleView.ForeColor = Color.Black;
             scheduleTab.BackColor = Color.MidnightBlue;
-            appMenu.BackColor = Color.CornflowerBlue;
+            appMenu.BackColor = Color.White;
 
             // Adv Filter
             filter_UI.BackColor = Color.DarkBlue;
@@ -247,6 +287,7 @@ namespace ScheduleApp
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
+        //sets theme to gcc crimson
         private void themeToGCC(object sender, EventArgs e)
         {
             currentTheme = THEME.GCC;
@@ -300,6 +341,7 @@ namespace ScheduleApp
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
+        //sets theme to classic
         private void themeToClassic(object sender, EventArgs e)
         {
 
@@ -355,6 +397,7 @@ namespace ScheduleApp
         
 
         /*************************Sort Search Result Column****************************************/
+        //initial function for sorting
         private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
         {
             set_sort_type(e.Column); // sets whether it should be by relevancy, asc, or desc order
@@ -362,6 +405,7 @@ namespace ScheduleApp
             searchResult_UI.SetSortIcon(e.Column, sort_status[e.Column]);  // Sets the arrow icon 
         }
 
+        //sets the type of sorting type the user desires
         private void set_sort_type(int index)
         {
             if(cur_attr != index)
@@ -388,6 +432,7 @@ namespace ScheduleApp
             }
         }
 
+        //sorts columns
         private void sort_col(int i)
         {
             switch (sort_status[i])
@@ -412,6 +457,7 @@ namespace ScheduleApp
         /******************************************************************************************/
 
         /**********************Create UI Search Results Fns****************************************/
+        //event listener for button clicks
         private void searchBtn_Click(object sender, EventArgs e)
         {
 
@@ -430,6 +476,7 @@ namespace ScheduleApp
             //display_corrected_query();
         }
 
+        //fills the search results section with desired courses
         private void populateSearch(List<Course> results)
         {
             foreach (var course in results)
@@ -453,7 +500,7 @@ namespace ScheduleApp
         }
 
 
-        
+        //refreshes the search results window
         private void refresh_search_results(List<Course> results)
         {
             int i = 0;
@@ -487,7 +534,7 @@ namespace ScheduleApp
             }
         }
         
-
+        //sets new colors to search results depending on prior course selections
         private void refreshSearchItemColors(List<Course> results)
         {
             int i = 0;
@@ -529,6 +576,7 @@ namespace ScheduleApp
             return res;
         }
 
+        //sets the row for searching
         private string[] setSearchRow(Course c) // c = the course
         {
             string[] row = new string[50]; // row buffer
@@ -549,7 +597,7 @@ namespace ScheduleApp
 
         /***********************Add to Schedule**************************************************/
 
-
+        //allows for adding courses to schedule with double click
         private void searchResult_UI_DoubleClick(object sender, MouseEventArgs e)
         {
             if(searchResult_UI.SelectedItems.Count >= 0)
@@ -563,7 +611,8 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
-                            clickHelp1.ForeColor = Color.Yellow;
+                        case THEME.NIGHT:
+                            clickHelp1.ForeColor = Color.GreenYellow;
                             break;
 
                         default:
@@ -584,6 +633,7 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
+                        case THEME.NIGHT:
                             clickHelp1.ForeColor = Color.LightSalmon;
                             break;
 
@@ -614,6 +664,7 @@ namespace ScheduleApp
             }
         }
 
+        //sets schedule row in accordance with selected course
         public string[] setScheduleRow(Course c)
         {
             string[] buf = new string[50]; // buf buffer
@@ -630,6 +681,7 @@ namespace ScheduleApp
 
         }
 
+        //clears schedule of selected courses
         private void clearAll_Click(object sender, EventArgs e)
         {
             scheduleView.Items.Clear(); // what the user sees
@@ -638,7 +690,7 @@ namespace ScheduleApp
             refreshSearchItemColors(search.lastSearchResults.getCourses());
         }
 
-        
+        //remove courses from schedule with a double click
         private void remove_DoubleClick(object sender, EventArgs e)
         {
             if (scheduleView.SelectedItems.Count >= 0)
@@ -651,6 +703,7 @@ namespace ScheduleApp
             }
         }
 
+        //updates schedule after courses have been added or removed
         private void updateScheduleUI()
         {
             scheduleView.Items.Clear();
@@ -679,6 +732,7 @@ namespace ScheduleApp
 
 
         /*************************************adv search****************************************/
+        //drops down advanced search box after button is clicked
         private void advSearchBtn_Click(object sender, EventArgs e)
         {
             int shift = 106;
@@ -700,6 +754,7 @@ namespace ScheduleApp
 
         }
 
+        //checks to see if the days chosen attribute has been changed by the user
         private void daysAttr_checkChanged(object sender, EventArgs e)
         {
             bool [] checkboxes = { M_checkBox.Checked, T_checkBox.Checked, W_checkBox.Checked, R_checkBox.Checked, F_checkBox.Checked };
@@ -710,12 +765,14 @@ namespace ScheduleApp
             }
         }
 
+        //checks to see if the start time chosen attribute has been changed by the user
         private void startEndTimes_valueChanged(object sender,  EventArgs e)
         {
             search.options.timeStart = (double)firstTime_UI.Value;
             search.options.timeEnd = (double)secondTime_UI.Value;
         }
 
+        //displays new info in results query if it has been updated based on new search criteria
         private void display_corrected_query()
         {
             if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower())
@@ -730,6 +787,7 @@ namespace ScheduleApp
             }
         }
 
+        //
         private void display_query_labels(bool p)
         {
             dym_label.Visible = p;
@@ -737,6 +795,7 @@ namespace ScheduleApp
             autocorrect_label.Visible = p;
         }
 
+        //checks to see if the building attribute has been changed by the user
         private void building_valueChanged(object sender, EventArgs e)
         {
         
@@ -749,6 +808,8 @@ namespace ScheduleApp
                 if (building_adv.Text == str[i]) search.options.building = enums[i];
             }
         }
+
+        //checks to see if the professor attribute has been changed by the user
         private void professorValueChanged(object sender, EventArgs e)
         {
             bool anyProf = professor_adv.Text == "Any";
@@ -757,7 +818,7 @@ namespace ScheduleApp
         }
 
 
-        
+        //
         private void allNoneCheck_checkChanged(object sender, EventArgs e)
         {
             CheckBox[] checkboxes = { M_checkBox, T_checkBox, W_checkBox, R_checkBox, F_checkBox };
@@ -768,11 +829,13 @@ namespace ScheduleApp
             }
         }
 
+        //checks to see if the rmp attribute has been changed by the user
         private void rmp_valueChanged(object sender, EventArgs e)
         {
             search.options.rmp = (double)rmp_numericUpDown.Value;
         }
-        
+
+        //checks to see if the probability attribute has been changed by the user
         private void probability_valueChanged(object sender, EventArgs e)
         {
             switch (probability_combobox.Text)
@@ -798,6 +861,7 @@ namespace ScheduleApp
 
 
         /**************************************JSON Transfer***************************************/
+        //function that allows the import button to work
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openJson = new OpenFileDialog();
@@ -823,6 +887,7 @@ namespace ScheduleApp
             refreshSearchItemColors(search.lastSearchResults.getCourses());
         }
 
+        //function that allows the export button to work
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StreamWriter jsonSaveStream = null;
@@ -862,6 +927,7 @@ namespace ScheduleApp
 
 
         /***********************************Click on tab****************************************************/
+        //allows for moving back and forth between schedule and search
         private void menuTabs_Click(object sender, EventArgs e)
         {
             if (menuTabs.SelectedIndex == 1) // If the Schedule tab was clicked
@@ -869,6 +935,7 @@ namespace ScheduleApp
                 switch (currentTheme)
                 {
                     case THEME.BLUE:
+                    case THEME.NIGHT:
                         clickHelp1.ForeColor = Color.White;
                         break;
 
@@ -884,6 +951,7 @@ namespace ScheduleApp
         /***************************************************************************************************/
     }
 
+    //
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class ListViewExtensions
     {
@@ -931,9 +999,11 @@ namespace ScheduleApp
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
 
+        //
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, ref HDITEM lParam);
 
+        //
         public static void SetSortIcon(this ListView listViewControl, int columnIndex, SortOrder order)
         {
             IntPtr columnHeader = SendMessage(listViewControl.Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
