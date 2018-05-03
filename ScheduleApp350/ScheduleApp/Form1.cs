@@ -64,6 +64,7 @@ namespace ScheduleApp
         }
 
         /**********************Text Inside Search****************************************/
+        #region 
         private void searchBox_Enter(object sender, EventArgs e)
         {
             searchBox.Text = Search.Create().lastSearchResults.getQuery(); 
@@ -78,14 +79,15 @@ namespace ScheduleApp
                 searchBox.ForeColor = Color.Gray;
             }
         }
+        #endregion 
         /******************************************************************************************/
 
 
 
 
         /************************Calendar-Related**************************************************/
+        #region
 
-        
         private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
         {
             
@@ -133,14 +135,16 @@ namespace ScheduleApp
         {
             dayView1.HalfHourHeight = trackBar1.Value;
         }
-         * /
+         */
 
+         #endregion 
         /******************************************************************************************/
 
 
 
 
         /**************************************** Themes ******************************************/
+        #region
         //sets themes
         private void adjustCheckstates()
         {
@@ -187,6 +191,7 @@ namespace ScheduleApp
             // 89 102 107 <- unfocused search bar
 
             var veryDarkGray = Color.FromArgb(51, 51, 51);
+
             // Base color
             scheduleTitle.ForeColor = Color.White;
 
@@ -214,8 +219,6 @@ namespace ScheduleApp
             advSearchBtn.ForeColor = Color.Black;
               
             // More need to be added  
-            
-            
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -387,11 +390,13 @@ namespace ScheduleApp
             calendar_UI.Invalidate(); // Updates the Calendar
 
         }
+        #endregion
         /******************************************************************************************/
 
         
 
         /*************************Sort Search Result Column****************************************/
+        #region 
         //initial function for sorting
         private void sortResults_columnClick(object sender, ColumnClickEventArgs e)
         {
@@ -448,14 +453,14 @@ namespace ScheduleApp
             //refresh_search_results(search.lastSearchResults.getCourses());
         }
 
-        
+        #endregion
         /******************************************************************************************/
 
         /**********************Create UI Search Results Fns****************************************/
+        #region 
         //event listener for button clicks
         private void searchBtn_Click(object sender, EventArgs e)
         {
-
             // Remove previous search results upon performing another search
             searchResult_UI.Items.Clear();
 
@@ -466,6 +471,13 @@ namespace ScheduleApp
 
             search.advancedSearchFilter(); 
             search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
+
+            int column = sort_status.ToList().FindIndex(x => x != SortOrder.None);
+            if (column != -1)
+            {
+                searchResult_UI.SetSortIcon(column, SortOrder.None);  // Sets the arrow icon 
+                sort_status[column] = SortOrder.None; 
+            }
 
             populateSearch(search.lastSearchResults.getCourses());
             //display_corrected_query();
@@ -587,6 +599,7 @@ namespace ScheduleApp
             row[8] = c.getProbability();
             return row;
         }
+        #endregion 
         /***************************************************************************************/
 
 
