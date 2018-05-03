@@ -47,7 +47,12 @@ namespace ScheduleApp
                 {
                     i = 0;
                     if (search.lastSearchResults.getCorrectedQuery() != query.ToLower())  // If your query had a spelling mistake
-                        Console.WriteLine("Did you mean {0}?", search.lastSearchResults.getCorrectedQuery());
+                    {
+                        if (search.lastSearchResults.getCorrectedQuery().Split().ToList().Count == query.Split().ToList().Count)
+                            Console.WriteLine("Did you mean {0}?", search.lastSearchResults.getCorrectedQuery());
+                        else
+                            Console.WriteLine("{0} query words could not be corrected.", query.Split().ToList().Count - search.lastSearchResults.getCorrectedQuery().Split().ToList().Count);
+                    }
                     Console.WriteLine("Top 20 search results for {0}, ordered by best match: ", query);
                     foreach (var match in searchResults)
                     {
