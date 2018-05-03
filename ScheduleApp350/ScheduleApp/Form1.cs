@@ -188,8 +188,6 @@ namespace ScheduleApp
 
             var veryDarkGray = Color.FromArgb(51, 51, 51);
 
-<<<<<<< HEAD
-=======
             // Base color
             scheduleTitle.ForeColor = Color.White;
 
@@ -220,7 +218,7 @@ namespace ScheduleApp
             
             
 
->>>>>>> 939970d75673769432100c66f28dd01353662c18
+
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
