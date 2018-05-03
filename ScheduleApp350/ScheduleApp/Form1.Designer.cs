@@ -73,8 +73,6 @@
             this.capacityCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rmpCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.probCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.dym_label = new System.Windows.Forms.Label();
-            this.qm_label = new System.Windows.Forms.Label();
             this.scheduleTab = new System.Windows.Forms.TabPage();
             this.credits_notify_label = new System.Windows.Forms.Label();
             this.removeHelp = new System.Windows.Forms.Label();
@@ -158,8 +156,6 @@
             this.searchTab.Controls.Add(this.searchBtn);
             this.searchTab.Controls.Add(this.searchBox);
             this.searchTab.Controls.Add(this.searchResult_UI);
-            this.searchTab.Controls.Add(this.dym_label);
-            this.searchTab.Controls.Add(this.qm_label);
             this.searchTab.Location = new System.Drawing.Point(4, 31);
             this.searchTab.Name = "searchTab";
             this.searchTab.Padding = new System.Windows.Forms.Padding(3);
@@ -170,21 +166,23 @@
             // autocorrect_label
             // 
             this.autocorrect_label.AutoSize = true;
-            this.autocorrect_label.Location = new System.Drawing.Point(187, 76);
+            this.autocorrect_label.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autocorrect_label.ForeColor = System.Drawing.Color.IndianRed;
+            this.autocorrect_label.Location = new System.Drawing.Point(106, 74);
             this.autocorrect_label.Name = "autocorrect_label";
-            this.autocorrect_label.Size = new System.Drawing.Size(58, 13);
+            this.autocorrect_label.Size = new System.Drawing.Size(106, 13);
             this.autocorrect_label.TabIndex = 12;
-            this.autocorrect_label.Text = "<query>";
+            this.autocorrect_label.Text = "autocorrect_label";
             this.autocorrect_label.Visible = false;
             // 
             // clickHelp1
             // 
             this.clickHelp1.AutoSize = true;
-            this.clickHelp1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clickHelp1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clickHelp1.ForeColor = System.Drawing.Color.Black;
             this.clickHelp1.Location = new System.Drawing.Point(329, 504);
             this.clickHelp1.Name = "clickHelp1";
-            this.clickHelp1.Size = new System.Drawing.Size(201, 16);
+            this.clickHelp1.Size = new System.Drawing.Size(202, 16);
             this.clickHelp1.TabIndex = 10;
             this.clickHelp1.Text = "Double click to add a course!";
             // 
@@ -243,7 +241,7 @@
             this.filter_UI.Controls.Add(this.T_checkBox);
             this.filter_UI.Controls.Add(this.M_checkBox);
             this.filter_UI.Controls.Add(this.day_label);
-            this.filter_UI.Location = new System.Drawing.Point(197, 108);
+            this.filter_UI.Location = new System.Drawing.Point(202, 108);
             this.filter_UI.Name = "filter_UI";
             this.filter_UI.Size = new System.Drawing.Size(444, 100);
             this.filter_UI.TabIndex = 6;
@@ -266,6 +264,7 @@
             this.probability_combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.probability_combobox.FormattingEnabled = true;
             this.probability_combobox.Items.AddRange(new object[] {
+            "Any",
             "high",
             "medium",
             "low"});
@@ -608,27 +607,7 @@
             // probCol
             // 
             this.probCol.Text = "Prob.";
-            this.probCol.Width = 74;
-            // 
-            // dym_label
-            // 
-            this.dym_label.AutoSize = true;
-            this.dym_label.Location = new System.Drawing.Point(106, 76);
-            this.dym_label.Name = "dym_label";
-            this.dym_label.Size = new System.Drawing.Size(89, 13);
-            this.dym_label.TabIndex = 11;
-            this.dym_label.Text = "did you mean ";
-            this.dym_label.Visible = false;
-            // 
-            // qm_label
-            // 
-            this.qm_label.AutoSize = true;
-            this.qm_label.Location = new System.Drawing.Point(244, 77);
-            this.qm_label.Name = "qm_label";
-            this.qm_label.Size = new System.Drawing.Size(13, 13);
-            this.qm_label.TabIndex = 13;
-            this.qm_label.Text = "?";
-            this.qm_label.Visible = false;
+            this.probCol.Width = 50;
             // 
             // scheduleTab
             // 
@@ -648,6 +627,7 @@
             // credits_notify_label
             // 
             this.credits_notify_label.AutoSize = true;
+            this.credits_notify_label.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.credits_notify_label.Location = new System.Drawing.Point(23, 178);
             this.credits_notify_label.Name = "credits_notify_label";
             this.credits_notify_label.Size = new System.Drawing.Size(118, 13);
@@ -931,9 +911,7 @@
         private System.Windows.Forms.ToolStripMenuItem classicTheme;
         private System.Windows.Forms.NumericUpDown rmp_numericUpDown;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Label qm_label;
         private System.Windows.Forms.Label autocorrect_label;
-        private System.Windows.Forms.Label dym_label;
         private System.Windows.Forms.ComboBox probability_combobox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label credits_notify_label;

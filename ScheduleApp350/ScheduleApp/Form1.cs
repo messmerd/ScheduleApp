@@ -456,7 +456,7 @@ namespace ScheduleApp
         #endregion
         /******************************************************************************************/
 
-        /**********************Create UI Search Results Fns****************************************/
+        /*********************************Create UI Search Fns*************************************/
         #region 
         //event listener for button clicks
         private void searchBtn_Click(object sender, EventArgs e)
@@ -480,7 +480,10 @@ namespace ScheduleApp
             }
 
             populateSearch(search.lastSearchResults.getCourses());
-            //display_corrected_query();
+            display_corrected_query();
+
+            searchBox.SelectionStart = 0; // automatically highlights the users last query, so they can search again quickly
+            searchBox.SelectionLength = searchBox.Text.Length;
         }
 
         //fills the search results section with desired courses
@@ -599,12 +602,12 @@ namespace ScheduleApp
             row[8] = c.getProbability();
             return row;
         }
-        #endregion 
+        #endregion
         /***************************************************************************************/
 
 
         /***********************Add to Schedule**************************************************/
-
+        #region
         //allows for adding courses to schedule with double click
         private void searchResult_UI_DoubleClick(object sender, MouseEventArgs e)
         {
@@ -732,14 +735,12 @@ namespace ScheduleApp
             }
         }
 
-
+        #endregion
         /***************************************************************************************/
 
 
-
-
-
         /*************************************adv search****************************************/
+        #region
         //drops down advanced search box after button is clicked
         private void advSearchBtn_Click(object sender, EventArgs e)
         {
@@ -783,25 +784,25 @@ namespace ScheduleApp
         //displays new info in results query if it has been updated based on new search criteria
         private void display_corrected_query()
         {
-            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower())
+            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower() && searchResult_UI.Items.Count > 0)
             {
                 searchBox.Text = search.lastSearchResults.getCorrectedQuery();
-                autocorrect_label.Text = search.lastSearchResults.getCorrectedQuery();
-                display_query_labels(true);
+                autocorrect_label.Text = "Did you mean " + search.lastSearchResults.getCorrectedQuery() + "?";
+                autocorrect_label.Visible = true;
+
+                searchBox.SelectionStart = searchBox.Text.Length;
+            }
+            else if(searchResult_UI.Items.Count == 0)
+            {
+                autocorrect_label.Text = "No results. Try another query.";
+                autocorrect_label.Visible = true;
             }
             else
             {
-                display_query_labels(false);
+                autocorrect_label.Visible = false;
             }
         }
 
-        //
-        private void display_query_labels(bool p)
-        {
-            dym_label.Visible = p;
-            qm_label.Visible = p;
-            autocorrect_label.Visible = p;
-        }
 
         //checks to see if the building attribute has been changed by the user
         private void building_valueChanged(object sender, EventArgs e)
@@ -890,12 +891,13 @@ namespace ScheduleApp
             probability_combobox.Text = "Any";
             search.options.probabilityScore = 3;
         }
-
+        #endregion
         /**************************************************************************************/
 
 
 
         /**************************************JSON Transfer***************************************/
+        #region
         //function that allows the import button to work
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -948,6 +950,7 @@ namespace ScheduleApp
             }
             
         }
+        #endregion
         /***************************************************************************************************/
 
 
