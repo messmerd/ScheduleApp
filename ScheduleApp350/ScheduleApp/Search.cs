@@ -288,6 +288,19 @@ namespace ScheduleApp
                     lastSearchResults.courses.RemoveAt(index);
                 }
             }
+            // Filter by Probability score
+            if (options.probabilityScore != -1)  // If the user has a preference for the professor's minimum probability chance 
+            {
+                removeIndices.Clear();
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getProbabilityInt() < options.probabilityScore ? index : -1).Where(i => i != -1).ToList();
+                removeIndices.Reverse();
+
+                foreach (int index in removeIndices)
+                {
+                    lastSearchResults.relevance.Remove(lastSearchResults.getCourses()[index].getCourseID());
+                    lastSearchResults.courses.RemoveAt(index);
+                }
+            }
 
         }
         
@@ -297,7 +310,7 @@ namespace ScheduleApp
     public class AdvancedOptions
     {
         public double rmp;  // Filter by courses with professor with RateMyProfessor rating >= rmp. -1 means the user doesn't have a preference
-        public string probability; // high, medium, or low
+        public int probabilityScore; // high, medium, or low
 
         // Put other advanced options here later 
 
@@ -315,7 +328,7 @@ namespace ScheduleApp
         public AdvancedOptions()
         {
             rmp = -1.0;  
-            probability = ""; // high, medium, low, or low/none
+            probabilityScore = -1; // high, medium, low
 
             // Put other advanced options here later 
 

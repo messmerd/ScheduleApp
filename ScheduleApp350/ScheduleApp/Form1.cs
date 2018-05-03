@@ -182,36 +182,6 @@ namespace ScheduleApp
             // 89 102 107 <- unfocused search bar
 
 
-            /*
-            // Base color
-            scheduleTitle.ForeColor = Color.Black;
-
-            menuBar.BackColor = Color.White;
-            searchBox.BackColor = Color.White;
-            searchTab.BackColor = Color.White;
-            searchResult_UI.BackColor = Color.White;
-            searchResult_UI.ForeColor = Color.Black;
-            scheduleView.BackColor = Color.White;
-            scheduleTab.BackColor = Color.White;
-            appMenu.BackColor = Color.White;
-
-            // Adv Filter elements
-            filter_UI.BackColor = Color.White;
-            filter_UI.ForeColor = Color.Black;
-
-            // Button backgrounds
-            searchBtn.BackColor = Color.Gainsboro;
-            advSearchBtn.BackColor = Color.Gainsboro;
-            searchBtn.BackColor = Color.Gainsboro;
-
-            // Button fonts
-            searchBtn.ForeColor = Color.Black;
-            advSearchBtn.ForeColor = Color.Black;
-              
-            // More need to be added  
-            
-            */
-
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -453,11 +423,11 @@ namespace ScheduleApp
             else
                 search.searchForQuery(""); // search for all courses
 
-            display_corrected_query();
             search.advancedSearchFilter(); 
             search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
 
             populateSearch(search.lastSearchResults.getCourses());
+            //display_corrected_query();
         }
 
         private void populateSearch(List<Course> results)
@@ -625,8 +595,22 @@ namespace ScheduleApp
                     clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" was removed from your schedule.";
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
                     searchResult_UI.SelectedItems[0].Selected = false; 
-                    
                 }
+            }
+
+            if(schedule.checkCreditCount() == -1)
+            {
+                credits_notify_label.Text = "You have too few credits for a full-time student";
+                credits_notify_label.Visible = true;
+            }
+            if(schedule.checkCreditCount() == 0)
+            {
+                credits_notify_label.Visible = false;
+            }
+            if (schedule.checkCreditCount() == 1)
+            {
+                credits_notify_label.Text = "You have over 17 credits and may have to pay extra for tuition";
+                credits_notify_label.Visible = true;
             }
         }
 
@@ -734,12 +718,10 @@ namespace ScheduleApp
 
         private void display_corrected_query()
         {
-            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower() /*||
-               search.lastSearchResults.getCorrectedQuery().Split().Length > 1*/)
+            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower())
             {
                 searchBox.Text = search.lastSearchResults.getCorrectedQuery();
                 autocorrect_label.Text = search.lastSearchResults.getCorrectedQuery();
-                MessageBox.Show(search.lastSearchResults.getCorrectedQuery());
                 display_query_labels(true);
             }
             else
@@ -793,7 +775,21 @@ namespace ScheduleApp
         
         private void probability_valueChanged(object sender, EventArgs e)
         {
-            search.options.probability = probability_combobox.Text;
+            switch (probability_combobox.Text)
+            {
+                case "low":
+                    search.options.probabilityScore = 2;
+                    break;
+                case "medium":
+                    search.options.probabilityScore = 1;
+                    break;
+                case "high":
+                    search.options.probabilityScore = 0;
+                    break;
+                default:
+                    search.options.probabilityScore = 0;
+                    break;
+            }
         }
        
 
