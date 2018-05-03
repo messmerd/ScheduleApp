@@ -219,6 +219,13 @@ namespace ScheduleApp
             advSearchBtn.ForeColor = Color.Black;
               
             // More need to be added  
+<<<<<<< HEAD
+            
+            
+
+
+=======
+>>>>>>> 853194de1bff6f938b4177bfeb0bf48c8b2f35fc
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
