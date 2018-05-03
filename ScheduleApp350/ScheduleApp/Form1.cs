@@ -243,7 +243,7 @@ namespace ScheduleApp
             scheduleTitle.ForeColor = Color.White;
             //Color.CornflowerBlue;
             //Color.DarkBlue
-            menuBar.BackColor = Color.CornflowerBlue;
+            menuBar.BackColor = Color.White;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = Color.MidnightBlue;
             //searchResult_UI.BackColor = Color.CornflowerBlue;
@@ -251,7 +251,7 @@ namespace ScheduleApp
             //scheduleView.BackColor = Color.CornflowerBlue;
             scheduleView.ForeColor = Color.Black;
             scheduleTab.BackColor = Color.MidnightBlue;
-            appMenu.BackColor = Color.CornflowerBlue;
+            appMenu.BackColor = Color.White;
 
             // Adv Filter
             filter_UI.BackColor = Color.DarkBlue;
