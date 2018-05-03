@@ -234,9 +234,9 @@ namespace ScheduleApp
                 case 2:
                     return "low";
                 case 3:
-                    return "low/none";
+                    return "low";
                 default: // It should never activate this case, but we put it in to account for corner cases
-                    return "low/none";
+                    return "low";
             }
         }
 
@@ -256,7 +256,7 @@ namespace ScheduleApp
                 if (caseItem) probScore++;
             }
 
-            // If the class is full, it has a default probability of low/none, otherwise we return our calculated score
+            // If the class is full, it has a default probability of low, otherwise we return our calculated score
             return this.capacity - this.enrollment == 0 ? 3 : probScore;
         }
 

@@ -29,14 +29,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
-            this.qm_label = new System.Windows.Forms.Label();
             this.autocorrect_label = new System.Windows.Forms.Label();
-            this.dym_label = new System.Windows.Forms.Label();
             this.clickHelp1 = new System.Windows.Forms.Label();
             this.userHelpLabel = new System.Windows.Forms.Label();
             this.gccLogo = new System.Windows.Forms.PictureBox();
@@ -74,7 +72,10 @@
             this.capacityCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rmpCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.probCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dym_label = new System.Windows.Forms.Label();
+            this.qm_label = new System.Windows.Forms.Label();
             this.scheduleTab = new System.Windows.Forms.TabPage();
+            this.credits_notify_label = new System.Windows.Forms.Label();
             this.removeHelp = new System.Windows.Forms.Label();
             this.clearAll = new System.Windows.Forms.Button();
             this.scheduleView = new System.Windows.Forms.ListView();
@@ -112,8 +113,8 @@
             // 
             // calendar_UI
             // 
-            drawTool1.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool1;
+            drawTool2.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool2;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
@@ -146,9 +147,7 @@
             // searchTab
             // 
             this.searchTab.BackColor = System.Drawing.Color.White;
-            this.searchTab.Controls.Add(this.qm_label);
             this.searchTab.Controls.Add(this.autocorrect_label);
-            this.searchTab.Controls.Add(this.dym_label);
             this.searchTab.Controls.Add(this.clickHelp1);
             this.searchTab.Controls.Add(this.userHelpLabel);
             this.searchTab.Controls.Add(this.gccLogo);
@@ -158,22 +157,14 @@
             this.searchTab.Controls.Add(this.searchBtn);
             this.searchTab.Controls.Add(this.searchBox);
             this.searchTab.Controls.Add(this.searchResult_UI);
+            this.searchTab.Controls.Add(this.dym_label);
+            this.searchTab.Controls.Add(this.qm_label);
             this.searchTab.Location = new System.Drawing.Point(4, 31);
             this.searchTab.Name = "searchTab";
             this.searchTab.Padding = new System.Windows.Forms.Padding(3);
             this.searchTab.Size = new System.Drawing.Size(854, 540);
             this.searchTab.TabIndex = 0;
             this.searchTab.Text = "Search";
-            // 
-            // qm_label
-            // 
-            this.qm_label.AutoSize = true;
-            this.qm_label.Location = new System.Drawing.Point(244, 77);
-            this.qm_label.Name = "qm_label";
-            this.qm_label.Size = new System.Drawing.Size(13, 13);
-            this.qm_label.TabIndex = 13;
-            this.qm_label.Text = "?";
-            this.qm_label.Visible = false;
             // 
             // autocorrect_label
             // 
@@ -184,16 +175,6 @@
             this.autocorrect_label.TabIndex = 12;
             this.autocorrect_label.Text = "<query>";
             this.autocorrect_label.Visible = false;
-            // 
-            // dym_label
-            // 
-            this.dym_label.AutoSize = true;
-            this.dym_label.Location = new System.Drawing.Point(106, 76);
-            this.dym_label.Name = "dym_label";
-            this.dym_label.Size = new System.Drawing.Size(89, 13);
-            this.dym_label.TabIndex = 11;
-            this.dym_label.Text = "did you mean ";
-            this.dym_label.Visible = false;
             // 
             // clickHelp1
             // 
@@ -270,6 +251,7 @@
             // 
             // probability_combobox
             // 
+            this.probability_combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.probability_combobox.FormattingEnabled = true;
             this.probability_combobox.Items.AddRange(new object[] {
             "high",
@@ -279,7 +261,6 @@
             this.probability_combobox.Name = "probability_combobox";
             this.probability_combobox.Size = new System.Drawing.Size(72, 21);
             this.probability_combobox.TabIndex = 19;
-            this.probability_combobox.Text = "Any";
             // 
             // label2
             // 
@@ -292,12 +273,18 @@
             // 
             // rmp_numericUpDown
             // 
+            this.rmp_numericUpDown.DecimalPlaces = 1;
             this.rmp_numericUpDown.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
             this.rmp_numericUpDown.Location = new System.Drawing.Point(185, 45);
+            this.rmp_numericUpDown.Maximum = new decimal(new int[] {
+            45,
+            0,
+            0,
+            65536});
             this.rmp_numericUpDown.Name = "rmp_numericUpDown";
             this.rmp_numericUpDown.Size = new System.Drawing.Size(43, 21);
             this.rmp_numericUpDown.TabIndex = 17;
@@ -345,6 +332,7 @@
             // 
             // professor_adv
             // 
+            this.professor_adv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.professor_adv.FormattingEnabled = true;
             this.professor_adv.Items.AddRange(new object[] {
             "Any"});
@@ -352,7 +340,6 @@
             this.professor_adv.Name = "professor_adv";
             this.professor_adv.Size = new System.Drawing.Size(130, 21);
             this.professor_adv.TabIndex = 12;
-            this.professor_adv.Text = "Any";
             this.professor_adv.SelectedValueChanged += new System.EventHandler(this.professorValueChanged);
             // 
             // label1
@@ -385,6 +372,7 @@
             // 
             // building_adv
             // 
+            this.building_adv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.building_adv.FormattingEnabled = true;
             this.building_adv.Items.AddRange(new object[] {
             "Any",
@@ -400,7 +388,6 @@
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
-            this.building_adv.Text = "Any";
             this.building_adv.SelectedValueChanged += new System.EventHandler(this.building_valueChanged);
             // 
             // firstTime_UI
@@ -611,8 +598,29 @@
             this.probCol.Text = "Prob.";
             this.probCol.Width = 74;
             // 
+            // dym_label
+            // 
+            this.dym_label.AutoSize = true;
+            this.dym_label.Location = new System.Drawing.Point(106, 76);
+            this.dym_label.Name = "dym_label";
+            this.dym_label.Size = new System.Drawing.Size(89, 13);
+            this.dym_label.TabIndex = 11;
+            this.dym_label.Text = "did you mean ";
+            this.dym_label.Visible = false;
+            // 
+            // qm_label
+            // 
+            this.qm_label.AutoSize = true;
+            this.qm_label.Location = new System.Drawing.Point(244, 77);
+            this.qm_label.Name = "qm_label";
+            this.qm_label.Size = new System.Drawing.Size(13, 13);
+            this.qm_label.TabIndex = 13;
+            this.qm_label.Text = "?";
+            this.qm_label.Visible = false;
+            // 
             // scheduleTab
             // 
+            this.scheduleTab.Controls.Add(this.credits_notify_label);
             this.scheduleTab.Controls.Add(this.calendar_UI);
             this.scheduleTab.Controls.Add(this.removeHelp);
             this.scheduleTab.Controls.Add(this.clearAll);
@@ -624,6 +632,15 @@
             this.scheduleTab.TabIndex = 1;
             this.scheduleTab.Text = "Schedule";
             this.scheduleTab.UseVisualStyleBackColor = true;
+            // 
+            // credits_notify_label
+            // 
+            this.credits_notify_label.AutoSize = true;
+            this.credits_notify_label.Location = new System.Drawing.Point(23, 178);
+            this.credits_notify_label.Name = "credits_notify_label";
+            this.credits_notify_label.Size = new System.Drawing.Size(118, 13);
+            this.credits_notify_label.TabIndex = 4;
+            this.credits_notify_label.Text = "credits_notify_label";
             // 
             // removeHelp
             // 
@@ -907,6 +924,7 @@
         private System.Windows.Forms.Label dym_label;
         private System.Windows.Forms.ComboBox probability_combobox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label credits_notify_label;
     }
 }
 

@@ -192,6 +192,8 @@ namespace ScheduleApp
 
             var veryDarkGray = Color.FromArgb(51, 51, 51);
 
+<<<<<<< HEAD
+=======
             // Base color
             scheduleTitle.ForeColor = Color.White;
 
@@ -222,6 +224,7 @@ namespace ScheduleApp
             
             
 
+>>>>>>> 939970d75673769432100c66f28dd01353662c18
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -472,7 +475,6 @@ namespace ScheduleApp
             else
                 search.searchForQuery(""); // search for all courses
 
-            display_corrected_query();
             search.advancedSearchFilter(); 
             search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
 
@@ -484,6 +486,7 @@ namespace ScheduleApp
             }
 
             populateSearch(search.lastSearchResults.getCourses());
+            //display_corrected_query();
         }
 
         //fills the search results section with desired courses
@@ -656,8 +659,22 @@ namespace ScheduleApp
                     clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" was removed from your schedule.";
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
                     searchResult_UI.SelectedItems[0].Selected = false; 
-                    
                 }
+            }
+
+            if(schedule.checkCreditCount() == -1)
+            {
+                credits_notify_label.Text = "You have too few credits for a full-time student";
+                credits_notify_label.Visible = true;
+            }
+            if(schedule.checkCreditCount() == 0)
+            {
+                credits_notify_label.Visible = false;
+            }
+            if (schedule.checkCreditCount() == 1)
+            {
+                credits_notify_label.Text = "You have over 17 credits and may have to pay extra for tuition";
+                credits_notify_label.Visible = true;
             }
         }
 
@@ -772,12 +789,10 @@ namespace ScheduleApp
         //displays new info in results query if it has been updated based on new search criteria
         private void display_corrected_query()
         {
-            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower() /*||
-               search.lastSearchResults.getCorrectedQuery().Split().Length > 1*/)
+            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower())
             {
                 searchBox.Text = search.lastSearchResults.getCorrectedQuery();
                 autocorrect_label.Text = search.lastSearchResults.getCorrectedQuery();
-                MessageBox.Show(search.lastSearchResults.getCorrectedQuery());
                 display_query_labels(true);
             }
             else
@@ -837,7 +852,21 @@ namespace ScheduleApp
         //checks to see if the probability attribute has been changed by the user
         private void probability_valueChanged(object sender, EventArgs e)
         {
-            search.options.probability = probability_combobox.Text;
+            switch (probability_combobox.Text)
+            {
+                case "low":
+                    search.options.probabilityScore = 2;
+                    break;
+                case "medium":
+                    search.options.probabilityScore = 1;
+                    break;
+                case "high":
+                    search.options.probabilityScore = 0;
+                    break;
+                default:
+                    search.options.probabilityScore = 0;
+                    break;
+            }
         }
        
 
