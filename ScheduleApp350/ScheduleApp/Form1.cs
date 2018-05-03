@@ -608,7 +608,8 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
-                            clickHelp1.ForeColor = Color.Yellow;
+                        case THEME.NIGHT:
+                            clickHelp1.ForeColor = Color.GreenYellow;
                             break;
 
                         default:
@@ -629,6 +630,7 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
+                        case THEME.NIGHT:
                             clickHelp1.ForeColor = Color.LightSalmon;
                             break;
 
@@ -904,6 +906,7 @@ namespace ScheduleApp
                 switch (currentTheme)
                 {
                     case THEME.BLUE:
+                    case THEME.NIGHT:
                         clickHelp1.ForeColor = Color.White;
                         break;
 
