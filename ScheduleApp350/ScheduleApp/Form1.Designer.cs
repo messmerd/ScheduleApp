@@ -34,11 +34,17 @@
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.searchTab = new System.Windows.Forms.TabPage();
+            this.qm_label = new System.Windows.Forms.Label();
+            this.autocorrect_label = new System.Windows.Forms.Label();
+            this.dym_label = new System.Windows.Forms.Label();
             this.clickHelp1 = new System.Windows.Forms.Label();
             this.userHelpLabel = new System.Windows.Forms.Label();
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.probability_combobox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.rmp_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.professor_adv_label = new System.Windows.Forms.Label();
             this.adv_building_label = new System.Windows.Forms.Label();
@@ -86,16 +92,18 @@
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.themes_menu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nightTheme = new System.Windows.Forms.ToolStripMenuItem();
             this.blueTheme = new System.Windows.Forms.ToolStripMenuItem();
             this.crimsonTheme = new System.Windows.Forms.ToolStripMenuItem();
             this.classicTheme = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
             this.filter_UI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rmp_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondTime_UI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).BeginInit();
             this.scheduleTab.SuspendLayout();
@@ -138,6 +146,9 @@
             // searchTab
             // 
             this.searchTab.BackColor = System.Drawing.Color.White;
+            this.searchTab.Controls.Add(this.qm_label);
+            this.searchTab.Controls.Add(this.autocorrect_label);
+            this.searchTab.Controls.Add(this.dym_label);
             this.searchTab.Controls.Add(this.clickHelp1);
             this.searchTab.Controls.Add(this.userHelpLabel);
             this.searchTab.Controls.Add(this.gccLogo);
@@ -153,6 +164,36 @@
             this.searchTab.Size = new System.Drawing.Size(854, 540);
             this.searchTab.TabIndex = 0;
             this.searchTab.Text = "Search";
+            // 
+            // qm_label
+            // 
+            this.qm_label.AutoSize = true;
+            this.qm_label.Location = new System.Drawing.Point(244, 77);
+            this.qm_label.Name = "qm_label";
+            this.qm_label.Size = new System.Drawing.Size(13, 13);
+            this.qm_label.TabIndex = 13;
+            this.qm_label.Text = "?";
+            this.qm_label.Visible = false;
+            // 
+            // autocorrect_label
+            // 
+            this.autocorrect_label.AutoSize = true;
+            this.autocorrect_label.Location = new System.Drawing.Point(187, 76);
+            this.autocorrect_label.Name = "autocorrect_label";
+            this.autocorrect_label.Size = new System.Drawing.Size(58, 13);
+            this.autocorrect_label.TabIndex = 12;
+            this.autocorrect_label.Text = "<query>";
+            this.autocorrect_label.Visible = false;
+            // 
+            // dym_label
+            // 
+            this.dym_label.AutoSize = true;
+            this.dym_label.Location = new System.Drawing.Point(106, 76);
+            this.dym_label.Name = "dym_label";
+            this.dym_label.Size = new System.Drawing.Size(89, 13);
+            this.dym_label.TabIndex = 11;
+            this.dym_label.Text = "did you mean ";
+            this.dym_label.Visible = false;
             // 
             // clickHelp1
             // 
@@ -200,6 +241,9 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.probability_combobox);
+            this.filter_UI.Controls.Add(this.label2);
+            this.filter_UI.Controls.Add(this.rmp_numericUpDown);
             this.filter_UI.Controls.Add(this.label3);
             this.filter_UI.Controls.Add(this.professor_adv_label);
             this.filter_UI.Controls.Add(this.adv_building_label);
@@ -224,19 +268,54 @@
             this.filter_UI.Text = "Advanced";
             this.filter_UI.Visible = false;
             // 
+            // probability_combobox
+            // 
+            this.probability_combobox.FormattingEnabled = true;
+            this.probability_combobox.Items.AddRange(new object[] {
+            "high",
+            "medium",
+            "low"});
+            this.probability_combobox.Location = new System.Drawing.Point(321, 44);
+            this.probability_combobox.Name = "probability_combobox";
+            this.probability_combobox.Size = new System.Drawing.Size(72, 21);
+            this.probability_combobox.TabIndex = 19;
+            this.probability_combobox.Text = "Any";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(248, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Probability:";
+            // 
+            // rmp_numericUpDown
+            // 
+            this.rmp_numericUpDown.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.rmp_numericUpDown.Location = new System.Drawing.Point(185, 45);
+            this.rmp_numericUpDown.Name = "rmp_numericUpDown";
+            this.rmp_numericUpDown.Size = new System.Drawing.Size(43, 21);
+            this.rmp_numericUpDown.TabIndex = 17;
+            this.rmp_numericUpDown.ValueChanged += new System.EventHandler(this.rmp_valueChanged);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(140, 47);
+            this.label3.Location = new System.Drawing.Point(142, 48);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 16;
-            this.label3.Text = "RMP:";
+            this.label3.Text = "RMP >";
             // 
             // professor_adv_label
             // 
             this.professor_adv_label.AutoSize = true;
-            this.professor_adv_label.Location = new System.Drawing.Point(194, 72);
+            this.professor_adv_label.Location = new System.Drawing.Point(194, 73);
             this.professor_adv_label.Name = "professor_adv_label";
             this.professor_adv_label.Size = new System.Drawing.Size(66, 13);
             this.professor_adv_label.TabIndex = 15;
@@ -245,7 +324,7 @@
             // adv_building_label
             // 
             this.adv_building_label.AutoSize = true;
-            this.adv_building_label.Location = new System.Drawing.Point(44, 71);
+            this.adv_building_label.Location = new System.Drawing.Point(44, 72);
             this.adv_building_label.Name = "adv_building_label";
             this.adv_building_label.Size = new System.Drawing.Size(57, 13);
             this.adv_building_label.TabIndex = 14;
@@ -269,7 +348,7 @@
             this.professor_adv.FormattingEnabled = true;
             this.professor_adv.Items.AddRange(new object[] {
             "Any"});
-            this.professor_adv.Location = new System.Drawing.Point(263, 68);
+            this.professor_adv.Location = new System.Drawing.Point(263, 69);
             this.professor_adv.Name = "professor_adv";
             this.professor_adv.Size = new System.Drawing.Size(130, 21);
             this.professor_adv.TabIndex = 12;
@@ -317,7 +396,7 @@
             "BAO",
             "STEM",
             "Other"});
-            this.building_adv.Location = new System.Drawing.Point(104, 68);
+            this.building_adv.Location = new System.Drawing.Point(104, 69);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
@@ -655,21 +734,21 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.importToolStripMenuItem.Text = "Import JSON...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.exportToolStripMenuItem.Text = "Export JSON...";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(147, 6);
             // 
             // themes_menu
             // 
@@ -679,26 +758,14 @@
             this.crimsonTheme,
             this.classicTheme});
             this.themes_menu.Name = "themes_menu";
-            this.themes_menu.Size = new System.Drawing.Size(152, 22);
+            this.themes_menu.Size = new System.Drawing.Size(150, 22);
             this.themes_menu.Text = "Theme";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // nightTheme
             // 
             this.nightTheme.CheckOnClick = true;
             this.nightTheme.Name = "nightTheme";
-            this.nightTheme.Size = new System.Drawing.Size(152, 22);
+            this.nightTheme.Size = new System.Drawing.Size(146, 22);
             this.nightTheme.Text = "Night";
             this.nightTheme.Click += new System.EventHandler(this.themeToNight);
             // 
@@ -706,7 +773,7 @@
             // 
             this.blueTheme.CheckOnClick = true;
             this.blueTheme.Name = "blueTheme";
-            this.blueTheme.Size = new System.Drawing.Size(152, 22);
+            this.blueTheme.Size = new System.Drawing.Size(146, 22);
             this.blueTheme.Text = "Blue";
             this.blueTheme.Click += new System.EventHandler(this.themeToBlue);
             // 
@@ -714,7 +781,7 @@
             // 
             this.crimsonTheme.CheckOnClick = true;
             this.crimsonTheme.Name = "crimsonTheme";
-            this.crimsonTheme.Size = new System.Drawing.Size(152, 22);
+            this.crimsonTheme.Size = new System.Drawing.Size(146, 22);
             this.crimsonTheme.Text = "GCC Crimson";
             this.crimsonTheme.Click += new System.EventHandler(this.themeToGCC);
             // 
@@ -723,9 +790,21 @@
             this.classicTheme.Checked = true;
             this.classicTheme.CheckState = System.Windows.Forms.CheckState.Checked;
             this.classicTheme.Name = "classicTheme";
-            this.classicTheme.Size = new System.Drawing.Size(152, 22);
+            this.classicTheme.Size = new System.Drawing.Size(146, 22);
             this.classicTheme.Text = "Classic";
             this.classicTheme.Click += new System.EventHandler(this.themeToClassic);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(147, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // AppWindow
             // 
@@ -746,6 +825,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).EndInit();
             this.filter_UI.ResumeLayout(false);
             this.filter_UI.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rmp_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondTime_UI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).EndInit();
             this.scheduleTab.ResumeLayout(false);
@@ -820,6 +900,13 @@
         private System.Windows.Forms.ToolStripMenuItem blueTheme;
         private System.Windows.Forms.ToolStripMenuItem crimsonTheme;
         private System.Windows.Forms.ToolStripMenuItem classicTheme;
+        private System.Windows.Forms.NumericUpDown rmp_numericUpDown;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label qm_label;
+        private System.Windows.Forms.Label autocorrect_label;
+        private System.Windows.Forms.Label dym_label;
+        private System.Windows.Forms.ComboBox probability_combobox;
+        private System.Windows.Forms.Label label2;
     }
 }
 
