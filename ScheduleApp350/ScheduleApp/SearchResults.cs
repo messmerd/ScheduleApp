@@ -46,7 +46,8 @@ namespace ScheduleApp
             else
                 return -1; // Course is not in the search results
         }
-
+        //contains cases to designate what the list of courses is to be sorted by (building, capacity, etc.) as well as whether it is ascending
+        //or descendng
         public void SortCourses(SORTTYPE sortBy, bool ascending)
         {
             switch (sortBy)
@@ -100,6 +101,7 @@ namespace ScheduleApp
             alphabetize(sortBy);
         }
 
+        //assigns values to each tuple in order to order them
         private int getSortableValueForDay(List<bool> input)
         {
             int sum = 0;
@@ -110,6 +112,7 @@ namespace ScheduleApp
             return Int32.MaxValue - (sum + input.Count(x => !x) * 32);
         }
 
+        //returns false if sorttype variables are equal, false if not
         private bool attributesAreEqual(SORTTYPE type, int index1, int index2)
         {
             switch (type)
