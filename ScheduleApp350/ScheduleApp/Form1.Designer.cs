@@ -40,6 +40,8 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.showFullCheckbox = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.clear_adv = new System.Windows.Forms.Button();
             this.probability_combobox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -222,6 +224,8 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.showFullCheckbox);
+            this.filter_UI.Controls.Add(this.label4);
             this.filter_UI.Controls.Add(this.clear_adv);
             this.filter_UI.Controls.Add(this.probability_combobox);
             this.filter_UI.Controls.Add(this.label2);
@@ -250,9 +254,29 @@
             this.filter_UI.Text = "Advanced";
             this.filter_UI.Visible = false;
             // 
+            // showFullCheckbox
+            // 
+            this.showFullCheckbox.AutoSize = true;
+            this.showFullCheckbox.Checked = true;
+            this.showFullCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showFullCheckbox.Location = new System.Drawing.Point(380, 82);
+            this.showFullCheckbox.Name = "showFullCheckbox";
+            this.showFullCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.showFullCheckbox.TabIndex = 22;
+            this.showFullCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(354, 66);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Show Full";
+            // 
             // clear_adv
             // 
-            this.clear_adv.Location = new System.Drawing.Point(415, 71);
+            this.clear_adv.Location = new System.Drawing.Point(416, 72);
             this.clear_adv.Name = "clear_adv";
             this.clear_adv.Size = new System.Drawing.Size(24, 24);
             this.clear_adv.TabIndex = 20;
@@ -269,7 +293,7 @@
             "high",
             "medium",
             "low"});
-            this.probability_combobox.Location = new System.Drawing.Point(328, 44);
+            this.probability_combobox.Location = new System.Drawing.Point(299, 44);
             this.probability_combobox.Name = "probability_combobox";
             this.probability_combobox.Size = new System.Drawing.Size(72, 21);
             this.probability_combobox.TabIndex = 19;
@@ -278,7 +302,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(248, 48);
+            this.label2.Location = new System.Drawing.Point(219, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 18;
@@ -292,7 +316,7 @@
             0,
             0,
             65536});
-            this.rmp_numericUpDown.Location = new System.Drawing.Point(185, 45);
+            this.rmp_numericUpDown.Location = new System.Drawing.Point(175, 44);
             this.rmp_numericUpDown.Maximum = new decimal(new int[] {
             45,
             0,
@@ -306,7 +330,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(142, 48);
+            this.label3.Location = new System.Drawing.Point(130, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 16;
@@ -315,7 +339,7 @@
             // professor_adv_label
             // 
             this.professor_adv_label.AutoSize = true;
-            this.professor_adv_label.Location = new System.Drawing.Point(169, 72);
+            this.professor_adv_label.Location = new System.Drawing.Point(154, 78);
             this.professor_adv_label.Name = "professor_adv_label";
             this.professor_adv_label.Size = new System.Drawing.Size(66, 13);
             this.professor_adv_label.TabIndex = 15;
@@ -324,7 +348,7 @@
             // adv_building_label
             // 
             this.adv_building_label.AutoSize = true;
-            this.adv_building_label.Location = new System.Drawing.Point(19, 72);
+            this.adv_building_label.Location = new System.Drawing.Point(4, 77);
             this.adv_building_label.Name = "adv_building_label";
             this.adv_building_label.Size = new System.Drawing.Size(57, 13);
             this.adv_building_label.TabIndex = 14;
@@ -349,7 +373,7 @@
             this.professor_adv.FormattingEnabled = true;
             this.professor_adv.Items.AddRange(new object[] {
             "Any"});
-            this.professor_adv.Location = new System.Drawing.Point(238, 68);
+            this.professor_adv.Location = new System.Drawing.Point(222, 74);
             this.professor_adv.Name = "professor_adv";
             this.professor_adv.Size = new System.Drawing.Size(130, 21);
             this.professor_adv.TabIndex = 12;
@@ -397,7 +421,7 @@
             "BAO",
             "STEM",
             "Other"});
-            this.building_adv.Location = new System.Drawing.Point(77, 69);
+            this.building_adv.Location = new System.Drawing.Point(64, 74);
             this.building_adv.Name = "building_adv";
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
@@ -702,7 +726,7 @@
             // schedule_timeCol
             // 
             this.schedule_timeCol.Text = "Times";
-            this.schedule_timeCol.Width = 105;
+            this.schedule_timeCol.Width = 101;
             // 
             // schedule_buildingCol
             // 
@@ -919,6 +943,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label credits_notify_label;
         private System.Windows.Forms.Button clear_adv;
+        private System.Windows.Forms.CheckBox showFullCheckbox;
+        private System.Windows.Forms.Label label4;
     }
 }
 

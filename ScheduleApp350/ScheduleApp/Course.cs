@@ -272,7 +272,8 @@ namespace ScheduleApp
             if (time.Item1 == -1.0) return new Tuple<int,int,int,int>(-1, -1, -1, -1); //No time is given
             int t1 = (int)time.Item1;
             int t2 = (int)Math.Round((time.Item1 % 1) * 100.0);
-            int t3 = (int)time.Item2;
+            int t3 = (int)time.
+                Item2;
             int t4 = (int)Math.Round((time.Item2 % 1) * 100.0);
 
             return Tuple.Create(t1, t2, t3, t4);

@@ -140,7 +140,7 @@ namespace ScheduleApp
                         }
                     }
                     //Console.WriteLine(rmp);
-                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
+                    prof_database.Add(new Professor("john", parsedCourse[12], rmp));
                     Console.WriteLine(prof_database[0].rmp);
                 }
                 i++;

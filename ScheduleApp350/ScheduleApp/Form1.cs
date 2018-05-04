@@ -191,6 +191,7 @@ namespace ScheduleApp
         //sets theme to night
         private void themeToNight(object sender, EventArgs e)
         {
+            
             currentTheme = THEME.NIGHT;
             adjustCheckstates();
 
@@ -227,8 +228,10 @@ namespace ScheduleApp
             // Button fonts
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
-              
-            // More need to be added  
+
+            autocorrect_label.ForeColor = Color.White;
+            removeHelp.ForeColor = Color.White;
+            credits_notify_label.ForeColor = Color.White;
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -291,6 +294,8 @@ namespace ScheduleApp
                 clickHelp1.ForeColor = Color.White;
 
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
+            autocorrect_label.ForeColor = Color.White;
+            credits_notify_label.ForeColor = Color.White;
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
@@ -345,6 +350,8 @@ namespace ScheduleApp
                 clickHelp1.ForeColor = Color.Black;
 
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
+            autocorrect_label.ForeColor = Color.White;
+            credits_notify_label.ForeColor = Color.White;
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
@@ -731,7 +738,7 @@ namespace ScheduleApp
 
             if (schedule.checkCreditCount() == -1)
             {
-                credits_notify_label.Text = "You have too few credits for a full-time student";
+                credits_notify_label.Text = "You have too few credits to be a full-time student";
                 credits_notify_label.Visible = true;
             }
             if (schedule.checkCreditCount() == 0)
@@ -875,6 +882,18 @@ namespace ScheduleApp
             }
         }
 
+        private void showFullCheckbox_CheckChanged(object sender, EventArgs e)
+        {
+            if (showFullCheckbox.Checked)
+            {
+                // display full courses, default value
+            }
+            else
+            {
+                // remove full courses
+            }
+        }
+
         private void clearAdvBtn_Click(object sender, EventArgs e)
         {
             search.options.rmp = -1;
@@ -899,6 +918,9 @@ namespace ScheduleApp
             professor_adv.Text = "Any";
             search.options.firstNameProfessor = "";
             search.options.lastNameProfessor = "";
+
+            showFullCheckbox.CheckState = CheckState.Checked;
+            showFullCheckbox_CheckChanged(sender, e);
         }
         #endregion
         /**************************************************************************************/
