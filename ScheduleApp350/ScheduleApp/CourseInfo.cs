@@ -24,12 +24,12 @@ namespace ScheduleApp
 
         }
 
-        public static CourseInfo Create(string db_filename)
+        public static CourseInfo Create(string db_filename, string rmp_filename)
         {
 
             if (singleton == null)
             {
-                singleton = new CourseInfo(db_filename);
+                singleton = new CourseInfo(db_filename, rmp_filename);
             }
             return singleton;
 
@@ -40,22 +40,22 @@ namespace ScheduleApp
         {
              database = new List<Course>();
              prof_database = new List<Professor>();
-             parseTextFile("course_database.txt", "rmp_database.txt");    // This function was causing the program to hang so it is commented out for now
+             parseTextFile("course_database.txt", "rmp_database.txt");    
         }
 
         //construtor based on a given database filename
-        private CourseInfo(string course_filename)
+        private CourseInfo(string course_filename, string rmp_filename)
         {
             database = new List<Course>();
             prof_database = new List<Professor>();
-            parseTextFile(course_filename, "rmp_database.txt");    // This function was causing the program to hang so it is commented out for now
+            parseTextFile(course_filename, rmp_filename);  
         }
 
         public List<Course> database;
         public List<Professor> prof_database;
         private int numCourses;
         
-        //function that parses the database file (if it is CSV)
+        //function that parses the database file (if it is CSV)   (UNUSED!!!!)
         private void parseCSV()
         {
             string fileName = "course_database.xlsx";
@@ -90,7 +90,7 @@ namespace ScheduleApp
                         parsedCourse.Add(xlRange.Cells[i, j].Value2.ToString());
                     else parsedCourse.Add("0");
                 }
-                Course nextCourse = new Course(parsedCourse, numCourses);
+                Course nextCourse = new Course(parsedCourse, numCourses, 3.5);
                 database.Add(nextCourse);
                 numCourses++;
             }
@@ -113,6 +113,17 @@ namespace ScheduleApp
                 return;
             }
 
+            List<string> rmp_data = new List<string>();
+            try
+            {
+                rmp_data = File.ReadAllLines(rmp_filename).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\n");
+                return;
+            }
+
             numCourses = fileContents.Count;
             int i = 0;
             foreach (string line in fileContents)  //CourseCode	ShortTitle	LongTitle	BeginTime	EndTime	Meets	Building	Room	Enrollment	Capacity
@@ -123,15 +134,14 @@ namespace ScheduleApp
                 {
                     parsedCourse.Add("0"); 
                 }
-                database.Add(new Course(parsedCourse, i));
-                List<string> rmp_data = File.ReadAllLines(rmp_filename).ToList();
+
+                double rmp = 3.5; // default value
                 // Don't add duplicate professors or empty strings:
                 if (parsedCourse[11] != "" && parsedCourse[12] != "" && !prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
                 {
-                    double rmp = 3.5; // default value
-                    foreach(var dataline in rmp_data)
+                    foreach (var dataline in rmp_data)
                     {
-                        if(dataline.Split()[0] == parsedCourse[12] && dataline.Split()[1] == parsedCourse[11])
+                        if (dataline.Split()[0] == parsedCourse[12] && dataline.Split()[1] == parsedCourse[11])
                         {
                             if (Double.TryParse(dataline.Split()[2], out rmp))
                             {
@@ -139,10 +149,11 @@ namespace ScheduleApp
                             }
                         }
                     }
-                    //Console.WriteLine(rmp);
                     prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
-                    Console.WriteLine(prof_database[0].rmp);
                 }
+                
+                database.Add(new Course(parsedCourse, i, rmp));
+                
                 i++;
             }
             prof_database = prof_database.OrderBy(x => x.last).ToList();
