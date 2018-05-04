@@ -97,6 +97,11 @@ namespace ScheduleApp
         
         }
 
+
+        private void parseRmpFile(string filename)
+        {
+
+        }
         //function that parses the database file (if it is .txt)
         private void parseTextFile(string filename)
         {

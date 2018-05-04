@@ -49,6 +49,7 @@ namespace ScheduleApp
             calendar_UI.StartHour = 8;
             calendar_UI.WorkingHourStart = 8;
 
+            clearAdvBtn_Click(this, new EventArgs());
             clickHelp1.Text = "Double click to add a course!";
         }
 
@@ -219,13 +220,7 @@ namespace ScheduleApp
             advSearchBtn.ForeColor = Color.Black;
               
             // More need to be added  
-<<<<<<< HEAD
-            
-            
 
-
-=======
->>>>>>> 853194de1bff6f938b4177bfeb0bf48c8b2f35fc
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -793,7 +788,6 @@ namespace ScheduleApp
         {
             if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower() && searchResult_UI.Items.Count > 0)
             {
-                searchBox.Text = search.lastSearchResults.getCorrectedQuery();
                 autocorrect_label.Text = "Did you mean " + search.lastSearchResults.getCorrectedQuery() + "?";
                 autocorrect_label.Visible = true;
 
