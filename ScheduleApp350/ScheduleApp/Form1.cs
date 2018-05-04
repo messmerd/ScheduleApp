@@ -55,6 +55,7 @@ namespace ScheduleApp
 
             clearAdvBtn_Click(this, new EventArgs());
             clickHelp1.Text = "Double click to add a course!";
+
             updateScheduleUI();
         }
 
@@ -805,10 +806,10 @@ namespace ScheduleApp
         }
 
         //checks to see if the start time chosen attribute has been changed by the user
-        private void startEndTimes_valueChanged(object sender,  EventArgs e)
+        private void numericUpDownEx_ValueChanged(object sender, EventArgs e)
         {
-            search.options.timeStart = (double)firstTime_UI.Value;
-            search.options.timeEnd = (double)secondTime_UI.Value;
+            search.options.timeStart = (double)numericUpDownEx1.Value;
+            search.options.timeEnd = (double)numericUpDownEx2.Value;
         }
 
         // Shows the auto correct label if the auto corrected string != the string the user typed in
@@ -911,8 +912,8 @@ namespace ScheduleApp
             search.options.timeStart = -1;
             search.options.timeEnd = -1;
 
-            firstTime_UI.Value = 0;
-            secondTime_UI.Value = 24;
+            numericUpDownEx1.Value = 0;
+            numericUpDownEx2.Value = 24;
 
             search.options.building = Build.NONE;
             building_adv.Text = "Any";

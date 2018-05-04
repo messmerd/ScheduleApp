@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -40,6 +40,8 @@
             this.gccLogo = new System.Windows.Forms.PictureBox();
             this.scheduleTitle = new System.Windows.Forms.Label();
             this.filter_UI = new System.Windows.Forms.GroupBox();
+            this.numericUpDownEx2 = new NumericUpDownCustom.NumericUpDownEx();
+            this.numericUpDownEx1 = new NumericUpDownCustom.NumericUpDownEx();
             this.showFullCheckbox = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.clear_adv = new System.Windows.Forms.Button();
@@ -52,9 +54,7 @@
             this.allNoneCheckBox = new System.Windows.Forms.CheckBox();
             this.professor_adv = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.secondTime_UI = new System.Windows.Forms.NumericUpDown();
             this.building_adv = new System.Windows.Forms.ComboBox();
-            this.firstTime_UI = new System.Windows.Forms.NumericUpDown();
             this.between_label = new System.Windows.Forms.Label();
             this.F_checkBox = new System.Windows.Forms.CheckBox();
             this.R_checkBox = new System.Windows.Forms.CheckBox();
@@ -106,17 +106,17 @@
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
             this.filter_UI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmp_numericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondTime_UI)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).BeginInit();
             this.scheduleTab.SuspendLayout();
             this.menuBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // calendar_UI
             // 
-            drawTool2.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool2;
+            drawTool1.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool1;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
@@ -225,6 +225,8 @@
             // filter_UI
             // 
             this.filter_UI.BackColor = System.Drawing.Color.White;
+            this.filter_UI.Controls.Add(this.numericUpDownEx2);
+            this.filter_UI.Controls.Add(this.numericUpDownEx1);
             this.filter_UI.Controls.Add(this.showFullCheckbox);
             this.filter_UI.Controls.Add(this.label4);
             this.filter_UI.Controls.Add(this.clear_adv);
@@ -237,9 +239,7 @@
             this.filter_UI.Controls.Add(this.allNoneCheckBox);
             this.filter_UI.Controls.Add(this.professor_adv);
             this.filter_UI.Controls.Add(this.label1);
-            this.filter_UI.Controls.Add(this.secondTime_UI);
             this.filter_UI.Controls.Add(this.building_adv);
-            this.filter_UI.Controls.Add(this.firstTime_UI);
             this.filter_UI.Controls.Add(this.between_label);
             this.filter_UI.Controls.Add(this.F_checkBox);
             this.filter_UI.Controls.Add(this.R_checkBox);
@@ -254,6 +254,39 @@
             this.filter_UI.TabStop = false;
             this.filter_UI.Text = "Advanced";
             this.filter_UI.Visible = false;
+            // 
+            // numericUpDownEx2
+            // 
+            this.numericUpDownEx2.DecimalPlaces = 2;
+            this.numericUpDownEx2.Location = new System.Drawing.Point(380, 21);
+            this.numericUpDownEx2.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.numericUpDownEx2.Name = "numericUpDownEx2";
+            this.numericUpDownEx2.Size = new System.Drawing.Size(58, 21);
+            this.numericUpDownEx2.TabIndex = 13;
+            this.numericUpDownEx2.Value = new decimal(new int[] {
+            2400,
+            0,
+            0,
+            131072});
+            this.numericUpDownEx2.ValueChanged += new System.EventHandler(this.numericUpDownEx_ValueChanged);
+            // 
+            // numericUpDownEx1
+            // 
+            this.numericUpDownEx1.DecimalPlaces = 2;
+            this.numericUpDownEx1.Location = new System.Drawing.Point(286, 21);
+            this.numericUpDownEx1.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.numericUpDownEx1.Name = "numericUpDownEx1";
+            this.numericUpDownEx1.Size = new System.Drawing.Size(57, 21);
+            this.numericUpDownEx1.TabIndex = 13;
+            this.numericUpDownEx1.ValueChanged += new System.EventHandler(this.numericUpDownEx_ValueChanged);
             // 
             // showFullCheckbox
             // 
@@ -390,25 +423,6 @@
             this.label1.TabIndex = 11;
             this.label1.Text = "and";
             // 
-            // secondTime_UI
-            // 
-            this.secondTime_UI.DecimalPlaces = 2;
-            this.secondTime_UI.Location = new System.Drawing.Point(380, 21);
-            this.secondTime_UI.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.secondTime_UI.Name = "secondTime_UI";
-            this.secondTime_UI.Size = new System.Drawing.Size(53, 21);
-            this.secondTime_UI.TabIndex = 10;
-            this.secondTime_UI.Value = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.secondTime_UI.ValueChanged += new System.EventHandler(this.startEndTimes_valueChanged);
-            // 
             // building_adv
             // 
             this.building_adv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -428,20 +442,6 @@
             this.building_adv.Size = new System.Drawing.Size(86, 21);
             this.building_adv.TabIndex = 9;
             this.building_adv.SelectedValueChanged += new System.EventHandler(this.building_valueChanged);
-            // 
-            // firstTime_UI
-            // 
-            this.firstTime_UI.DecimalPlaces = 2;
-            this.firstTime_UI.Location = new System.Drawing.Point(294, 21);
-            this.firstTime_UI.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.firstTime_UI.Name = "firstTime_UI";
-            this.firstTime_UI.Size = new System.Drawing.Size(50, 21);
-            this.firstTime_UI.TabIndex = 8;
-            this.firstTime_UI.ValueChanged += new System.EventHandler(this.startEndTimes_valueChanged);
             // 
             // between_label
             // 
@@ -873,9 +873,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).EndInit();
             this.filter_UI.ResumeLayout(false);
             this.filter_UI.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rmp_numericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondTime_UI)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstTime_UI)).EndInit();
             this.scheduleTab.ResumeLayout(false);
             this.scheduleTab.PerformLayout();
             this.menuBar.ResumeLayout(false);
@@ -921,11 +921,9 @@
         private System.Windows.Forms.CheckBox W_checkBox;
         private System.Windows.Forms.CheckBox T_checkBox;
         private System.Windows.Forms.CheckBox M_checkBox;
-        private System.Windows.Forms.NumericUpDown firstTime_UI;
         private System.Windows.Forms.ComboBox building_adv;
         private System.Windows.Forms.ComboBox professor_adv;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown secondTime_UI;
         private System.Windows.Forms.Label scheduleTitle;
         private System.Windows.Forms.Label userHelpLabel;
         private System.Windows.Forms.PictureBox gccLogo;
@@ -958,6 +956,8 @@
         private System.Windows.Forms.CheckBox showFullCheckbox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label calendar_info_label;
+        private NumericUpDownCustom.NumericUpDownEx numericUpDownEx1;
+        private NumericUpDownCustom.NumericUpDownEx numericUpDownEx2;
     }
 }
 
