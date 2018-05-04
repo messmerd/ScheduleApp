@@ -19,21 +19,19 @@ namespace ScheduleApp
     public partial class AppWindow : Form
     {
 
-        public const string emptySearchBarText = "Search by course code or name...";
-        Search search = Search.Create("course_dictionary.txt");
+        public const string emptySearchBarText = "Search by course code or name..."; // The text when the searchBox is unfocused
+        Search search = Search.Create("course_dictionary.txt"); // Create our databases and the candidate schedule
         CourseInfo DB = CourseInfo.Create();
         CandidateSchedule schedule = CandidateSchedule.Create();
+
+        // enum for keeping track of what sort is applied on which attribute
         SortOrder[] sort_status = { SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None };
-        int cur_attr = 0;
-        public static THEME currentTheme;
+        int cur_attr = 0; // The current attribute being clicked
+        public static THEME currentTheme; // enum for keeping track of current theme
 
         //constructor
         public AppWindow()
         {
-            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ":";
-
-            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             InitializeComponent();
             initializeProfessorComboBox();
             searchResult_UI.ShowItemToolTips = true;
@@ -60,7 +58,7 @@ namespace ScheduleApp
             updateScheduleUI();
         }
 
-        //orders professor first and last name in dropdown
+        //orders professor first and last name in combobox for the advanced search 
         private void initializeProfessorComboBox()
         {
             foreach (var prof in DB.prof_database) {
@@ -75,7 +73,7 @@ namespace ScheduleApp
         #region 
         private void searchBox_Enter(object sender, EventArgs e)
         {
-            searchBox.Text = Search.Create().lastSearchResults.getQuery(); 
+            searchBox.Text = Search.Create().lastSearchResults.getQuery(); // calls search if user presses enter instead of the search button
             searchBox.ForeColor = Color.Black;
         }
 
@@ -83,7 +81,7 @@ namespace ScheduleApp
         {
             if (searchBox.Text == "")
             {
-                searchBox.Text = emptySearchBarText;
+                searchBox.Text = emptySearchBarText; // Sets combobox to default text "Search for..."
                 searchBox.ForeColor = Color.Gray;
             }
         }
@@ -159,9 +157,9 @@ namespace ScheduleApp
 
         /**************************************** Themes ******************************************/
         #region
-        //sets themes
+        //sets theme checkboxes in the dropdown menu
         private void adjustCheckstates()
-        {
+        { 
             if(currentTheme == THEME.NIGHT)
             {
                 classicTheme.CheckState = CheckState.Unchecked;
@@ -199,11 +197,6 @@ namespace ScheduleApp
             currentTheme = THEME.NIGHT;
             adjustCheckstates();
             updateCalendarTheme();
-            // 38 50 56 <- background and surrounding stuff
-            // 0 150 136 <- buttons
-            // 168 183 185 <- text color
-            // 48 64 71 <- search bar
-            // 89 102 107 <- unfocused search bar
 
             var veryDarkGray = Color.FromArgb(51, 51, 51);
 
@@ -211,7 +204,6 @@ namespace ScheduleApp
             scheduleTitle.ForeColor = Color.White;
 
             menuBar.BackColor = Color.White;
-            //menuBar.ForeColor = Color.White;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = veryDarkGray;
             searchResult_UI.BackColor = Color.White;
@@ -243,14 +235,6 @@ namespace ScheduleApp
                 course.BorderColor = Color.DarkGray;
             }
 
-            /*
-            if (clickHelp1.ForeColor == Color.LightSalmon)
-                clickHelp1.ForeColor = Color.GreenYellow;
-            if (clickHelp1.ForeColor == Color.LightSalmon)
-                clickHelp1.ForeColor = Color.Red;
-            if (clickHelp1.ForeColor == Color.White)
-                clickHelp1.ForeColor = Color.Black;
-                */
             if (clickHelp1.ForeColor == Color.Black)
                 clickHelp1.ForeColor = Color.White;
 
@@ -265,14 +249,11 @@ namespace ScheduleApp
             updateCalendarTheme(); 
 
             scheduleTitle.ForeColor = Color.White;
-            //Color.CornflowerBlue;
-            //Color.DarkBlue
             menuBar.BackColor = Color.White;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = Color.MidnightBlue;
-            //searchResult_UI.BackColor = Color.CornflowerBlue;
+
             searchResult_UI.ForeColor = Color.Black;
-            //scheduleView.BackColor = Color.CornflowerBlue;
             scheduleView.ForeColor = Color.Black;
             scheduleTab.BackColor = Color.MidnightBlue;
             appMenu.BackColor = Color.White;
@@ -289,14 +270,7 @@ namespace ScheduleApp
             // Button font color
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
-            /*
-            if (clickHelp1.ForeColor == Color.Green)
-                clickHelp1.ForeColor = Color.Yellow;
-            if (clickHelp1.ForeColor == Color.Red)
-                clickHelp1.ForeColor = Color.LightSalmon;
-            if (clickHelp1.ForeColor == Color.Black)
-                clickHelp1.ForeColor = Color.White;
-                */
+
             if (clickHelp1.ForeColor == Color.Black)
                 clickHelp1.ForeColor = Color.White;
 
@@ -344,14 +318,6 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
-            /*
-            if (clickHelp1.ForeColor == Color.Yellow)
-                clickHelp1.ForeColor = Color.Green;
-            if (clickHelp1.ForeColor == Color.LightSalmon)
-                clickHelp1.ForeColor = Color.Red;
-            if (clickHelp1.ForeColor == Color.White)
-                clickHelp1.ForeColor = Color.Black;
-            */
             if (clickHelp1.ForeColor == Color.Black)
                 clickHelp1.ForeColor = Color.White;
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
@@ -395,18 +361,11 @@ namespace ScheduleApp
             // Button font color
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
-            /*
-            if (clickHelp1.ForeColor == Color.Yellow)
-                clickHelp1.ForeColor = Color.Green;
-            if (clickHelp1.ForeColor == Color.LightSalmon)
-                clickHelp1.ForeColor = Color.Red;
-            if (clickHelp1.ForeColor == Color.White)
-                clickHelp1.ForeColor = Color.Black;
-                */
-                clickHelp1.ForeColor = Color.Black;
-                credits_notify_label.ForeColor = Color.Black;
-                autocorrect_label.ForeColor = Color.Red;
-                calendar_info_label.ForeColor = Color.Black;
+           
+            clickHelp1.ForeColor = Color.Black;
+            credits_notify_label.ForeColor = Color.Black;
+            autocorrect_label.ForeColor = Color.Red;
+            calendar_info_label.ForeColor = Color.Black;
 
             removeHelp.ForeColor = Color.Black;  // This is the "Double click to remove courses" text
 
@@ -679,16 +638,16 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
-                            clickHelp1.ForeColor = Color.White;//Color.LightSalmon;
+                            clickHelp1.ForeColor = Color.White;
                             break;
                         case THEME.NIGHT:
-                            clickHelp1.ForeColor = Color.White;//Color.GreenYellow;
+                            clickHelp1.ForeColor = Color.White;
                             break;
                         case THEME.GCC:
                             clickHelp1.ForeColor = Color.White;
                             break;
                         default:
-                            clickHelp1.ForeColor = Color.Black;//Color.Green;
+                            clickHelp1.ForeColor = Color.Black;
                             break;
                     }
 
@@ -815,16 +774,16 @@ namespace ScheduleApp
             int x = searchResult_UI.Location.X;
             int y = searchResult_UI.Location.Y;
 
-            if (!filter_UI.Visible)
+            if (!filter_UI.Visible) // if the adv filter is not visible
             {
-                searchResult_UI.Location = new Point(x, y + shift);
-                autocorrect_label.Location = new Point(autocorrect_label.Location.X, autocorrect_label.Location.Y + shift);
-                searchResult_UI.Height -= shift;
-                filter_UI.Show();
+                searchResult_UI.Location = new Point(x, y + shift); // shift search results up vertiallcay
+                autocorrect_label.Location = new Point(autocorrect_label.Location.X, autocorrect_label.Location.Y + shift); // shift label by same amount
+                searchResult_UI.Height -= shift; // adjust the height so it doesnt overflow
+                filter_UI.Show(); // then show it once these changes are done
             }
             else
             {
-                filter_UI.Hide();
+                filter_UI.Hide(); // The opposite of the "if" block
                 searchResult_UI.Location = new Point(x, y - shift);
                 autocorrect_label.Location = new Point(autocorrect_label.Location.X, autocorrect_label.Location.Y - shift);
                 searchResult_UI.Height += shift;
@@ -835,10 +794,12 @@ namespace ScheduleApp
         //checks to see if the days chosen attribute has been changed by the user
         private void daysAttr_checkChanged(object sender, EventArgs e)
         {
+            // all checkboxes that potentially need to be changed
             bool [] checkboxes = { M_checkBox.Checked, T_checkBox.Checked, W_checkBox.Checked, R_checkBox.Checked, F_checkBox.Checked };
 
             for(int i = 0; i < checkboxes.Count(); i++)
             {
+                // set the advanced options based on the search boxes
                 search.options.day[i] = checkboxes[i] ? true : false;
             }
         }
@@ -850,7 +811,7 @@ namespace ScheduleApp
             search.options.timeEnd = (double)secondTime_UI.Value;
         }
 
-        //displays new info in results query if it has been updated based on new search criteria
+        // Shows the auto correct label if the auto corrected string != the string the user typed in
         private void display_corrected_query()
         {
             if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower() && searchResult_UI.Items.Count > 0)
@@ -860,7 +821,7 @@ namespace ScheduleApp
 
                 searchBox.SelectionStart = searchBox.Text.Length;
             }
-            else if(searchResult_UI.Items.Count == 0)
+            else if(searchResult_UI.Items.Count == 0) // No results appeared
             {
                 autocorrect_label.Text = "No results. Try another query.";
                 autocorrect_label.Visible = true;
@@ -876,6 +837,7 @@ namespace ScheduleApp
         private void building_valueChanged(object sender, EventArgs e)
         {
         
+            // set advanced options with building based on what the user has selected in the UI
             string [] str = { "Any", "HAL", "Hoyt", "Other", "Pew Fine Arts", "PLC", "Rockwell", "BAO", "STEM" };
 
             Build[] enums = { Build.NONE, Build.HAL, Build.HH, Build.OFFCP, Build.PFAC, Build.PLC, Build.RH, Build.BAO, Build.STEM };
@@ -893,9 +855,8 @@ namespace ScheduleApp
             search.options.lastNameProfessor = !anyProf ? professor_adv.Text.Split(',')[0] : "";
             search.options.firstNameProfessor = !anyProf ? professor_adv.Text.Split(',')[1].Trim() : "";
         }
-
-
-        //
+        
+        // Sets all or none of the checkboxes for the day-related advanced options if the user clicks the all/none box
         private void allNoneCheck_checkChanged(object sender, EventArgs e)
         {
             CheckBox[] checkboxes = { M_checkBox, T_checkBox, W_checkBox, R_checkBox, F_checkBox };
@@ -912,7 +873,7 @@ namespace ScheduleApp
             search.options.rmp = (double)rmp_numericUpDown.Value;
         }
 
-        //checks to see if the probability attribute has been changed by the user
+        // sets advanced options based on what user has selected from the combobox
         private void probability_valueChanged(object sender, EventArgs e)
         {
             switch (probability_combobox.Text)
@@ -934,10 +895,11 @@ namespace ScheduleApp
 
         private void showFullCheckbox_CheckChanged(object sender, EventArgs e)
         {
-
+            // If the user does not want to see full classes or does, checks the appropriate checkbox
             search.options.showFull = showFullCheckbox.Checked ? true : false;
         }
 
+        // restores all advanced options to default
         private void clearAdvBtn_Click(object sender, EventArgs e)
         {
             search.options.rmp = -1;

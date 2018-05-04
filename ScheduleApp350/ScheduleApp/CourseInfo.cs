@@ -101,6 +101,7 @@ namespace ScheduleApp
         //function that parses the database file (if it is .txt)
         private void parseTextFile(string course_filename, string rmp_filename)
         {
+            // Get all course info lines, store each line as an element in a list
             List<string> fileContents = new List<string>();
             try
             {
@@ -113,6 +114,9 @@ namespace ScheduleApp
                 return;
             }
 
+
+            // Get RMP data from the rmp_database.txt, store each line as an element in a list
+            // database created with a python script that scraped and parsed html from grove city college on the rmp website
             List<string> rmp_data = new List<string>();
             try
             {
@@ -126,40 +130,42 @@ namespace ScheduleApp
 
             numCourses = fileContents.Count;
             int i = 0;
-            double rmp = 3.8; // default value
-            foreach (string line in fileContents)  //CourseCode	ShortTitle	LongTitle	BeginTime	EndTime	Meets	Building	Room	Enrollment	Capacity
+
+            double rmp = 3.8; // default value, the RMP average. Only assigned if professor does not exist on ratemyprofessors.com
+
+            foreach (string line in fileContents)  // CourseCode	ShortTitle	LongTitle	BeginTime	EndTime	Meets	Building	Room	Enrollment	Capacity
             {
                 List<string> parsedCourse = new List<string>();
                 parsedCourse = line.Split('\t').ToList();  // The text file is tab delimited 
-                while (parsedCourse.Count < 13)
+                while (parsedCourse.Count < 13) // go through each attribute
                 {
                     parsedCourse.Add("0"); 
                 }
 
-                //rmp = 3.5; 
                 // Don't add duplicate professors or empty strings:
                 if (!prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
                 {
                     if (parsedCourse[11] != "" && parsedCourse[12] != "")
                     {
-                        foreach (var dataline in rmp_data)
+                        foreach (var dataline in rmp_data) // each professor triple (lastname firstname rmpscore)
                         {
-                            if (dataline.Split()[0] == parsedCourse[12] && dataline.Split()[1] == parsedCourse[11])
+                            if (dataline.Split()[0] == parsedCourse[12] && dataline.Split()[1] == parsedCourse[11]) // if it is equal to the professor in the database
                             {
                                 if (Double.TryParse(dataline.Split()[2], out rmp))
                                 {
-                                    rmp = Double.Parse(dataline.Split()[2]);
+                                    rmp = Double.Parse(dataline.Split()[2]); // extract that rmp score
                                 }
                             }
                         }
                     }
-                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp)); // initialize that professor with that rmp score
                 }
                 else
                 {
                     rmp = prof_database.Find(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]).rmp; 
                 }
 
+                // add the parsed course to the database
                 database.Add(new Course(parsedCourse, i, rmp));
                 
                 i++;
