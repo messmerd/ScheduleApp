@@ -13,14 +13,15 @@ namespace ScheduleApp
         {
             Search search = Search.Create("course_database.txt");
             CourseInfo DB = CourseInfo.Create();
-            search.searchForQuery(null);
             search.options.firstNameProfessor = "Britton";
             search.options.lastNameProfessor = "Wolfe";
-            
+            search.searchForQuery(null);
+            search.advancedSearchFilter();
+
             foreach (var course in search.lastSearchResults.getCourses())
             {
                 int courseID = course.getCourseID();
-                if (courseID != 184 || courseID != 186 || courseID != 187)
+                if (courseID != 184 && courseID != 186 && courseID != 187)
                 {
                     return false;
                 }
@@ -34,7 +35,11 @@ namespace ScheduleApp
             
             Search search = Search.Create("course_dictionary.txt");
             CourseInfo DB = CourseInfo.Create();
+            search.options.firstNameProfessor = "";
+            search.options.lastNameProfessor = "";
             search.searchForQuery(null);
+            search.advancedSearchFilter();
+
             int i = 0;
             foreach(var course in search.lastSearchResults.getCourses())
             {
@@ -52,19 +57,19 @@ namespace ScheduleApp
         {
             Search search = Search.Create("course_database.txt");
             CourseInfo DB = CourseInfo.Create();
-            search.searchForQuery("Software");
             search.options.firstNameProfessor = "Britton";
             search.options.lastNameProfessor = "Wolfe";
-            
+            search.searchForQuery("Software");
+            search.advancedSearchFilter();
+
             foreach (var course in search.lastSearchResults.getCourses())
             {
                 int courseID = course.getCourseID();
-                if (courseID != 186 || courseID != 187)
+                if (courseID != 186 && courseID != 187)
                 {
                     return false;
                 }
             }
-
             return true;
         }
     }
