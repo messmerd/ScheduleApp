@@ -416,7 +416,7 @@ namespace ScheduleApp
                 */
                 clickHelp1.ForeColor = Color.Black;
                 credits_notify_label.ForeColor = Color.Black;
-                autocorrect_label.ForeColor = Color.Black;
+                autocorrect_label.ForeColor = Color.Red;
                 calendar_info_label.ForeColor = Color.Black;
 
             removeHelp.ForeColor = Color.Black;  // This is the "Double click to remove courses" text
