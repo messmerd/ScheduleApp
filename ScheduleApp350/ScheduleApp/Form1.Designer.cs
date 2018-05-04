@@ -121,6 +121,7 @@
             this.calendar_UI.HalfHourHeight = 11;
             this.calendar_UI.Location = new System.Drawing.Point(15, 210);
             this.calendar_UI.Name = "calendar_UI";
+            this.calendar_UI.SelectedAppointment = null;
             this.calendar_UI.SelectionEnd = new System.DateTime(((long)(0)));
             this.calendar_UI.SelectionStart = new System.DateTime(((long)(0)));
             this.calendar_UI.Size = new System.Drawing.Size(822, 321);
@@ -272,6 +273,7 @@
             this.probability_combobox.Name = "probability_combobox";
             this.probability_combobox.Size = new System.Drawing.Size(72, 21);
             this.probability_combobox.TabIndex = 19;
+            this.probability_combobox.SelectedValueChanged += new System.EventHandler(this.probability_valueChanged);
             // 
             // label2
             // 
