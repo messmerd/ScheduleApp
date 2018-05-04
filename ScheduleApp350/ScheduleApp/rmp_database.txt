@@ -1,4 +1,4 @@
-﻿Stringer Randy 2.9
+Stringer Randy 2.9
 MacKey Roger 3.8
 Schaefer Paul 4.4
 Harp Gillis 3.4
@@ -16,7 +16,7 @@ Tilford Earl 4.1
 Horton Joseph 3.3
 Dupree James 2.0
 Kengor Paul 4.1
-Campbell George 4.0
+Campbell George Van 4.0
 Adams David 3.6
 Wolinski Jeffrey 2.9
 Trammell Richard 4.4
@@ -169,7 +169,7 @@ Paich Jim 5.0
 Ulrich Vernon 3.7
 Scott Jennifer 4.7
 Scheffler Patricia 2.3
-Anderson William 4.3
+Anderson William P. 4.3
 Young Susan 4.5
 Thomson Scott 4.3
 Bardy Erik 3.5
@@ -227,11 +227,12 @@ Paparone Stacy 4.5
 Kolm Jonathan 3.0
 Amodei Michelle 4.5
 Gibson Todd 5.0
-Kocur Richard 4.0
+Kocur Richard D 4.0
 Miller Susan 3.0
 Fair Mark 2.5
 Ball Thomas 3.5
 Mucha Nate 4.5
+Anderson William 3.0
 Wu Jie 4.0
 Allen Todd 3.5
 Mueller Katherine 5.0
