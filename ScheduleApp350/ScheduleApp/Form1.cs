@@ -866,7 +866,7 @@ namespace ScheduleApp
                     search.options.probabilityScore = 0;
                     break;
                 default:
-                    search.options.probabilityScore = 0;
+                    search.options.probabilityScore = -1;
                     break;
             }
         }

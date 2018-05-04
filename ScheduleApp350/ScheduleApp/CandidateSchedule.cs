@@ -139,7 +139,7 @@ namespace ScheduleApp
 
                 int id;
                 if (Int32.TryParse(importedCourse[importedCourse.Count - 1], out id) &&
-                    DB.getCourseCode(id) == System.Text.RegularExpressions.Regex.Replace(importedCourse[0], @"\s+", " ")) ;
+                    DB.getCourseCode(id) == System.Text.RegularExpressions.Regex.Replace(importedCourse[0], @" +", " ")) ;
                 else continue;
 
                 importedCourse.RemoveAt(importedCourse.Count - 1);
@@ -161,7 +161,6 @@ namespace ScheduleApp
             {
                 file = file + course.getAllInfo() + "\n";
             }
-            
             return file;
         }
 

@@ -67,7 +67,7 @@ namespace ScheduleApp
 
         public Course(List<string> parsedCourse, int courseID) // Constructor
         {
-            this.allInfo = System.Text.RegularExpressions.Regex.Replace(string.Join("\t", parsedCourse.ToArray()) + "\t" + courseID.ToString(), @"\s+", " "); 
+            this.allInfo = System.Text.RegularExpressions.Regex.Replace(string.Join("\t", parsedCourse.ToArray()) + "\t" + courseID.ToString(), @" +", " "); 
  
             this.courseID = courseID;
             
@@ -223,7 +223,7 @@ namespace ScheduleApp
             return time;
         }
 
-        public string getProbability()  //returns the string equivelent of getProbabilityInt
+        public string getProbability()  //returns the string equivalent of getProbabilityInt
         {
             switch (getProbabilityInt())
             {
