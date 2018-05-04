@@ -67,6 +67,6 @@ namespace ScheduleApp
 
             return true;
         }
-        }
+        
     }
 }
