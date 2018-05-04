@@ -60,6 +60,7 @@
     <Compile Include="Search.cs" />
     <Compile Include="SearchResults.cs" />
     <Compile Include="Spelling.cs" />
+    <Compile Include="UnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="course_database.txt" />
