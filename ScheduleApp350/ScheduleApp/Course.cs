@@ -73,8 +73,6 @@ namespace ScheduleApp
             
             this.professor = new Professor(parsedCourse[11], parsedCourse[12], rmp);
 
-            //parsedCourse[3], parsedCourse[4]
-            //s.Split(':')[3]
             int j, t1, t2;
             string s1, s2;
             double start, stop;

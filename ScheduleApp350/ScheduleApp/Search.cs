@@ -13,16 +13,16 @@ namespace ScheduleApp
         
         private static Search singleton;
 
-        public static Search Create()
+        public static Search Create() // creates a default string 
         {
             if (singleton == null)
             {
-                singleton = new Search();
+                singleton = new Search(); 
             }
             return singleton;
         }      
 
-        public static Search Create(string spelling_db)
+        public static Search Create(string spelling_db) // create a search object on the name of a spelling database for use with autocorrect
         {
             if (singleton == null)
             {
