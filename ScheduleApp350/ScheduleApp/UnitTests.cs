@@ -70,7 +70,6 @@ namespace ScheduleApp
                     return false;
                 }
             }
-
             return true;
         }
     }
