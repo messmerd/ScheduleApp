@@ -152,7 +152,6 @@ namespace ScheduleApp
                                 }
                             }
                         }
-                        prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
                     }
                     prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
                 }

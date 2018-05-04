@@ -472,7 +472,6 @@ namespace ScheduleApp
         #endregion
         /******************************************************************************************/
 
-
         /*********************************Create UI Search Fns*************************************/
         #region 
         //event listener for button clicks
@@ -615,7 +614,9 @@ namespace ScheduleApp
             row[4] = c.getTimeString().Item1 + "-" + c.getTimeString().Item2;
             row[5] = getDays(c);
             row[6] = c.getEnrollment().ToString() + "/" + c.getCapacity().ToString();
-            row[7] = c.getProf().rmp.ToString(); // placeholder until Sprint 2
+            string rmp = c.getProf().rmp.ToString();
+            if (c.getProf().rmp.ToString().Length == 1) rmp += ".0";
+            row[7] = rmp;
             row[8] = c.getProbability();
             return row;
         }
