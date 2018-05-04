@@ -183,7 +183,7 @@
             this.clickHelp1.AutoSize = true;
             this.clickHelp1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clickHelp1.ForeColor = System.Drawing.Color.Black;
-            this.clickHelp1.Location = new System.Drawing.Point(329, 519);
+            this.clickHelp1.Location = new System.Drawing.Point(512, 518);
             this.clickHelp1.Name = "clickHelp1";
             this.clickHelp1.Size = new System.Drawing.Size(202, 16);
             this.clickHelp1.TabIndex = 10;

@@ -238,13 +238,16 @@ namespace ScheduleApp
                 course.BorderColor = Color.DarkGray;
             }
 
-            if (clickHelp1.ForeColor == Color.Yellow)
-                clickHelp1.ForeColor = Color.Green;
+            /*
+            if (clickHelp1.ForeColor == Color.LightSalmon)
+                clickHelp1.ForeColor = Color.GreenYellow;
             if (clickHelp1.ForeColor == Color.LightSalmon)
                 clickHelp1.ForeColor = Color.Red;
             if (clickHelp1.ForeColor == Color.White)
                 clickHelp1.ForeColor = Color.Black;
-
+                */
+            if (clickHelp1.ForeColor == Color.Black)
+                clickHelp1.ForeColor = Color.White;
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
@@ -285,11 +288,14 @@ namespace ScheduleApp
             // Button font color
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
-
+            /*
             if (clickHelp1.ForeColor == Color.Green)
                 clickHelp1.ForeColor = Color.Yellow;
             if (clickHelp1.ForeColor == Color.Red)
                 clickHelp1.ForeColor = Color.LightSalmon;
+            if (clickHelp1.ForeColor == Color.Black)
+                clickHelp1.ForeColor = Color.White;
+                */
             if (clickHelp1.ForeColor == Color.Black)
                 clickHelp1.ForeColor = Color.White;
 
@@ -342,13 +348,16 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
+            /*
             if (clickHelp1.ForeColor == Color.Yellow)
                 clickHelp1.ForeColor = Color.Green;
             if (clickHelp1.ForeColor == Color.LightSalmon)
                 clickHelp1.ForeColor = Color.Red;
             if (clickHelp1.ForeColor == Color.White)
                 clickHelp1.ForeColor = Color.Black;
-
+            */
+            if (clickHelp1.ForeColor == Color.Black)
+                clickHelp1.ForeColor = Color.White;
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
             autocorrect_label.ForeColor = Color.White;
             credits_notify_label.ForeColor = Color.White;
@@ -394,11 +403,14 @@ namespace ScheduleApp
             // Button font color
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
-
+            /*
             if (clickHelp1.ForeColor == Color.Yellow)
                 clickHelp1.ForeColor = Color.Green;
             if (clickHelp1.ForeColor == Color.LightSalmon)
                 clickHelp1.ForeColor = Color.Red;
+            if (clickHelp1.ForeColor == Color.White)
+                clickHelp1.ForeColor = Color.Black;
+                */
             if (clickHelp1.ForeColor == Color.White)
                 clickHelp1.ForeColor = Color.Black;
 
@@ -640,14 +652,16 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
-                            clickHelp1.ForeColor = Color.White;
+                            clickHelp1.ForeColor = Color.White;//Color.LightSalmon;
                             break;
                         case THEME.NIGHT:
-                            clickHelp1.ForeColor = Color.GreenYellow;
+                            clickHelp1.ForeColor = Color.White;//Color.GreenYellow;
                             break;
-
+                        case THEME.GCC:
+                            clickHelp1.ForeColor = Color.White;
+                            break;
                         default:
-                            clickHelp1.ForeColor = Color.Green;
+                            clickHelp1.ForeColor = Color.Black;//Color.Green;
                             break;
                     }
 
@@ -664,14 +678,16 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
-                            clickHelp1.ForeColor = Color.White;
+                            clickHelp1.ForeColor = Color.White;//Color.GreenYellow;
                             break;
                         case THEME.NIGHT:
-                            clickHelp1.ForeColor = Color.LightSalmon;
+                            clickHelp1.ForeColor = Color.White;//Color.Red;
                             break;
-
+                        case THEME.GCC:
+                            clickHelp1.ForeColor = Color.White;
+                            break;
                         default:
-                            clickHelp1.ForeColor = Color.Red;
+                            clickHelp1.ForeColor = Color.Black;//Color.Red;
                             break;
                     }
 
