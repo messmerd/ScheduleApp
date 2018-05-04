@@ -76,6 +76,7 @@
             this.rmpCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.probCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.scheduleTab = new System.Windows.Forms.TabPage();
+            this.calendar_info_label = new System.Windows.Forms.Label();
             this.credits_notify_label = new System.Windows.Forms.Label();
             this.removeHelp = new System.Windows.Forms.Label();
             this.clearAll = new System.Windows.Forms.Button();
@@ -101,7 +102,6 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.calendar_info_label = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -653,6 +653,15 @@
             this.scheduleTab.Text = "Schedule";
             this.scheduleTab.UseVisualStyleBackColor = true;
             // 
+            // calendar_info_label
+            // 
+            this.calendar_info_label.AutoSize = true;
+            this.calendar_info_label.Location = new System.Drawing.Point(274, 196);
+            this.calendar_info_label.Name = "calendar_info_label";
+            this.calendar_info_label.Size = new System.Drawing.Size(311, 13);
+            this.calendar_info_label.TabIndex = 5;
+            this.calendar_info_label.Text = "Double click on the calendar to see more information";
+            // 
             // credits_notify_label
             // 
             this.credits_notify_label.AutoSize = true;
@@ -844,15 +853,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // calendar_info_label
-            // 
-            this.calendar_info_label.AutoSize = true;
-            this.calendar_info_label.Location = new System.Drawing.Point(274, 196);
-            this.calendar_info_label.Name = "calendar_info_label";
-            this.calendar_info_label.Size = new System.Drawing.Size(311, 13);
-            this.calendar_info_label.TabIndex = 5;
-            this.calendar_info_label.Text = "Double click on the calendar to see more information";
             // 
             // AppWindow
             // 

@@ -52,7 +52,10 @@ namespace ScheduleApp
 
             clearAdvBtn_Click(this, new EventArgs());
             clickHelp1.Text = "Double click to add a course!";
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ":";
 
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             updateScheduleUI();
         }
 
