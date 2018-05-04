@@ -35,6 +35,9 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="NumericUpDownCustom, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -44,6 +47,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CandidateSchedule.cs" />
@@ -65,6 +69,7 @@
   <ItemGroup>
     <Content Include="course_database.txt" />
     <Content Include="course_dictionary.txt" />
+    <Content Include="NumericUpDownCustom.dll" />
     <Content Include="rmp_database.txt" />
   </ItemGroup>
   <ItemGroup>
