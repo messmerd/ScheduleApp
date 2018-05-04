@@ -505,7 +505,7 @@
             this.advSearchBtn.BackColor = System.Drawing.Color.Gainsboro;
             this.advSearchBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.advSearchBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.advSearchBtn.Location = new System.Drawing.Point(428, 79);
+            this.advSearchBtn.Location = new System.Drawing.Point(428, 85);
             this.advSearchBtn.Name = "advSearchBtn";
             this.advSearchBtn.Size = new System.Drawing.Size(87, 23);
             this.advSearchBtn.TabIndex = 3;
@@ -518,7 +518,7 @@
             this.searchBtn.BackColor = System.Drawing.Color.Gainsboro;
             this.searchBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.searchBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchBtn.Location = new System.Drawing.Point(335, 79);
+            this.searchBtn.Location = new System.Drawing.Point(335, 85);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(87, 23);
             this.searchBtn.TabIndex = 2;
