@@ -866,7 +866,7 @@ namespace ScheduleApp
                     search.options.probabilityScore = 0;
                     break;
                 default:
-                    search.options.probabilityScore = 0;
+                    search.options.probabilityScore = -1;
                     break;
             }
         }
@@ -877,7 +877,7 @@ namespace ScheduleApp
             rmp_numericUpDown.Value = (decimal)0.0;
 
             search.options.probabilityScore = -1;
-            probability_combobox.ResetText();
+            probability_combobox.Text = "Any";
 
             search.options.timeStart = 0.0;
             search.options.timeEnd = 24.0;
@@ -895,9 +895,6 @@ namespace ScheduleApp
             professor_adv.Text = "Any";
             search.options.firstNameProfessor = "";
             search.options.lastNameProfessor = "";
-
-            probability_combobox.Text = "Any";
-            search.options.probabilityScore = 3;
         }
         #endregion
         /**************************************************************************************/

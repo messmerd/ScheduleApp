@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -112,8 +112,8 @@
             // 
             // calendar_UI
             // 
-            drawTool1.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool1;
+            drawTool2.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool2;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
@@ -269,7 +269,7 @@
             "high",
             "medium",
             "low"});
-            this.probability_combobox.Location = new System.Drawing.Point(321, 44);
+            this.probability_combobox.Location = new System.Drawing.Point(328, 44);
             this.probability_combobox.Name = "probability_combobox";
             this.probability_combobox.Size = new System.Drawing.Size(72, 21);
             this.probability_combobox.TabIndex = 19;
@@ -280,9 +280,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(248, 48);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 18;
-            this.label2.Text = "Probability:";
+            this.label2.Text = "Probability ≥";
             // 
             // rmp_numericUpDown
             // 
@@ -310,7 +310,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 16;
-            this.label3.Text = "RMP >";
+            this.label3.Text = "RMP ≥";
             // 
             // professor_adv_label
             // 
@@ -349,7 +349,7 @@
             this.professor_adv.FormattingEnabled = true;
             this.professor_adv.Items.AddRange(new object[] {
             "Any"});
-            this.professor_adv.Location = new System.Drawing.Point(241, 69);
+            this.professor_adv.Location = new System.Drawing.Point(238, 68);
             this.professor_adv.Name = "professor_adv";
             this.professor_adv.Size = new System.Drawing.Size(130, 21);
             this.professor_adv.TabIndex = 12;
@@ -367,7 +367,7 @@
             // secondTime_UI
             // 
             this.secondTime_UI.DecimalPlaces = 2;
-            this.secondTime_UI.Location = new System.Drawing.Point(384, 21);
+            this.secondTime_UI.Location = new System.Drawing.Point(383, 21);
             this.secondTime_UI.Maximum = new decimal(new int[] {
             24,
             0,
@@ -406,7 +406,7 @@
             // firstTime_UI
             // 
             this.firstTime_UI.DecimalPlaces = 2;
-            this.firstTime_UI.Location = new System.Drawing.Point(293, 21);
+            this.firstTime_UI.Location = new System.Drawing.Point(294, 21);
             this.firstTime_UI.Maximum = new decimal(new int[] {
             23,
             0,
@@ -420,7 +420,7 @@
             // between_label
             // 
             this.between_label.AutoSize = true;
-            this.between_label.Location = new System.Drawing.Point(232, 23);
+            this.between_label.Location = new System.Drawing.Point(233, 23);
             this.between_label.Name = "between_label";
             this.between_label.Size = new System.Drawing.Size(55, 13);
             this.between_label.TabIndex = 7;

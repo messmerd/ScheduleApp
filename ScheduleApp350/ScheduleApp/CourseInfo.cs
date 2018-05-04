@@ -40,15 +40,15 @@ namespace ScheduleApp
         {
              database = new List<Course>();
              prof_database = new List<Professor>();
-             parseTextFile("course_database.txt");    // This function was causing the program to hang so it is commented out for now
+             parseTextFile("course_database.txt", "rmp_data.txt");    // This function was causing the program to hang so it is commented out for now
         }
 
         //construtor based on a given database filename
-        private CourseInfo(string db_filename)
+        private CourseInfo(string course_filename)
         {
             database = new List<Course>();
             prof_database = new List<Professor>();
-            parseTextFile(db_filename);    // This function was causing the program to hang so it is commented out for now
+            parseTextFile(course_filename, "rmp_data.txt");    // This function was causing the program to hang so it is commented out for now
         }
 
         public List<Course> database;
@@ -97,18 +97,49 @@ namespace ScheduleApp
         
         }
 
-
+        /*
         private void parseRmpFile(string filename)
-        {
-
-        }
-        //function that parses the database file (if it is .txt)
-        private void parseTextFile(string filename)
         {
             List<string> fileContents = new List<string>();
             try
             {
                 fileContents = File.ReadAllLines(filename).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\n");
+                return;
+            }
+
+            int numLines = fileContents.Count;
+
+            string firstName;
+            string lastName;
+            double rmp;
+            foreach (string line in fileContents)
+            {
+                foreach(var prof in prof_database)
+                {
+                    lastName = line.Split()[0];
+                    firstName = line.Split()[1];
+                    Double.TryParse(line.Split()[2], out rmp);
+
+                    if (lastName == prof.last && firstName == prof.first)
+                    {
+                        prof.rmp = 
+                    }
+                }
+            }
+        }
+        */
+
+        //function that parses the database file (if it is .txt)
+        private void parseTextFile(string course_filename, string rmp_filename)
+        {
+            List<string> fileContents = new List<string>();
+            try
+            {
+                fileContents = File.ReadAllLines(course_filename).ToList();
                 fileContents.RemoveAt(0);
             }
             catch (Exception e)
@@ -130,7 +161,10 @@ namespace ScheduleApp
                 database.Add(new Course(parsedCourse, i));
                 // Don't add duplicate professors or empty strings:
                 if (parsedCourse[11] != "" && parsedCourse[12] != "" && !prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
-                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], 0.0));  
+                {
+
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], 0.0));
+                }
                 i++;
             }
             prof_database = prof_database.OrderBy(x => x.last).ToList();

@@ -293,7 +293,7 @@ namespace ScheduleApp
             if (options.probabilityScore != -1)  // If the user has a preference for the professor's minimum probability chance 
             {
                 removeIndices.Clear();
-                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getProbabilityInt() < options.probabilityScore ? index : -1).Where(i => i != -1).ToList();
+                removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getProbabilityInt() > options.probabilityScore ? index : -1).Where(i => i != -1).ToList();
                 removeIndices.Reverse();
 
                 foreach (int index in removeIndices)
