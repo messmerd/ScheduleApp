@@ -14,17 +14,18 @@ namespace ScheduleApp
             Search search = Search.Create("course_database.txt");
             CourseInfo DB = CourseInfo.Create();
             search.searchForQuery(null);
-            /*
+            search.options.firstNameProfessor = "Britton";
+            search.options.lastNameProfessor = "Wolfe";
+            
+            foreach (var course in search.lastSearchResults.getCourses())
+            {
+                int courseID = course.getCourseID();
+                if (courseID != 184 || courseID != 186 || courseID != 187)
+                {
+                    return false;
+                }
+            }
 
-            if(results == )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            */
             return true;
         }
 
@@ -49,17 +50,23 @@ namespace ScheduleApp
 
         public bool test3() //search for professor while Software is written in regular search box; courseID's are 186, 187
         {
-            /*
-            if(results == )
+            Search search = Search.Create("course_database.txt");
+            CourseInfo DB = CourseInfo.Create();
+            search.searchForQuery("Software");
+            search.options.firstNameProfessor = "Britton";
+            search.options.lastNameProfessor = "Wolfe";
+            
+            foreach (var course in search.lastSearchResults.getCourses())
             {
-                return true;
+                int courseID = course.getCourseID();
+                if (courseID != 186 || courseID != 187)
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
-             * */
+
             return true;
+        }
         }
     }
 }
