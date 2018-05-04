@@ -52,6 +52,8 @@ namespace ScheduleApp
 
             clearAdvBtn_Click(this, new EventArgs());
             clickHelp1.Text = "Double click to add a course!";
+
+            updateScheduleUI();
         }
 
         //orders professor first and last name in dropdown
@@ -666,21 +668,6 @@ namespace ScheduleApp
                     searchResult_UI.SelectedItems[0].Selected = false; 
                 }
             }
-
-            if(schedule.checkCreditCount() == -1)
-            {
-                credits_notify_label.Text = "You have too few credits for a full-time student";
-                credits_notify_label.Visible = true;
-            }
-            if(schedule.checkCreditCount() == 0)
-            {
-                credits_notify_label.Visible = false;
-            }
-            if (schedule.checkCreditCount() == 1)
-            {
-                credits_notify_label.Text = "You have over 17 credits and may have to pay extra for tuition";
-                credits_notify_label.Visible = true;
-            }
         }
 
         //sets schedule row in accordance with selected course
@@ -740,6 +727,21 @@ namespace ScheduleApp
                     listViewItem.BackColor = scheduleView.BackColor; 
                 }
                 scheduleView.Items.Add(listViewItem);
+            }
+
+            if (schedule.checkCreditCount() == -1)
+            {
+                credits_notify_label.Text = "You have too few credits for a full-time student";
+                credits_notify_label.Visible = true;
+            }
+            if (schedule.checkCreditCount() == 0)
+            {
+                credits_notify_label.Visible = false;
+            }
+            if (schedule.checkCreditCount() == 1)
+            {
+                credits_notify_label.Text = "You have over 17 credits and may have to pay extra for tuition";
+                credits_notify_label.Visible = true;
             }
         }
 
