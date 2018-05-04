@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool3 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool4 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -114,8 +114,8 @@
             // 
             // calendar_UI
             // 
-            drawTool3.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool3;
+            drawTool4.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool4;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;

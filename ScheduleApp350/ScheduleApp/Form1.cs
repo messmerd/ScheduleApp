@@ -906,14 +906,8 @@ namespace ScheduleApp
 
         private void showFullCheckbox_CheckChanged(object sender, EventArgs e)
         {
-            if (showFullCheckbox.Checked)
-            {
-                // display full courses, default value
-            }
-            else
-            {
-                // remove full courses
-            }
+
+            search.options.showFull = showFullCheckbox.Checked ? true : false;
         }
 
         private void clearAdvBtn_Click(object sender, EventArgs e)
