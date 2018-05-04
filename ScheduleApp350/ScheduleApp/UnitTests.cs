@@ -9,50 +9,64 @@ namespace ScheduleApp
     public class UnitTests
     {
         //all tests are based on requirement 7 (professor searching) of the sprint 1 testing plan, tests b-d
-        public bool test1() //searching for a specific teacher
+        public bool test1() //searching for a specific teacher; courseID's are 184, 186, 187
         {
-            /*
+            Search search = Search.Create("course_database.txt");
+            CourseInfo DB = CourseInfo.Create();
+            search.searchForQuery(null);
+            search.options.firstNameProfessor = "Britton";
+            search.options.lastNameProfessor = "Wolfe";
+            
+            foreach (var course in search.lastSearchResults.getCourses())
+            {
+                int courseID = course.getCourseID();
+                if (courseID != 184 || courseID != 186 || courseID != 187)
+                {
+                    return false;
+                }
+            }
 
-            if(results == )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            */
             return true;
         }
 
-        public bool test2() //search databse with nothing entered (all courses in database will be returned)
+        public bool test2() //search databse with nothing entered (all courses in database will be returned); course ID's are 0 to 760
         {
-            /*
-            if(results == )
+            
+            Search search = Search.Create("course_dictionary.txt");
+            CourseInfo DB = CourseInfo.Create();
+            search.searchForQuery(null);
+            int i = 0;
+            foreach(var course in search.lastSearchResults.getCourses())
             {
-                return true;
+                if (i++ != course.getCourseID())
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
-             * */
+            if (i != DB.getNumCourses()) return false;
+            
             return true;
         }
 
-        public bool test3() //search for professor while something is written in regular search box
+        public bool test3() //search for professor while Software is written in regular search box; courseID's are 186, 187
         {
-            /*
-            if(results == )
+            Search search = Search.Create("course_database.txt");
+            CourseInfo DB = CourseInfo.Create();
+            search.searchForQuery("Software");
+            search.options.firstNameProfessor = "Britton";
+            search.options.lastNameProfessor = "Wolfe";
+            
+            foreach (var course in search.lastSearchResults.getCourses())
             {
-                return true;
+                int courseID = course.getCourseID();
+                if (courseID != 186 || courseID != 187)
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
-             * */
+
             return true;
+        }
         }
     }
 }
