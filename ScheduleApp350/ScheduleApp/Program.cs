@@ -14,7 +14,7 @@ namespace ScheduleApp
         [STAThreadAttribute]
         static void Main(string[] args)
         {
-            CourseInfo database = CourseInfo.Create("course_database.txt");  // Creates CourseInfo singleton
+            CourseInfo database = CourseInfo.Create("course_database.txt", "rmp_database.txt");  // Creates CourseInfo singleton
             Search search = Search.Create("course_dictionary.txt");
 
             Application.EnableVisualStyles();

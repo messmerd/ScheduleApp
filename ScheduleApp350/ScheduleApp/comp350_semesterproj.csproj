@@ -64,6 +64,7 @@
   <ItemGroup>
     <Content Include="course_database.txt" />
     <Content Include="course_dictionary.txt" />
+    <Content Include="rmp_database.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">

@@ -65,13 +65,13 @@ namespace ScheduleApp
             this.allInfo = DB.getAllInfo(courseID);
         }
 
-        public Course(List<string> parsedCourse, int courseID) // Constructor
+        public Course(List<string> parsedCourse, int courseID, double rmp) // Constructor
         {
             this.allInfo = System.Text.RegularExpressions.Regex.Replace(string.Join("\t", parsedCourse.ToArray()) + "\t" + courseID.ToString(), @" +", " "); 
  
             this.courseID = courseID;
             
-            this.professor = new Professor(parsedCourse[11], parsedCourse[12], 0.0);
+            this.professor = new Professor(parsedCourse[11], parsedCourse[12], rmp);
 
             //parsedCourse[3], parsedCourse[4]
             //s.Split(':')[3]
