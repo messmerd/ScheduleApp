@@ -289,6 +289,7 @@ namespace ScheduleApp
                     lastSearchResults.courses.RemoveAt(index);
                 }
             }
+
             // Filter by Probability score
             if (options.probabilityScore != -1)  // If the user has a preference for the professor's minimum probability chance 
             {
