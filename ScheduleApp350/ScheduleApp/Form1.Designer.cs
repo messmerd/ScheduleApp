@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool3 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -114,8 +114,8 @@
             // 
             // calendar_UI
             // 
-            drawTool1.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool1;
+            drawTool3.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool3;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
@@ -293,7 +293,7 @@
             "high",
             "medium",
             "low"});
-            this.probability_combobox.Location = new System.Drawing.Point(299, 44);
+            this.probability_combobox.Location = new System.Drawing.Point(313, 44);
             this.probability_combobox.Name = "probability_combobox";
             this.probability_combobox.Size = new System.Drawing.Size(72, 21);
             this.probability_combobox.TabIndex = 19;
@@ -302,7 +302,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(219, 47);
+            this.label2.Location = new System.Drawing.Point(233, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 18;
@@ -316,7 +316,7 @@
             0,
             0,
             65536});
-            this.rmp_numericUpDown.Location = new System.Drawing.Point(175, 44);
+            this.rmp_numericUpDown.Location = new System.Drawing.Point(181, 44);
             this.rmp_numericUpDown.Maximum = new decimal(new int[] {
             45,
             0,
@@ -330,7 +330,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(130, 47);
+            this.label3.Location = new System.Drawing.Point(136, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 16;
@@ -581,9 +581,9 @@
             this.searchResult_UI.GridLines = true;
             this.searchResult_UI.HideSelection = false;
             this.searchResult_UI.LabelWrap = false;
-            this.searchResult_UI.Location = new System.Drawing.Point(24, 126);
+            this.searchResult_UI.Location = new System.Drawing.Point(24, 125);
             this.searchResult_UI.Name = "searchResult_UI";
-            this.searchResult_UI.Size = new System.Drawing.Size(805, 390);
+            this.searchResult_UI.Size = new System.Drawing.Size(805, 391);
             this.searchResult_UI.TabIndex = 4;
             this.searchResult_UI.UseCompatibleStateImageBehavior = false;
             this.searchResult_UI.View = System.Windows.Forms.View.Details;
