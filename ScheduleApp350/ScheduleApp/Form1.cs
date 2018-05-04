@@ -883,8 +883,8 @@ namespace ScheduleApp
             search.options.probabilityScore = -1;
             probability_combobox.Text = "Any";
 
-            search.options.timeStart = 0.0;
-            search.options.timeEnd = 24.0;
+            search.options.timeStart = -1;
+            search.options.timeEnd = -1;
 
             firstTime_UI.Value = 0;
             secondTime_UI.Value = 24;

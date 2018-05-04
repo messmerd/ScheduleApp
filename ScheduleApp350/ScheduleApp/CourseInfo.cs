@@ -97,41 +97,6 @@ namespace ScheduleApp
         
         }
 
-        /*
-        private void parseRmpFile(string filename)
-        {
-            List<string> fileContents = new List<string>();
-            try
-            {
-                fileContents = File.ReadAllLines(filename).ToList();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message + "\n");
-                return;
-            }
-
-            int numLines = fileContents.Count;
-
-            string firstName;
-            string lastName;
-            double rmp;
-            foreach (string line in fileContents)
-            {
-                foreach(var prof in prof_database)
-                {
-                    lastName = line.Split()[0];
-                    firstName = line.Split()[1];
-                    Double.TryParse(line.Split()[2], out rmp);
-
-                    if (lastName == prof.last && firstName == prof.first)
-                    {
-                        prof.rmp = 
-                    }
-                }
-            }
-        }
-        */
 
         //function that parses the database file (if it is .txt)
         private void parseTextFile(string course_filename, string rmp_filename)
@@ -163,7 +128,7 @@ namespace ScheduleApp
                 // Don't add duplicate professors or empty strings:
                 if (parsedCourse[11] != "" && parsedCourse[12] != "" && !prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
                 {
-                    double rmp = 0.0;
+                    double rmp = 3.5; // default value
                     foreach(var dataline in rmp_data)
                     {
                         if(dataline.Split()[0] == parsedCourse[12] && dataline.Split()[1] == parsedCourse[11])
@@ -174,11 +139,14 @@ namespace ScheduleApp
                             }
                         }
                     }
+                    //Console.WriteLine(rmp);
                     prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
+                    Console.WriteLine(prof_database[0].rmp);
                 }
                 i++;
             }
             prof_database = prof_database.OrderBy(x => x.last).ToList();
+            
         }
 
         //getters
