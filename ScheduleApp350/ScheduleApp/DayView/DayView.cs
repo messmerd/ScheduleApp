@@ -215,6 +215,14 @@ namespace Calendar
         public Appointment SelectedAppointment
         {
             get { return selectedAppointment; }
+            set
+            {
+                if (value == null)
+                {
+                    selectedAppointment = null;  // This allows you to clear the unselect an appointment
+                    Invalidate();
+                }
+            }
         }
 
         private DateTime selectionStart;

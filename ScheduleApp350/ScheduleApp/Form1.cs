@@ -42,6 +42,7 @@ namespace ScheduleApp
             calendar_UI.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
 
             calendar_UI.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
+            calendar_UI.DoubleClick += new EventHandler(this.dayView1_MouseDoubleClick); 
 
             // Use a line like this to change the visual theme of the calendar:
             calendar_UI.Renderer = new Calendar.Office11Renderer(calendar_UI);    // Can also use Calendar.Office12Renderer
@@ -83,8 +84,6 @@ namespace ScheduleApp
         /******************************************************************************************/
 
 
-
-
         /************************Calendar-Related**************************************************/
         #region
 
@@ -118,29 +117,37 @@ namespace ScheduleApp
             //Console.WriteLine(text);
         }
 
-        /*
-        void dayView1_NewAppointment(object sender, Calendar.NewAppointmentEventArgs args)
+        // function for double clicking courses in calendar -- shows a messagebox with course info
+        private void dayView1_MouseDoubleClick(object sender, EventArgs e)
         {
-            Calendar.Appointment m_Appointment = new Calendar.Appointment();
-
-            m_Appointment.StartDate = args.StartDate;
-            m_Appointment.EndDate = args.EndDate;
-            m_Appointment.Title = args.Title;
-
-            CandidateSchedule.Create().m_Courses.Add(m_Appointment);
-        }*/
-
-        /*
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            dayView1.HalfHourHeight = trackBar1.Value;
+            if (calendar_UI.SelectedAppointment != null)
+            {
+                int id = calendar_UI.SelectedAppointment.CourseID;
+                MessageBox.Show(getCalendarPopupString(DB.database.FindAll(x => x.getCourseCode() == DB.getCourseCode(id)).Select(x => x.getCourseID()).ToList()));
+                calendar_UI.SelectedAppointment = null;  // Unselects course in calendar
+            }
         }
-         */
 
+        string getCalendarPopupString(List<int> ids)
+        {
+            string val = DB.getCourseCode(ids[0]) + "\n";
+            val += DB.getLongName(ids[0]) + "\n";
+            val += "with " + DB.getProf(ids[0]).first + " " + DB.getProf(ids[0]).last + "\n\n";
+
+            int credits = 0;
+            foreach (int course_id in ids)
+            {
+                val += DB.getCourse(course_id).getTimeString().Item1 + " to " + DB.getCourse(course_id).getTimeString().Item2;
+                val += " on " + getDays(DB.getCourse(course_id)) + " in " + DB.getBuilding(course_id) + " " + DB.getRoom(course_id) + "\n";
+                credits += DB.getCredits(course_id);
+            }
+
+            val += "\n" + credits.ToString() + " total credits\n";
+            val += DB.getEnrollment(ids[0]).ToString() + " seats taken out of " + DB.getCapacity(ids[0]).ToString() + "\n";
+            return val;
+        }
          #endregion 
         /******************************************************************************************/
-
-
 
 
         /**************************************** Themes ******************************************/
@@ -391,9 +398,8 @@ namespace ScheduleApp
 
         }
         #endregion
-        /******************************************************************************************/
+        /******************************************************************************************/        
 
-        
 
         /*************************Sort Search Result Column****************************************/
         #region 
@@ -455,6 +461,7 @@ namespace ScheduleApp
 
         #endregion
         /******************************************************************************************/
+
 
         /**********************Create UI Search Results Fns****************************************/
         #region 
@@ -604,7 +611,7 @@ namespace ScheduleApp
 
 
         /***********************Add to Schedule**************************************************/
-
+        #region
         //allows for adding courses to schedule with double click
         private void searchResult_UI_DoubleClick(object sender, MouseEventArgs e)
         {
@@ -732,14 +739,12 @@ namespace ScheduleApp
             }
         }
 
-
+        #endregion
         /***************************************************************************************/
 
 
-
-
-
         /*************************************adv search****************************************/
+        #region 
         //drops down advanced search box after button is clicked
         private void advSearchBtn_Click(object sender, EventArgs e)
         {
@@ -862,14 +867,14 @@ namespace ScheduleApp
                     break;
             }
         }
-       
 
+        #endregion 
         /**************************************************************************************/
 
 
-
         /**************************************JSON Transfer***************************************/
-        //function that allows the import button to work
+        #region
+        //function that allows the import button to work 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openJson = new OpenFileDialog();
@@ -921,20 +926,22 @@ namespace ScheduleApp
             }
             
         }
+        #endregion
         /***************************************************************************************************/
 
 
         /***********************************Quit Program****************************************************/
+        #region 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {   
             Application.Exit();
         }
-
+        #endregion 
         /***************************************************************************************************/
 
 
-
         /***********************************Click on tab****************************************************/
+        #region 
         //allows for moving back and forth between schedule and search
         private void menuTabs_Click(object sender, EventArgs e)
         {
@@ -955,11 +962,11 @@ namespace ScheduleApp
                 clickHelp1.Text = "Double click to add a course!";
             }
         }
-
+        #endregion 
         /***************************************************************************************************/
     }
 
-    //
+    // This is for the sort arrows on the search result columns: 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class ListViewExtensions
     {
@@ -1054,6 +1061,5 @@ namespace ScheduleApp
             }
         }
     }
-
 
 }
