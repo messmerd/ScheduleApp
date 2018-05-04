@@ -463,7 +463,7 @@ namespace ScheduleApp
         /******************************************************************************************/
 
 
-        /**********************Create UI Search Results Fns****************************************/
+        /*********************************Create UI Search Fns*************************************/
         #region 
         //event listener for button clicks
         private void searchBtn_Click(object sender, EventArgs e)
@@ -487,7 +487,10 @@ namespace ScheduleApp
             }
 
             populateSearch(search.lastSearchResults.getCourses());
-            //display_corrected_query();
+            display_corrected_query();
+
+            searchBox.SelectionStart = 0; // automatically highlights the users last query, so they can search again quickly
+            searchBox.SelectionLength = searchBox.Text.Length;
         }
 
         //fills the search results section with desired courses
@@ -606,7 +609,7 @@ namespace ScheduleApp
             row[8] = c.getProbability();
             return row;
         }
-        #endregion 
+        #endregion
         /***************************************************************************************/
 
 
@@ -744,7 +747,7 @@ namespace ScheduleApp
 
 
         /*************************************adv search****************************************/
-        #region 
+        #region
         //drops down advanced search box after button is clicked
         private void advSearchBtn_Click(object sender, EventArgs e)
         {
@@ -788,25 +791,25 @@ namespace ScheduleApp
         //displays new info in results query if it has been updated based on new search criteria
         private void display_corrected_query()
         {
-            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower())
+            if(search.lastSearchResults.getCorrectedQuery() != search.lastSearchResults.getQuery().ToLower() && searchResult_UI.Items.Count > 0)
             {
                 searchBox.Text = search.lastSearchResults.getCorrectedQuery();
-                autocorrect_label.Text = search.lastSearchResults.getCorrectedQuery();
-                display_query_labels(true);
+                autocorrect_label.Text = "Did you mean " + search.lastSearchResults.getCorrectedQuery() + "?";
+                autocorrect_label.Visible = true;
+
+                searchBox.SelectionStart = searchBox.Text.Length;
+            }
+            else if(searchResult_UI.Items.Count == 0)
+            {
+                autocorrect_label.Text = "No results. Try another query.";
+                autocorrect_label.Visible = true;
             }
             else
             {
-                display_query_labels(false);
+                autocorrect_label.Visible = false;
             }
         }
 
-        //
-        private void display_query_labels(bool p)
-        {
-            dym_label.Visible = p;
-            qm_label.Visible = p;
-            autocorrect_label.Visible = p;
-        }
 
         //checks to see if the building attribute has been changed by the user
         private void building_valueChanged(object sender, EventArgs e)
@@ -868,7 +871,35 @@ namespace ScheduleApp
             }
         }
 
-        #endregion 
+        private void clearAdvBtn_Click(object sender, EventArgs e)
+        {
+            search.options.rmp = -1;
+            rmp_numericUpDown.Value = (decimal)0.0;
+
+            search.options.probabilityScore = -1;
+            probability_combobox.ResetText();
+
+            search.options.timeStart = 0.0;
+            search.options.timeEnd = 24.0;
+
+            firstTime_UI.Value = 0;
+            secondTime_UI.Value = 24;
+
+            search.options.building = Build.NONE;
+            building_adv.Text = "Any";
+
+            search.options.day = (new bool[] { true, true, true, true, true }).ToList();
+            allNoneCheckBox.Checked = true;
+            allNoneCheck_checkChanged(sender, e);
+
+            professor_adv.Text = "Any";
+            search.options.firstNameProfessor = "";
+            search.options.lastNameProfessor = "";
+
+            probability_combobox.Text = "Any";
+            search.options.probabilityScore = 3;
+        }
+        #endregion
         /**************************************************************************************/
 
 
