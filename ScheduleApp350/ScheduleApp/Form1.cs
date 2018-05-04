@@ -640,6 +640,8 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
+                            clickHelp1.ForeColor = Color.White;
+                            break;
                         case THEME.NIGHT:
                             clickHelp1.ForeColor = Color.GreenYellow;
                             break;
@@ -662,6 +664,8 @@ namespace ScheduleApp
                     switch (currentTheme)
                     {
                         case THEME.BLUE:
+                            clickHelp1.ForeColor = Color.White;
+                            break;
                         case THEME.NIGHT:
                             clickHelp1.ForeColor = Color.LightSalmon;
                             break;
@@ -702,6 +706,7 @@ namespace ScheduleApp
             schedule.removeAllCourses();
             calendar_UI.Invalidate(); // Updates the Calendar
             refreshSearchItemColors(search.lastSearchResults.getCourses());
+            updateScheduleUI();
         }
 
         //remove courses from schedule with a double click

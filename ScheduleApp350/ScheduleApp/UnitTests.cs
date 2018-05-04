@@ -30,16 +30,20 @@ namespace ScheduleApp
 
         public bool test2() //search databse with nothing entered (all courses in database will be returned); course ID's are 0 to 760
         {
-            /*
-            if(results == )
+            
+            Search search = Search.Create("course_dictionary.txt");
+            CourseInfo DB = CourseInfo.Create();
+            search.searchForQuery(null);
+            int i = 0;
+            foreach(var course in search.lastSearchResults.getCourses())
             {
-                return true;
+                if (i++ != course.getCourseID())
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
-             * */
+            if (i != DB.getNumCourses()) return false;
+            
             return true;
         }
 
