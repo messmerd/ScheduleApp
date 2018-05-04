@@ -68,6 +68,7 @@
     <Compile Include="Search.cs" />
     <Compile Include="SearchResults.cs" />
     <Compile Include="Spelling.cs" />
+    <Compile Include="UnitTests.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
