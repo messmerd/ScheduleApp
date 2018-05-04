@@ -1,0 +1,6 @@
+This is the install(README) file for Group 2's software engineering project.
+
+Double click the solution (ScheduleApp.sln) below this file to open; ctrl + F5 to run.
+
+To view the results of the unit tests, simply view the console application, as they
+are ran from scratch every time the program starts.
