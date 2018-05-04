@@ -232,6 +232,7 @@ namespace ScheduleApp
             autocorrect_label.ForeColor = Color.White;
             removeHelp.ForeColor = Color.White;
             credits_notify_label.ForeColor = Color.White;
+            calendar_info_label.ForeColor = Color.White;
 
             foreach (var course in CandidateSchedule.Create().getCalendarItems())
             {
@@ -302,6 +303,7 @@ namespace ScheduleApp
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
             autocorrect_label.ForeColor = Color.White;
             credits_notify_label.ForeColor = Color.White;
+            calendar_info_label.ForeColor = Color.White;
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
@@ -361,6 +363,7 @@ namespace ScheduleApp
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
             autocorrect_label.ForeColor = Color.White;
             credits_notify_label.ForeColor = Color.White;
+            calendar_info_label.ForeColor = Color.White;
 
             calendar_UI.Invalidate(); // Updates the Calendar
         }
@@ -411,8 +414,10 @@ namespace ScheduleApp
             if (clickHelp1.ForeColor == Color.White)
                 clickHelp1.ForeColor = Color.Black;
                 */
-            if (clickHelp1.ForeColor == Color.White)
                 clickHelp1.ForeColor = Color.Black;
+                credits_notify_label.ForeColor = Color.Black;
+                autocorrect_label.ForeColor = Color.Black;
+                calendar_info_label.ForeColor = Color.Black;
 
             removeHelp.ForeColor = Color.Black;  // This is the "Double click to remove courses" text
 

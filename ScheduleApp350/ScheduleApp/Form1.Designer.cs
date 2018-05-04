@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -101,6 +101,7 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.calendar_info_label = new System.Windows.Forms.Label();
             this.menuTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gccLogo)).BeginInit();
@@ -114,8 +115,8 @@
             // 
             // calendar_UI
             // 
-            drawTool1.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool1;
+            drawTool2.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool2;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
@@ -264,6 +265,7 @@
             this.showFullCheckbox.Size = new System.Drawing.Size(15, 14);
             this.showFullCheckbox.TabIndex = 22;
             this.showFullCheckbox.UseVisualStyleBackColor = true;
+            this.showFullCheckbox.CheckedChanged += new System.EventHandler(this.showFullCheckbox_CheckChanged);
             // 
             // label4
             // 
@@ -637,6 +639,7 @@
             // 
             // scheduleTab
             // 
+            this.scheduleTab.Controls.Add(this.calendar_info_label);
             this.scheduleTab.Controls.Add(this.credits_notify_label);
             this.scheduleTab.Controls.Add(this.calendar_UI);
             this.scheduleTab.Controls.Add(this.removeHelp);
@@ -842,6 +845,15 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // calendar_info_label
+            // 
+            this.calendar_info_label.AutoSize = true;
+            this.calendar_info_label.Location = new System.Drawing.Point(274, 196);
+            this.calendar_info_label.Name = "calendar_info_label";
+            this.calendar_info_label.Size = new System.Drawing.Size(311, 13);
+            this.calendar_info_label.TabIndex = 5;
+            this.calendar_info_label.Text = "Double click on the calendar to see more information";
+            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -945,6 +957,7 @@
         private System.Windows.Forms.Button clear_adv;
         private System.Windows.Forms.CheckBox showFullCheckbox;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label calendar_info_label;
     }
 }
 
