@@ -194,7 +194,7 @@ namespace ScheduleApp
             
             currentTheme = THEME.NIGHT;
             adjustCheckstates();
-
+            updateCalendarTheme();
             // 38 50 56 <- background and surrounding stuff
             // 0 150 136 <- buttons
             // 168 183 185 <- text color
@@ -258,11 +258,7 @@ namespace ScheduleApp
         {
             currentTheme = THEME.BLUE;
             adjustCheckstates();
-            calendar_UI.Renderer = new Calendar.Office12Renderer();  // Calendar theme - this one looks blue
-            foreach (var course in CandidateSchedule.Create().getCalendarItems())
-            {
-                course.BorderColor = Color.MidnightBlue; 
-            }
+            updateCalendarTheme(); 
 
             scheduleTitle.ForeColor = Color.White;
             //Color.CornflowerBlue;
@@ -314,13 +310,7 @@ namespace ScheduleApp
             currentTheme = THEME.GCC;
 
             adjustCheckstates();
-
-            calendar_UI.Renderer = new Calendar.GCCCrimsonRenderer();  // Calendar theme
-            foreach (var course in CandidateSchedule.Create().getCalendarItems())
-            {
-                course.BorderColor = Color.Crimson;
-            }
-
+            updateCalendarTheme(); 
 
             scheduleTitle.ForeColor = Color.Black;
             
@@ -374,12 +364,7 @@ namespace ScheduleApp
 
             currentTheme = THEME.CLASSIC;
             adjustCheckstates();
-
-            calendar_UI.Renderer = new Calendar.Office11Renderer();  // Calendar theme
-            foreach (var course in CandidateSchedule.Create().getCalendarItems())
-            {
-                course.BorderColor = Color.DarkSlateGray;
-            }
+            updateCalendarTheme(); 
 
             // 
             scheduleTitle.ForeColor = Color.Black;
@@ -424,6 +409,39 @@ namespace ScheduleApp
             calendar_UI.Invalidate(); // Updates the Calendar
 
         }
+
+        //updates calendar items with the current theme
+        private void updateCalendarTheme()
+        {
+            Color color = Color.Black; 
+            switch (currentTheme)
+            {
+                case THEME.BLUE:
+                    calendar_UI.Renderer = new Calendar.Office12Renderer();
+                    color = Color.MidnightBlue;
+                    break;
+                case THEME.CLASSIC:
+                    calendar_UI.Renderer = new Calendar.Office11Renderer();
+                    color = Color.DarkSlateGray;
+                    break;
+                case THEME.GCC:
+                    calendar_UI.Renderer = new Calendar.GCCCrimsonRenderer();
+                    color = Color.Crimson;
+                    break;
+                case THEME.NIGHT:
+                    calendar_UI.Renderer = new Calendar.NightRenderer();
+                    color = Color.DarkSlateGray;
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (var calendar_item in schedule.getCalendarItems())
+            {
+                calendar_item.BorderColor = color;
+            }
+        }
+
         #endregion
         /******************************************************************************************/        
 
@@ -671,6 +689,7 @@ namespace ScheduleApp
                     }
 
                     clickHelp1.Text = "\"" + DB.getCourseCode(courseID) + "\" successfully added.";
+                    updateCalendarTheme(); 
                     calendar_UI.Invalidate(); // Updates the Calendar
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
                     searchResult_UI.SelectedItems[0].Selected = false; 
@@ -737,7 +756,7 @@ namespace ScheduleApp
             {
                 int courseID = int.Parse(scheduleView.SelectedItems[0].Name);   
                 schedule.removeCourse(courseID);
-                updateScheduleUI(); 
+                updateScheduleUI();
                 calendar_UI.Invalidate(); // Updates the Calendar
                 refreshSearchItemColors(search.lastSearchResults.getCourses());
             }
@@ -747,7 +766,7 @@ namespace ScheduleApp
         private void updateScheduleUI()
         {
             scheduleView.Items.Clear();
-            foreach (Course c in schedule.getCourses())
+            foreach (Course c in schedule.getCourses().OrderBy(x => x.getCourseID()))
             {
                 var courseToAdd = setScheduleRow(c);
                 var listViewItem = new ListViewItem(courseToAdd);
