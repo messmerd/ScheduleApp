@@ -126,7 +126,7 @@ namespace ScheduleApp
 
             numCourses = fileContents.Count;
             int i = 0;
-            double rmp = 3.5; // default value
+            double rmp = 3.8; // default value
             foreach (string line in fileContents)  //CourseCode	ShortTitle	LongTitle	BeginTime	EndTime	Meets	Building	Room	Enrollment	Capacity
             {
                 List<string> parsedCourse = new List<string>();
@@ -136,7 +136,7 @@ namespace ScheduleApp
                     parsedCourse.Add("0"); 
                 }
 
-                rmp = 3.5; 
+                //rmp = 3.5; 
                 // Don't add duplicate professors or empty strings:
                 if (!prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
                 {
@@ -144,9 +144,9 @@ namespace ScheduleApp
                     {
                         foreach (var dataline in rmp_data)
                         {
-                            if (dataline.Split('\t')[0] == parsedCourse[12] && dataline.Split('\t')[1] == parsedCourse[11])
+                            if (dataline.Split()[0] == parsedCourse[12] && dataline.Split()[1] == parsedCourse[11])
                             {
-                                if (Double.TryParse(dataline.Split('\t')[2], out rmp))
+                                if (Double.TryParse(dataline.Split()[2], out rmp))
                                 {
                                     rmp = Double.Parse(dataline.Split()[2]);
                                 }
@@ -154,15 +154,13 @@ namespace ScheduleApp
                         }
                         prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
                     }
-                    //Console.WriteLine(rmp);
-                    prof_database.Add(new Professor("john", parsedCourse[12], rmp));
-                    Console.WriteLine(prof_database[0].rmp);
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
                 }
                 else
                 {
                     rmp = prof_database.Find(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]).rmp; 
                 }
-                
+
                 database.Add(new Course(parsedCourse, i, rmp));
                 
                 i++;
