@@ -759,6 +759,7 @@ namespace ScheduleApp
             if (!filter_UI.Visible)
             {
                 searchResult_UI.Location = new Point(x, y + shift);
+                autocorrect_label.Location = new Point(autocorrect_label.Location.X, autocorrect_label.Location.Y + shift);
                 searchResult_UI.Height -= shift;
                 filter_UI.Show();
             }
@@ -766,6 +767,7 @@ namespace ScheduleApp
             {
                 filter_UI.Hide();
                 searchResult_UI.Location = new Point(x, y - shift);
+                autocorrect_label.Location = new Point(autocorrect_label.Location.X, autocorrect_label.Location.Y - shift);
                 searchResult_UI.Height += shift;
             }
 

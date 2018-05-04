@@ -294,7 +294,7 @@ namespace ScheduleApp
         }
         public double getRMPScore() //getter for RMPScore
         {
-            return 0.0;
+            return professor.rmp;
         }
     };
 

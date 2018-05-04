@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Calendar.DrawTool drawTool2 = new Calendar.DrawTool();
+            Calendar.DrawTool drawTool1 = new Calendar.DrawTool();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.calendar_UI = new Calendar.DayView();
             this.menuTabs = new System.Windows.Forms.TabControl();
@@ -112,8 +112,8 @@
             // 
             // calendar_UI
             // 
-            drawTool2.DayView = this.calendar_UI;
-            this.calendar_UI.ActiveTool = drawTool2;
+            drawTool1.DayView = this.calendar_UI;
+            this.calendar_UI.ActiveTool = drawTool1;
             this.calendar_UI.AllowInplaceEditing = false;
             this.calendar_UI.AllowScroll = false;
             this.calendar_UI.DaysToShow = 5;
@@ -169,7 +169,7 @@
             this.autocorrect_label.AutoSize = true;
             this.autocorrect_label.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autocorrect_label.ForeColor = System.Drawing.Color.IndianRed;
-            this.autocorrect_label.Location = new System.Drawing.Point(106, 74);
+            this.autocorrect_label.Location = new System.Drawing.Point(370, 109);
             this.autocorrect_label.Name = "autocorrect_label";
             this.autocorrect_label.Size = new System.Drawing.Size(106, 13);
             this.autocorrect_label.TabIndex = 12;
@@ -181,7 +181,7 @@
             this.clickHelp1.AutoSize = true;
             this.clickHelp1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clickHelp1.ForeColor = System.Drawing.Color.Black;
-            this.clickHelp1.Location = new System.Drawing.Point(329, 504);
+            this.clickHelp1.Location = new System.Drawing.Point(329, 519);
             this.clickHelp1.Name = "clickHelp1";
             this.clickHelp1.Size = new System.Drawing.Size(202, 16);
             this.clickHelp1.TabIndex = 10;
@@ -557,7 +557,7 @@
             this.searchResult_UI.GridLines = true;
             this.searchResult_UI.HideSelection = false;
             this.searchResult_UI.LabelWrap = false;
-            this.searchResult_UI.Location = new System.Drawing.Point(24, 111);
+            this.searchResult_UI.Location = new System.Drawing.Point(24, 126);
             this.searchResult_UI.Name = "searchResult_UI";
             this.searchResult_UI.Size = new System.Drawing.Size(805, 390);
             this.searchResult_UI.TabIndex = 4;
@@ -635,6 +635,7 @@
             this.credits_notify_label.Size = new System.Drawing.Size(118, 13);
             this.credits_notify_label.TabIndex = 4;
             this.credits_notify_label.Text = "credits_notify_label";
+            this.credits_notify_label.Visible = false;
             // 
             // removeHelp
             // 

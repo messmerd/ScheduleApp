@@ -40,7 +40,7 @@ namespace ScheduleApp
         {
              database = new List<Course>();
              prof_database = new List<Professor>();
-             parseTextFile("course_database.txt", "rmp_data.txt");    // This function was causing the program to hang so it is commented out for now
+             parseTextFile("course_database.txt", "rmp_database.txt");    // This function was causing the program to hang so it is commented out for now
         }
 
         //construtor based on a given database filename
@@ -48,7 +48,7 @@ namespace ScheduleApp
         {
             database = new List<Course>();
             prof_database = new List<Professor>();
-            parseTextFile(course_filename, "rmp_data.txt");    // This function was causing the program to hang so it is commented out for now
+            parseTextFile(course_filename, "rmp_database.txt");    // This function was causing the program to hang so it is commented out for now
         }
 
         public List<Course> database;
@@ -159,11 +159,22 @@ namespace ScheduleApp
                     parsedCourse.Add("0"); 
                 }
                 database.Add(new Course(parsedCourse, i));
+                List<string> rmp_data = File.ReadAllLines(rmp_filename).ToList();
                 // Don't add duplicate professors or empty strings:
                 if (parsedCourse[11] != "" && parsedCourse[12] != "" && !prof_database.Any(x => x.first == parsedCourse[11] && x.last == parsedCourse[12]))
                 {
-
-                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], 0.0));
+                    double rmp = 0.0;
+                    foreach(var dataline in rmp_data)
+                    {
+                        if(dataline.Split()[0] == parsedCourse[12] && dataline.Split()[1] == parsedCourse[11])
+                        {
+                            if (Double.TryParse(dataline.Split()[2], out rmp))
+                            {
+                                rmp = Double.Parse(dataline.Split()[2]);
+                            }
+                        }
+                    }
+                    prof_database.Add(new Professor(parsedCourse[11], parsedCourse[12], rmp));
                 }
                 i++;
             }
