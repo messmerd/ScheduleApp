@@ -9,7 +9,7 @@ namespace ScheduleApp
     public class UnitTests
     {
         //all tests are based on requirement 7 (professor searching) of the sprint 1 testing plan, tests b-d
-        public bool test1() //searching for a specific teacher; courseID's are 184, 186, 187
+        public bool test1() //searching for a specific professor (Britton Wolfe); courseIDs should be 184, 186, and 187.
         {
             Search search = Search.Create("course_database.txt");
             CourseInfo DB = CourseInfo.Create();
@@ -28,10 +28,15 @@ namespace ScheduleApp
                 }
             }
 
+            if (search.lastSearchResults.getCourses().Count != 3) 
+            {
+                return false; 
+            }
+
             return true;
         }
 
-        public bool test2() //search databse with nothing entered (all courses in database will be returned); course ID's are 0 to 760
+        public bool test2() //search database with nothing entered (all courses in database will be returned); course ID's are 0 to 760
         {
             
             Search search = Search.Create("course_dictionary.txt");
@@ -55,7 +60,7 @@ namespace ScheduleApp
             return true;
         }
 
-        public bool test3() //search for professor while Software is written in regular search box; courseID's are 186, 187
+        public bool test3() //search for professor (Britton Wolfe) while Software is written in regular search box; courseID's are 186, 187
         {
             Search search = Search.Create("course_database.txt");
             CourseInfo DB = CourseInfo.Create();
@@ -73,6 +78,12 @@ namespace ScheduleApp
                     return false;
                 }
             }
+
+            if (search.lastSearchResults.getCourses().Count != 2)
+            {
+                return false; 
+            }
+
             return true;
         }
     }
