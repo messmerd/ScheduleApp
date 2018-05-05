@@ -71,6 +71,11 @@ namespace ScheduleApp
             search.searchForQuery("Software");
             search.advancedSearchFilter();
 
+            if (search.lastSearchResults.getCourses().Count != 2)
+            {
+                return false;
+            }
+
             foreach (var course in search.lastSearchResults.getCourses())
             {
                 int courseID = course.getCourseID();
@@ -78,11 +83,6 @@ namespace ScheduleApp
                 {
                     return false;
                 }
-            }
-
-            if (search.lastSearchResults.getCourses().Count != 2)
-            {
-                return false; 
             }
 
             return true;
