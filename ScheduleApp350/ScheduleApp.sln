@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleApp", "ScheduleApp\ScheduleApp.csproj", "{0D852C22-FFEB-48C0-801C-B06996AAB10D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayView", "ScheduleApp\DayView\DayView.csproj", "{D17A4D6A-4CAA-4470-8A19-F42463C021FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E84FC619-885E-4E80-BC7F-7F4093807329}"
+	ProjectSection(SolutionItems) = preProject
+		ScheduleApp\NumericUpDownCustom.cs = ScheduleApp\NumericUpDownCustom.cs
+		ScheduleApp\NumericUpDownCustom.dll = ScheduleApp\NumericUpDownCustom.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
