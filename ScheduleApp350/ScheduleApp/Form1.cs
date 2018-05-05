@@ -583,7 +583,7 @@ namespace ScheduleApp
         //allows for adding and removing courses to/from schedule with double click when on the search result page
         private void searchResult_UI_DoubleClick(object sender, MouseEventArgs e)
         {
-            if(searchResult_UI.SelectedItems.Count >= 0)
+            if(searchResult_UI.SelectedItems.Count > 0)
             {
                 int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
                 if (!schedule.exists(courseID)) // If the course isn't currently in your schedule, need to add it to your schedule
@@ -671,7 +671,7 @@ namespace ScheduleApp
         //remove courses from schedule with a double click
         private void remove_DoubleClick(object sender, EventArgs e)
         {
-            if (scheduleView.SelectedItems.Count >= 0)
+            if (scheduleView.SelectedItems.Count > 0)
             {
                 int courseID = int.Parse(scheduleView.SelectedItems[0].Name);   
                 schedule.removeCourse(courseID);
