@@ -47,7 +47,7 @@ namespace Calendar
         {
             get
             {
-                return System.Drawing.Color.FromArgb(165, 191, 225);
+                return System.Drawing.Color.FromArgb(190, 190, 190);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Calendar
         {
             get
             {
-                return System.Drawing.Color.FromArgb(255, 255, 255);
+                return System.Drawing.Color.FromArgb(130,130,130); //FromArgb(255, 255, 255);
             }
         }
 
@@ -72,7 +72,8 @@ namespace Calendar
             get
             {
                 //return Color.Gainsboro;  // Light grey 
-                return Color.LightGray;
+                return Color.White;  //FromArgb(140,140,140); 
+                //return Color.LightGray;
                 //return Color.FromArgb(225,200,205);  // Light pink
             }
         }
@@ -105,29 +106,93 @@ namespace Calendar
             }
         }
 
-        public override void DrawDayHeader(Graphics g, Rectangle rect, DateTime date)
+        public override void DrawDayHeader(System.Drawing.Graphics g, System.Drawing.Rectangle rect, DateTime date)
         {
+
             StringFormat m_Format = new StringFormat();
             m_Format.Alignment = StringAlignment.Center;
             m_Format.FormatFlags = StringFormatFlags.NoWrap;
             m_Format.LineAlignment = StringAlignment.Center;
 
-            ControlPaint.DrawButton(g, rect, ButtonState.Inactive);
-            ControlPaint.DrawBorder3D(g, rect, Border3DStyle.Etched);
+            StringFormat m_Formatdd = new StringFormat();
+            m_Formatdd.Alignment = StringAlignment.Near;
+            m_Formatdd.FormatFlags = StringFormatFlags.NoWrap;
+            m_Formatdd.LineAlignment = StringAlignment.Center;
 
-            g.DrawString(
-                System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(date.DayOfWeek),
-                BaseFont,
-                SystemBrushes.WindowText,
-                rect,
-                m_Format
-                );
+            using (SolidBrush brush = new SolidBrush(this.BackColor))
+                g.FillRectangle(brush, rect);
+
+            using (Pen aPen = new Pen(Color.LightGray)) //Color.FromArgb(205, 219, 238)))
+                g.DrawLine(aPen, rect.Left, rect.Top + (int)rect.Height / 2, rect.Right, rect.Top + (int)rect.Height / 2);
+
+            using (Pen aPen = new Pen(Color.Black))  //Color.FromArgb(141, 174, 217)))
+                g.DrawRectangle(aPen, rect);
+
+            Rectangle topPart = new Rectangle(rect.Left + 1, rect.Top + 1, rect.Width - 2, (int)(rect.Height / 2) - 1);
+            Rectangle lowPart = new Rectangle(rect.Left + 1, rect.Top + (int)(rect.Height / 2) + 1, rect.Width - 1, (int)(rect.Height / 2) - 1);
+
+            using (LinearGradientBrush aGB = new LinearGradientBrush(topPart, Color.FromArgb(191, 191, 191), Color.FromArgb(185, 185, 185), LinearGradientMode.Vertical))
+                g.FillRectangle(aGB, topPart);
+
+            using (LinearGradientBrush aGB = new LinearGradientBrush(lowPart, Color.FromArgb(170, 170, 170), Color.FromArgb(165, 165, 165), LinearGradientMode.Vertical))
+                g.FillRectangle(aGB, lowPart);
+
+            if (date.Date.Equals(DateTime.Now.Date))
+            {
+                topPart.Inflate((int)(-topPart.Width / 4 + 1), 1); //top left orange area
+                topPart.Offset(rect.Left - topPart.Left + 1, 1);
+                topPart.Inflate(1, 0);
+                using (LinearGradientBrush aGB = new LinearGradientBrush(topPart, Color.FromArgb(247, 207, 114), Color.FromArgb(251, 230, 148), LinearGradientMode.Horizontal))
+                {
+                    topPart.Inflate(-1, 0);
+                    g.FillRectangle(aGB, topPart);
+                }
+
+                topPart.Offset(rect.Right - topPart.Right, 0);        //top right orange
+                topPart.Inflate(1, 0);
+                using (LinearGradientBrush aGB = new LinearGradientBrush(topPart, Color.FromArgb(251, 230, 148), Color.FromArgb(247, 207, 114), LinearGradientMode.Horizontal))
+                {
+                    topPart.Inflate(-1, 0);
+                    g.FillRectangle(aGB, topPart);
+                }
+
+                using (Pen aPen = new Pen(Color.FromArgb(128, 240, 154, 30))) //center line
+                    g.DrawLine(aPen, rect.Left, topPart.Bottom - 1, rect.Right, topPart.Bottom - 1);
+
+                topPart.Inflate(0, -1);
+                topPart.Offset(0, topPart.Height + 1); //lower right
+                using (LinearGradientBrush aGB = new LinearGradientBrush(topPart, Color.FromArgb(240, 157, 33), Color.FromArgb(250, 226, 142), LinearGradientMode.BackwardDiagonal))
+                    g.FillRectangle(aGB, topPart);
+
+                topPart.Offset(rect.Left - topPart.Left + 1, 0); //lower left
+                using (LinearGradientBrush aGB = new LinearGradientBrush(topPart, Color.FromArgb(240, 157, 33), Color.FromArgb(250, 226, 142), LinearGradientMode.ForwardDiagonal))
+                    g.FillRectangle(aGB, topPart);
+                using (Pen aPen = new Pen(Color.FromArgb(238, 147, 17)))
+                    g.DrawRectangle(aPen, rect);
+            }
+
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            //get short dayabbr. if narrow dayrect
+            string sTodaysName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(date.DayOfWeek);
+            if (rect.Width < 105)
+                sTodaysName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(date.DayOfWeek);
+
+            rect.Offset(2, 1);
+
+            using (Font fntDay = new Font("Segoe UI", 8))
+                g.DrawString(sTodaysName, fntDay, SystemBrushes.WindowText, rect, m_Format);
+
+            rect.Offset(-2, -1);
+
+            // using (Font fntDayDate = new Font("Segoe UI", 9, FontStyle.Bold))
+            //     g.DrawString(date.ToString(" d"), fntDayDate, SystemBrushes.WindowText, rect, m_Formatdd);
         }
 
         public override void DrawDayBackground(System.Drawing.Graphics g, System.Drawing.Rectangle rect)
         {
-            using (Pen aPen = new Pen(Color.FromArgb(242,228,228)))  // very light red 
-                g.DrawRectangle(aPen, rect);
+            //using (SolidBrush brush = new SolidBrush(this.BackColor))
+            //    g.FillRectangle(brush, rect);
         }
 
         public override void DrawAppointment(System.Drawing.Graphics g, System.Drawing.Rectangle rect, Appointment appointment, bool isSelected, int gripWidth)
@@ -137,7 +202,7 @@ namespace Calendar
             m_Format.LineAlignment = StringAlignment.Near;
 
             Color start = InterpolateColors(appointment.Color, Color.White, 0.4f);
-            Color end = InterpolateColors(appointment.Color, Color.FromArgb(235, 108, 163), 0.7f);  //
+            Color end = InterpolateColors(appointment.Color, Color.White, 0.7f);  //
 
             if ((appointment.Locked))
             {

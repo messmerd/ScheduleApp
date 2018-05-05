@@ -194,7 +194,6 @@ namespace ScheduleApp
         //sets theme to night
         private void themeToNight(object sender, EventArgs e)
         {
-            
             currentTheme = THEME.NIGHT;
             adjustCheckstates();
             updateCalendarTheme();
@@ -207,9 +206,9 @@ namespace ScheduleApp
             menuBar.BackColor = Color.White;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = veryDarkGray;
-            searchResult_UI.BackColor = Color.White;
+            searchResult_UI.BackColor = Color.LightGray; ///////////
             searchResult_UI.ForeColor = Color.Black;
-            scheduleView.BackColor = Color.White;
+            scheduleView.BackColor = Color.LightGray;  ////////////////////
             scheduleTab.BackColor = veryDarkGray;
             appMenu.BackColor = Color.White;
 
@@ -231,14 +230,11 @@ namespace ScheduleApp
             credits_notify_label.ForeColor = Color.White;
             calendar_info_label.ForeColor = Color.White;
 
-            foreach (var course in CandidateSchedule.Create().getCalendarItems())
-            {
-                course.BorderColor = Color.DarkGray;
-            }
-
             if (clickHelp1.ForeColor == Color.Black)
                 clickHelp1.ForeColor = Color.White;
 
+            updateScheduleUI();
+            refreshSearchItemColors(search.lastSearchResults.getCourses());
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
@@ -255,6 +251,7 @@ namespace ScheduleApp
             searchTab.BackColor = Color.MidnightBlue;
 
             searchResult_UI.ForeColor = Color.Black;
+            searchResult_UI.BackColor = Color.White;
             scheduleView.ForeColor = Color.Black;
             scheduleTab.BackColor = Color.MidnightBlue;
             appMenu.BackColor = Color.White;
@@ -280,6 +277,8 @@ namespace ScheduleApp
             credits_notify_label.ForeColor = Color.White;
             calendar_info_label.ForeColor = Color.White;
 
+            updateScheduleUI();
+            refreshSearchItemColors(search.lastSearchResults.getCourses());
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
@@ -326,6 +325,8 @@ namespace ScheduleApp
             credits_notify_label.ForeColor = Color.White;
             calendar_info_label.ForeColor = Color.White;
 
+            updateScheduleUI();
+            refreshSearchItemColors(search.lastSearchResults.getCourses());
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
@@ -369,7 +370,8 @@ namespace ScheduleApp
             calendar_info_label.ForeColor = Color.Black;
 
             removeHelp.ForeColor = Color.Black;  // This is the "Double click to remove courses" text
-
+            updateScheduleUI();
+            refreshSearchItemColors(search.lastSearchResults.getCourses());
             calendar_UI.Invalidate(); // Updates the Calendar
 
         }
@@ -394,7 +396,7 @@ namespace ScheduleApp
                     break;
                 case THEME.NIGHT:
                     calendar_UI.Renderer = new Calendar.NightRenderer();
-                    color = Color.DarkSlateGray;
+                    color = Color.DarkGray;
                     break;
                 default:
                     break;
