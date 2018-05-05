@@ -36,7 +36,7 @@ namespace ScheduleApp
             return true;
         }
 
-        public bool test2() //search database with nothing entered (all courses in database will be returned); course ID's are 0 to 760
+        public bool test2() //search database with nothing entered (all courses in database will be returned); course ID's are 0 through 760
         {
             
             Search search = Search.Create("course_dictionary.txt");
@@ -56,7 +56,8 @@ namespace ScheduleApp
                 }
             }
             if (i != DB.getNumCourses()) return false;
-            
+            if (i != 761) return false; 
+
             return true;
         }
 
