@@ -18,7 +18,7 @@ namespace Calendar
         }
 
         private DateTime m_StartDate;
-        private int m_CourseID; 
+        private int m_CourseID;    // Stores the course id of a calendar item
 
         public DateTime StartDate
         {

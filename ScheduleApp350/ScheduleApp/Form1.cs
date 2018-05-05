@@ -13,18 +13,17 @@ using System.Runtime.InteropServices;
 
 namespace ScheduleApp
 {
-    public enum THEME { CLASSIC, NIGHT, BLUE, GCC };
+    public enum THEME { CLASSIC, NIGHT, BLUE, GCC }; // An enum for each of the different themes
     
     //class for the program window itself
     public partial class AppWindow : Form
     {
-
         public const string emptySearchBarText = "Search by course code or name..."; // The text when the searchBox is unfocused
-        Search search = Search.Create("course_dictionary.txt"); // Create our databases and the candidate schedule
-        CourseInfo DB = CourseInfo.Create();
-        CandidateSchedule schedule = CandidateSchedule.Create();
+        Search search = Search.Create("course_dictionary.txt");  // Create our databases and the candidate schedule
+        CourseInfo DB = CourseInfo.Create();                     // Used for accessing the course database
+        CandidateSchedule schedule = CandidateSchedule.Create(); // Used for accessing the candidate schedule
 
-        // enum for keeping track of what sort is applied on which attribute
+        // enum for keeping track of what sort is applied on which attribute:
         SortOrder[] sort_status = { SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None, SortOrder.None };
         int cur_attr = 0; // The current attribute being clicked
         public static THEME currentTheme; // enum for keeping track of current theme
@@ -34,26 +33,19 @@ namespace ScheduleApp
         {
             InitializeComponent();
             initializeProfessorComboBox();
-            searchResult_UI.ShowItemToolTips = true;
-            //searchResult_UI.HideSelection = true;
 
-            currentTheme = THEME.CLASSIC; 
+            currentTheme = THEME.CLASSIC; // Start using the Classing theme
 
             calendar_UI.StartDate = new DateTime(2010,2,1,0,0,0);  // I chose this date so that the calendar starts on Monday the 1st 
-            //calendar_UI.NewAppointment += new Calendar.NewAppointmentEventHandler(dayView1_NewAppointment);
-            calendar_UI.SelectionChanged += new EventHandler(dayView1_SelectionChanged);
             calendar_UI.ResolveAppointments += new Calendar.ResolveAppointmentsEventHandler(this.dayView1_ResolveAppointments);
+            calendar_UI.DoubleClick += new EventHandler(this.dayView1_MouseDoubleClick); // For double-clicking on calendar items
+            calendar_UI.Renderer = new Calendar.Office11Renderer(calendar_UI);    // Begin using the Classic theme
 
-            calendar_UI.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dayView1_MouseMove);
-            calendar_UI.DoubleClick += new EventHandler(this.dayView1_MouseDoubleClick); 
-
-            // Use a line like this to change the visual theme of the calendar:
-            calendar_UI.Renderer = new Calendar.Office11Renderer(calendar_UI);    // Can also use Calendar.Office12Renderer
-            calendar_UI.HalfHourHeight = 11;  // was 18
+            calendar_UI.HalfHourHeight = 11;  // Spacing between half hours in the calendar
             calendar_UI.StartHour = 8;
             calendar_UI.WorkingHourStart = 8;
 
-            clearAdvBtn_Click(this, new EventArgs());
+            clearAdvBtn_Click(this, new EventArgs()); // Reset all the advanced options
             clickHelp1.Text = "Double click to add a course!";
 
             updateScheduleUI();
@@ -62,8 +54,11 @@ namespace ScheduleApp
         //orders professor first and last name in combobox for the advanced search 
         private void initializeProfessorComboBox()
         {
-            foreach (var prof in DB.prof_database) {
-                if ((prof.last + ", " + prof.first).Trim() != ",")
+
+            for (int i = 0; i < DB.getNumProfs(); i++)
+            {
+                Professor prof = DB.getProfInDatabase(i);
+                if ((prof.last + ", " + prof.first).Trim() != ",")  // Doesn't add blank professor names 
                 {
                     professor_adv.Items.Add(prof.last + ", " + prof.first);
                 }
@@ -72,12 +67,14 @@ namespace ScheduleApp
 
         /**********************Text Inside Search****************************************/
         #region 
+        // Displays the last thing the user entered in the search box when search box is clicked
         private void searchBox_Enter(object sender, EventArgs e)
         {
             searchBox.Text = Search.Create().lastSearchResults.getQuery(); // calls search if user presses enter instead of the search button
             searchBox.ForeColor = Color.Black;
         }
 
+        // If the user didn't type anything in search box, leaving it resets the text inside
         private void searchBox_Leave(object sender, EventArgs e)
         {
             if (searchBox.Text == "")
@@ -93,6 +90,7 @@ namespace ScheduleApp
         /************************Calendar-Related**************************************************/
         #region
 
+        // needed for adding courses to the calendar
         private void dayView1_ResolveAppointments(object sender, Calendar.ResolveAppointmentsEventArgs args)
         {
             
@@ -103,24 +101,7 @@ namespace ScheduleApp
                     (m_App.StartDate <= args.EndDate))
                     m_Apps.Add(m_App);
 
-            args.Appointments = m_Apps;
-             
-        }
-        
-        //function for a change of selction of options
-        private void dayView1_SelectionChanged(object sender, EventArgs e)
-        {
-            //string text = dayView1.SelectionStart.ToString() + ":" + dayView1.SelectionEnd.ToString();
-            //label3.Text = calendar_UI.SelectionStart.ToString() + ":" + calendar_UI.SelectionEnd.ToString();
-            //Console.WriteLine(text);
-        }
-        
-        //function for mouse movement
-        private void dayView1_MouseMove(object sender, MouseEventArgs e)
-        {
-            //professor_adv_label.Text = calendar_UI.GetTimeAt(e.X, e.Y).ToString();
-            //string text = dayView1.GetTimeAt(e.X, e.Y).ToString();
-            //Console.WriteLine(text);
+            args.Appointments = m_Apps;  
         }
 
         // function for double clicking courses in calendar -- shows a messagebox with course info
@@ -129,13 +110,22 @@ namespace ScheduleApp
             if (calendar_UI.SelectedAppointment != null)
             {
                 int id = calendar_UI.SelectedAppointment.CourseID;
-                MessageBox.Show(getCalendarPopupString(DB.database.FindAll(x => x.getCourseCode() == DB.getCourseCode(id)).Select(x => x.getCourseID()).ToList()));
+                MessageBox.Show(getCalendarPopupString(id));
                 calendar_UI.SelectedAppointment = null;  // Unselects course in calendar
             }
         }
 
-        string getCalendarPopupString(List<int> ids)
+        // displays an info box containing information about a course
+        string getCalendarPopupString(int id)
         {
+            // Gets all courses with same course code: 
+            List<int> ids = new List<int>(); 
+            for (int i = 0; i < DB.getNumCourses(); i++)
+            {
+                if (DB.getCourseCode(i) == DB.getCourseCode(id))
+                    ids.Add(i);
+            }
+            
             string val = DB.getCourseCode(ids[0]) + "\n";
             val += DB.getLongName(ids[0]) + "\n";
             val += "with " + DB.getProf(ids[0]).first + " " + DB.getProf(ids[0]).last + "\n\n";
@@ -206,9 +196,9 @@ namespace ScheduleApp
             menuBar.BackColor = Color.White;
             searchBox.BackColor = Color.White;
             searchTab.BackColor = veryDarkGray;
-            searchResult_UI.BackColor = Color.LightGray; ///////////
+            searchResult_UI.BackColor = Color.LightGray; 
             searchResult_UI.ForeColor = Color.Black;
-            scheduleView.BackColor = Color.LightGray;  ////////////////////
+            scheduleView.BackColor = Color.LightGray; 
             scheduleTab.BackColor = veryDarkGray;
             appMenu.BackColor = Color.White;
 
@@ -230,10 +220,9 @@ namespace ScheduleApp
             credits_notify_label.ForeColor = Color.White;
             calendar_info_label.ForeColor = Color.White;
 
-            if (clickHelp1.ForeColor == Color.Black)
-                clickHelp1.ForeColor = Color.White;
+            clickHelp1.ForeColor = Color.White;
 
-            updateScheduleUI();
+            updateScheduleUI(); 
             refreshSearchItemColors(search.lastSearchResults.getCourses());
             calendar_UI.Invalidate(); // Updates the Calendar
         }
@@ -269,8 +258,7 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
-            if (clickHelp1.ForeColor == Color.Black)
-                clickHelp1.ForeColor = Color.White;
+            clickHelp1.ForeColor = Color.White;
 
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
             autocorrect_label.ForeColor = Color.White;
@@ -282,7 +270,7 @@ namespace ScheduleApp
             calendar_UI.Invalidate(); // Updates the Calendar
         }
 
-        //sets theme to gcc crimson
+        //sets theme to GCC crimson
         private void themeToGCC(object sender, EventArgs e)
         {
             currentTheme = THEME.GCC;
@@ -318,8 +306,8 @@ namespace ScheduleApp
             searchBtn.ForeColor = Color.Black;
             advSearchBtn.ForeColor = Color.Black;
 
-            if (clickHelp1.ForeColor == Color.Black)
-                clickHelp1.ForeColor = Color.White;
+            clickHelp1.ForeColor = Color.White;
+            
             removeHelp.ForeColor = Color.White;  // This is the "Double click to remove courses" text
             autocorrect_label.ForeColor = Color.White;
             credits_notify_label.ForeColor = Color.White;
@@ -333,12 +321,10 @@ namespace ScheduleApp
         //sets theme to classic
         private void themeToClassic(object sender, EventArgs e)
         {
-
             currentTheme = THEME.CLASSIC;
             adjustCheckstates();
             updateCalendarTheme(); 
 
-            // 
             scheduleTitle.ForeColor = Color.Black;
 
             menuBar.BackColor = Color.White;
@@ -349,7 +335,6 @@ namespace ScheduleApp
             scheduleView.BackColor = Color.White;
             scheduleTab.BackColor = Color.White;
             appMenu.BackColor = Color.White;
-
 
             // Adv Filter
             filter_UI.BackColor = Color.White;
@@ -365,6 +350,7 @@ namespace ScheduleApp
             advSearchBtn.ForeColor = Color.Black;
            
             clickHelp1.ForeColor = Color.Black;
+
             credits_notify_label.ForeColor = Color.Black;
             autocorrect_label.ForeColor = Color.Red;
             calendar_info_label.ForeColor = Color.Black;
@@ -402,7 +388,7 @@ namespace ScheduleApp
                     break;
             }
 
-            foreach (var calendar_item in schedule.getCalendarItems())
+            foreach (var calendar_item in schedule.getCalendarItems())  // Sets border color of each calendar item 
             {
                 calendar_item.BorderColor = color;
             }
@@ -475,35 +461,35 @@ namespace ScheduleApp
 
         /*********************************Create UI Search Fns*************************************/
         #region 
-        //event listener for button clicks
+        //event listener for button clicks (when user clicks the search button)
         private void searchBtn_Click(object sender, EventArgs e)
         {
             // Remove previous search results upon performing another search
             searchResult_UI.Items.Clear();
 
-            if (searchBox.Text != emptySearchBarText)
-                search.searchForQuery(searchBox.Text);
+            if (searchBox.Text != emptySearchBarText)  // If the user entered something to search for
+                search.searchForQuery(searchBox.Text); // Search for query
             else
                 search.searchForQuery(""); // search for all courses
 
-            search.advancedSearchFilter(); 
-            search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by descending relevancy 
+            search.advancedSearchFilter(); // Filter the results according to the advanced options 
+            search.lastSearchResults.SortCourses(SORTTYPE.RELEVANCY, false);  // Sort by relevancy 
 
             int column = sort_status.ToList().FindIndex(x => x != SortOrder.None);
             if (column != -1)
             {
-                searchResult_UI.SetSortIcon(column, SortOrder.None);  // Sets the arrow icon 
+                searchResult_UI.SetSortIcon(column, SortOrder.None);  // Resets the arrow icon on the column
                 sort_status[column] = SortOrder.None; 
             }
 
-            populateSearch(search.lastSearchResults.getCourses());
-            display_corrected_query();
+            populateSearch(search.lastSearchResults.getCourses());  // Populate the search results UI
+            display_corrected_query();    // Displays the "Did you mean  ______?" text 
 
             searchBox.SelectionStart = 0; // automatically highlights the users last query, so they can search again quickly
             searchBox.SelectionLength = searchBox.Text.Length;
         }
 
-        //fills the search results section with desired courses
+        //fills the search results UI with the search results 
         private void populateSearch(List<Course> results)
         {
             foreach (var course in results)
@@ -512,6 +498,8 @@ namespace ScheduleApp
                 listViewItem.Name = course.getCourseID().ToString();
                 listViewItem.UseItemStyleForSubItems = false;
 
+                // The next two parts set the colors of the results depending on whether the course has been added 
+                //    to the schedule already or if it conflicts with items currently in schedule
                 for (int j = 0; j < listViewItem.SubItems.Count; j++)
                 {
                     listViewItem.SubItems[j].BackColor = schedule.exists(course.getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
@@ -520,47 +508,12 @@ namespace ScheduleApp
                 if (schedule.checkTimeConflict(course).Count > 1)
                 {
                     listViewItem.SubItems[4].BackColor = Color.Red;
-                    listViewItem.ToolTipText = "This course conflicts with your schedule";
                 }
-                searchResult_UI.Items.Add(listViewItem);
+
+                searchResult_UI.Items.Add(listViewItem); // Adds the course to the search results UI
             }
         }
 
-
-        //refreshes the search results window
-        private void refresh_search_results(List<Course> results)
-        {
-            int i = 0;
-            foreach (ListViewItem item in searchResult_UI.Items)
-            {
-                item.UseItemStyleForSubItems = false;
-                //item.SubItems[0].Text = results[i].getCredits().ToString();
-                //item.SubItems[1].Text = results[i].getCourseCode();
-                //item.SubItems[2].Text = results[i].getProf().last + ", " + results[i].getProf().first;
-                //item.SubItems[3].Text = results[i].getLongName();
-                //item.SubItems[4].Text = results[i].getTimeString().Item1 + "-" + results[i].getTimeString().Item2;
-                //item.SubItems[5].Text = getDays(results[i]);
-                //item.SubItems[6].Text = results[i].getEnrollment().ToString() + "/" + results[i].getCapacity().ToString();
-                //item.SubItems[7].Text = results[i].getProf().rmp.ToString(); // placeholder until Sprint 2
-                //item.SubItems[8].Text = results[i].getProbability();
-                int k = 0;
-                setSearchRow(results[i]).ToList().ForEach(x => item.SubItems[k++].Text = x); 
-                  
-                for (int j = 0; j < item.SubItems.Count; j++)
-                {
-                    item.SubItems[j].BackColor = schedule.exists(results[i].getCourseID()) ? Color.GreenYellow : searchResult_UI.BackColor;
-                }
-
-                if (schedule.checkTimeConflict(results[i]).Count > 1)
-                {
-                    item.SubItems[4].BackColor = Color.Red;
-                    item.ToolTipText = "This course conflicts with your schedule";
-                }
-                i++;
-
-            }
-        }
-        
         //sets new colors to search results depending on prior course selections
         private void refreshSearchItemColors(List<Course> results)
         {
@@ -577,19 +530,19 @@ namespace ScheduleApp
                 if (schedule.checkTimeConflict(results[i]).Count > 1)
                 {
                     item.SubItems[4].BackColor = Color.Red;
-                    item.ToolTipText = "This course conflicts with your schedule";
                 }
                 i++;
                 
             }
         }
 
-        // search by pressing enter, must have the search box focused
+        // search by pressing enter (must have the search box focused)
         private void input_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter) searchBtn_Click(sender, e);
         }
 
+        // gets the days that a course meets as a string
         private string getDays(Course c)
         {
             string res = "";
@@ -603,7 +556,7 @@ namespace ScheduleApp
             return res;
         }
 
-        //sets the row for searching
+        //sets the text for a row in the search results
         private string[] setSearchRow(Course c) // c = the course
         {
             string[] row = new string[50]; // row buffer
@@ -627,18 +580,18 @@ namespace ScheduleApp
 
         /***********************Add to Schedule**************************************************/
         #region
-        //allows for adding courses to schedule with double click
+        //allows for adding and removing courses to/from schedule with double click when on the search result page
         private void searchResult_UI_DoubleClick(object sender, MouseEventArgs e)
         {
             if(searchResult_UI.SelectedItems.Count >= 0)
             {
                 int courseID = int.Parse(searchResult_UI.SelectedItems[0].Name);
-                if (!schedule.exists(courseID)) 
+                if (!schedule.exists(courseID)) // If the course isn't currently in your schedule, need to add it to your schedule
                 {
-                    schedule.addCourse(courseID);
+                    schedule.addCourse(courseID);  // Add the course to the schedule 
+                    updateScheduleUI();            // Make the schedule UI reflect these changes
 
-                    updateScheduleUI();
-                    switch (currentTheme)
+                    switch (currentTheme) // Sets clickHelp1 color based on current theme
                     {
                         case THEME.BLUE:
                             clickHelp1.ForeColor = Color.White;
@@ -660,24 +613,24 @@ namespace ScheduleApp
                     refreshSearchItemColors(search.lastSearchResults.getCourses());
                     searchResult_UI.SelectedItems[0].Selected = false; 
                 }
-                else
+                else  // If course is already in the schedule, need to remove it  
                 {
-                    schedule.removeCourse(courseID);
-                    updateScheduleUI();
+                    schedule.removeCourse(courseID); // Remove the course from the schedule
+                    updateScheduleUI();              // Make the schedule UI reflect these changes
 
-                    switch (currentTheme)
+                    switch (currentTheme)            // Sets clickHelp1 color based on current theme
                     {
                         case THEME.BLUE:
-                            clickHelp1.ForeColor = Color.White;//Color.GreenYellow;
+                            clickHelp1.ForeColor = Color.White;
                             break;
                         case THEME.NIGHT:
-                            clickHelp1.ForeColor = Color.White;//Color.Red;
+                            clickHelp1.ForeColor = Color.White;
                             break;
                         case THEME.GCC:
                             clickHelp1.ForeColor = Color.White;
                             break;
                         default:
-                            clickHelp1.ForeColor = Color.Black;//Color.Red;
+                            clickHelp1.ForeColor = Color.Black;
                             break;
                     }
 
@@ -835,7 +788,6 @@ namespace ScheduleApp
             }
         }
 
-
         //checks to see if the building attribute has been changed by the user
         private void building_valueChanged(object sender, EventArgs e)
         {
@@ -896,9 +848,9 @@ namespace ScheduleApp
             }
         }
 
+        // If the user does not want to see full classes or does, checks the appropriate checkbox
         private void showFullCheckbox_CheckChanged(object sender, EventArgs e)
         {
-            // If the user does not want to see full classes or does, checks the appropriate checkbox
             search.options.showFull = showFullCheckbox.Checked ? true : false;
         }
 
@@ -934,16 +886,6 @@ namespace ScheduleApp
         {
             OpenFileDialog openJson = new OpenFileDialog();
             openJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-            //openJson.FilterIndex = 1;  // Json by default 
-            //openJson.InitialDirectory = @"C:\";
-            //openJson.Title = "Browse Schedule Files";
-            //openJson.CheckFileExists = true;
-            //openJson.CheckPathExists = true;
-            //openJson.DefaultExt = "json";
-            //openJson.RestoreDirectory = true;
-
-            //openJson.ReadOnlyChecked = true;
-            //openJson.ShowReadOnly = true;
 
             if (openJson.ShowDialog() == DialogResult.OK)
             {
@@ -951,6 +893,7 @@ namespace ScheduleApp
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             updateScheduleUI();
+            updateCalendarTheme(); 
             calendar_UI.Invalidate(); // Updates the Calendar
             refreshSearchItemColors(search.lastSearchResults.getCourses());
         }
@@ -962,14 +905,6 @@ namespace ScheduleApp
             SaveFileDialog saveJson = new SaveFileDialog();
 
             saveJson.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-
-            //saveJson.FilterIndex = 1;  // Json by default 
-            //openJson.InitialDirectory = @"C:\";
-            //saveJson.Title = "Browse Schedule Files";
-            //saveJson.CheckFileExists = true;
-            //saveJson.CheckPathExists = true;
-            //saveJson.DefaultExt = "json";
-            //saveJson.RestoreDirectory = true;
 
             if (saveJson.ShowDialog() == DialogResult.OK)
             {
@@ -997,24 +932,12 @@ namespace ScheduleApp
 
         /***********************************Click on tab****************************************************/
         #region 
-        //allows for moving back and forth between schedule and search
+        //resets the "Double click to add a course" text
         private void menuTabs_Click(object sender, EventArgs e)
         {
             if (menuTabs.SelectedIndex == 1) // If the Schedule tab was clicked
             {
-                switch (currentTheme)
-                {
-                    case THEME.BLUE:
-                    case THEME.NIGHT:
-                        clickHelp1.ForeColor = Color.White;
-                        break;
-
-                    default:
-                        clickHelp1.ForeColor = Color.Black;
-                        break;
-                }
-                
-                clickHelp1.Text = "Double click to add a course!";
+                clickHelp1.Text = "Double click to add a course!";  // Just to reset the text 
             }
         }
         #endregion 

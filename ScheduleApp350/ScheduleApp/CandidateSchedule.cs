@@ -8,11 +8,13 @@ using System.IO;
 
 namespace ScheduleApp
 {
+    // This class stores the user's candidate schedule and contains methods for
+    //    handling things related to the schedule and the calendar
     public class CandidateSchedule
     {
-        public const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF";
+        private const string KEY_STRING = "SCHEDULING COURSES GCCMBAODMTF"; 
 
-        public List<Course> schedule;                  // Stores all the courses in the user's schedule
+        private List<Course> schedule;                  // Stores all the courses in the user's schedule
         private List<Calendar.Appointment> m_Courses;  // Stores the calendar items 
         private CourseInfo DB;
         private int creditCount; //Current count of credits within user's schedule
@@ -241,16 +243,19 @@ namespace ScheduleApp
                 }
             }         
         }
+
         // getter for creditCount
         public int getCreditCount()
         {
             return creditCount; 
         }
+
         //getter for m_Courses
         public List<Calendar.Appointment> getCalendarItems()
         {
             return m_Courses; 
         }
+
         //getter for schedule
         public List<Course> getCourses()
         {

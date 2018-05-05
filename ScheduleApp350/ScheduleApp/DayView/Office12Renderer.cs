@@ -7,6 +7,7 @@ using System.Drawing.Text;
 
 namespace Calendar
 {
+    // This class renders the calendar using the Blue theme
     public class Office12Renderer : AbstractRenderer
     {
         Font baseFont;

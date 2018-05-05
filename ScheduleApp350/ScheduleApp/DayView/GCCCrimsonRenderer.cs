@@ -7,6 +7,7 @@ using System.Drawing.Text;
 
 namespace Calendar
 {
+    // This class renders the calendar using the GCC Crimson theme
     public class GCCCrimsonRenderer : AbstractRenderer
     {
         Font baseFont;

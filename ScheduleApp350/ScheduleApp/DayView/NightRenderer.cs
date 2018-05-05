@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace Calendar
 {
+    // This class renders the calendar using the Night theme
     public class NightRenderer : AbstractRenderer
     {
         Font baseFont;
