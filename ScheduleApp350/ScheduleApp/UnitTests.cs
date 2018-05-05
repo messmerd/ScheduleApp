@@ -13,6 +13,7 @@ namespace ScheduleApp
         {
             Search search = Search.Create("course_database.txt");
             CourseInfo DB = CourseInfo.Create();
+            search.options.clear();
             search.options.firstNameProfessor = "Britton";
             search.options.lastNameProfessor = "Wolfe";
             search.searchForQuery(null);
@@ -35,9 +36,10 @@ namespace ScheduleApp
             
             Search search = Search.Create("course_dictionary.txt");
             CourseInfo DB = CourseInfo.Create();
+            search.options.clear();
             search.options.firstNameProfessor = "";
             search.options.lastNameProfessor = "";
-            search.searchForQuery(null);
+            search.searchForQuery("");
             search.advancedSearchFilter();
 
             int i = 0;
@@ -57,6 +59,7 @@ namespace ScheduleApp
         {
             Search search = Search.Create("course_database.txt");
             CourseInfo DB = CourseInfo.Create();
+            search.options.clear();
             search.options.firstNameProfessor = "Britton";
             search.options.lastNameProfessor = "Wolfe";
             search.searchForQuery("Software");

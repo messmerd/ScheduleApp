@@ -313,12 +313,7 @@ namespace ScheduleApp
     public class AdvancedOptions
     {
         public double rmp;  // Filter by courses with professor with RateMyProfessor rating >= rmp. -1 means the user doesn't have a preference
-
         public int probabilityScore; // high, medium, or low
-
-        // Put other advanced options here later 
-
-
         public double timeStart;  // Filter by courses that start at or after timeStart. -1 means the user doesn't have a preference 
         public double timeEnd;    // Filter by courses that end at or before timeEnd. -1 means the user doesn't have a preference
 
@@ -342,6 +337,26 @@ namespace ScheduleApp
             timeEnd = -1.0;
             day = (new bool[] {true,true,true,true,true}).ToList();
             building = Build.NONE;  // NONE in CourseClass will mean ANY building here. 
+            firstNameProfessor = "";
+            lastNameProfessor = "";
+            showFull = true;
+        }
+
+        public void clear()
+        {
+            rmp = -1.0;
+            probabilityScore = -1;
+
+            timeStart = -1.0;
+            timeEnd = -1.0;
+
+            building = Build.NONE;
+
+            for(int i = 0; i < day.Count; i++)
+            {
+                day[i] = true; 
+            }
+
             firstNameProfessor = "";
             lastNameProfessor = "";
             showFull = true;

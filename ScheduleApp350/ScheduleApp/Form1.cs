@@ -902,31 +902,23 @@ namespace ScheduleApp
             search.options.showFull = showFullCheckbox.Checked ? true : false;
         }
 
-        // restores all advanced options to default
+        // restores all advanced options to default, both in the AdvancedOptions class and the UI
         private void clearAdvBtn_Click(object sender, EventArgs e)
         {
-            search.options.rmp = -1;
+            search.options.clear(); // Resets all the options
             rmp_numericUpDown.Value = (decimal)0.0;
-
-            search.options.probabilityScore = -1;
+            
             probability_combobox.Text = "Any";
-
-            search.options.timeStart = -1;
-            search.options.timeEnd = -1;
-
+            
             numericUpDownEx1.Value = 0;
             numericUpDownEx2.Value = 24;
-
-            search.options.building = Build.NONE;
+            
             building_adv.Text = "Any";
 
-            search.options.day = (new bool[] { true, true, true, true, true }).ToList();
             allNoneCheckBox.Checked = true;
             allNoneCheck_checkChanged(sender, e);
 
             professor_adv.Text = "Any";
-            search.options.firstNameProfessor = "";
-            search.options.lastNameProfessor = "";
 
             showFullCheckbox.CheckState = CheckState.Checked;
             showFullCheckbox_CheckChanged(sender, e);
