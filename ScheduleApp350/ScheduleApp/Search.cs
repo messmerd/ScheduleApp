@@ -7,22 +7,23 @@ using SpellingCorrector;
 
 namespace ScheduleApp
 {
-
+    // This class contains all the methods for searching and using the autocorrect feature. It's a singleton class. 
     public class Search
     {
-        
         private static Search singleton;
 
-        public static Search Create() // creates a default string 
+        // create a search instance using the default course dictionary filename
+        public static Search Create()
         {
             if (singleton == null)
             {
                 singleton = new Search(); 
             }
             return singleton;
-        }      
+        }
 
-        public static Search Create(string spelling_db) // create a search object on the name of a spelling database for use with autocorrect
+        // create a search instance using a course dictionary filename for use with autocorrect and searching
+        public static Search Create(string spelling_db) 
         {
             if (singleton == null)
             {
@@ -31,12 +32,13 @@ namespace ScheduleApp
             return singleton;
         }        
              
-        public AdvancedOptions options;   // For storing advanced search options 
+        public AdvancedOptions options;    // For storing advanced search options 
         private Spelling spelling;         // Instance of Spelling object from Spelling.cs 
         private string courseDictionary;   // Stores course dictionary filename for use by spellchecker and course search 
         public SearchResults lastSearchResults;  // Stores the search results after using searchForQuery()
 
-        private Search()  // Constructor 
+        // constructor - uses default course dictionary filename
+        private Search()   
         {
             this.spelling = new Spelling("course_dictionary.txt");
             this.courseDictionary = "course_dictionary.txt";
@@ -45,7 +47,8 @@ namespace ScheduleApp
             this.options = new AdvancedOptions();
         }
 
-        public Search(string courseDictionary)  // Constructor 
+        // constructor - takes a course dictionary file name
+        private Search(string courseDictionary)   
         {
             this.spelling = new Spelling(courseDictionary);
             this.courseDictionary = courseDictionary;
@@ -56,7 +59,8 @@ namespace ScheduleApp
 
         // This function creates a list of Courses that match a given query or are close enough to be recognized by the spell-checker. 
         // It also creates a string containing the spell-checked version of the user's query. 
-        // All these search results are placed in the lastSearchResults struct, which can be accessed using the getters. 
+        // All these search results are placed in the instance of the SearchResults class called lastSearchResults, which can be accessed 
+        // using the getters. 
         // The query can be a course name or course code. Courses that don't match the query at all are not included in the results. 
         public void searchForQuery(string query)
         {
@@ -84,7 +88,7 @@ namespace ScheduleApp
                 else
                     result = spelling.CorrectExt(word, false);
 
-                // For single letter queries, list classes whose first letter in course name/code matches letter? 
+                // Future feature: For single letter queries, list classes whose first letter in course name/code matches letter? 
 
                 if (result.Value[0] != 0)  // If the word in the query doesn't match anything in the dictionary and cannot be corrected with the spell-checker, don't add to the corrected query 
                 {
@@ -101,7 +105,6 @@ namespace ScheduleApp
             lastSearchResults.query = query;                   // Setting query in the lastSearchResults struct 
 
             storeSearchResults(matching, querySplit, correctedQuery);  // Calculate the relevance for each course that matched the query, and store that along with all the courses in results 
-
         }
 
         // Calculates the relevancy of each item in the search results using a heuristic, then stores these values along with all the courses in the results. 
@@ -114,31 +117,29 @@ namespace ScheduleApp
             {
                 foreach (var id in match)    // For each course ID of courses that contain the corrected query word in their title or course code 
                 {
-                    if (lastSearchResults.relevance.ContainsKey(id)) //(bestMatches.ContainsKey(id))
+                    if (lastSearchResults.relevance.ContainsKey(id)) 
                     {
-                        lastSearchResults.relevance[id]++; //bestMatches[id]++;  // Increment the number of matching words for the course "id"  
+                        lastSearchResults.relevance[id]++;  // Increment the number of matching words for the course "id"  
                         // If it matches the department code rather than just part of the course title, the relevance will be increased an extra amount for better results (see below)   
                     }
                     else
                     {
                         lastSearchResults.courses.Add(new Course(id));
-                        lastSearchResults.relevance[id] = 1; //bestMatches[id] = 1; // This course has one matching word 
+                        lastSearchResults.relevance[id] = 1;  // This course has one matching word 
 
                         // For the following line, if a course matches the query completely (every word), then that course is given one extra relevancy.
                         // I'm not sure if this will improve search results much. It's an experimental feature. It can be safely commented out to disable it. 
-                        lastSearchResults.relevance[id] /*bestMatches[id]*/ += (querySplit.Count != 1 && correctedQuery.Split().ToList().Count == querySplit.Count && correctedQuery.Split().All(i => spelling.getDictionaryFileContents()[id].ToLower().Split().Contains(i))) ? 1 : 0;
+                        lastSearchResults.relevance[id] += (querySplit.Count != 1 && correctedQuery.Split().ToList().Count == querySplit.Count && correctedQuery.Split().All(i => spelling.getDictionaryFileContents()[id].ToLower().Split().Contains(i))) ? 1 : 0;
                     }
 
                     // This loop adds extra relevance to results whose department code (part of its course code) matches part of the query 
                     // For example, CS courses have higher relevance in search results than the business courses that have "computer" in the name when the user searches for "computer"
                     foreach (string word in spelling.getDictionaryFileContents()[id].Split())
                     {
-
                         if (Regex.IsMatch(word, @"^\d+$"))  // Breaks once it reaches the course number 
                             break;
                         else
                         {
-                            //Console.WriteLine("correctedQuery.Split()[j] = ,{0}, word.ToLower() = ,{1}, ", correctedQuery.Split()[j], word.ToLower());
                             if (j < correctedQuery.Split().ToList().Count && correctedQuery.Split()[j] == word.ToLower())    // If a word in the query matches a department code of a course, it counts extra towards the relevance of that course in the search results 
                                 lastSearchResults.relevance[id]++; //bestMatches[id]++;  // For now, increase the relevance by an extra 1. Remove this line to remove the effect of this whole feature.  
                         }
@@ -168,20 +169,20 @@ namespace ScheduleApp
         private void addAllCourses()
         {
             lastSearchResults.relevance.Clear();  // Clear the results from the last search 
-            lastSearchResults.courses.Clear();          // Clear the results from the last search 
+            lastSearchResults.courses.Clear();    // Clear the results from the last search 
 
             // Add all of the courses to the search results: 
-            for (int i = 0; i < CourseInfo.Create().getNumCourses(); i++)   // Was i < spelling.getDictionaryFileContents().Count
+            for (int i = 0; i < CourseInfo.Create().getNumCourses(); i++)  
             {
                 lastSearchResults.courses.Add(new Course(i));
-                lastSearchResults.relevance[i] = 1;      // Should it be 0?  
+                lastSearchResults.relevance[i] = 1;      
             }
         }
 
-        //main function for utilizing advanced search
+        //main function for utilizing advanced search. Filters out all courses that don't match preferences from search results 
         public void advancedSearchFilter()
         {
-            List<int> removeIndices = new List<int>();
+            List<int> removeIndices = new List<int>(); // To Contain all the courses that will be filtered out of the main search results
 
             // Filter start time 
             if (options.timeStart != -1.0)  // If the user has selected a start time preference 
@@ -214,12 +215,11 @@ namespace ScheduleApp
 
             }
 
-            // Filter day of week
+            // Filter by day of week
             if (options.day.Contains(false))    // If the user has selected a day that they don't want included 
             {
                 removeIndices.Clear();
-                // Remove a course if a day which the potential course meets maps to false for that same day in options.day 
-                // This one's a bit crazy... 
+                // Remove a course if a day which the potential course meets maps to false for that same day in options.day: 
                 removeIndices = lastSearchResults.getCourses().Select((element, index) => element.getDay().Select((elem, ind) => element.getDay()[ind] && !options.day[ind] ? true : false).Where(i => i).ToList().Count != 0 ? index : -1).Where(i => i != -1).ToList();
                 removeIndices.Reverse();
 
@@ -312,36 +312,49 @@ namespace ScheduleApp
     //This class contains all variables for advanced searching, used to filter results
     public class AdvancedOptions
     {
-        public double rmp;  // Filter by courses with professor with RateMyProfessor rating >= rmp. -1 means the user doesn't have a preference
-
+        public double rmp;        // Filter by courses with professor with RateMyProfessor rating >= rmp. -1 means the user doesn't have a preference
         public int probabilityScore; // high, medium, or low
-
-        // Put other advanced options here later 
-
-
         public double timeStart;  // Filter by courses that start at or after timeStart. -1 means the user doesn't have a preference 
         public double timeEnd;    // Filter by courses that end at or before timeEnd. -1 means the user doesn't have a preference
 
         public List<bool> day;    // Filter by courses that don't meet on days you don't want it to meet. If a value is false, it means you don't want a class that meets on that day. All true means user doesn't have a preference 
 
-        public Build building;
-        public string firstNameProfessor;
-        public string lastNameProfessor;
+        public Build building;    // Filter by desired building. BUILD.NONE means the user has no preference
+        public string firstNameProfessor;  // Filter by desired professor. Empty string means no preference 
+        public string lastNameProfessor;   // Filter by desired professor. Empty string means no preference
 
-        public bool showFull;
+        public bool showFull;     // Filter by whether a course is full or not
 
         //constructor
         public AdvancedOptions()
         {
-            rmp = -1.0;  
+            rmp = -1.0;            // Rate my professor rating
             probabilityScore = -1; // high, medium, low
+            timeStart = -1.0;      // Desired start time
+            timeEnd = -1.0;        // Desired end time
+            day = (new bool[] {true,true,true,true,true}).ToList(); // Desired days
+            building = Build.NONE;  // Desired building. NONE in CourseClass will mean ANY building here. 
+            firstNameProfessor = ""; // Desired professor first name
+            lastNameProfessor = "";  // Desired professor last name
+            showFull = true;         // Whether the user want full courses (no seats left) to be shown
+        }
 
-            // Put other advanced options here later 
+        // clears (or resets) all of the advanced search options
+        public void clear()
+        {
+            rmp = -1.0;
+            probabilityScore = -1;
 
-            timeStart = -1.0; 
+            timeStart = -1.0;
             timeEnd = -1.0;
-            day = (new bool[] {true,true,true,true,true}).ToList();
-            building = Build.NONE;  // NONE in CourseClass will mean ANY building here. 
+
+            building = Build.NONE;
+
+            for(int i = 0; i < day.Count; i++)
+            {
+                day[i] = true; 
+            }
+
             firstNameProfessor = "";
             lastNameProfessor = "";
             showFull = true;

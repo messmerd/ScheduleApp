@@ -6,6 +6,7 @@ using System.Drawing;
 
 namespace Calendar
 {
+    // This class renders the calendar using the Classic theme
     public class Office11Renderer : AbstractRenderer
     {
         private Font minuteFont;

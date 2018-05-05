@@ -5,15 +5,18 @@ using System.Text;
 
 namespace ScheduleApp
 {
+    // Enum for each of the different sort types:
     public enum SORTTYPE { BUILDING=-1, CAPACITY=-2, COURSECODE=1, COURSENAME=3, CREDITS=0, DAY=5, ENDTIME=-3, ENROLLMENT=6, PROBABILITY=8, PROFESSOR=2, RMP=7, RELEVANCY=-4, STARTTIME=4 };
  
+    // This class stores search results and provides methods for retreiving data and manipulating the data
     public class SearchResults 
     {
-        public List<Course> courses;         // Courses ordered from most relevant to least by default.  
-        public string query;                 // The query passed to searchForQuery()
-        public string correctedQuery;        // The spell-checked version of query
-        public Dictionary<int, int> relevance;
+        public List<Course> courses;           // Courses ordered from most relevant to least by default.  
+        public string query;                   // The query passed to searchForQuery()
+        public string correctedQuery;          // The spell-checked version of query
+        public Dictionary<int, int> relevance; // Stores the relevance for each course (represented by course id) in the search results
 
+        // default constuctor
         public SearchResults()
         {
             this.query = "";
@@ -27,18 +30,26 @@ namespace ScheduleApp
         {
             return courses;
         }
+
+        // Get a course in the search results
         public Course getCourse(int id)
         {
             return courses.ElementAt(id); 
         }
+
+        // Gets the user's spell-checked search query 
         public string getCorrectedQuery()
         {
             return correctedQuery;
         }
+
+        // Gets the user's original search query
         public string getQuery()
         {
             return query;
         }
+
+        // Gets the relevance of a course in the search results
         public int getCourseRelevance(int id)
         {
             if (relevance.ContainsKey(id))
@@ -46,8 +57,9 @@ namespace ScheduleApp
             else
                 return -1; // Course is not in the search results
         }
-        //contains cases to designate what the list of courses is to be sorted by (building, capacity, etc.) as well as whether it is ascending
-        //or descendng
+
+        // Sorts the search results. Contains cases to designate what the list of courses is to be 
+        // sorted by (building, capacity, etc.) as well as whether it is ascending or descendng
         public void SortCourses(SORTTYPE sortBy, bool ascending)
         {
             switch (sortBy)
@@ -96,12 +108,12 @@ namespace ScheduleApp
             }
 
             if (!ascending)
-                courses.Reverse();
+                courses.Reverse(); // Simple, right? 
 
-            alphabetize(sortBy);
+            alphabetize(sortBy);   // Alphabetizes the results by course code without disrupting the primary sorting order 
         }
 
-        //assigns values to each tuple in order to order them
+        // Gets a value used to sort by day. The order is: M thru F, MT thru RF, MTW thru WRF, MTWR thru TWRF, then MTWRF.  
         private int getSortableValueForDay(List<bool> input)
         {
             int sum = 0;
@@ -112,7 +124,7 @@ namespace ScheduleApp
             return Int32.MaxValue - (sum + input.Count(x => !x) * 32);
         }
 
-        //returns false if sorttype variables are equal, false if not
+        //returns false if sorttype variables are equal, false if not. This is used in the alphabetize method.
         private bool attributesAreEqual(SORTTYPE type, int index1, int index2)
         {
             switch (type)
@@ -178,7 +190,6 @@ namespace ScheduleApp
 
 
         }
-
 
     }
 

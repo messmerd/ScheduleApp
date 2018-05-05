@@ -658,9 +658,9 @@
             this.calendar_info_label.AutoSize = true;
             this.calendar_info_label.Location = new System.Drawing.Point(274, 196);
             this.calendar_info_label.Name = "calendar_info_label";
-            this.calendar_info_label.Size = new System.Drawing.Size(311, 13);
+            this.calendar_info_label.Size = new System.Drawing.Size(329, 13);
             this.calendar_info_label.TabIndex = 5;
-            this.calendar_info_label.Text = "Double click on the calendar to see more information";
+            this.calendar_info_label.Text = "Double click on a calendar item to see more information";
             // 
             // credits_notify_label
             // 

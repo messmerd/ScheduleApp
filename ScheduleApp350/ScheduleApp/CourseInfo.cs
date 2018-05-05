@@ -4,11 +4,10 @@ using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Text;
-using Excel = Microsoft.Office.Interop.Excel;       //Microsoft Excel 14 object in references-> COM tab
 
 namespace ScheduleApp
 {
-    //Used to designate all data assigned to a specific course; utilizes a singleton method
+    // This class is used as a common database for all course and professor information. It is a singleton
     public class CourseInfo
     {
         private static CourseInfo singleton;
@@ -35,7 +34,7 @@ namespace ScheduleApp
 
         }
 
-        //constructor
+        // default constructor
         private CourseInfo()
         {
              database = new List<Course>();
@@ -51,54 +50,10 @@ namespace ScheduleApp
             parseTextFile(course_filename, rmp_filename);  
         }
 
-        public List<Course> database;
-        public List<Professor> prof_database;
-        private int numCourses;
-        
-        //function that parses the database file (if it is CSV)   (UNUSED!!!!)
-        private void parseCSV()
-        {
-            string fileName = "course_database.xlsx";
-            System.IO.FileInfo f = new System.IO.FileInfo(fileName);
-            string fullname = f.FullName;
-            Console.WriteLine("File('{0}') has path '{1}'", fileName, fullname);
-
-            //https://coderwall.com/p/app3ya/read-excel-file-in-c
-
-            //Create COM Objects. Create a COM object for everything that is referenced
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fullname);
-            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
-
-            Console.WriteLine("File('{0}') has path '{1}'", fileName, fullname);
-
-
-            int rowCount = 762;
-            int colCount = 13;
-            numCourses = 0;
-
-            //iterate over the rows and columns and print to the console as it appears in the file
-            //excel is not zero based!!
-            for (int i = 2; i <= rowCount; i++)//CourseCode	ShortTitle	LongTitle	BeginTime	EndTime	Meets	Building	Room	Enrollment	Capacity
-            {
-                List<string> parsedCourse = new List<string>();
-                for (int j = 1; j <= colCount; j++)
-                {
-                    Console.WriteLine("i = {0}, j = {1}\n", i, j);
-                    if (xlRange.Cells[i, j].Value2 != null)
-                        parsedCourse.Add(xlRange.Cells[i, j].Value2.ToString());
-                    else parsedCourse.Add("0");
-                }
-                Course nextCourse = new Course(parsedCourse, numCourses, 3.5);
-                database.Add(nextCourse);
-                numCourses++;
-            }
-        
-        }
-
-
-        //function that parses the database file (if it is .txt)
+        private List<Course> database;           // Database of all the courses 
+        private List<Professor> prof_database;   // Database of all the professors                  
+         
+        //function that parses the database file (if it is .txt) and stores it
         private void parseTextFile(string course_filename, string rmp_filename)
         {
             // Get all course info lines, store each line as an element in a list
@@ -114,7 +69,6 @@ namespace ScheduleApp
                 return;
             }
 
-
             // Get RMP data from the rmp_database.txt, store each line as an element in a list
             // database created with a python script that scraped and parsed html from grove city college on the rmp website
             List<string> rmp_data = new List<string>();
@@ -128,7 +82,6 @@ namespace ScheduleApp
                 return;
             }
 
-            numCourses = fileContents.Count;
             int i = 0;
 
             double rmp = 3.8; // default value, the RMP average. Only assigned if professor does not exist on ratemyprofessors.com
@@ -171,10 +124,9 @@ namespace ScheduleApp
                 i++;
             }
             prof_database = prof_database.OrderBy(x => x.last).ToList();
-            
         }
 
-        //getters
+        #region Various getters
         public Course getCourse(int id)
         {
             return database[id]; 
@@ -182,7 +134,7 @@ namespace ScheduleApp
 
         public int getNumCourses()
         {
-            return numCourses; 
+            return database.Count; 
         }
 
         public Build getBuilding(int id) 
@@ -259,6 +211,18 @@ namespace ScheduleApp
         {
             return database[id].getAllInfo();
         }
+
+        public int getNumProfs()
+        {
+            return prof_database.Count; 
+        }
+
+        public Professor getProfInDatabase(int prof_id)
+        {
+            return prof_database[prof_id];
+        }
+
+        #endregion
 
     }
 

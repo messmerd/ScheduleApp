@@ -7,6 +7,7 @@ using System.Drawing.Text;
 
 namespace Calendar
 {
+    // This class renders the calendar using the GCC Crimson theme
     public class GCCCrimsonRenderer : AbstractRenderer
     {
         Font baseFont;
@@ -128,10 +129,10 @@ namespace Calendar
             Rectangle topPart = new Rectangle(rect.Left + 1, rect.Top + 1, rect.Width - 2, (int)(rect.Height / 2) - 1);
             Rectangle lowPart = new Rectangle(rect.Left + 1, rect.Top + (int)(rect.Height / 2) + 1, rect.Width - 1, (int)(rect.Height / 2) - 1);
 
-            using (LinearGradientBrush aGB = new LinearGradientBrush(topPart,Color.FromArgb(249, 221, 221), Color.Crimson /*Color.FromArgb(236, 209, 209)*/, LinearGradientMode.Vertical)) // light pink
+            using (LinearGradientBrush aGB = new LinearGradientBrush(topPart, Color.FromArgb(236, 118, 138), Color.FromArgb(236, 111, 131) /*Color.FromArgb(236, 209, 209)*/, LinearGradientMode.Vertical)) // light pink
                 g.FillRectangle(aGB, topPart);
 
-            using (LinearGradientBrush aGB = new LinearGradientBrush(lowPart, Color.FromArgb(236, 118, 138), Color.FromArgb(236, 111, 131), LinearGradientMode.Vertical)) // darker pink
+            using (LinearGradientBrush aGB = new LinearGradientBrush(lowPart, Color.FromArgb(220, 83, 106), Color.FromArgb(215, 77, 101), LinearGradientMode.Vertical)) // darker pink
                 g.FillRectangle(aGB, lowPart);
 
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;

@@ -9,16 +9,17 @@ namespace ScheduleApp
     // TBA = N/A, BAO = ???
     public enum Build { NONE, BAO, HAL, HH, OFFCP, PFAC, PLC, RH, RO, STEM, TBA };
 
-    //contains all variables to be designated to a specific course after it is parsed from courseinfo
+    // This class contains all information about a specific course after it is parsed from courseinfo
     public struct Course
     {
+        #region Member variables 
         private Build building;
         private string room;
 
         private string courseDept;
         private string courseNum;
         private string courseSect;
-        private string courseCode;// = courseDept + courseNum.toString();
+        private string courseCode; // = courseDept + courseNum.toString();
 
         private string shortName;
         private string longName;
@@ -36,8 +37,10 @@ namespace ScheduleApp
         private int courseID;
 
         private string allInfo;
+        #endregion 
 
-        public Course(int courseID)  // Constructor
+        // Constructor that uses a course id
+        public Course(int courseID)  
         {
             CourseInfo DB = CourseInfo.Create();
             this.courseID = courseID;
@@ -65,7 +68,8 @@ namespace ScheduleApp
             this.allInfo = DB.getAllInfo(courseID);
         }
 
-        public Course(List<string> parsedCourse, int courseID, double rmp) // Constructor
+        // Constructor that uses data parsed from the database file to create a course instance. This is used in the CourseInfo class
+        public Course(List<string> parsedCourse, int courseID, double rmp) 
         {
             this.allInfo = System.Text.RegularExpressions.Regex.Replace(string.Join("\t", parsedCourse.ToArray()) + "\t" + courseID.ToString(), @" +", " "); 
  
@@ -151,77 +155,93 @@ namespace ScheduleApp
                 credits = 0;
         }
 
-        public bool isFull() //returns true if the course is full
+        #region Various getters 
+        //returns true if the course is full
+        public bool isFull() 
         {
             return capacity-enrollment <= 0;
         }
 
-        public int getCourseID()  // Getter for courseID, Note: courseID is NOT the same as courseCode 
+        // Getter for courseID, Note: courseID is NOT the same as courseCode
+        public int getCourseID()   
         {
             return courseID;
         }
 
-        public Build getBuilding()   //Getter for building
+        //Getter for building
+        public Build getBuilding()   
         {
             return building;
         }
 
-        public string getRoom()   //Getter for room
+        //Getter for room
+        public string getRoom()   
         {
             return room;
         }
 
-        public string getCourseDept()   //getter for courseDept
+        //getter for courseDept
+        public string getCourseDept()   
         {
             return courseDept;
         }
 
-        public string getCourseNum()   //getter for courseNum
+        //getter for courseNum
+        public string getCourseNum()   
         {
             return courseNum;
         }
 
-        public string getCourseSect()   //getter for courseSect
+        //getter for courseSect
+        public string getCourseSect()   
         {
             return courseSect;
         }
 
-        public string getCourseCode()   //getter for courseCode
+        //getter for courseCode
+        public string getCourseCode()   
         {
             return courseCode;
         }
 
-        public string getShortName()   //getter for shortName
+        //getter for shortName
+        public string getShortName()   
         {
             return shortName;
         }
 
-        public string getLongName()   //getter for longNamef
+        //getter for longName
+        public string getLongName()   
         {
             return longName;
         }
 
-        public int getEnrollment()   //getter for enrollment
+        //getter for enrollment
+        public int getEnrollment()   
         {
             return enrollment;
         }
 
-        public int getCapacity()  //getter for capacity
+        //getter for capacity
+        public int getCapacity()  
         {
             return capacity;
         }
 
-        public List<bool> getDay()  //getter for day
+        //getter for day
+        public List<bool> getDay()  
         {
             return day;
         }
 
-        public Tuple<double, double> getTime()   //getter for time
+        //getter for time
+        public Tuple<double, double> getTime()   
         {
             return time;
         }
 
-        public string getProbability()  //returns the string equivalent of getProbabilityInt
+        //returns the string equivalent of getProbabilityInt
+        public string getProbability()  
         {
             switch (getProbabilityInt())
             {
@@ -238,8 +258,10 @@ namespace ScheduleApp
             }
         }
 
-        // 0, 1, 2, or 3
-        public int getProbabilityInt()  //calculates and returns the probability of a student recieving a course (int)
+        
+        //calculates and returns the probability of a student being able to get into a course using a heuristic 
+        // Returns a 0, 1, 2, or 3. 0 is high probability, 3 is low.
+        public int getProbabilityInt()  
         {
             int probScore = 0;
 
@@ -258,14 +280,16 @@ namespace ScheduleApp
             return this.capacity - this.enrollment == 0 ? 3 : probScore;
         }
 
-        public Tuple<string, string> getTimeString()    //returns time as a tuple of strings
+        //returns time as a tuple of strings
+        public Tuple<string, string> getTimeString()   
         {
             Tuple<int, int, int, int> temp = getTimeHourMinute();
             if (temp.Item1 == -1.0) return new Tuple<string,string>("",""); //No time is given
             return Tuple.Create(temp.Item1.ToString("00") + ":" + temp.Item2.ToString("00"), temp.Item3.ToString("00") + ":" + temp.Item4.ToString("00"));
         }
 
-        public Tuple<int, int, int, int> getTimeHourMinute() //returns time as a tuple of ints
+        //returns time as a tuple of ints
+        public Tuple<int, int, int, int> getTimeHourMinute() 
         {
             if (time.Item1 == -1.0) return new Tuple<int,int,int,int>(-1, -1, -1, -1); //No time is given
             int t1 = (int)time.Item1;
@@ -277,26 +301,34 @@ namespace ScheduleApp
             return Tuple.Create(t1, t2, t3, t4);
         }
 
-        public Professor getProf()   //getter for professor
+        //getter for professor
+        public Professor getProf()   
         {
             return professor;
         }
 
-        public int getCredits()   //getter for credits
+        //getter for credits
+        public int getCredits()   
         {
             return credits;
         }
 
-        public string getAllInfo()  //getter for allInfo
+        //getter for allInfo
+        public string getAllInfo()  
         {
             return allInfo;
         }
-        public double getRMPScore() //getter for RMPScore
+
+        //getter for RMPScore
+        public double getRMPScore() 
         {
             return professor.rmp;
         }
+        #endregion
+
     };
 
+    // This stores information about a professor
     public struct Professor //struct for the professor object
     {
         public string first, last;
