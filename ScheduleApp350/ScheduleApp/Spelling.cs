@@ -18,6 +18,7 @@ namespace SpellingCorrector
         private static readonly Regex _wordRegex = new Regex("[a-z]+", RegexOptions.Compiled);
         private List<string> fileContentLines; 
 
+        // constructor that takes a dictionary filename
         public Spelling(string dictionary_filename)
         {
             string fileContent = "";
